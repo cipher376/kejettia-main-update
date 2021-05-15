@@ -62,6 +62,7 @@ import { ProfileComponent } from './components/shared/ui-components/profile/prof
 import { OrdersComponent } from './components/shared/ui-components/orders/orders.component';
 import { AddressComponent } from './components/shared/ui-components/address/address.component';
 import { AccountDetailsComponent } from './components/shared/ui-components/account-details/account-details.component';
+import { ComingSoonComponent } from './components/pages/coming-soon/coming-soon.component';
 
 
 @NgModule({
@@ -126,6 +127,7 @@ import { AccountDetailsComponent } from './components/shared/ui-components/accou
     OrdersComponent,
     AddressComponent,
     AccountDetailsComponent,
+    ComingSoonComponent,
   ],
   imports: [
     BrowserModule,

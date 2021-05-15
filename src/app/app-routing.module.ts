@@ -6,6 +6,7 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { MyAccountComponent } from './components/pages/my-account/my-account.component';
 import { StoresComponent } from './components/pages/stores/stores.component';
 import { ProfileComponent } from './components/shared/ui-components/profile/profile.component';
+import {ComingSoonComponent} from './components/pages/coming-soon/coming-soon.component';
 
 const routes: Routes = [
 {
@@ -20,6 +21,7 @@ const routes: Routes = [
 {path: 'login', component: LoginComponent},
 {path: 'profile', component: ProfileComponent},
 {path: 'my-account', component: MyAccountComponent},
+{path: 'coming-soon', component: ComingSoonComponent},
 
 ];
 
