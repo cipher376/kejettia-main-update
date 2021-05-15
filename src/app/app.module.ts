@@ -17,7 +17,6 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { MapViewComponent } from './components/pages/map-view/map-view.component';
 import { MyAccountComponent } from './components/pages/my-account/my-account.component';
-import { ProfileComponent } from './components/pages/profile/profile.component';
 import { RecentBrowsedComponent } from './components/pages/recent-browsed/recent-browsed.component';
 import { SearchComponent } from './components/pages/search/search.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
@@ -40,7 +39,6 @@ import { PriceComponent } from './components/shared/ui-components/price/price.co
 import { ProductComponent } from './components/shared/ui-components/product/product.component';
 import { SidebarComponent } from './components/shared/ui-components/sidebar/sidebar.component';
 import { SidebarItemComponent } from './components/shared/ui-components/sidebar/sidebar-item/sidebar-item.component';
-import { StoreComponent } from './components/shared/ui-components/store/store.component';
 import { StoreCarouselComponent } from './components/shared/ui-components/store-carousel/store-carousel.component';
 import { StoreDetailsComponent } from './components/shared/ui-components/store-details/store-details.component';
 import { DialogComponent } from './components/shared/ui-components/dialog/dialog.component';
@@ -51,6 +49,17 @@ import { PopularCategoriesComponent } from './components/shared/ui-components/po
 import { BestSellersComponent } from './components/shared/ui-components/best-sellers/best-sellers.component';
 import { SignupBannerComponent } from './components/shared/ui-components/signup-banner/signup-banner.component';
 import { TaglineWidgetComponent } from './components/shared/ui-components/tagline-widget/tagline-widget.component';
+import { IntroBannerOneComponent } from './components/shared/ui-components/intro-banner-one/intro-banner-one.component';
+import { IntroBannerTwoComponent } from './components/shared/ui-components/intro-banner-two/intro-banner-two.component';
+import { IntroBannerThreeComponent } from './components/shared/ui-components/intro-banner-three/intro-banner-three.component';
+import { OtherCategoriesComponent } from './components/shared/ui-components/other-categories/other-categories.component';
+import { NewsletterPopupComponent } from './components/shared/ui-components/newsletter-popup/newsletter-popup.component';
+import { PopularCategoriesItemComponent } from './components/shared/ui-components/popular-categories-item/popular-categories-item.component';
+import { BestSellerItemComponent } from './components/shared/ui-components/best-seller-item/best-seller-item.component';
+import { StoresComponent } from './components/pages/stores/stores.component';
+import { StoreItemComponent } from './components/shared/ui-components/store-item/store-item.component';
+import { ProfileComponent } from './components/shared/ui-components/profile/profile.component';
+import { OrdersComponent } from './components/shared/ui-components/orders/orders.component';
 
 
 @NgModule({
@@ -70,7 +79,6 @@ import { TaglineWidgetComponent } from './components/shared/ui-components/taglin
     LoginComponent,
     MapViewComponent,
     MyAccountComponent,
-    ProfileComponent,
     RecentBrowsedComponent,
     SearchComponent,
     SignupComponent,
@@ -93,7 +101,6 @@ import { TaglineWidgetComponent } from './components/shared/ui-components/taglin
     ProductComponent,
     SidebarComponent,
     SidebarItemComponent,
-    StoreComponent,
     StoreCarouselComponent,
     StoreDetailsComponent,
     DialogComponent,
@@ -104,6 +111,17 @@ import { TaglineWidgetComponent } from './components/shared/ui-components/taglin
     BestSellersComponent,
     SignupBannerComponent,
     TaglineWidgetComponent,
+    IntroBannerOneComponent,
+    IntroBannerTwoComponent,
+    IntroBannerThreeComponent,
+    OtherCategoriesComponent,
+    NewsletterPopupComponent,
+    PopularCategoriesItemComponent,
+    BestSellerItemComponent,
+    StoresComponent,
+    StoreItemComponent,
+    ProfileComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,
