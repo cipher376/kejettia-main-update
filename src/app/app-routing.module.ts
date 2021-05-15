@@ -7,6 +7,7 @@ import { MyAccountComponent } from './components/pages/my-account/my-account.com
 import { StoresComponent } from './components/pages/stores/stores.component';
 import { ProfileComponent } from './components/shared/ui-components/profile/profile.component';
 import {ComingSoonComponent} from './components/pages/coming-soon/coming-soon.component';
+import { ErrorPageComponent } from './components/pages/error-page/error-page.component';
 
 const routes: Routes = [
 {
@@ -22,6 +23,7 @@ const routes: Routes = [
 {path: 'profile', component: ProfileComponent},
 {path: 'my-account', component: MyAccountComponent},
 {path: 'coming-soon', component: ComingSoonComponent},
+{path: 'error-page', component: ErrorPageComponent},
 
 ];
 
