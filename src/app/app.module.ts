@@ -60,6 +60,8 @@ import { StoresComponent } from './components/pages/stores/stores.component';
 import { StoreItemComponent } from './components/shared/ui-components/store-item/store-item.component';
 import { ProfileComponent } from './components/shared/ui-components/profile/profile.component';
 import { OrdersComponent } from './components/shared/ui-components/orders/orders.component';
+import { AddressComponent } from './components/shared/ui-components/address/address.component';
+import { AccountDetailsComponent } from './components/shared/ui-components/account-details/account-details.component';
 
 
 @NgModule({
@@ -122,6 +124,8 @@ import { OrdersComponent } from './components/shared/ui-components/orders/orders
     StoreItemComponent,
     ProfileComponent,
     OrdersComponent,
+    AddressComponent,
+    AccountDetailsComponent,
   ],
   imports: [
     BrowserModule,
