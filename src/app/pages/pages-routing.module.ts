@@ -1,3 +1,5 @@
+import { StoreDetailsComponent } from './../shared/ui-components/store-details/store-details.component';
+import { ProductComponent } from './../shared/ui-components/product/product.component';
 import { RecentBrowsedComponent } from './recent-browsed/recent-browsed.component';
 import { MapViewComponent } from './map-view/map-view.component';
 import { MapComponent } from './../shared/ui-components/map/map.component';
