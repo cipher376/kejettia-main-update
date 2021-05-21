@@ -1,0 +1,18 @@
+import { Component, OnInit } from '@angular/core';
+
+
+
+@Component({
+  selector: 'app-categories-menu',
+  templateUrl: './categories-menu.component.html',
+  styleUrls: ['./categories-menu.component.scss']
+})
+export class CategoriesMenuComponent implements OnInit {
+
+  categoryItems = [1, 1, 1, 1, 1, 1, 1, 1];
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
