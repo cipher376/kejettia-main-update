@@ -5,78 +5,21 @@
   <li><a href="demo5-shop.html" class="menu-title">Browse Our Categories</a></li>
 
 
-  <li *ngFor="let item of categoryItems">
-    <a href="demo5-shop.html">
-      <i class="d-icon-t-shirt1" style="
-                                  font-size: 23px;
-                                  margin-left: -1px;
-                                  margin-right: 1rem;
-                              "></i>Travel &amp; Clothing</a>
-    <div class="megamenu">
-      <div class="row">
-        <div class="col-lg-4">
-          <h4 class="menu-title">Women’s Clothing</h4>
-          <ul>
-            <li><a href="demo5-shop.html">Bottoms</a></li>
-            <li><a href="demo5-shop.html">Dresses</a></li>
-            <li><a href="demo5-shop.html">Outwear</a></li>
-            <li><a href="demo5-shop.html">Sleepwear</a></li>
-            <li><a href="demo5-shop.html">Swimwear</a></li>
-            <li><a href="demo5-shop.html">Tops</a></li>
-            <li><a href="demo5-shop.html">Two-Piece Set</a></li>
-            <li><a href="demo5-shop.html">Women's Accessories</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-4">
-          <h4 class="menu-title">Men’s Clothing</h4>
-          <ul>
-            <li><a href="demo5-shop.html">Bottoms</a></li>
-            <li><a href="demo5-shop.html">Men's Accessories</a></li>
-            <li><a href="demo5-shop.html">Outdoors</a></li>
-            <li><a href="demo5-shop.html">Outwear</a></li>
-            <li><a href="demo5-shop.html">Sleepwear</a></li>
-            <li><a href="demo5-shop.html">Swimwear</a></li>
-            <li><a href="demo5-shop.html">Tops</a></li>
-            <li><a href="demo5-shop.html">Underwear</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-4">
-          <div class="menu-banner menu-banner3 banner banner-fixed">
-            <figure>
-              <img src="assets/images/menu/banner-3.jpg" alt="Banner" width="280" height="374" />
-            </figure>
-            <div class="banner-content banner-date">
-              <h6 class=" text-white text-right font-weight-bold text-uppercase lh-1 mb-0">
-                20-22<sup>tm</sup>April</h6>
-            </div>
-            <div class="banner-content x-50 w-100 text-center">
-              <h4
-                class="banner-subtitle bg-primary d-inline-block mb-1 text-white lh-1 ls-normal text-uppercase font-weight-semi-bold">
-                Ultimate Sale</h4>
-              <h3 class="banner-title text-white text-uppercase font-weight-bold lh-1 ls-l mb-0">
-                Up To 70%</h3>
-              <p class="text-white font-weight-normal ls-normal mb-2">
-                Discount Selected Items</p>
-              <a href="demo5-shop.html" class="btn btn-white btn-link btn-underline">Shop Now<i
-                  class="d-icon-arrow-right"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </li>
+
+  <ng-template ngFor let-task [ngForOf]="categories" let-i="index" let-even="even">
+    <app-categories-menu-item></app-categories-menu-item>
+  </ng-template>
 
 
-
-  <li><a href="demo5-shop.html" class="menu-title">Today Coupon Deals</a>
+  <li><a href="javascript:;" class="menu-title">Today Coupon Deals</a>
   </li>
   <li>
-    <a href="demo5-shop.html">
+    <a href="javascript:;">
       <i class="d-icon-card"></i>Backpacks &amp; Fashion bags
     </a>
   </li>
   <li>
-    <a href="demo5-shop.html">
+    <a href="javascript:;">
       <i class="d-icon-card"></i>Daily Deals
     </a>
   </li>

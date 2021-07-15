@@ -1,3 +1,4 @@
+
 import { TaglineWidgetComponent } from './tagline-widget/tagline-widget.component';
 import { StoreItemComponent } from './store-item/store-item.component';
 import { StoreDetailsComponent } from './store-details/store-details.component';
@@ -13,7 +14,7 @@ import { BestSellerItemComponent } from './best-seller-item/best-seller-item.com
 import { BestSellersComponent } from './best-sellers/best-sellers.component';
 import { BlogSectionComponent } from './blog-section/blog-section.component';
 import { BrandsComponent } from './brands/brands.component';
-import { CategoriesMenuItemComponent } from './categories-menu-item/categories-menu-item.component';
+import { CategoriesMenuItemComponent } from './categories-menu/categories-menu-item/categories-menu-item.component';
 import { CategoriesMenuComponent } from './categories-menu/categories-menu.component';
 import { CategoriesSectionComponent } from './categories-section/categories-section.component';
 import { CategoriesComponent } from './categories/categories.component';
@@ -39,6 +40,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SignupBannerComponent } from './signup-banner/signup-banner.component';
 import { StickyFooterComponent } from './sticky-footer/sticky-footer.component';
+import { CategoriesMenuItemSectionComponent } from './categories-menu/categories-menu-item-section/categories-menu-item-section.component';
+import { CategoriesMenuItemSectionBannerComponent } from './categories-menu/categories-menu-item-section-banner/categories-menu-item-section-banner.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 
@@ -82,7 +87,11 @@ import { StickyFooterComponent } from './sticky-footer/sticky-footer.component';
     StoreCarouselComponent,
     StoreDetailsComponent,
     StoreItemComponent,
-    TaglineWidgetComponent
+    TaglineWidgetComponent,
+    CategoriesMenuItemSectionComponent,
+    CategoriesMenuItemSectionBannerComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     CommonModule
@@ -126,7 +135,9 @@ import { StickyFooterComponent } from './sticky-footer/sticky-footer.component';
     StoreCarouselComponent,
     StoreDetailsComponent,
     StoreItemComponent,
-    TaglineWidgetComponent
+    TaglineWidgetComponent,
+    LoginComponent,
+    SignupComponent
   ]
 })
 export class ComponentModule { }

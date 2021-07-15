@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesMenuComponent implements OnInit {
 
-  categoryItems = [1, 1, 1, 1, 1, 1, 1, 1];
+  categories = [1, 1, 1, 1, 1, 1, 1, 1];
   constructor() { }
 
   ngOnInit(): void {

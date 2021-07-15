@@ -11,8 +11,6 @@ import { MyAccountComponent } from './my-account/my-account.component';
 import { FaqComponent } from './faq/faq.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
 import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { MapViewComponent } from './map-view/map-view.component';
@@ -23,6 +21,7 @@ import { StoresComponent } from './stores/stores.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComponentModule } from '../ui-components/component.module';
 import { LayoutComponent } from './layout/layout.component';
+import { AuthComponent } from './auth/auth.component';
 
 
 @NgModule({
@@ -45,15 +44,14 @@ import { LayoutComponent } from './layout/layout.component';
     FaqComponent,
     ForgetPasswordComponent,
     HomeComponent,
-    LoginComponent,
     MapViewComponent,
     MyAccountComponent,
     RecentBrowsedComponent,
     SearchComponent,
-    SignupComponent,
     WishlistComponent,
     StoresComponent,
     LayoutComponent,
+    AuthComponent,
 
   ]
 })
