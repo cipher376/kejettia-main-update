@@ -1,3 +1,4 @@
+import { BrowserModule } from '@angular/platform-browser';
 
 import { TaglineWidgetComponent } from './tagline-widget/tagline-widget.component';
 import { StoreItemComponent } from './store-item/store-item.component';
@@ -25,7 +26,7 @@ import { InstagramComponent } from './instagram/instagram.component';
 import { IntroBannerOneComponent } from './intro-banner-one/intro-banner-one.component';
 import { IntroBannerThreeComponent } from './intro-banner-three/intro-banner-three.component';
 import { IntroBannerTwoComponent } from './intro-banner-two/intro-banner-two.component';
-import { MainCarouelComponent } from './main-carouel/main-carouel.component';
+import { MainCarouselComponent } from './main-carousel/main-carousel.component';
 import { MapComponent } from './map/map.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { NewsletterPopupComponent } from './newsletter-popup/newsletter-popup.component';
@@ -44,6 +45,7 @@ import { CategoriesMenuItemSectionComponent } from './categories-menu/categories
 import { CategoriesMenuItemSectionBannerComponent } from './categories-menu/categories-menu-item-section-banner/categories-menu-item-section-banner.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -69,7 +71,7 @@ import { SignupComponent } from './signup/signup.component';
     IntroBannerOneComponent,
     IntroBannerTwoComponent,
     IntroBannerThreeComponent,
-    MainCarouelComponent,
+    MainCarouselComponent,
     MapComponent,
     MobileMenuComponent,
     NewsletterPopupComponent,
@@ -94,7 +96,8 @@ import { SignupComponent } from './signup/signup.component';
     SignupComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports:[
     AccountDetailsComponent,
@@ -117,7 +120,7 @@ import { SignupComponent } from './signup/signup.component';
     IntroBannerOneComponent,
     IntroBannerTwoComponent,
     IntroBannerThreeComponent,
-    MainCarouelComponent,
+    MainCarouselComponent,
     MapComponent,
     MobileMenuComponent,
     NewsletterPopupComponent,

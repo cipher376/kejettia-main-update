@@ -4,21 +4,21 @@ import { MainComponent } from './pages/main/main.component';
 
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'pages',
+  //   pathMatch: 'full'
+  // },
   {
     canActivate: [],
     path: '',
     children: [
+      // {
+      //  path: 'home',
+      //  loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+      // },
       {
-       path: 'home',
-       loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
-      },
-      {
-        path: 'pages',
+        path: '',
         loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
       }
     ]

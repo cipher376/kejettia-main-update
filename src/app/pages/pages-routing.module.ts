@@ -1,3 +1,4 @@
+import { AuthComponent } from './auth/auth.component';
 import { LayoutComponent } from './layout/layout.component';
 import { RecentBrowsedComponent } from './recent-browsed/recent-browsed.component';
 import { MapViewComponent } from './map-view/map-view.component';
@@ -23,27 +24,34 @@ import { StoresComponent } from './stores/stores.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'pages',
     children: [
-      { path: '', component: LayoutComponent },
-      { path: 'contact', component: ContactComponent },
-      { path: 'stores', component: StoresComponent },
-      { path: 'search', component: SearchComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'my-account', component: MyAccountComponent },
-      { path: 'about', component: AboutUsComponent },
-      { path: 'cart', component: CartComponent },
-      { path: 'checkout', component: CheckoutComponent },
-      { path: 'faq', component: FaqComponent },
-      { path: 'contact', component: ContactComponent },
-      { path: 'wishlist', component: WishlistComponent },
-      { path: 'compare', component: CompareComponent },
-      { path: 'my-account', component: MyAccountComponent },
-      { path: 'error', component: ErrorPageComponent },
-      { path: 'signup', component: SignupComponent },
-      { path: 'search', component: SearchComponent },
-      { path: 'map', component: MapViewComponent },
-      { path: 'recent-browsed', component: RecentBrowsedComponent }
+      {
+        path: '', component: LayoutComponent,
+        children: [
+          { path: 'home', component: HomeComponent },
+          { path: 'auth', component: AuthComponent },
+          { path: 'contact', component: ContactComponent },
+          { path: 'stores', component: StoresComponent },
+          { path: 'search', component: SearchComponent },
+          { path: 'login', component: LoginComponent },
+          { path: 'my-account', component: MyAccountComponent },
+          { path: 'about', component: AboutUsComponent },
+          { path: 'cart', component: CartComponent },
+          { path: 'checkout', component: CheckoutComponent },
+          { path: 'faq', component: FaqComponent },
+          { path: 'contact', component: ContactComponent },
+          { path: 'wishlist', component: WishlistComponent },
+          { path: 'compare', component: CompareComponent },
+          { path: 'my-account', component: MyAccountComponent },
+          { path: 'error', component: ErrorPageComponent },
+          { path: 'signup', component: SignupComponent },
+          { path: 'search', component: SearchComponent },
+          { path: 'map', component: MapViewComponent },
+          { path: 'recent-browsed', component: RecentBrowsedComponent }
+        ]
+      },
+
     ]
   }
 ];
