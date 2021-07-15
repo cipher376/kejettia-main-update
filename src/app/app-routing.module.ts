@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './pages/main/main.component';
-import { RouteGuardService } from './shared/services/route-guard.service';
 
 
 const routes: Routes = [
@@ -11,12 +10,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    canActivate: [RouteGuardService],
+    canActivate: [],
     path: '',
-    component: MainComponent,
     children: [
       {
-
        path: 'home',
        loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
       },

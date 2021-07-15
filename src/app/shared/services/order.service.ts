@@ -1,26 +1,12 @@
-import { StoreService } from 'src/app/components/shared/services/store.service';
+import { HttpClient } from '@angular/common/http';
 import { MY_ACTION, SignalService } from './signal.service';
-import { CartService } from './cart.service';
-import { CartItemApi } from './../store-sdk/services/custom/CartItem';
-import { ProductService } from './product.service';
 import { Injectable } from '@angular/core';
-import { Order, Cart, OrderApi, DeliveryAddressApi, DeliveryAddress, CartItem } from '../store-sdk';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { MyUserApi } from '../identity-sdk';
-import { MatDialog, MatSnackBar } from '@angular/material';
 import { MyLocalStorageService } from './local-storage.service';
-import { ConfirmDiaglogComponent } from '../ui-components/confirm-diaglog/confirm-diaglog.component';
+import { Order, ORDER_STATE } from 'src/app/models';
+import { environment } from 'src/environments/environment';
 
-export enum OrderState {
-  NEW = 0, // Order created
-  PENDING = 1, // Payment paid
-  COMPLETE = 2, // Item shiped or delivered
-  UNKNOWN = 3, // Still processing payment,
-  CANCELLED = 4 // transaction cancelled
-}
-
-export const ORDER_STATE = ['NEW', 'PENDING', 'COMPLETE', 'UNKNOWN', 'CANCELLED'];
 
 
 @Injectable({
@@ -28,69 +14,101 @@ export const ORDER_STATE = ['NEW', 'PENDING', 'COMPLETE', 'UNKNOWN', 'CANCELLED'
 })
 export class OrderService {
   constructor(
-    private orderApi: OrderApi,
-    private _myUserApi: MyUserApi,
-    private _localStore: MyLocalStorageService,
-    private _deliveryAddressApi: DeliveryAddressApi,
-    public snackBar: MatSnackBar,
-    private productService: ProductService,
-    private cartItemApi: CartItemApi,
-    private cartService: CartService,
+    private fstore: MyLocalStorageService,
+    private http: HttpClient,
     private signal: SignalService,
-    public dialog: MatDialog,
-    private storeService: StoreService
-
   ) {
   }
 
-  createUpdateOrder(order: Order) {
+  createUpdateOrder(storeId: any, userId: any, order: Order) {
+    order.storeId = storeId;
+    order.userId = userId;
     if (!this.validateOrder(order)) {
       return;
     }
     // validate order
-    return this.orderApi.patchOrCreate(order).pipe(
-      map((res) => {
-        console.log(res);
-        return res;
-      })
-    );
+    if (order.id) { // perform update
+      return this.http.patch<Order>(environment.store_api_root_url + `/stores/${order.storeId}/orders`, order).pipe(
+        map(res => {
+          // console.log(res);
+          return order as any;
+        }),
+        catchError(e => this.handleError(e))
+      );
+    } else {
+      return this.http.post<Order>(environment.store_api_root_url + `/stores/${order.storeId}/orders`, order).pipe(
+        map(res => {
+          // console.log(res);
+          return res as any;
+        }),
+        catchError(e => this.handleError(e))
+      );
+    }
   }
 
   validateOrder(order: Order) {
-    if (!order.myUserId) {
-      // alert('Invalid order');
+    if (!order.userId && !order.storeId) {
       console.log('Order is invalid', order);
       return false;
     }
     return true;
   }
 
-  getOrdersByUser(myUserId: any = null) {
-    if (!myUserId) {
-      myUserId = this._myUserApi.getCurrentId();
-      // console.log(myUserId)
-    }
+  getOrdersByUser(userId: any) {
     const filter = {
       order: 'id DESC',
       where: {
-        myUserId,
+        userId,
         visibleToUser: true
       },
       include: [
         {
           relation: 'cartItems',
           scope: {
-            include: {
-              relation: 'productItem'
-            }
+            include: [{
+              relation: 'product'
+            }]
           }
         },
         {
           relation: 'store',
           scope: {
-            include: {
+            include: [{
               relation: 'address'
-            }
+            }]
+          }
+        },
+        {
+          relation: 'deliveryAddress'
+        }
+      ]
+    };
+    const url = `${environment.store_api_root_url}/orders/?filter=${JSON.stringify(filter)}`
+    return this.http.get<Order[]>(url).pipe(
+      map((res: Order[]) => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  getOrdersByStore(storeId: any, state?: ORDER_STATE): any {
+    if (!storeId) {
+      return {} as any;
+    }
+    const filter = {
+      order: 'id DESC',
+      where: {
+        storeId,
+        // visibleToUser: true
+      } as any,
+      include: [
+        {
+          relation: 'cartItems',
+          scope: {
+            include: [{
+              relation: 'product'
+            }]
           }
         },
         {
@@ -99,138 +117,171 @@ export class OrderService {
       ]
     };
 
-    return this.orderApi.find(filter).pipe(
+    if (state !== null || state === ORDER_STATE.NEW) {
+      filter.where.state = state;
+    }
+    // console.log(filter);
+    const url = `${environment.store_api_root_url}/orders/?filter=${JSON.stringify(filter)}`
+    return this.http.get<Order[]>(url).pipe(
       map((res: Order[]) => {
-        console.log(res);
-        res = res.filter(order => {
-          return order.visibleToUser;
-        });
         this.saveOrdersLocal(res);
-        console.log(res);
         return res;
-      })
+      }),
+      catchError(e => this.handleError(e))
     );
   }
 
-  getOrdersByStore() {
 
+  getOrders(state?: ORDER_STATE) {
+    const filter = {
+      order: 'id DESC',
+      include: [
+        {
+          relation: 'cartItems',
+          scope: {
+            include: [{
+              relation: 'product'
+            }]
+          }
+        },
+        {
+          relation: 'store',
+          scope: {
+            include: [{
+              relation: 'address'
+            }]
+          }
+        },
+        {
+          relation: 'deliveryAddress'
+        }
+      ]
+    } as any;
+
+    if (state) {
+      filter.where = { state };
+    }
+
+    const url = `${environment.store_api_root_url}/orders/?filter=${JSON.stringify(filter)}`
+    return this.http.get<Order[]>(url).pipe(
+      map((res: Order[]) => {
+        this.saveOrdersLocal(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
   }
+
 
   getOrderById(orderId: any) {
-    return this.orderApi.findById<Order>(orderId).pipe(
+    const url = `${environment.store_api_root_url}/orders/${orderId}`
+    return this.http.get<Order>(url).pipe(
       map((res: Order) => {
-        console.log(res);
         return res;
-      })
+      }),
+      catchError(e => this.handleError(e))
     );
   }
 
 
-  deleteOrderFromUser(order: Order) {
-    const dialogRef = this.dialog.open(ConfirmDiaglogComponent, {
-      width: '250px',
-      data: { msg: 'Do you want to permanently delete this order?' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        order.visibleToUser = false;
-        return this.createUpdateOrder(order).subscribe(_ => {
-          console.log(result);
-          this.signal.sendAction(MY_ACTION.ordersChangedRemote);
-        }
-        );
-      }
-    });
+  deleteOrderFromUser(userId: any, order: Order) {
+    if (userId != order.userId) {
+      console.log('Order does not belongs to user');
+      return;
+    }
+    if(!order?.storeId){
+      console.log('Order object is invalid');
+      return;
+    }
+    order.visibleToUser = false;
+    return this.createUpdateOrder(order.storeId,userId,order);
   }
 
-  async cancelOrder(order: Order) {
-    // show dialog
-    const dialogRef = this.dialog.open(ConfirmDiaglogComponent, {
-      width: '250px',
-      data: { msg: 'Do you want to permanently delete this order?' }
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      if (result) {
-        console.log(result);
-        order.visibleToUser = false;
-        if (order.state !== OrderState.COMPLETE && order.state !== OrderState.PENDING) {
-          order.state = OrderState.CANCELLED;
-        }
-        return this.createUpdateOrder(order).subscribe(_ => {
-          this.signal.sendAction(MY_ACTION.ordersChangedRemote);
-        });
-      }
-    });
 
-  }
+  // async cancelOrder(order: Order) {
+  //   // show dialog
+  //   const dialogRef = this.dialog.open(ConfirmDiaglogComponent, {
+  //     width: '250px',
+  //     data: { msg: 'Do you want to permanently delete this order?' }
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(result);
+  //     if (result) {
+  //       console.log(result);
+  //       order.visibleToUser = false;
+  //       order.state = OrderState.CANCELLED;
+  //       return this.createUpdateOrder(order).subscribe(_ => {
+  //         this.signal.sendAction(MY_ACTION.ordersChangedRemote);
+  //       });
+  //     }
+  //   });
+
+  // }
 
   saveOrdersLocal(orders: Order[]) {
-    this._localStore.setObject('orders', orders).then(_ => _);
+    this.fstore.setObject('orders', orders).then(_ => _);
     this.signal.sendAction(MY_ACTION.ordersLoaded);
   }
 
   async getOrdersLocal(): Promise<Order[]> {
-    return await this._localStore.getObject('orders');
+    return await this.fstore.getObject('orders');
 
   }
 
   async getSelectedOrderLocal(): Promise<Order> {
-    return await this._localStore.getObject('selected_order');
+    return await this.fstore.getObject('selected_order');
   }
 
   async setSelectedOrderLocal(order: Order) {
-    this._localStore.setObject('selected_order', order).then(_ => _);
+    this.fstore.setObject('selected_order', order).then(_ => _);
   }
 
-  async moveCartItemToOrder(item: CartItem) {
-    let message, status;
-    const myUserId = this._myUserApi.getCurrentId();
-    const storeId = await this.storeService.getStoreIdLocal();
-    if (!myUserId || !storeId) {
-      console.log('No user or store specified');
-      return;
-    }
-    if (!item.orderId) {
-      message = 'Item cannot be purchased. It might be out of stock.';
-      status = 'failed';
-      this.snackBar.open(message, '×', {
-        panelClass: [status],
-        verticalPosition: 'top', duration: 3000
-      });
-      throwError('Some items are invalid');
-      return;
-    }
-    // move from cartitem
-    item.cartId = '';
-
-
-    // Check if product is in stock
-    const productsInStock = await this.productService.countProductInStock(item.productItemId);
-    if (item.quantity >= productsInStock) {
-      // out of stock
-      message = 'Some items are out of stock. Order will be cancelled!';
-      status = 'failed';
-      this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 3000 });
-      throwError('Some items are invalid');
-      return;
-    }
-    return this.cartItemApi.patchOrCreate(item).pipe(
-      map((res: CartItem) => {
-        console.log(res);
-        if (res) {
-          // message = 'Item in cart updated!';
-          // status = 'Success';
-          // this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 3000 });
-
-          // reload cart remote
-          this.cartService.getCart(storeId, myUserId).subscribe(_ => _);
-        }
-        return res;
-      }), catchError((e) => this.handleError(e)));
+  async clearOrdersLocal() {
+    this.fstore.remove('orders');
   }
+
+  // async moveCartItemToOrder(item: CartItem) {
+  //   let message, status;
+  //   if (!item.orderId) {
+  //     message = 'Item cannot be purchased. It might be out of stock.';
+  //     status = 'failed';
+  //     this.snackBar.open(message, '×', {
+  //       panelClass: [status],
+  //       verticalPosition: 'top', duration: 3000
+  //     });
+  //     throwError('Some items are invalid');
+  //     return;
+  //   }
+  //   // move from cartitem
+  //   item.cartId = '';
+
+
+  //   // Check if product is in stock
+  //   const productsInStock = await this.productService.countProductInStock(item.productItemId);
+  //   if (item.quantity >= productsInStock) {
+  //     // out of stock
+  //     message = 'Some items are out of stock. Order will be cancelled!';
+  //     status = 'failed';
+  //     this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 3000 });
+  //     throwError('Some items are invalid');
+  //     return;
+  //   }
+  //   return this.cartItemApi.patchOrCreate(item).pipe(
+  //     map((res: CartItem) => {
+  //       console.log(res);
+  //       if (res) {
+  //         // message = 'Item in cart updated!';
+  //         // status = 'Success';
+  //         // this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 3000 });
+
+  //         // reload cart remote
+  //         this.cartService.getCart().subscribe(_ => _);
+  //       }
+  //       return res;
+  //     }), catchError((e) => this.handleError(e)));
+  // }
 
 
   // saveDeliveryInfo(info: DeliveryAddress) {
@@ -262,6 +313,6 @@ export class OrderService {
       );
     }
     // return an observable with a user-facing error message
-    return throwError('System error, please report to: antiamoah890@gmail.com');
+    return throwError('System error, please report to: admin@kejettia.com');
   }
 }

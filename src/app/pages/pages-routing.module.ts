@@ -1,8 +1,6 @@
-import { StoreDetailsComponent } from './../shared/ui-components/store-details/store-details.component';
-import { ProductComponent } from './../shared/ui-components/product/product.component';
+import { LayoutComponent } from './layout/layout.component';
 import { RecentBrowsedComponent } from './recent-browsed/recent-browsed.component';
 import { MapViewComponent } from './map-view/map-view.component';
-import { MapComponent } from './../shared/ui-components/map/map.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CartComponent } from './cart/cart.component';
@@ -18,7 +16,6 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
-import { AuthGuardService } from '../shared/services/auth-guard.service';
 import { StoresComponent } from './stores/stores.component';
 
 
@@ -28,14 +25,12 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', component: HomeComponent },
-      { path: 'home', component: HomeComponent },
+      { path: '', component: LayoutComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'stores', component: StoresComponent },
       { path: 'search', component: SearchComponent },
       { path: 'login', component: LoginComponent },
       { path: 'my-account', component: MyAccountComponent },
-      { path: '', component: HomeComponent },
       { path: 'about', component: AboutUsComponent },
       { path: 'cart', component: CartComponent },
       { path: 'checkout', component: CheckoutComponent },

@@ -1,3 +1,4 @@
+import { Urls } from './../../config';
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -6,7 +7,7 @@ import { filter } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class RoutingStateService {
-  private history = [];
+  private history: any = [];
 
   constructor(
     private router: Router
@@ -15,8 +16,8 @@ export class RoutingStateService {
   public loadRouting(): void {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(({ urlAfterRedirects }: NavigationEnd) => {
-        this.history = [...this.history, urlAfterRedirects];
+      .subscribe((urlAfterRedirects: any) => {
+        this.history = [...this.history, { urlAfterRedirects }];
       });
   }
 
@@ -25,7 +26,7 @@ export class RoutingStateService {
   }
 
   public getPreviousUrl(): string {
-    return this.history[this.history.length - 2] || '/dashboard';
+    return this.history[this.history.length - 2] || Urls.home;
   }
 
 }

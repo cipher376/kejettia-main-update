@@ -1,170 +1,196 @@
-import { CartService } from './cart.service';
+import { Urls } from './../../config';
+import { environment } from './../../../environments/environment';
+import { UserService } from 'src/app/shared/services';
+import { Credentials } from './../../models/user';
 import { Injectable, Inject } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs/internal/observable/throwError';
 // import { DateTime } from 'ionic-angular';
-import { SDKToken, LoopBackAuth as IdentityLoopBackAuth, MyUserApi as IdentityApi, MyUser } from '../identity-sdk';
 import { Subject, Observable } from 'rxjs';
-import { LoopBackAuth as StoreLoopBackAuth } from '../store-sdk/services';
-import { UserService } from './user.service';
+import { Router } from '@angular/router';
+import { User, Photo, UserConfig, Token, Address, MyDevice } from 'src/app/models';
+import { MyLocalStorageService, UtilityService } from '.';
+import { PageInfo } from 'src/app/models/page';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MyAuthService {
-  _httpOptions;
 
-  private _authenticationStateSource = new Subject<boolean>();
-  authenticationState$ = this._authenticationStateSource.asObservable();
 
-  constructor(private userIdentity: IdentityApi,
+  token?: Token;
+  redirectUrl = Urls.home;
+
+  constructor(
     private http: HttpClient,
-    @Inject(IdentityLoopBackAuth) protected identityAuth: IdentityLoopBackAuth,
-    @Inject(StoreLoopBackAuth) protected storeAuth: StoreLoopBackAuth,
+    private store: MyLocalStorageService,
     private userService: UserService,
-    private cartService: CartService
-  ) {
-    this._httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: ''
-      })
-    };
+    private router: Router) {
+    this.token = this.getToken();
   }
 
-  private authenticationState(state: boolean) {
-    this._authenticationStateSource.next(state);
-  }
 
-  register(data: MyUser): Observable<any> {
-    return this.userIdentity.create(data, this._httpOptions).pipe(
-      map(res => {
-        console.log(res);
-        return res;
-      }),
-      catchError(e => this.handleError(e))
-    );
-  }
+  // static getUserIdentityPhoto(user: User) {
+  //   // console.log(user?.photos);
+  //   const photo: IdentityPhoto = {} as any;
+  //   user?.photos?.forEach(ph => {
+  //     if (ph.profile) {
+  //       ph.fileUrl = DOWNLOAD_CONTAINER + ph.fileName ?? USER_DEFAULT_PHOTO_URL;
+  //       ph.thumbnailUrl = DOWNLOAD_CONTAINER + 'thumb_' + ph.fileName ?? USER_DEFAULT_PHOTO_URL;
+  //       photo.profile = ph;
+  //     }
+  //     if (ph.coverImage) {
+  //       ph.fileUrl = DOWNLOAD_CONTAINER + ph.fileName ?? USER_DEFAULT_COVER_URL;
+  //       photo.cover = ph;
+  //     }
+  //   });
 
-  login(data: MyUser): Observable<MyUser> {
-    return this.userIdentity.login(data, this._httpOptions).pipe(
-      map(res => {
-        // console.log(res);
-        // set store auth token
-        this.storeAuth.setToken(this.identityAuth.getToken());
-        return res;
-      }),
-      catchError(e => this.handleError(e))
-    );
-  }
+  //   if (!photo.profile && !photo?.cover) {
+  //     photo.profile = new Photo();
+  //     photo.profile.fileUrl = USER_DEFAULT_PHOTO_URL;
+  //     photo.profile.thumbnailUrl = USER_DEFAULT_PHOTO_URL;
 
-  // completeFBAuthentication(token: string, ttl: number = null) {
-  //   const requestUrl = environment.fb_auth_success_url + token;
-  //   return this.http.get(requestUrl)
-  //     .pipe(
-  //       map((res: FameIdentity) => {
-  //         console.log(res);
-  //         if (res && res.id) {
-  //           const sdkToken = new SDKToken({
-  //             id: token,
-  //             ttl: ttl,
-  //             // "scopes"?: ["string"];
-  //             created: new Date(res.dateCreated),
-  //             userId: res.id.toString(),
-  //             user: res.email
-  //           });
-  //           this.auth.setToken(sdkToken);
-  //         }
-  //         return res;
-  //       }),
-  //       catchError(e => this.handleError(e))
-  //     );
+  //     photo.cover = new Photo();
+  //     photo.cover.fileUrl = '';
+  //     photo.cover.thumbnailUrl = '';
+  //   }
+
+  //   return photo;
   // }
 
-  setSocialSDKToken(token: string, userId: string, created = new Date(), ttl = Date.now()) {
-    const sdkToken = new SDKToken({
-      id: token, // access jwt token
-      ttl: ttl,
-      // "scopes"?: ["string"];
-      created: new Date(),
-      userId: userId, // the row position in a table
-      // user: res.email
-    });
-    this.identityAuth.setToken(sdkToken);
-    this.storeAuth.setToken(sdkToken);
+  // static getUserProfilePhotoUrl(identityPhoto: IdentityPhoto) {
+  //   return identityPhoto?.profile?.thumbnailUrl || USER_DEFAULT_PHOTO_URL;
+  // }
+
+  // static getUserCoverPhotoUrl(identityPhoto: IdentityPhoto) {
+  //   return identityPhoto?.cover?.thumbnailUrl || USER_DEFAULT_COVER_URL;
+  // }
+
+  static checkOwnerShip(user1: User, user2: User) {
+    console.log(user1)
+    console.log(user2)
+    if (!user1?.id || !user2?.id || (user1?.id !== user2?.id)) {
+      console.log('not owner');
+      return false;
+    } else {
+      console.log('is owner');
+      return true;
+    }
   }
 
-  getUserAccessToken(currentToken: string, userId: string) {
-    this._httpOptions.headers.Authorization = currentToken;
-    // .0
-    return this.userIdentity.getAccessTokens(userId, {}, this._httpOptions).pipe(
+  signUp(user: Credentials) {
+    return this.http.post<User>(environment.identity_api_root_url + '/users/signup', user).pipe(
       map(res => {
-        console.log(res);
+        // console.log(res);
         return res;
       }),
       catchError(e => this.handleError(e))
     );
   }
 
-
-
+  login(data: Credential) {
+    console.log(environment.identity_api_root_url)
+    return this.http.post<{ token: string, user: User }>(environment.identity_api_root_url + '/users/login', data).pipe(
+      map((res) => {
+        this.token = { token: res.token } as any;
+        if (this.token?.token) {
+          this.saveToken(this.token);
+          this.userService.setLoggedUserLocal(res.user);
+          // load user roles
+          // this.adminService.getUserRoles(res.user?.id).subscribe((roles: string[]) => {
+          //   console.log(roles);
+          //   this.userService.setLoggedUserRolesLocal(roles);
+          //   this.adminService.setHomeUrl();
+          //   this.redirectUrl = Urls.home;
+          //   this.router.navigateByUrl(this.redirectUrl);
+          // });
+        }
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
 
   logout() {
-    this.storeAuth.setToken(new SDKToken());
-    this.userService.clearUserLocal();
-    this.cartService.clearCartLocal();
-    return this.userIdentity.logout();
+    this.deleteToken(); // delete jwt auth token
+    this.userService.deleteLoggedUserLocal(); // clear user details
+    this.router.navigateByUrl('/login');
   }
 
-  // Requesting for password reset by email
+  getToken(): Token {
+    return this.store.getObjectSync('token');
+  }
+
+  saveToken(token: Token) {
+    /** Save the authentication token **/
+    this.store.setObject('token', token);
+    this.token = token;
+  }
+
+  deleteToken() {
+    this.store.remove('token');
+  }
+
+  isAuthenticated() {
+    if (this.token) {
+      return true;
+    }
+    return false;
+  }
   RequestResetLink(email: string) {
-    return this.userIdentity.resetPassword({ email: email }).pipe(
-      map(res => {
-        return res;
-      }),
-      catchError(e => this.handleError(e))
-    );
+    // return this.userIdentity.resetPassword({ email: email }).pipe(
+    //   map(res => {
+    //     return res;
+    //   }),
+    //   catchError(e => this.handleError(e))
+    // );
   }
 
 
   requestVerificationLink(email: string) {
-    return this.userIdentity.verifyEmail(email).pipe(
-      map(res => {
-        return res;
-      }),
-      catchError(e => this.handleError(e))
-    );
-  }
-  isAuthenticated() {
-    const state = this.userIdentity.isAuthenticated();
-    console.log('Autentication ' + state);
-    this.authenticationState(state); // broadcast state;
-    return state;
+    // return this.userIdentity.verifyEmail(email).pipe(
+    //   map(res => {
+    //     return res;
+    //   }),
+    //   catchError(e => this.handleError(e))
+    // );
   }
 
-  private handleError(error) {
-    // alert(JSON.stringify(error));
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
+
+  /**************************************/
+  /************Lock screen***************/
+  /**************************************/
+  lockScreen() {
+    // generate the number
+    const max = 1000, min = 100;
+    const code = Math.floor(Math.random() * (max - min) + min);
+    this.store.set('lock_code', code);
+    return code;
+  }
+
+  async unlockScreen(code: number): Promise<boolean> {
+    const stored_code: number = await this.store.get('lock_code');
+    if (stored_code === code) {
+      await this.store.remove('lock_code');
+      return true;
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(error);
+      return false;
     }
-    // return an observable with a user-facing error message
-    // return an observable with a user-facing error message
-    if (error && error.message && error.message.search('Email already exists') > -1) {
-      return throwError('Email is already in use!');
-    } else if (error && error.message && error.message.search('verified') > -1) {
-      return throwError('Email is not verified. Please verify from the in-box of the email provided!');
-    } else if (error.toString().search('< in JSON at position 0') > -1) {
-      return throwError('Email is not verified. Please verify from the in-box of the email provided!');
-    } else if (error && error.message && error.message.search('not found') > -1) {
-      return throwError('Email is not registered with Fame');
-    } else {
-      return throwError('System error, please report to: antiamoah890@gmail.com');
+  }
+
+  async isScreenLocked() {
+    const stored_code: number = await this.store.get('lock_code');
+    if (stored_code) {
+      return true;
     }
+    return false;
+  }
+
+
+
+  private handleError(e: any): any {
+    // console.log(e);
+    return throwError(UtilityService.myHttpErrorFormat(e, 'user'));
   }
 }

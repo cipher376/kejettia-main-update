@@ -1,13 +1,10 @@
-import { SharedModule } from './shared/shared.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SDKBrowserModule as identitySDKBrowserModule } from './shared/identity-sdk';
-import { SDKBrowserModule as StoreSDKBrowserModule } from './shared/store-sdk';
-import { SDKBrowserModule as companySDKBrowserModule } from './shared/company-sdk';
 import { AngularWebStorageModule } from 'angular-web-storage';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -18,10 +15,11 @@ import { AngularWebStorageModule } from 'angular-web-storage';
     BrowserModule,
     AppRoutingModule,
     AngularWebStorageModule,
-    identitySDKBrowserModule.forRoot(),
-    StoreSDKBrowserModule.forRoot(),
-    companySDKBrowserModule.forRoot(),
-    SharedModule
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,43 +1,10 @@
-import { CompanyView } from './company.service';
-import { StoreView } from './store.service';
+import { MyFile as File } from './../../models/file';
+import { LatLng } from './../../models/LatLng';
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from 'angular-web-storage';
 import { MyLocalStorageService } from './local-storage.service';
-import { LoopBackConfig as IdentityLoopBackConfig } from '../identity-sdk';
-import { LoopBackConfig as StoreLoopBackConfig, Photo } from '../store-sdk';
-import { GeolocationService } from './geolocation.service';
-import { Currency } from './cart.service';
-import { MY_ACTION, SignalService } from './signal.service';
-import { SearchObject } from '../models/search';
-
-export const IDENTITY_CONTAINER_ROOT = IdentityLoopBackConfig.getPath() +
-  '/' +
-  IdentityLoopBackConfig.getApiVersion() +
-  '/containers/';
-export const STORE_CONTAINER_ROOT = StoreLoopBackConfig.getPath() +
-  '/' +
-  StoreLoopBackConfig.getApiVersion() +
-  '/containers/';
-
-export interface Country {
-  name: string;
-  states: string[];
-}
+import { Country } from 'src/app/models';
 
 
-export enum PHOTO_TYPE {
-  Cover = 1,
-  Front = 2,
-  Back = 3,
-  Other = 4,
-  ProjectCover = 5,
-  CertificateOrAward = 6,
-  Signature = 7,
-  Service = 8,
-  profile = 9,
-  logo = 10,
-  small = 11,
-}
 
 @Injectable({
   providedIn: 'root'
@@ -46,13 +13,19 @@ export class UtilityService {
 
   constructor(
     private localStore: MyLocalStorageService,
-    private geoLocation: GeolocationService,
-    private signalService: SignalService
   ) { }
+
+
+
+  static generateAccountNumber() {
+    return Math.random().toString().slice(2, 11);
+  }
+
   static generateRandomNumber() {
     return Math.random().toString().slice(2, 6);
 
   }
+
 
   static destroySubscription(subscription$: any) {
 
@@ -71,92 +44,56 @@ export class UtilityService {
     }
   }
 
-  async getViewedItems() {
-    return await this.localStore.getObject('viewed_items');
-  }
 
-  async saveViewItems(items: (StoreView | CompanyView)[]) {
-    await this.localStore.setObject('viewed_items', items);
-    this.signalService.sendAction(MY_ACTION.recently_viewed_items_change);
-  }
-
-  async addToViewedItems(item: StoreView | CompanyView) {
-    let items = (await this.getViewedItems()) || [];
-    items.push(item);
-    const tems = [];
-    items.forEach(item => {
-      if ((!tems.includes(item)) && tems.indexOf(item) < 0) {
-        tems.push(item);
-      }
-    });
-    items = tems;
-    if (items.length > 20) {
-      items = items.slice(items.length - 20, items.length);
-    }
-    await this.saveViewItems(items);
-  }
-
-
-
-  async getCurrentCountry() {
-    return await this.geoLocation.getUserCountryLocal();
-  }
-
-
-  countryToCurrency(country: string): Currency {
-    switch ((country || '').toLowerCase()) {
-      case 'ghana':
-        return {
-          code: 'GHS',
-          sign: ' GH₵'
-        }
-      case 'nigeria':
-        return {
-          code: 'NGN',
-          sign: '₦'
-        }
-      default:
-        return {
-          code: 'GHS',
-          sign: ' GH₵'
-        }
+  // String 1 constains string2 return true else false
+  // last argument (i) is case sensitivity
+  static stringContains(str1: string, str2: string, sensitivity: boolean = true) {
+    if (sensitivity) {
+      return (str1.indexOf(str2) >= 0); // boy != Boy
+    } else {
+      return str1.toLowerCase().indexOf(str2.toLowerCase()) >= 0; // boy == Boy
     }
   }
 
-
-
-  async getCurrency() {
-    return this.countryToCurrency(await this.getCurrentCountry());
+  static supportedImageFiles() {
+    return 'image/png,image/gif,image/jpeg,image/bmp,image/x-icon,image/vnd.dwg, image/tiff, 	image/webp, image/x-tiff, 	image/vnd.microsoft.icon';
+  }
+  static supportedAudioFiles() {
+    return 'audio/mp3,audio/mp2,audio/aac,audio/mpeg,audio/ogg,audio/3gpp,audio/mpeg3,audio/wav,audio/x-wav, audio/x-aiff, audio/aiff, audio/xm,audio/x-voc,audio/voxware,audio/midi,audio/basic,audio/x-mod,audio/mod,audio/x-gsm,audio/x-au';
+  }
+  static supportedVideoFiles() {
+    return 'video/x-matroska,video/webm,video/flv,video/mkv,video/mp4,video/avi,video/3gpp,video/ogg,video/3gpp2,audio/3gpp2,video/msvideo,video/x-mpeq2a, video/mpeg,video/quicktime,video/vosaic,video/x-msvideo';
+  }
+  static supportedDocumentFiles() {
+    return 'text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation, text/x-c,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/epub+zip, text/css,application/xml, text/xml, text/html,application/pdf,application/x-rtf,application/rtf, text/x-script.phyton, text/richtext, text/vnd.rn-realtext,application/msword,application/wordperfect,application/x-lotus,application/excel,application/x-excel,application/x-msexcel,application/vnd.ms-excel';
+  }
+  static supportedOtherFiles() {
+    return 'multipart/x-gzip,application/x-compressed,application/zip,application/vnd.rar, application/x-7z-compressed, application/octet-stream';
   }
 
-  isNew(startDate: Date) {
-    return this.calcDatesDiffInDays(startDate) < 30 ? true : false;
+  static isImage(file: File) {
+    return UtilityService.stringContains(UtilityService.supportedImageFiles(), file?.mimeType ?? '');
+  }
+  static isAudio(file: File) {
+    return UtilityService.stringContains(UtilityService.supportedAudioFiles(), file?.mimeType ?? '');
+  }
+  static isVideo(file: File) {
+    return UtilityService.stringContains(UtilityService.supportedVideoFiles(), file?.mimeType ?? '');
+  }
+  static isDocument(file: File) {
+    return UtilityService.stringContains(UtilityService.supportedDocumentFiles(), file?.mimeType ?? '');
   }
 
-  isSales(count: number) {
-    return count > 5 ? true : false;
-  }
 
 
-  sortSearchObjects(data: SearchObject[]) {
-    return data.sort((a, b) => {
-      if (a.score > b.score) {
-        return 1;
-      } else if (a.score < b.score) {
-        return -1;
-      } else {
-        return 0;
-      }
-    })
+  static generateUniqueFileName(fileName: string): string {
+    const tem = fileName.split('.');
+    const ext = tem[tem.length - 1]
+    return  Math.random().toString(16).substr(2, 8) + new Date().getMilliseconds() + '_' + new Date().getSeconds() + '_'
+      + new Date().getMinutes() + '_' + new Date().getHours() + '_' +
+      new Date().getDay() + '_' + new Date().getMonth() + '_' +
+      new Date().getFullYear() + '.' + ext;
   }
-
-  async setSearchTermLocal(term: string) {
-    await this.localStore.set('searchKey', term).then(_ => _);
-  }
-  async getSearchTermLocal() {
-    return await this.localStore.get('searchKey');
-  }
-
 
   /************Format date for form rebind**********/
   formatDateFormRebind(date: Date) {
@@ -166,7 +103,7 @@ export class UtilityService {
       const day = ('' + date.getDay()).length == 1 ? '0' + date.getDay() : date.getDay()
       return '' + date.getFullYear() + '-' + month + '-' + day;
     }
-    return '';
+    return undefined;
   }
 
 
@@ -198,7 +135,7 @@ export class UtilityService {
   }
 
   /****** Search for object from and array and geit its index****/
-  searchObjFromArrray(id: any, objs: any[]) {
+  static searchObjFromArrray(id: any, objs: any[]) {
     if (!id || !objs || objs.length < 1) {
       console.log('invalid args');
       return undefined;
@@ -213,16 +150,20 @@ export class UtilityService {
     return undefined;
   }
 
-  countryToGmap(country: string) {
-    switch (country.toLowerCase()) {
-      case 'ghana':
-        return { lat: 6.6716423, lng: -2.8063946 };
-      case 'nigeria':
-        return { lat: 9.1750921, lng: 6.6924077 };
-      default:
-        return {};
-    }
+
+  getStoreCountries(): Country[] {
+    return [
+      {
+        "name": "Ghana",
+        "states": ["Ashanti", "Brong-Ahafo", "Central", "Eastern", "Greater Accra", "Northern", "Upper East", "Upper West", "Volta", "Western"]
+      },
+      {
+        "name": "Nigeria",
+        "states": ["Abia", "Abuja Federal Capital", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nassarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"]
+      }
+    ]
   }
+
   /***************Get observable of countries Json array*********************/
   getAllCountries(): Country[] {
     return [
@@ -1094,90 +1035,62 @@ export class UtilityService {
 
 
 
-  // Calculate and return difference between two date objects in days
-  calcDatesDiffInDays(startDate: Date, endDate: Date = new Date(Date.now())) {
-    endDate = new Date(endDate);
-    startDate = new Date(startDate);
-    const diff = Math.abs(startDate.getTime() - endDate.getTime());
-    return (diff / (1000 * 3600 * 24));
+  getCurrency() {
+    return this.countryToCurrency(this.getCurrentCountry())
   }
 
+  getCurrentCountry() {
+    return 'Ghana'
+  }
 
-  // rate based on number differences
-  rate(numToRate: number, min: number, max: number) {
-    const star = (max - min) / 5; // 5 is the number of stars
-    if (numToRate <= min + star) {
-      return 1; // 1 star
-    } else if (numToRate <= min + (2 * star)) {
-      return 2; // 1 star
-    } else if (numToRate <= min + (3 * star)) {
-      return 3; // 1 star
-    } else if (numToRate <= min + (4 * star)) {
-      return 4; // 1 star
-    } else if (numToRate > min + (4 * star)) {
-      return 5; // 1 star
-    } else {
-      return 0;
+  countryToCurrency(country: string) {
+    switch (country.toLowerCase()) {
+      case 'ghana':
+        return 'GHS'
+      case 'nigeria':
+        return 'N'
+      default:
+        return 'GHS'
     }
   }
 
+  getLatLngArray(latLngString: string = ''): LatLng {
+    const temp = latLngString.split(',');
+    const latLng = <LatLng>{};
+    latLng.lat = parseFloat(temp.length > 0 ? temp[0] : '');
+    latLng.lng = parseFloat(temp.length > 1 ? temp[1] : '');
 
-
-  getFrontPhoto(photos: Photo[]) {
-    for (const photo of (photos || [])) {
-      if (photo.type === PHOTO_TYPE.Front) {
-        return photo.url;
-      }
-    }
-    return '';
-
-  }
-  getThumbnailPhoto(photos: Photo[]) {
-    for (const photo of (photos || [])) {
-      if (photo.type === PHOTO_TYPE.small) {
-        return photo.url;
-      }
-    }
-    return '';
-
-  }
-  getBackPhoto(photos: Photo[]) {
-    for (const photo of (photos || [])) {
-      if (photo.type === PHOTO_TYPE.Back) {
-        return photo.url;
-      }
-    }
-    return '';
-
+    return latLng;
   }
 
-  getCoverPhoto(photos: Photo[]) {
-    for (const photo of (photos || [])) {
-      if (photo.type === PHOTO_TYPE.Cover) {
-        return photo.url;
-      }
+  static myHttpErrorFormat(e: { error: any; status: number; }, entityName = ''): { title: string, message: string } {
+    console.log(e);
+    let msg = {} as { title: string, message: string };
+    let statusCode = 0;
+    console.log(e.error);
+    if (e && e.error) {
+      statusCode = e.status;
     }
-    return '';
-
-  }
-  getAnyPhoto(photos: Photo[]) {
-    for (const photo of (photos || [])) {
-      return photo.url;
-
+    switch (statusCode) {
+      case 0:
+        msg.title = 'No connection';
+        msg.message = 'Check your internet connection and try again';
+        break;
+      case 422:
+        msg.title = `Invalid ${entityName} data`;
+        msg.message = 'Check all required fields';
+        break;
     }
-    return '';
-
-  }
-
-  getLogo(photos: Photo[]) {
-    for (const photo of (photos || [])) {
-      if (photo.type === PHOTO_TYPE.logo) {
-        return photo.url;
-      }
-    }
-    return '';
+    return msg;
   }
 
 
+  getSearchKey(): string {
+    return this.localStore.getSync('searchKey');
+  }
+
+  setSearchKey(key: string) {
+    this.localStore.setSync('searchKey', key);
+  }
 
 }
