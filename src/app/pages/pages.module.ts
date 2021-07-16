@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartComponent } from './cart/cart.component';
@@ -16,7 +17,6 @@ import { HomeComponent } from './home/home.component';
 import { MapViewComponent } from './map-view/map-view.component';
 import { RecentBrowsedComponent } from './recent-browsed/recent-browsed.component';
 import { MainComponent } from './main/main.component';
-import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { StoresComponent } from './stores/stores.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComponentModule } from '../ui-components/component.module';
@@ -31,7 +31,8 @@ import { AuthComponent } from './auth/auth.component';
     ReactiveFormsModule,
     PagesRoutingModule,
     NgxPaginationModule,
-    ComponentModule
+    ComponentModule,
+    HttpClientModule
   ],
   declarations: [
     MainComponent,
@@ -42,7 +43,6 @@ import { AuthComponent } from './auth/auth.component';
     ContactComponent,
     ErrorPageComponent,
     FaqComponent,
-    ForgetPasswordComponent,
     HomeComponent,
     MapViewComponent,
     MyAccountComponent,

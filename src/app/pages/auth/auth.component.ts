@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
 
-  constructor() { }
+  //UI
+  page = 'login'; // login, register, forgot
+  constructor(
+    private route: ActivatedRoute
+  ) {
+    this.page = this.route.snapshot.paramMap.get('page');
+    this.route.params.subscribe(params=>{
+      console.log(params)
+      this.page = params.page;
+    })
+   }
 
   ngOnInit(): void {
   }
+
+
+  //UI
+
 
 }

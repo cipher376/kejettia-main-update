@@ -97,14 +97,6 @@ export class MyAuthService {
         if (this.token?.token) {
           this.saveToken(this.token);
           this.userService.setLoggedUserLocal(res.user);
-          // load user roles
-          // this.adminService.getUserRoles(res.user?.id).subscribe((roles: string[]) => {
-          //   console.log(roles);
-          //   this.userService.setLoggedUserRolesLocal(roles);
-          //   this.adminService.setHomeUrl();
-          //   this.redirectUrl = Urls.home;
-          //   this.router.navigateByUrl(this.redirectUrl);
-          // });
         }
         return res;
       }),
@@ -115,7 +107,8 @@ export class MyAuthService {
   logout() {
     this.deleteToken(); // delete jwt auth token
     this.userService.deleteLoggedUserLocal(); // clear user details
-    this.router.navigateByUrl('/login');
+    window.location.href = window.location.protocol + '//' + window.location.host + Urls.home;
+
   }
 
   getToken(): Token {
