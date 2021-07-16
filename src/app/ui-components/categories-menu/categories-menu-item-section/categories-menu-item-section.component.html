@@ -1,11 +1,6 @@
-<h4 class="menu-title">Women’s Clothing</h4>
+<h4 class="menu-title">{{ProductCategory?.name}}</h4>
 <ul>
-  <li><a href="demo5-shop.html">Bottoms</a></li>
-  <li><a href="demo5-shop.html">Dresses</a></li>
-  <li><a href="demo5-shop.html">Outwear</a></li>
-  <li><a href="demo5-shop.html">Sleepwear</a></li>
-  <li><a href="demo5-shop.html">Swimwear</a></li>
-  <li><a href="demo5-shop.html">Tops</a></li>
-  <li><a href="demo5-shop.html">Two-Piece Set</a></li>
-  <li><a href="demo5-shop.html">Women's Accessories</a></li>
+  <li><a href="javascript:;"
+    *ngFor="let item of ProductCategory?.productCategoryItems">{{item?.name}}</a></li>
+
 </ul>

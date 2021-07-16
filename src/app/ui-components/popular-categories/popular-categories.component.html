@@ -23,45 +23,8 @@
             }
         }">
 
-            <div class="category category-default1 category-absolute banner-radius overlay-zoom">
-                <a href="demo5-shop.html">
-                    <figure class="category-media" style="background-color: #edd3c7;">
-                        <img src="assets/images/demos/demo5/categories/1.jpg" alt="category" width="280"
-                            height="280" />
-                    </figure>
-                </a>
-                <div class="category-content">
-                    <h4 class="category-name ls-l"><a href="demo5-shop.html">Backpacks &amp; Fashion Bags</a>
-                    </h4>
-                </div>
-            </div>
+            <app-popular-categories-item *ngFor="let cat of productCategories" [ProductCategory]="cat"></app-popular-categories-item>
 
-            <div class="category category-default1 category-absolute banner-radius overlay-zoom">
-                <a href="demo5-shop.html">
-                    <figure class="category-media" style="background-color: #090909;">
-                        <img src="assets/images/demos/demo5/categories/2.jpg" alt="category" width="280"
-                            height="280" />
-                    </figure>
-                </a>
-                <div class="category-content">
-                    <h4 class="category-name ls-l"><a href="demo5-shop.html">Travel &amp; Clothing</a></h4>
-                </div>
-            </div>
-
-            <div class="category category-default1 category-absolute banner-radius overlay-zoom">
-                <a href="demo5-shop.html">
-                    <figure class="category-media" style="background-color: #fcd772;">
-                        <img src="assets/images/demos/demo5/categories/3.jpg" alt="category" width="280"
-                            height="280" />
-                    </figure>
-                </a>
-                <div class="category-content">
-                    <h4 class="category-name ls-l"><a href="demo5-shop.html">Musical instruments</a></h4>
-                </div>
-            </div>
-            
-            <app-popular-categories-item></app-popular-categories-item>
-            
         </div>
     </div>
 </section>

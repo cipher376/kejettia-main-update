@@ -1,3 +1,5 @@
+import { ProductBrand } from './../../models/product';
+import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrandsComponent implements OnInit {
 
-  constructor() { }
+   brands: ProductBrand[] = [];
 
-  ngOnInit(): void {
+  constructor(
+    private storeService: StoreService
+  ) { }
+
+  ngOnInit() {
+    this.getBrands();
+  }
+
+  getBrands(){
+    this.storeService.getProductBrands().subscribe(brands =>{
+      this.brands = brands;
+    })
   }
 
 }

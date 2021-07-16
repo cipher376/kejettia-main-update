@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { StoreService } from './../../shared/services/store.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Store } from 'src/app/models';
 
 @Component({
   selector: 'app-best-seller-item',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BestSellerItemComponent implements OnInit {
 
-  constructor() { }
+  store = new Store();
 
-  ngOnInit(): void {
+  constructor(
+     ) { }
+
+  ngOnInit() {
+  }
+
+
+  @Input() set Store(store: Store){
+    this.store = store;
+  }
+
+  getStorePhoto(){
+    return StoreService.getPhotoUrlByDisplayTypeLocal(this.store?.photos || [], 'cover', true)
   }
 
 }

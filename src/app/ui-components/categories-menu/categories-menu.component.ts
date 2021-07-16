@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { StoreService } from './../../shared/services/store.service';
+import { StoreCategory } from 'src/app/models';
+import { Component, Input, OnInit } from '@angular/core';
 
 
 
@@ -9,10 +11,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesMenuComponent implements OnInit {
 
-  categories = [1, 1, 1, 1, 1, 1, 1, 1];
-  constructor() { }
+  private storeCategories: StoreCategory[] = [];
+
+  constructor(
+  ) { }
 
   ngOnInit(): void {
   }
+
+  @Input() set StoreCategories(cat: StoreCategory[]) {
+    this.storeCategories = cat;
+  }
+
+  get StoreCategories() {
+    return this.storeCategories;
+  }
+
+
 
 }
