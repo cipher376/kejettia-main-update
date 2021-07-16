@@ -1,3 +1,4 @@
+import { User } from 'src/app/models';
 import { Urls } from 'src/app/config';
 import { Router } from '@angular/router';
 import { MyAuthService } from 'src/app/shared/services';
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-account.component.scss']
 })
 export class MyAccountComponent implements OnInit {
+  loggedUser: User = new User();
 
   constructor(
     private auth: MyAuthService,

@@ -1,3 +1,5 @@
+import { Urls } from 'src/app/config';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -28,14 +30,15 @@ export class RegisterComponent implements OnInit {
     private toaster: ToastrService,
     private auth: MyAuthService,
     private signal: SignalService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.createRegForm();
 
   }
 
-  async ngOnInit() {
-    this.selectedUser = await this.userService.getSelectedUserLocal()
+  ngOnInit() {
+    this.selectedUser =  this.userService.getSelectedUserLocalSync()
   }
 
   async onRegister() {
@@ -54,6 +57,7 @@ export class RegisterComponent implements OnInit {
         this.toaster.info('Please check your inbox to verify your email');
         // inform other UI components to update
         this.signal.sendAction(MY_ACTION.reloadUser);
+        this.router.navigateByUrl(Urls.login)
       }
     },
       (error: any) => {
@@ -74,7 +78,8 @@ export class RegisterComponent implements OnInit {
 
   getData() {
     if (!this.regForm?.value.agreement) {
-      this.toaster.error('You must agree to the terms');
+      alert('You must agree to the terms and conditions');
+      console.log('Agree')
       return false;
     }
     if (this.credentials) {
