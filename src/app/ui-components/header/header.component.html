@@ -26,12 +26,14 @@
                 </div>
                 <!-- End DropDown Menu -->
                 <span class="divider"></span>
-                <a href="contact-us.html" class="contact d-lg-show"><i class="d-icon-map"></i>Contact</a>
-                <a href="#" class="help d-lg-show"><i class="d-icon-info"></i> Need Help</a>
-                <a class="login-link" href="assets/ajax/login.html" data-toggle="login-modal"><i
-                        class="d-icon-user"></i>Sign in</a>
+                <a [routerLink]="['/pages/contact']" routerLinkActive="router-link-active" class="contact d-lg-show"><i
+                    class="d-icon-map"></i>Contact</a>
+                <a [routerLink]="['/pages/faq']" routerLinkActive="router-link-active" class="help d-lg-show"><i
+                    class="d-icon-info"></i> Need Help</a>
+                <a [routerLink]="['/pages/auth']" routerLinkActive="router-link-active"><i class="d-icon-user"></i> &nbsp; Sign
+                  in</a>
                 <span class="delimiter">/</span>
-                <a class="register-link ml-0" href="assets/ajax/login.html" data-toggle="login-modal">Register</a>
+                <a class="ml-0"  [routerLink]="['/pages/auth']" routerLinkActive="router-link-active">Register</a>
                 <!-- End of Login -->
             </div>
         </div>
@@ -43,8 +45,8 @@
                 <a href="#" class="mobile-menu-toggle">
                     <i class="d-icon-bars2"></i>
                 </a>
-                <a href="demo5.html" class="logo">
-                    <img src="assets/images/demos/demo5/logo.png" alt="logo" width="153" height="44" />
+                <a href="/pages/home" class="logo">
+                    <img src="assets/images/logo.png" alt="logo" width="153" height="44" />
                 </a>
                 <!-- End Logo -->
 
