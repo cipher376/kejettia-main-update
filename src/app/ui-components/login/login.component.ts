@@ -60,16 +60,11 @@ export class LoginComponent implements OnInit {
 
     this._auth.login(this._loginForm.value).subscribe(
       res => {
-        if ((res as Credentials).id) {
-          console.log(res);
-          // fetch user identity and any other related details
-          this._userService.getMyProfile().subscribe(u => {
-            this._user = u as User;
-            this._localStore.remove('lock_code');
-            // this.redirectUserToPage();
-          }, (error: any) => {
-            console.log(error);
-          });
+        // console.log(res);
+        if ((res as any)?.user?.id) {
+    window.location.href = window.location.protocol + '//' + window.location.host  + Urls.home;
+
+          // this._router.navigateByUrl()
         } else {
           this._localStore.set('is_login', false).then(_ => { });
         }
@@ -112,11 +107,11 @@ export class LoginComponent implements OnInit {
   }
 
   gotoForgotPassword() {
-    // this._router.navigateByUrl('/auth/forgot-password');
+    this._router.navigateByUrl('/pages/auth/forgot');
   }
 
   gotoRegister() {
-    this._router.navigateByUrl('/auth/register');
+    this._router.navigateByUrl('/pages/auth/register');
   }
 
 }

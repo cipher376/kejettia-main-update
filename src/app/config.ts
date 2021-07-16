@@ -1,6 +1,6 @@
 export const Urls = {
-  home: '/home',
-  forgotPassword: '/pages/forgot-password',
+  home: '/pages/home',
+  forgotPassword: '/pages/forgot',
   register: '/pages/signup',
   login: '/pages/login',
   paymentPlatform: '/pages/payment-platform',

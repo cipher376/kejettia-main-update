@@ -1,0 +1,30 @@
+<form  [formGroup]="_loginForm">
+  <div class="form-group mb-3">
+    <input type="text" class="form-control" placeholder="Email"
+    formControlName="email" (keyup)="onValidate('email')"
+    autocomplete="username" required>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" placeholder="Password"
+    formControlName="password" (keyup)="onValidate('password')"
+    autocomplete="current-password" required>
+  </div>
+  <div class="form-footer">
+      <div class="form-checkbox">
+          <input type="checkbox" class="custom-checkbox" id="signin-remember"
+              name="signin-remember" />
+          <label class="form-control-label" for="signin-remember">Remember
+              me</label>
+      </div>
+      <a href="/pages/auth/forgot" class="lost-link  border-no lh-1 ls-normal font-weight-bold">Lost your password?</a>
+  </div>
+  <button class="btn btn-dark btn-block btn-rounded"  (click)="onLogin()">Login</button>
+</form>
+<div class="form-choice text-center">
+  <label class="ls-m">or Login With</label>
+  <div class="social-links">
+      <a href="#" class="social-link social-google fab fa-google border-no"></a>
+      <a href="#" class="social-link social-facebook fab fa-facebook-f border-no"></a>
+      <a href="#" class="social-link social-twitter fab fa-twitter border-no"></a>
+  </div>
+</div>

@@ -14,7 +14,6 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { FaqComponent } from './faq/faq.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { LoginComponent } from '../ui-components/login/login.component';
-import { SignupComponent } from '../ui-components/signup/signup.component';
 import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { StoresComponent } from './stores/stores.component';
@@ -30,7 +29,7 @@ const routes: Routes = [
         path: '', component: LayoutComponent,
         children: [
           { path: 'home', component: HomeComponent },
-          { path: 'auth', component: AuthComponent },
+          { path: 'auth/:page', component: AuthComponent },
           { path: 'contact', component: ContactComponent },
           { path: 'stores', component: StoresComponent },
           { path: 'search', component: SearchComponent },
@@ -45,7 +44,6 @@ const routes: Routes = [
           { path: 'compare', component: CompareComponent },
           { path: 'my-account', component: MyAccountComponent },
           { path: 'error', component: ErrorPageComponent },
-          { path: 'signup', component: SignupComponent },
           { path: 'search', component: SearchComponent },
           { path: 'map', component: MapViewComponent },
           { path: 'recent-browsed', component: RecentBrowsedComponent }

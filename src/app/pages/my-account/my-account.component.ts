@@ -1,3 +1,6 @@
+import { Urls } from 'src/app/config';
+import { Router } from '@angular/router';
+import { MyAuthService } from 'src/app/shared/services';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyAccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private auth: MyAuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+
+  logOut(){
+    this.auth.logout();
+
   }
 
 }

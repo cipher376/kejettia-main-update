@@ -1,3 +1,6 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { RegisterComponent } from './register/register.component';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { TaglineWidgetComponent } from './tagline-widget/tagline-widget.component';
@@ -44,8 +47,9 @@ import { StickyFooterComponent } from './sticky-footer/sticky-footer.component';
 import { CategoriesMenuItemSectionComponent } from './categories-menu/categories-menu-item-section/categories-menu-item-section.component';
 import { CategoriesMenuItemSectionBannerComponent } from './categories-menu/categories-menu-item-section-banner/categories-menu-item-section-banner.component';
 import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { SearchInputComponent } from './search-input/search-input.component';
 
 
 
@@ -93,11 +97,16 @@ import { RouterModule } from '@angular/router';
     CategoriesMenuItemSectionComponent,
     CategoriesMenuItemSectionBannerComponent,
     LoginComponent,
-    SignupComponent
+    RegisterComponent,
+    ForgotPasswordComponent,
+    SearchInputComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports:[
     AccountDetailsComponent,
@@ -140,7 +149,8 @@ import { RouterModule } from '@angular/router';
     StoreItemComponent,
     TaglineWidgetComponent,
     LoginComponent,
-    SignupComponent
+    RegisterComponent,
+    ForgotPasswordComponent
   ]
 })
 export class ComponentModule { }
