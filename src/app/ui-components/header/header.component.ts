@@ -12,10 +12,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(
     private userService: UserService
   ) {
-   }
+  }
 
   ngAfterViewInit() {
-    this.loggedUser = this.userService.getLoggedUserLocalSync();
+    setTimeout(() => {
+      this.loggedUser = this.userService.getLoggedUserLocalSync();
+    }, 100);
 
   }
 

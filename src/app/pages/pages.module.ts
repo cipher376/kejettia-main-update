@@ -33,7 +33,8 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
     PagesRoutingModule,
     NgxPaginationModule,
     ComponentModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
   declarations: [
     MainComponent,

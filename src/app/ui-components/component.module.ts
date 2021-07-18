@@ -50,6 +50,12 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchInputComponent } from './search-input/search-input.component';
+import { ItemThumbnailComponent } from './item-thumbnail/item-thumbnail.component';
+import { ProductItemComponent } from './product-item/product-item.component';
+import { StoreSearchComponent } from './store-search/store-search.component';
+import { ProductSearchComponent } from './product-search/product-search.component';
+import { CompanySearchComponent } from './company-search/company-search.component';
+import { PublicServiceSearchComponent } from './public-service-search/public-service-search.component';
 
 
 
@@ -99,7 +105,13 @@ import { SearchInputComponent } from './search-input/search-input.component';
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    SearchInputComponent
+    SearchInputComponent,
+    ItemThumbnailComponent,
+    ProductItemComponent,
+    StoreSearchComponent,
+    ProductSearchComponent,
+    CompanySearchComponent,
+    PublicServiceSearchComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,7 @@
   <form action="#" class="input-wrapper">
-    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Search..." required />
-    <button class="btn btn-search" type="submit">
+    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Search..." required
+    [(ngModel)]="SearchTerm"  (keydown.enter)="search()"/>
+    <button class="btn btn-search" (click)="search()">
       <i class="d-icon-search"></i>
     </button>
   </form>

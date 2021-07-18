@@ -127,12 +127,12 @@
                   </nav>
 
                   <div class="row cols-2 cols-sm-3 cols-md-4 product-wrapper">
-                      <app-store-item></app-store-item>
+                      <app-store-item [Store]="store" *ngFor="let store of storeItems | paginate: { id:'search_pg', itemsPerPage: storeItemsPerPage, currentPage: page  }"> </app-store-item>
                   </div>
 
                   <nav class="toolbox toolbox-pagination">
-                      <p class="show-info">Showing 12 of 56 Products</p>
-                      <ul class="pagination">
+                      <p class="show-info">Showing {{getCurrentTotalItems()}} of {{storeItems.length}} Stores</p>
+                      <!-- <ul class="pagination">
                           <li class="page-item disabled">
                               <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1"
                                   aria-disabled="true">
@@ -149,8 +149,13 @@
                                   Next<i class="d-icon-arrow-right"></i>
                               </a>
                           </li>
-                      </ul>
-                  </nav>
+                      </ul> -->
+                      <pagination-controls class="search-pagination" [autoHide]="false" [maxSize]="10" [id]="'search_pg'"
+                      (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)"
+                      [directionLinks]="true" [responsive]="true" previousLabel="Back" nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page"></pagination-controls>
+                    </nav>
               </div>
           </div>
       </div>

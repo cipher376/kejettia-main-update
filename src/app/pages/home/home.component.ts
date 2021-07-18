@@ -1,5 +1,5 @@
 import { StoreService } from './../../shared/services/store.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { Store, StoreCategory } from 'src/app/models';
 
 @Component({
@@ -7,24 +7,42 @@ import { Store, StoreCategory } from 'src/app/models';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   private stores: Store[] = [];
   private storeCategories: StoreCategory[] = [];
 
   constructor(
     private storeService: StoreService
-  ) { }
+  ) {
+
+   }
+
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+
+    dispatchEvent(new Event('load'));
+    dispatchEvent(new Event('mousewheel'));
+
+    }, 1000);
+
+  }
+
+
+  ngAfterContentInit(): void {
+  }
 
   ngOnInit(): void {
+
     this.getStoreCategories();
 
   }
 
-  set StoreCategories(cat: StoreCategory[]){
+  set StoreCategories(cat: StoreCategory[]) {
     this.storeCategories = cat;
   }
 
-  get StoreCategories(){
+  get StoreCategories() {
     return this.storeCategories;
   }
 

@@ -17,6 +17,14 @@ export class UtilityService {
 
 
 
+   setSearchTermLocal(term: string) {
+    this.localStore.setSync('searchKey', term);
+  }
+  getSearchTermLocal() {
+    return  this.localStore.getSync('searchKey');
+  }
+
+
   static generateAccountNumber() {
     return Math.random().toString().slice(2, 11);
   }

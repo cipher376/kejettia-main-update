@@ -6,19 +6,14 @@ import { LatLng, Photo, Video } from 'src/app/models';
 
 
 export enum MY_ACTION {
-  unknown = 0, // used as a confirm signal for dialogs
 
   loadAllStores = 1.1,
   loadStoresByCountry = 1.2, // selectedStoreAddress: StoreAddress should be set via localStorage
   loadStoresByState = 1.3, // selectedStoreAddress should be set
   loadStoresBySuburb = 1.4, //  selectedStoreAddress should be set
-  loadStoresBySeller = 1.5,
-  loadStoresByManager = 1.6,
-  reloadStores = 1.7,
-  reloadStore = 1.71,
-  storesLoaded = 1.8,
-  loadSellers = 1.9,
-  loadCompanyManagers = 1.10,
+  reloadStores = 1.5,
+  storesLoaded = 1.6,
+  selected_store_change = 1.7,
 
 
   // Product categories
@@ -36,8 +31,9 @@ export enum MY_ACTION {
   loadProductsByStore = 4.3, // selectedStore set via local storage
   loadProductsByCategory = 4.4, // selectedProductCategory set via local storage
   productsLoaded = 4.5,
+  recently_viewed_products_change = 4.6,
 
-  reloadUser = 5.1, // selected user but not currently logged user
+  reloadUser = 5.1,
   reloadUsers = 5.2,
   userLoaded = 5.3,
   usersLoaded = 5.4,
@@ -46,7 +42,7 @@ export enum MY_ACTION {
   loadUsersByCountry = 5.7, // set country
   loadUsersByState = 5.8, // set country and state
   loadUsersByCity = 5.9, // set country, state, city
-  loadStoreManagers = 5.10,
+  userCountryChange = 5.11,
 
   rolesLoaded = 6.1,
   roleMapsLoaded = 6.2,
@@ -54,53 +50,29 @@ export enum MY_ACTION {
   reloadRoleMaps = 6.4,
   loadAllRoles = 6.5,
 
-  reloadCompanies = 7.1,
-  loadAllCompanies = 7.2,
-  loadCompaniesByCountry = 7.3,
-  loadCompaniesByState = 7.4,
-  loadCompaniesBySuburb = 7.5,
-  CompaniesLoaded = 7.6,
-  companyChanged = 7.7,
-  loadAllCompanyServices = 7.8,
-  reloadCompanyServices = 7.9,
-  companyServiceChanged = 7.10,
-  loadCompanyPhotos = 7.11,
+  // Google location and Geocoder signals
+  locationChanged = 7.1, // location object should be set
 
-  projectChanged = 8.0,
-  loadAllCompanyProjects = 8.1,
-  reloadCompanyProjects = 8.2,
+  // User cart management signals
+  cartChanged = 8.0,
+  orderChanged = 8.1,
+  saveDeliveryInfo = 8.2,
+  cartLoaded = 8.3,
+  ordersLoaded = 8.4,
+  ordersChangedRemote = 8.5,
 
-  loadAllCompanyAwards = 9.0,
-  reloadCompanyAwards = 9.1,
-  companyAwardChanged = 9.2,
-
-  loadContract = 10.0,
-  reloadContract = 10.1,
-  contractAccepted = 10.2,
-  loadAllCompanyContracts = 10.3,
-  reloadCompanyContracts = 10.4,
-  companyContractChanged = 10.5,
+  // Favourites
+  favouritesLoaded = 9.0,
 
 
-  ordersLoaded = 11.0,
-  loadAllOrders = 11.1,
-  loadPendingOrders = 11.2,
-  loadProcessedOrders = 11.3,
-  loadIncompleteOrders = 11.4,
-  reloadOrders = 11.5,
-  OrderUpdated = 11.6,
+  // PAYSTACK
+  paystackTransactionInitiated = 10.0,
+  paystackTransactionSuccess = 10.1,
+  paystackTransactionCancelled = 10.2,
 
-  employeesLoaded = 12.0,
-
-  loadAllTransactions = 13.0,
-  reloadTransactions = 13.1,
-
-  // Messages signals
-  markAsRead = 14.0,
-  markAsUnRead = 14.1,
-
-  // search key
-  searchKeyChanged = 15.0,
+  // General search signal, fires when text change in the search input filed
+  searchInputTextChange = 11.0,
+  searchDataLoaded = 11.1,
 
 }
 
