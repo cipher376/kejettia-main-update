@@ -17,6 +17,7 @@ import { LoginComponent } from '../ui-components/login/login.component';
 import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { StoresComponent } from './stores/stores.component';
+import { OrderCompleteComponent } from './order-complete/order-complete.component';
 
 
 
@@ -46,7 +47,8 @@ const routes: Routes = [
           { path: 'error', component: ErrorPageComponent },
           { path: 'search', component: SearchComponent },
           { path: 'map', component: MapViewComponent },
-          { path: 'recent-browsed', component: RecentBrowsedComponent }
+          { path: 'recent-browsed', component: RecentBrowsedComponent },
+          { path: 'order', component: OrderCompleteComponent }
         ]
       },
 
