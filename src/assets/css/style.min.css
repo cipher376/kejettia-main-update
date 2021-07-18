@@ -18674,8 +18674,8 @@ aside .owl-nav-top .owl-nav i::before {
 }
 
 .order .order-message {
-    max-width: 34rem;
-    padding: 3rem;
+    max-width: 50rem;
+    /* padding: 3rem;  */
     box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
     border-radius: 1rem
 }
@@ -18978,4 +18978,8 @@ aside .owl-nav-top .owl-nav i::before {
 
 .faq .card-body {
     padding: 0.2rem 1rem
+}
+
+button.pay_now.btn.btn-rounded.btn-order.order-message.mr-auto.ml-auto{
+    border: 5px solid #ED1D25 !important;
 }

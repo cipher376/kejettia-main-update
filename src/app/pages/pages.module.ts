@@ -22,6 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ComponentModule } from '../ui-components/component.module';
 import { LayoutComponent } from './layout/layout.component';
 import { AuthComponent } from './auth/auth.component';
+import { OrderCompleteComponent } from './order-complete/order-complete.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { AuthComponent } from './auth/auth.component';
     StoresComponent,
     LayoutComponent,
     AuthComponent,
+    OrderCompleteComponent,
 
   ]
 })
