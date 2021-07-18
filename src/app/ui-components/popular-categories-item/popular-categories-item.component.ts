@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { NO_IMAGE } from './../../config';
+import { environment } from 'src/environments/environment';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProductCategory } from 'src/app/models';
 
 @Component({
   selector: 'app-popular-categories-item',
@@ -6,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./popular-categories-item.component.scss']
 })
 export class PopularCategoriesItemComponent implements OnInit {
-
+  productCategory = new ProductCategory();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  @Input() set ProductCategory(cat: ProductCategory) {
+    this.productCategory = cat;
+  }
+  getCatPhoto() {
+    if (this.productCategory?.photo) {
+      return environment.file_api_download_url_root + this.productCategory?.photo?.source;
+    }
+    return NO_IMAGE;
+  }
 }

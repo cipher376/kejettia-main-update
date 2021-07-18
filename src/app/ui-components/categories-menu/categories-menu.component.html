@@ -2,12 +2,12 @@
                         'name': 'fadeInRightShorter',
                         'delay': '.2s'
                     }">
-  <li><a href="demo5-shop.html" class="menu-title">Browse Our Categories</a></li>
+  <li><a href="javascript:;" class="menu-title">Browse Our Categories</a></li>
 
 
 
-  <ng-template ngFor let-task [ngForOf]="categories" let-i="index" let-even="even">
-    <app-categories-menu-item></app-categories-menu-item>
+  <ng-template ngFor let-cat [ngForOf]="StoreCategories" let-i="index" let-even="even">
+    <app-categories-menu-item [Category]="cat"></app-categories-menu-item>
   </ng-template>
 
 

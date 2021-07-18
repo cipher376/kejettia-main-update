@@ -1,4 +1,6 @@
+import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
+import { ProductCategory } from 'src/app/models';
 
 @Component({
   selector: 'app-popular-categories',
@@ -6,10 +8,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./popular-categories.component.scss']
 })
 export class PopularCategoriesComponent implements OnInit {
+  productCategories: ProductCategory[] = [];
 
-  constructor() { }
+  constructor(
+    private storeService: StoreService
+  ) { }
 
   ngOnInit(): void {
+    this.getProductCategories();
+  }
+
+  getProductCategories(){
+    this.storeService.getProductCategories().subscribe(cats => {
+      this.productCategories = cats;
+    })
   }
 
 }

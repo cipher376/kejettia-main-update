@@ -101,7 +101,7 @@ export class StoreService {
   deleteStorePolicyType(policyTypeId: string) {
     if (!policyTypeId) {
       console.log('Policy type ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/stores/policy-types/${policyTypeId}`
     return this.http.delete(url).pipe(
@@ -157,7 +157,7 @@ export class StoreService {
   createUpdateStore(store: Store) {
     if (!store?.createdById) {
       console.log('Created by Id should be set');
-      return;
+      return undefined;
     }
     if (store.id) { // perform update
       return this.http.patch<Address>(environment.store_api_root_url + `/stores/${store?.id}`, store).pipe(
@@ -311,7 +311,7 @@ export class StoreService {
   deleteStore(storeId: string) {
     if (!storeId) {
       console.log('Store ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/stores/${storeId}`
     return this.http.delete(url).pipe(
@@ -351,6 +351,26 @@ export class StoreService {
       include: [
         {
           relation: 'photo'
+        },
+        {
+          relation: 'productCategories',
+          scope: {
+            include: [
+              {
+                relation: 'productCategoryItems',
+                scope: {
+                  include: [
+                    {
+                      relation: 'photo'
+                    }
+                  ]
+                }
+              },
+              {
+                relation: 'photo'
+              },
+            ]
+          }
         }
       ]
     }
@@ -366,7 +386,7 @@ export class StoreService {
   deleteStoreCategory(categoryId: string) {
     if (!categoryId) {
       console.log('Policy type ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/store-categories/${categoryId}`
     return this.http.delete(url).pipe(
@@ -380,7 +400,7 @@ export class StoreService {
   getCategoriesByStore(storeId: any) {
     if (!storeId) {
       console.log('Invalid store id');
-      return;
+      return undefined;
     }
     const filter = {
       include: [
@@ -401,7 +421,7 @@ export class StoreService {
   addStoreToCategory(storeId: any, storeCategoryId: any) {
     if (!storeId || !storeCategoryId) {
       console.log('Invalid store to category items map ids');
-      return;
+      return undefined;
     }
     const throughItem = { storeId, storeCategoryId } as ProductToCategoryItemThrough;
 
@@ -417,7 +437,7 @@ export class StoreService {
   deleteStoreFromCategories(storeId: any, categoryId: any) {
     if (!storeId || !categoryId) {
       console.log('Invalid store to category items map ids');
-      return;
+      return undefined;
     }
     let filter: any = {
       storeId, categoryId
@@ -439,7 +459,7 @@ export class StoreService {
 
   createProductCategory(storeCategoryId: string, category: ProductCategory) {
     if (!storeCategoryId) {
-      return
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/store-categories/${storeCategoryId}/product-categories`
     return this.http.post<ProductCategory>(url, category).pipe(
@@ -471,7 +491,7 @@ export class StoreService {
   deleteProductCategory(categoryId: string) {
     if (!categoryId) {
       console.log('Product category ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/product-categories/${categoryId}`
     return this.http.delete(url).pipe(
@@ -485,7 +505,7 @@ export class StoreService {
 
   createProductCategoryItem(productCategoryId: string, item: ProductCategoryItem) {
     if (!productCategoryId) {
-      return
+      return undefined;
     }
 
     const url = `${environment.store_api_root_url}/product-categories/${productCategoryId}/product-category-items`
@@ -518,7 +538,7 @@ export class StoreService {
   deleteProductCategoryItem(itemId: string) {
     if (!itemId) {
       console.log('Product category item ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/product-category-items/${itemId}`
     return this.http.delete(url).pipe(
@@ -533,7 +553,7 @@ export class StoreService {
   addProductToCategoryItem(productId: any, categoryItemId: any) {
     if (!productId || !categoryItemId) {
       console.log('Invalid product to category items map ids');
-      return;
+      return undefined;
     }
     const throughItem = { productId, productCategoryItemId: categoryItemId } as ProductToCategoryItemThrough;
 
@@ -550,7 +570,7 @@ export class StoreService {
   deleteProductFromCategoryItem(productId: any, productCategoryItemId: any) {
     if (!productId || !productCategoryItemId) {
       console.log('Invalid product to category items map ids');
-      return;
+      return undefined;
     }
     let filter: any = {
       productId, productCategoryItemId
@@ -570,7 +590,7 @@ export class StoreService {
   getCategoryItemsByProduct(productId: any) {
     if (!productId) {
       console.log('Invalid product id');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/products/${productId}/product-category-items`
     return this.http.get<ProductCategoryItem[]>(url).pipe(
@@ -588,7 +608,7 @@ export class StoreService {
   createProductFeatures(productId: any, features: Features) {
     if (!productId) {
       console.log('Please select product')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/products/${productId}/features`
     return this.http.post<Features>(url, features).pipe(
@@ -602,7 +622,7 @@ export class StoreService {
   createStoreFeatures(storeId: any, features: Features) {
     if (!storeId) {
       console.log('Please select store')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/stores/${storeId}/features`
     return this.http.post<Features>(url, features).pipe(
@@ -617,7 +637,7 @@ export class StoreService {
   createProductCategoryItemFeatures(categoryItemId: any, features: Features) {
     if (!categoryItemId) {
       console.log('Please select product category item')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/product-category-items/${encodeURIComponent(categoryItemId)}/features`
     console.log(url);
@@ -644,7 +664,7 @@ export class StoreService {
   getProductFeatures(productId: any) {
     if (!productId) {
       console.log('Please select product')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/products/${productId}/features`
     return this.http.get<Features[]>(url).pipe(
@@ -658,7 +678,7 @@ export class StoreService {
   getStoreFeatures(storeId: any) {
     if (!storeId) {
       console.log('Please select store')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/stores/${storeId}/features`
     return this.http.get<Features[]>(url).pipe(
@@ -672,7 +692,7 @@ export class StoreService {
   getProductCategoryItemFeatures(categoryItemId: any) {
     if (!categoryItemId) {
       console.log('Please select product category item')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/product-category-items/${categoryItemId}/features`
     return this.http.get<Features[]>(url).pipe(
@@ -686,7 +706,7 @@ export class StoreService {
   deleteFeature(featureId: string) {
     if (!featureId) {
       console.log('Feature ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/features/${featureId}`
     return this.http.delete(url).pipe(
@@ -703,7 +723,7 @@ export class StoreService {
   createProductModel(productBrandId: string, model: ProductModel) {
     if (!productBrandId) {
       console.log('Product brand ID cannot be undefined');
-      return;
+      return undefined;
     }
     if (model.id) { // perform update
       return this.http.patch<Address>(environment.store_api_root_url + `/product-models/${model?.id}`, model).pipe(
@@ -750,7 +770,7 @@ export class StoreService {
   deleteProductModel(productId: string) {
     if (!productId) {
       console.log('Product model ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/products/${productId}/product-model`
     return this.http.delete(url).pipe(
@@ -765,7 +785,7 @@ export class StoreService {
   // deleteProductModel(modelId: string) {
   //   if (!modelId) {
   //     console.log('Product model ID cannot be undefined');
-  //     return;
+  //     return undefined;
   //   }
   //   const url = `${environment.store_api_root_url}/product-models/${modelId}`
   //   return this.http.delete(url).pipe(
@@ -811,7 +831,7 @@ export class StoreService {
   deleteProductBrand(brandId: string) {
     if (!brandId) {
       console.log('Product brand ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/product-brands/${brandId}`
     return this.http.delete(url).pipe(
@@ -847,7 +867,7 @@ export class StoreService {
   deleteStorePolicyStatement(storeId: string, policyId: string) {
     if (!storeId || !policyId) {
       console.log('Store id or policy id is invalid');
-      return;
+      return undefined;
     }
     let filter: any = {
       id: policyId
@@ -866,7 +886,7 @@ export class StoreService {
   deletePolicyStatement(policyStatementId: string) {
     if (!policyStatementId) {
       console.log('Invalid policy statement ID')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/policy-statements/${policyStatementId}`
     return this.http.delete(url).pipe(
@@ -880,7 +900,7 @@ export class StoreService {
   getPolicyStatementsByStore(storeId: string) {
     if (!storeId) {
       console.log('Please select store')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/stores/${storeId}/policy-statements`
     return this.http.get<PolicyStatement[]>(url).pipe(
@@ -951,7 +971,7 @@ export class StoreService {
   deleteProductByStore(productId: string, storeId: string) {
     if (!productId || !storeId) {
       console.log('Invalid args for deleteProductByStore')
-      return;
+      return undefined;
     }
     const where = '?where=' + JSON.stringify({ id: productId })
     const url = `${environment.store_api_root_url}/stores/${storeId}/products${where}`
@@ -987,7 +1007,7 @@ export class StoreService {
   getProductShippings(productId: string) {
     if (!productId) {
       console.log('Please select product')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/products/${productId}/shippings`
     return this.http.get<Shipping[]>(url).pipe(
@@ -1000,7 +1020,7 @@ export class StoreService {
   deleteProductShipping(productId: string, shippingId: string) {
     if (!productId || !shippingId) {
       console.log('Product id or shipping id is invalid');
-      return;
+      return undefined;
     }
     let filter: any = {
       id: shippingId

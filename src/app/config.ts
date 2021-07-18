@@ -1,8 +1,8 @@
 export const Urls = {
   home: '/pages/home',
-  forgotPassword: '/pages/forgot',
-  register: '/pages/signup',
-  login: '/pages/login',
+  forgotPassword: '/pages/auth/forgot',
+  register: '/pages/auth/register',
+  login: '/pages/auth/login',
   paymentPlatform: '/pages/payment-platform',
   error: '/pages/error',
   order: '/pages/order-list',
