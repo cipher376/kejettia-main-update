@@ -46,12 +46,14 @@ const routes: Routes = [
           { path: 'error', component: ErrorPageComponent },
           { path: 'search', component: SearchComponent },
           { path: 'map', component: MapViewComponent },
-          { path: 'recent-browsed', component: RecentBrowsedComponent }
+          { path: 'recent-browsed', component: RecentBrowsedComponent },
+
         ]
       },
 
     ]
-  }
+  },
+  { path: '**', component: ErrorPageComponent }
 ];
 
 
