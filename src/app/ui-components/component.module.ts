@@ -56,6 +56,12 @@ import { StoreSearchComponent } from './store-search/store-search.component';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { CompanySearchComponent } from './company-search/company-search.component';
 import { PublicServiceSearchComponent } from './public-service-search/public-service-search.component';
+import { StoreFilterComponent } from './store-filter/store-filter.component';
+import { ProductFilterComponent } from './product-filter/product-filter.component';
+import { CompanyFilterComponent } from './company-filter/company-filter.component';
+import { SearchNavComponent } from './search-nav/search-nav.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { RatingComponent } from './rating/rating.component';
 
 
 
@@ -111,13 +117,19 @@ import { PublicServiceSearchComponent } from './public-service-search/public-ser
     StoreSearchComponent,
     ProductSearchComponent,
     CompanySearchComponent,
-    PublicServiceSearchComponent
+    PublicServiceSearchComponent,
+    StoreFilterComponent,
+    ProductFilterComponent,
+    CompanyFilterComponent,
+    SearchNavComponent,
+    RatingComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     HttpClientModule,
     FormsModule,
+    NgxPaginationModule,
     ReactiveFormsModule
   ],
   exports:[
@@ -162,7 +174,15 @@ import { PublicServiceSearchComponent } from './public-service-search/public-ser
     TaglineWidgetComponent,
     LoginComponent,
     RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    StoreSearchComponent,
+    ProductSearchComponent,
+    CompanySearchComponent,
+    PublicServiceSearchComponent,
+    StoreFilterComponent,
+    ProductFilterComponent,
+    CompanyFilterComponent,
+    SearchNavComponent
   ]
 })
 export class ComponentModule { }

@@ -1,3 +1,4 @@
+import { NO_IMAGE } from 'src/app/config';
 import { ProductCategory, ProductCategoryItem, ProductModel, ProductBrand, Product, ProductToCategoryItemThrough } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
 import { PolicyType } from './../../models/store-policy';
@@ -67,11 +68,17 @@ export class StoreService {
 
   }
 
+  static getStoreRating(store: Store){
+    // likes
+    // reviews
+    //
+    return 5;
+  }
 
   static getPhotoUrlByDisplayTypeLocal(photos: Photo[], displayType: string, thumb = false) {
     let url = '';
     let foundPhotos: Photo[] = [];
-    photos.forEach(photo => {
+    photos?.forEach(photo => {
       if (photo.photoDisplayType?.type?.toLowerCase() == displayType) {
         foundPhotos.push(photo);
       }
@@ -81,7 +88,8 @@ export class StoreService {
       const tmp = foundPhotos[Math.floor(Math.random() * (foundPhotos?.length))]
       url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
     }
-    return url;
+
+    return url ?? NO_IMAGE;
   }
 
 

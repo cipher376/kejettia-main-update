@@ -24,6 +24,13 @@ export class UtilityService {
     return  this.localStore.getSync('searchKey');
   }
 
+  // Calculate and return difference between two date objects in days
+  static calcDatesDiffInDays(startDate: Date, endDate: Date = new Date(Date.now())) {
+    endDate = new Date(endDate);
+    startDate = new Date(startDate);
+    const diff = Math.abs(startDate.getTime() - endDate.getTime());
+    return (diff / (1000 * 3600 * 24));
+  }
 
   static generateAccountNumber() {
     return Math.random().toString().slice(2, 11);
@@ -1100,5 +1107,8 @@ export class UtilityService {
   setSearchKey(key: string) {
     this.localStore.setSync('searchKey', key);
   }
+
+
+
 
 }

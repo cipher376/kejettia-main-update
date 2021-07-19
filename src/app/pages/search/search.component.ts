@@ -7,17 +7,6 @@ import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service
 import { StoreService } from 'src/app/shared/services/store.service';
 
 
-
-export interface SearchKey {
-  key: string;
-  limit: number;
-  skip: number;
-}
-export interface SearchObject {
-  object: any;
-  score: number;
-}
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',

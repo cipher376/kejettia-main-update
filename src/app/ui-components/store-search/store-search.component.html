@@ -1,1 +1,27 @@
-<p>store-search works!</p>
+<div class="row gutter-lg main-content-wrap">
+  <aside class="col-lg-3 sidebar sidebar-fixed sidebar-toggle-remain shop-sidebar sticky-sidebar-wrapper">
+    <app-search-nav></app-search-nav>
+  </aside>
+  <div class="col-lg-9 main-content">
+    <app-store-filter (itemsGridSizeEvent)="StoreItemsPerPage=$event" (layoutEvent)="layout=$event" (sortKeyEvent)="SortKey=$event"></app-store-filter>
+    <div class="row cols-2 cols-sm-3 cols-md-4 product-wrapper" *ngIf="layout === 'grid'">
+      <app-store-item [layout]='layout' [Store]="store"
+        *ngFor="let store of storeItems | paginate: { id:'search_pg', itemsPerPage: storeItemsPerPage, currentPage: page  }">
+      </app-store-item>
+    </div>
+
+    <div class="product-lists product-wrapper"  *ngIf="layout === 'list'">
+      <app-store-item [layout]="layout" [Store]="store"
+      *ngFor="let store of storeItems | paginate: { id:'search_pg', itemsPerPage: storeItemsPerPage, currentPage: page  }">
+    </app-store-item>
+    </div>
+
+    <nav class="toolbox toolbox-pagination">
+      <p class="show-info">Showing {{getCurrentTotalItems()}} of {{storeItems.length}} Stores</p>
+      <pagination-controls class="search-pagination" [autoHide]="false" [maxSize]="10" [id]="'search_pg'"
+        (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)" [directionLinks]="true"
+        [responsive]="true" previousLabel="Back" nextLabel="Next" screenReaderPaginationLabel="Pagination"
+        screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+    </nav>
+  </div>
+</div>

@@ -1,38 +1,74 @@
-<div class="product-wrap">
-    <div class="product">
-        <figure class="product-media">
-            <a href="product.html">
-                <img src="assets/images/shop/9.jpg" alt="product" width="280" height="315">
-            </a>
-            <div class="product-action-vertical">
-                <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
-                    data-target="#addCartModal" title="Add to cart"><i
-                        class="d-icon-bag"></i></a>
-                <a href="#" class="btn-product-icon btn-wishlist"
-                    title="Add to wishlist"><i class="d-icon-heart"></i></a>
-            </div>
-            <div class="product-action">
-                <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
-                    View</a>
-            </div>
-        </figure>
-        <div class="product-details">
-            <div class="product-cat">
-                <a href="shop-grid-3col.html">electronics</a>
-            </div>
-            <h3 class="product-name">
-                <a href="product.html">Fashion Cowboy Hat</a>
-            </h3>
-            <div class="product-price">
-                <ins class="new-price">$98.00</ins><del class="old-price">$210.00</del>
-            </div>
-            <div class="ratings-container">
-                <div class="ratings-full">
-                    <span class="ratings" style="width:100%"></span>
-                    <span class="tooltiptext tooltip-top"></span>
-                </div>
-                <a href="product.html" class="rating-reviews">( 6 reviews )</a>
-            </div>
-        </div>
-    </div>
-</div>
+ <div class="product-wrap" *ngIf="layout === 'grid'">
+   <div class="product">
+     <figure class="product-media">
+       <a href="javascript:;">
+         <img [src]="photoUrl" alt="{{Store?.name}}" width="280" height="315">
+       </a>
+       <div class="product-label-group" *ngIf="IsNew">
+        <label class="product-label label-new">new</label>
+      </div>
+       <div class="product-action-vertical">
+         <a href="javascript:;" class="btn-product-icon btn-cart" data-toggle="modal" data-target="#addCartModal"
+           title="Add to cart"><i class="d-icon-bag"></i></a>
+         <a href="javascript:;" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i
+             class="d-icon-heart"></i></a>
+       </div>
+       <div class="product-action">
+         <a href="javascript:;" class="btn-product btn-quickview" title="Quick View">Quick
+           View</a>
+       </div>
+     </figure>
+     <div class="product-details">
+       <div class="product-cat">
+         <a href="javascript:;">{{getCategory()}}</a>
+       </div>
+       <h3 class="product-name">
+         <a href="javascript:;">{{Store?.name}}</a>
+       </h3>
+       <!-- <div class="product-price">
+         <ins class="new-price">$98.00</ins><del class="old-price">$210.00</del>
+       </div> -->
+       <app-rating></app-rating>
+     </div>
+   </div>
+ </div>
+
+ <div class="product product-list" *ngIf="layout === 'list'">
+   <figure class="product-media">
+     <a href="javascript:;">
+       <img [src]="photoUrl" alt="{{Store?.name}}" width="260" height="293">
+     </a>
+     <div class="product-label-group" *ngIf="IsNew">
+       <label class="product-label label-new">new</label>
+     </div>
+   </figure>
+   <div class="product-details">
+     <div class="product-cat">
+       <a href="javascript:;">{{getCategory()}}</a>
+     </div>
+     <h3 class="product-name">
+       <a href="javascript:;">{{Store?.name}}</a>
+     </h3>
+     <!-- <div class="product-price">
+       <span class="price">$184.00</span>
+     </div> -->
+     <div class="ratings-container">
+       <div class="ratings-full">
+         <span class="ratings" style="width:80%"></span>
+         <span class="tooltiptext tooltip-top"></span>
+       </div>
+       <a href="javascript:;" class="rating-reviews">( 6 reviews )</a>
+     </div>
+     <p class="product-short-desc">
+       {{Store?.description}}
+     </p>
+     <div class="product-action">
+       <a href="javascript:;" class="btn-product btn-cart" data-toggle="modal" data-target="#addCartModal"
+         title="Add to cart"><i class="d-icon-bag"></i><label>Add to cart</label></a>
+       <a href="javascript:;" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i
+           class="d-icon-heart"></i></a>
+       <a href="javascript:;" class="btn-product-icon btn-quickview" title="Quick View"><i
+           class="d-icon-search"></i></a>
+     </div>
+   </div>
+ </div>
