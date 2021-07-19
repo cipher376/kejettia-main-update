@@ -107,11 +107,11 @@ export class LoginComponent implements OnInit {
   }
 
   gotoForgotPassword() {
-    this._router.navigateByUrl('/pages/auth/forgot');
+    this._router.navigateByUrl('/main/pages/auth/forgot');
   }
 
   gotoRegister() {
-    this._router.navigateByUrl('/pages/auth/register');
+    this._router.navigateByUrl('/main/pages/auth/register');
   }
 
 }

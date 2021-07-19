@@ -40,7 +40,7 @@ export class SearchInputComponent implements OnInit {
     if (this.searchTermChanged) {
       this.util.setSearchTermLocal(this.searchTerm);
       this.signal.sendAction(MY_ACTION.searchInputTextChange);
-      this.router.navigateByUrl('/pages/search');
+      this.router.navigateByUrl('/main/pages/search');
       this.searchTermChanged = false;
     }
   }

@@ -1,3 +1,17 @@
+import { BlogWidgetComponent } from './blog-widget/blog-widget.component';
+import { BrandsHorizontalComponent } from './brands-horizontal/brands-horizontal.component';
+import { BlackFridayAdComponent } from './black-friday-ad/black-friday-ad.component';
+import { LatestProductsComponent } from './latest-products/latest-products.component';
+import { PopularProductsComponent } from './popular-products/popular-products.component';
+import { ProductDetailsSimpleComponent } from './product-details-simple/product-details-simple.component';
+import { ProductDetailsCustomComponent } from './product-details-custom/product-details-custom.component';
+import { ProductSalesWidgetComponent } from './product-sales-widget/product-sales-widget.component';
+import { ProductThumbHorizontalComponent } from './product-thumb-horizontal/product-thumb-horizontal.component';
+import { ProductThumbVerticalComponent } from './product-thumb-vertical/product-thumb-vertical.component';
+import { SalesWidgetComponent } from './sales-widget/sales-widget.component';
+import { TestimonialWidgetComponent } from './testimonial-widget/testimonial-widget.component';
+import { TopProductsComponent } from './top-products/top-products.component';
+import { TrendProductsComponent } from './trend-products/trend-products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
@@ -62,6 +76,10 @@ import { CompanyFilterComponent } from './company-filter/company-filter.componen
 import { SearchNavComponent } from './search-nav/search-nav.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RatingComponent } from './rating/rating.component';
+import { Home2CategoriesComponent } from './home2-categories/home2-categories.component';
+import { Home2SliderComponent } from './home2-slider/home2-slider.component';
+import { Home2CategoryBadgeComponent } from './home2-category-badge/home2-category-badge.component';
+import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 
 
 
@@ -122,7 +140,25 @@ import { RatingComponent } from './rating/rating.component';
     ProductFilterComponent,
     CompanyFilterComponent,
     SearchNavComponent,
-    RatingComponent
+    RatingComponent,
+    Home2CategoriesComponent,
+    Home2SliderComponent,
+    Home2CategoryBadgeComponent,
+    FeaturedProductsComponent,
+    TrendProductsComponent,
+    TopProductsComponent,
+    TestimonialWidgetComponent,
+    SalesWidgetComponent,
+    ProductThumbVerticalComponent,
+    ProductThumbHorizontalComponent,
+    ProductSalesWidgetComponent,
+    ProductDetailsCustomComponent,
+    ProductDetailsSimpleComponent,
+    PopularProductsComponent,
+    LatestProductsComponent,
+    BlackFridayAdComponent,
+    BrandsHorizontalComponent,
+    BlogWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -182,7 +218,27 @@ import { RatingComponent } from './rating/rating.component';
     StoreFilterComponent,
     ProductFilterComponent,
     CompanyFilterComponent,
-    SearchNavComponent
+    SearchNavComponent,
+    Home2CategoriesComponent,
+    Home2SliderComponent,
+    Home2CategoryBadgeComponent,
+    FeaturedProductsComponent,
+    TrendProductsComponent,
+    TopProductsComponent,
+    TestimonialWidgetComponent,
+    SalesWidgetComponent,
+    ProductThumbVerticalComponent,
+    ProductThumbHorizontalComponent,
+    ProductSalesWidgetComponent,
+    ProductDetailsCustomComponent,
+    ProductDetailsSimpleComponent,
+    PopularProductsComponent,
+    LatestProductsComponent,
+    BlackFridayAdComponent,
+    BrandsHorizontalComponent,
+    BlogWidgetComponent,
+
+
   ]
 })
 export class ComponentModule { }

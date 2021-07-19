@@ -24,11 +24,17 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'pages',
+    pathMatch: 'full'
+  },
+  {
     path: 'pages',
     children: [
       {
         path: '', component: LayoutComponent,
         children: [
+          { path: '', component: HomeComponent },
           { path: 'home', component: HomeComponent },
           { path: 'auth/:page', component: AuthComponent },
           { path: 'contact', component: ContactComponent },
@@ -62,4 +68,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PagesRoutingModule { }
+export class MainPagesRoutingModule { }

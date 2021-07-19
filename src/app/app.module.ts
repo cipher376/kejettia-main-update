@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularWebStorageModule } from 'angular-web-storage';
 import { ToastrModule } from 'ngx-toastr';
+import { Home2Component } from './app-store-pages/home2/home2.component';
 
 
 @NgModule({

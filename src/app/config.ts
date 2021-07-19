@@ -1,18 +1,18 @@
 export const Urls = {
-  home: '/pages/home',
-  forgotPassword: '/pages/auth/forgot',
-  register: '/pages/auth/register',
-  login: '/pages/auth/login',
-  paymentPlatform: '/pages/payment-platform',
-  error: '/pages/error',
-  order: '/pages/order-list',
-  checkout: '/pages/checkout',
-  cart: '/pages/cart',
-  faq: '/pages/faq',
-  about: '/pages/about',
-  contact: '/pages/contact',
-  account: '/pages/my-account',
-  search: '/pages/search'
+  home: '/main/pages/home',
+  forgotPassword: '/main/pages/auth/forgot',
+  register: '/main/pages/auth/register',
+  login: '/main/pages/auth/login',
+  paymentPlatform: '/main/pages/payment-platform',
+  error: '/main/pages/error',
+  order: '/main/pages/order-list',
+  checkout: '/main/pages/checkout',
+  cart: '/main/pages/cart',
+  faq: '/main/pages/faq',
+  about: '/main/pages/about',
+  contact: '/main/pages/contact',
+  account: '/main/pages/my-account',
+  search: '/main/pages/search'
 };
 
 // export const STORE_DETAILS = {

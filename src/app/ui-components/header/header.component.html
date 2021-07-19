@@ -26,26 +26,26 @@
         </div>
         <!-- End DropDown Menu -->
         <span class="divider"></span>
-        <a [routerLink]="['/pages/contact']" routerLinkActive="router-link-active" class="contact d-lg-show"><i
+        <a [routerLink]="['/main/pages/contact']" routerLinkActive="router-link-active" class="contact d-lg-show"><i
             class="d-icon-map"></i>Contact</a>
-        <a [routerLink]="['/pages/faq']" routerLinkActive="router-link-active" class="help d-lg-show"><i
+        <a [routerLink]="['/main/pages/faq']" routerLinkActive="router-link-active" class="help d-lg-show"><i
             class="d-icon-info"></i> Need Help</a>
 
 
-        <a [routerLink]="['/pages/auth/login']" routerLinkActive="router-link-active" *ngIf="!loggedUser?.id"><i
+        <a [routerLink]="['/main/pages/auth/login']" routerLinkActive="router-link-active" *ngIf="!loggedUser?.id"><i
             class="d-icon-user"></i>
           &nbsp; Sign
           in</a>
         <span class="delimiter" *ngIf="!loggedUser?.id">/</span>
-        <a class="ml-0" [routerLink]="['/pages/auth/register']" routerLinkActive="router-link-active"
+        <a class="ml-0" [routerLink]="['/main/pages/auth/register']" routerLinkActive="router-link-active"
           *ngIf="!loggedUser?.id">Register</a>
         <span class="delimiter" *ngIf="!loggedUser?.id">/</span>
-        <a class="ml-0" [routerLink]="['/pages/auth/forgot']" routerLinkActive="router-link-active"
+        <a class="ml-0" [routerLink]="['/main/pages/auth/forgot']" routerLinkActive="router-link-active"
           *ngIf="!loggedUser?.id">Forgot
           password</a>
 
         <div *ngIf="loggedUser?.id">
-          <a [routerLink]="['/pages/my-account']" routerLinkActive="router-link-active"><i class="d-icon-user"></i>
+          <a [routerLink]="['/main/pages/my-account']" routerLinkActive="router-link-active"><i class="d-icon-user"></i>
             &nbsp; <span *ngIf="loggedUser?.profile">{{loggedUser?.profile?.firstName}}
               {{loggedUser?.profile?.lastName}}</span>
             <span *ngIf="!loggedUser?.profile">{{loggedUser?.email}}</span></a>
@@ -61,7 +61,7 @@
         <a href="#" class="mobile-menu-toggle">
           <i class="d-icon-bars2"></i>
         </a>
-        <a href="/pages/home" class="logo">
+        <a href="/main/pages/home" class="logo">
           <img src="assets/images/logo.svg" alt="logo" width="153" height="44" />
         </a>
         <!-- End Logo -->

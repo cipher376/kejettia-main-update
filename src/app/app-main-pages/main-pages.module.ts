@@ -6,7 +6,7 @@ import { ContactComponent } from './contact/contact.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CompareComponent } from './compare/compare.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { PagesRoutingModule } from './pages-routing.module';
+import { MainPagesRoutingModule } from './main-pages-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { FaqComponent } from './faq/faq.component';
@@ -30,7 +30,7 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    PagesRoutingModule,
+    MainPagesRoutingModule,
     NgxPaginationModule,
     ComponentModule,
     HttpClientModule,
@@ -58,4 +58,4 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
 
   ]
 })
-export class PagesModule { }
+export class MainPagesModule { }
