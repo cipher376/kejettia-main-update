@@ -1,3 +1,4 @@
+import { ProductDetailsComponent } from './product-details/product-details.component';
 import { Home2Component } from './home2/home2.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -21,7 +22,7 @@ import { StorePagesRoutingModule } from './store-pages-routing.module';
   ],
   declarations: [
     Home2Component,
-
+    ProductDetailsComponent
 
   ]
 })

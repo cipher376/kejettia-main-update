@@ -1,6 +1,6 @@
 <h4 class="menu-title">{{ProductCategory?.name}}</h4>
 <ul>
-  <li><a href="javascript:;"
+  <li><a href="javascript:;" (click)="searchCategory()"
     *ngFor="let item of ProductCategory?.productCategoryItems">{{item?.name}}</a></li>
 
 </ul>

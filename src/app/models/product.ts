@@ -25,6 +25,7 @@ export class Product {
   photos?: Photo[];
   videos?: Video[];
   productCategoryItemId?: string;
+  productCategoryItem: ProductCategoryItem
   productModel?: ProductModel;
   features?: Features[];
   shippings?: Shipping[];

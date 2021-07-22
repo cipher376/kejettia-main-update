@@ -1775,7 +1775,7 @@ window.Riode = {};
       self.$priceWrap.find('span').text('$' + (Math.round(Math.random() * 50) + 200) + '.00');
       self.$priceWrap.slideDown();
       self.$clean.slideDown();
-      self.$btnCart.removeAttr('disabled');
+      // self.$btnCart.removeAttr('disabled');
     }
 
     ProductSingle.prototype.variationClean = function (reset) {
@@ -1783,7 +1783,7 @@ window.Riode = {};
       reset && this.$items.children('.active').removeClass('active');
       this.$priceWrap.slideUp();
       this.$clean.css('display', 'none');
-      this.$btnCart.attr('disabled', 'disabled');
+      // this.$btnCart.attr('disabled', 'disabled');
 
     }
 

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductCategory } from 'src/app/models';
 
@@ -9,7 +10,9 @@ import { ProductCategory } from 'src/app/models';
 export class CategoriesMenuItemSectionComponent implements OnInit {
   private productCategory: ProductCategory = new ProductCategory();
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
@@ -19,5 +22,10 @@ export class CategoriesMenuItemSectionComponent implements OnInit {
   }
   get ProductCategory(){
     return this.productCategory;
+  }
+
+  searchCategory(){
+    this.router.navigateByUrl('/main/pages/search;cat='+this.productCategory?.name)
+
   }
 }

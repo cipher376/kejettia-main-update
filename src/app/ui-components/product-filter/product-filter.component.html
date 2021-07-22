@@ -1,1 +1,36 @@
-<p>product-filter works!</p>
+<nav class="toolbox sticky-toolbox sticky-content fix-top">
+  <div class="toolbox-left">
+      <a href="#"
+          class="toolbox-item left-sidebar-toggle btn btn-sm btn-outline btn-primary
+              btn-rounded btn-icon-right  d-lg-none">Filter<i
+              class="d-icon-arrow-right"></i></a>
+      <div class="toolbox-item toolbox-sort select-box text-dark">
+          <label>Sort By :</label>
+          <select name="orderby" class="form-control" [(ngModel)]="SortKey">
+              <option value="default">Default</option>
+              <option value="popularity" selected="selected">Most Popular</option>
+              <option value="rating">Average rating</option>
+              <option value="date">Latest</option>
+              <option value="price-low">Sort forward price low</option>
+              <option value="price-high">Sort forward price high</option>
+          </select>
+      </div>
+  </div>
+  <div class="toolbox-right">
+      <div class="toolbox-item toolbox-show select-box text-dark">
+          <label>Show :</label>
+          <select name="count" class="form-control" [(ngModel)]="GridSize">
+              <option value="2">2</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="50">75</option>
+          </select>
+      </div>
+      <div class="toolbox-item toolbox-layout">
+          <a href="javascript:;" class="d-icon-mode-list btn-layout" [ngClass]="{'active': Layout==='list'}" (click)="Layout = 'list'"></a>
+          <a href="javascript:;" class="d-icon-mode-grid btn-layout " [ngClass]="{'active': Layout==='grid'}" (click)="Layout = 'grid'"></a>
+      </div>
+  </div>
+</nav>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
@@ -11,12 +11,8 @@ import { StoreService } from 'src/app/shared/services/store.service';
   templateUrl: './store-search.component.html',
   styleUrls: ['./store-search.component.scss']
 })
-export class StoreSearchComponent implements OnInit {
+export class StoreSearchComponent implements OnInit, AfterContentInit {
 
-  public sidenavOpen = true;
-  public animation: any;   // Animation
-  public sortByOrder = '';   // sorting
-  public tagsFilters: any[] = [];
 
   private sortKey = ''; // sorting the stores
 
@@ -38,6 +34,8 @@ export class StoreSearchComponent implements OnInit {
   workersLoading = false;
 
   paramKey = '';
+
+  public storeItemsEvent = new EventEmitter<any>();
 
 
   constructor(
@@ -114,17 +112,17 @@ export class StoreSearchComponent implements OnInit {
 
     // search for store
     this.storeLoading = true;
-    this.storeService.searchStore(key, this.pageInfo).subscribe((data: Store) => {
+    this.storeService.searchStore(key, this.pageInfo).subscribe((data: Store[]) => {
       this.storeItems = this.storeItems.concat(data);
+      this.storeItemsEvent.emit(this.storeItems);
       this.storeLoading = false;
       this.pageInfo.offset += this.storeItems.length;
-
     });
 
   }
 
   isLoading() {
-    return this.companyLoading || this.storeLoading || this.productLoading;
+    return this.storeLoading;
   }
 
   public onPageChanged(event) {

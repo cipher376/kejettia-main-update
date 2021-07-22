@@ -23,6 +23,7 @@
     "@wkoza/ngx-upload": "^6.4.0",
     "angular-geocoder": "^8.1.0",
     "angular-web-storage": "^10.0.0",
+    "animate.css": "^4.1.1",
     "font-awesome": "^4.7.0",
     "ngx-bootstrap": "^6.2.0",
     "ngx-pagination": "^4.0.0",

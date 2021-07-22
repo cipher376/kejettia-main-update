@@ -4,7 +4,6 @@ import { RecentBrowsedComponent } from './recent-browsed/recent-browsed.componen
 import { MapViewComponent } from './map-view/map-view.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ContactComponent } from './contact/contact.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
@@ -18,6 +17,7 @@ import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { StoresComponent } from './stores/stores.component';
 import { OrderCompleteComponent } from './order-complete/order-complete.component';
+import { CartComponent } from './cart/cart.component';
 
 
 
@@ -43,7 +43,6 @@ const routes: Routes = [
           { path: 'login', component: LoginComponent },
           { path: 'my-account', component: MyAccountComponent },
           { path: 'about', component: AboutUsComponent },
-          { path: 'cart', component: CartComponent },
           { path: 'checkout', component: CheckoutComponent },
           { path: 'faq', component: FaqComponent },
           { path: 'contact', component: ContactComponent },
@@ -54,7 +53,8 @@ const routes: Routes = [
           { path: 'search', component: SearchComponent },
           { path: 'map', component: MapViewComponent },
           { path: 'recent-browsed', component: RecentBrowsedComponent },
-          { path: 'order', component: OrderCompleteComponent }
+          { path: 'order', component: OrderCompleteComponent },
+          { path: 'cart', component: CartComponent }
         ]
       },
 

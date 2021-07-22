@@ -29,16 +29,20 @@
             <div class="product-thumbs-wrap">
               <div class="product-thumbs">
                 <div class="product-thumb active">
-                  <img src="assets/images/product/product-1-1-109x122.jpg" alt="product thumbnail" width="109" height="122">
+                  <img src="assets/images/product/product-1-1-109x122.jpg" alt="product thumbnail" width="109"
+                    height="122">
                 </div>
                 <div class="product-thumb">
-                  <img src="assets/images/product/product-1-2-109x122.jpg" alt="product thumbnail" width="109" height="122">
+                  <img src="assets/images/product/product-1-2-109x122.jpg" alt="product thumbnail" width="109"
+                    height="122">
                 </div>
                 <div class="product-thumb">
-                  <img src="assets/images/product/product-1-3-109x122.jpg" alt="product thumbnail" width="109" height="122">
+                  <img src="assets/images/product/product-1-3-109x122.jpg" alt="product thumbnail" width="109"
+                    height="122">
                 </div>
                 <div class="product-thumb">
-                  <img src="assets/images/product/product-1-4-109x122.jpg" alt="product thumbnail" width="109" height="122">
+                  <img src="assets/images/product/product-1-4-109x122.jpg" alt="product thumbnail" width="109"
+                    height="122">
                 </div>
               </div>
               <button class="thumb-up disabled"><i class="fas fa-chevron-left"></i></button>
@@ -63,7 +67,8 @@
                   <a href="#">
                     <i class="d-icon-arrow-left"></i> Prev
                     <span class="product-nav-popup">
-                      <img src="assets/images/product/product-thumb-prev.jpg" alt="product thumbnail" width="110" height="123">
+                      <img src="assets/images/product/product-thumb-prev.jpg" alt="product thumbnail" width="110"
+                        height="123">
                       <span class="product-name">Sed egtas Dnte Comfort</span>
                     </span>
                   </a>
@@ -72,7 +77,8 @@
                   <a href="#">
                     Next <i class="d-icon-arrow-right"></i>
                     <span class="product-nav-popup">
-                      <img src="assets/images/product/product-thumb-next.jpg" alt="product thumbnail" width="110" height="123">
+                      <img src="assets/images/product/product-thumb-next.jpg" alt="product thumbnail" width="110"
+                        height="123">
                       <span class="product-name">Sed egtas Dnte Comfort</span>
                     </span>
                   </a>
@@ -135,12 +141,12 @@
             <div class="product-form product-qty">
               <div class="product-form-group">
                 <div class="input-group mr-2">
-                  <button class="quantity-minus d-icon-minus"></button>
-                  <input class="quantity form-control" type="number" min="1" max="1000000">
-                  <button class="quantity-plus d-icon-plus"></button>
+                  <button class="quantity-minus d-icon-minus" ></button>
+                  <input class="quantity form-control" type="number" min="1" max="1000000" [(ngModel)]="quantity">
+                  <button class="quantity-plus d-icon-plus" ></button>
                 </div>
-                <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold"><i
-                    class="d-icon-bag"></i>Add to
+                <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold"
+                  (click)="addToCart()" ><i class="d-icon-bag"></i>Add to
                   Cart</button>
               </div>
             </div>
@@ -149,14 +155,16 @@
 
             <div class="product-footer">
               <div class="social-links mr-4">
-                <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
-                <a href="#" class="social-link social-twitter fab fa-twitter"></a>
-                <a href="#" class="social-link social-pinterest fab fa-pinterest-p"></a>
+                <a href="javascript:;" class="social-link social-facebook fab fa-facebook-f"></a>
+                <a href="javascript:;" class="social-link social-twitter fab fa-twitter"></a>
+                <a href="javascript:;" class="social-link social-pinterest fab fa-pinterest-p"></a>
               </div>
               <span class="divider d-lg-show"></span>
-              <a href="#" class="btn-product btn-wishlist mr-6"><i class="d-icon-heart"></i>Add to
+              <a href="javascript:;" class="btn-product btn-wishlist mr-6" (click)="addToWishList()"><i
+                  class="d-icon-heart"></i>Add to
                 wishlist</a>
-              <a href="#" class="btn-product btn-compare"><i class="d-icon-compare"></i>Add
+              <a href="javascript:;" class="btn-product btn-compare" (click)="addToCompare()"><i
+                  class="d-icon-compare"></i>Add
                 to
                 compare</a>
             </div>
@@ -167,20 +175,20 @@
       <div class="tab tab-nav-simple product-tabs">
         <ul class="nav nav-tabs justify-content-center" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" href="#product-tab-description">Description</a>
+            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===1}" (click)="goToTab(1)">Description</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#product-tab-additional">Additional information</a>
+            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===2}" (click)="goToTab(2)">Additional information</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#product-tab-size-guide">Size Guide</a>
+            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===3}" (click)="goToTab(3)">Size Guide</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#product-tab-reviews">Reviews (2)</a>
+            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===4}" (click)="goToTab(4)">Reviews (2)</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active in" id="product-tab-description">
+          <div class="tab-pane" id="product-tab-description" [ngClass]="{'active in': tab===1}" [hidden]="tab!==1">
             <div class="row mt-6">
               <div class="col-md-6">
                 <h5 class="description-title mb-4 font-weight-semi-bold ls-m">Features</h5>
@@ -257,7 +265,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="product-tab-additional">
+          <div class="tab-pane" id="product-tab-additional" [ngClass]="{'active in': tab===2}" [hidden]="tab!==2">
             <ul class="list-none">
               <li><label>Brands:</label>
                 <p>SkillStar, SLS</p>
@@ -270,7 +278,7 @@
               </li>
             </ul>
           </div>
-          <div class="tab-pane " id="product-tab-size-guide">
+          <div class="tab-pane " id="product-tab-size-guide" [ngClass]="{'active in': tab===3}" [hidden]="tab!==3">
             <figure class="size-image mt-4 mb-4">
               <img src="assets/images/product/size_guide.png" alt="Size Guide Image" width="217" height="398">
             </figure>
@@ -325,7 +333,7 @@
               </table>
             </figure>
           </div>
-          <div class="tab-pane " id="product-tab-reviews">
+          <div class="tab-pane " id="product-tab-reviews" [ngClass]="{'active in': tab===4}" [hidden]="tab!==4">
             <div class="comments mb-8 pt-2 pb-2 border-no">
               <ul>
                 <li>

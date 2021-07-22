@@ -1,52 +1,48 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, AfterViewInit, AfterContentInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from 'src/app/models';
+import { Product, Store } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
 import { UtilityService } from 'src/app/shared/services';
-import { SignalService, MY_ACTION } from 'src/app/shared/services/signal.service';
+import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { StoreService } from 'src/app/shared/services/store.service';
 
 @Component({
-  selector: 'app-product-search',
-  templateUrl: './product-search.component.html',
-  styleUrls: ['./product-search.component.scss']
+  selector: 'app-mixed-search',
+  templateUrl: './mixed-search.component.html',
+  styleUrls: ['./mixed-search.component.scss']
 })
-export class ProductSearchComponent implements OnInit {
+export class MixedSearchComponent implements OnInit, AfterContentInit {
 
-  public sidenavOpen = true;
-  public animation: any;   // Animation
-  public sortByOrder = '';   // sorting
-  public tagsFilters: any[] = [];
+  // private products: Product[] = [];
+  // private stores: Store[] = [];
 
-  private sortKey = ''; // sorting the products
+
+  public sortKey = ''; // sorting the stores
 
   public page = 1;
   public layout = 'grid'; // list
 
   FETCH_LIMIT = 100;
   FETCH_OFFSET = 0;
-
   pageInfo = {} as PageInfo;
 
-  productItems: Product[] = [];
-  sortedProductItems: Product[] = [];
-  productItemsPerPage = 20;
+  private items: any[] = [];
+  sortedItems: any[] = [];
+  itemsPerPage = 20;
 
-  productLoading = false;
-  companyLoading = false;
-  workersLoading = false;
+  loading = false;
 
   paramKey = '';
-
-  public productItemsEvent = new EventEmitter<any>();
-
+  public itemsEvent = new EventEmitter<any>();
 
   constructor(
     private signal: SignalService,
     private util: UtilityService,
     private storeService: StoreService,
     private route: ActivatedRoute
+
   ) {
+
     this.route.params.subscribe(params => {
       console.log(params);
       this.paramKey = params.cat;
@@ -54,7 +50,6 @@ export class ProductSearchComponent implements OnInit {
 
     this.resetPage();
   }
-
 
   ngAfterContentInit(): void {
     this.resetPage();
@@ -86,25 +81,36 @@ export class ProductSearchComponent implements OnInit {
   }
 
 
-  set ProductItemsPerPage(size: number) {
-    this.productItemsPerPage = size;
+
+  get Items() {
+    return this.items;
+  }
+
+  set ItemsPerPage(size: number) {
+    this.itemsPerPage = size;
     this.resetPage();
     this.performSearch();
   }
 
+  get ItemsPerPage() {
+    return this.itemsPerPage;
+  }
+
+
   resetPage() {
     this.pageInfo.limit = this.FETCH_LIMIT;
     this.pageInfo.offset = this.FETCH_OFFSET;
-    this.productItems = [];
+    this.items = [];
   }
 
   getCurrentTotalItems() {
-    const total = this.page * this.productItemsPerPage;
-    if (total > this.productItems?.length) {
-      return this.productItems?.length;
+    const total = this.page * this.itemsPerPage;
+    if (total > this.items?.length) {
+      return this.items?.length;
     }
     return total;
   }
+
 
   async performSearch(key: string = null) {
     // get search term from disk
@@ -112,27 +118,30 @@ export class ProductSearchComponent implements OnInit {
       key = await this.util.getSearchTermLocal();
     }
 
-    // search for product
-    this.productLoading = true;
-    this.storeService.searchProduct(key, this.pageInfo).subscribe((data: Product[]) => {
-      this.productItems = this.productItems.concat(data);
-      this.productLoading = false;
-      this.pageInfo.offset += this.productItems.length;
+    // search for store
+    this.loading = true;
+    this.storeService.searchAll(key, this.pageInfo).subscribe((data: any) => {
+      this.items = this.items.concat(data);
+      console.log(this.items);
+      this.itemsEvent.emit(this.items);
+      this.loading = false;
+      this.pageInfo.offset += this.items.length;
     });
-
   }
+
+
 
   isLoading() {
-    return this.companyLoading || this.productLoading || this.productLoading;
+    // return this.companyLoading || this.storeLoading || this.productLoading;
   }
 
-  public onPageChanged(event) {
+public onPageChanged(event) {
     this.page = event;
-    // this.products;
+    // this.stores;
     window.scrollTo(200, 0);
 
-    // load more productItems from the server
-    const totalPages = Math.floor((this.productItems.length / this.productItemsPerPage) + 0.4);
+    // load more items from the server
+    const totalPages = Math.floor((this.Items.length / this.ItemsPerPage) + 0.4);
     if (totalPages === this.page) {
       // load more from server
       this.performSearch();
@@ -142,7 +151,7 @@ export class ProductSearchComponent implements OnInit {
   sort() {
     switch (this.sortKey) {
       case 'default':
-        this.sortedProductItems = this.productItems;
+        this.sortedItems = this.items;
         break;
       case 'popularity':
         this.sortByPopularity();
@@ -160,7 +169,7 @@ export class ProductSearchComponent implements OnInit {
         this.sortByPrice()
         break;
       default:
-        this.sortedProductItems = this.productItems;
+        this.sortedItems = this.items;
         break;
     }
   }
@@ -179,6 +188,22 @@ export class ProductSearchComponent implements OnInit {
 
   sortByPrice(){
 
+  }
+
+
+  sortItems() {
+    this.items = this.items.sort((a, b) => {
+      return a.name.localeCompare(b.name)
+    })
+  }
+
+
+
+  isStore(item: any) {
+    if (item.storeId) {
+      return false;
+    }
+    return true;
   }
 
 }

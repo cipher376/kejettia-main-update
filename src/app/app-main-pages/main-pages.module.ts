@@ -1,7 +1,7 @@
+import { CartComponent } from './cart/cart.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartComponent } from './cart/cart.component';
 import { ContactComponent } from './contact/contact.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CompareComponent } from './compare/compare.component';
@@ -39,7 +39,6 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
   declarations: [
     MainComponent,
     AboutUsComponent,
-    CartComponent,
     CheckoutComponent,
     CompareComponent,
     ContactComponent,
@@ -55,7 +54,7 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
     LayoutComponent,
     AuthComponent,
     OrderCompleteComponent,
-
+    CartComponent
   ]
 })
 export class MainPagesModule { }

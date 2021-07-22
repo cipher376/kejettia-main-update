@@ -2,7 +2,10 @@
   <div class="page-content mb-10 pb-6">
     <div class="container">
       <app-store-carousel></app-store-carousel>
-      <app-store-search></app-store-search>
+      <app-mixed-search [hidden]="searchPageFilter !== 'mixed'"></app-mixed-search>
+      <app-store-search [hidden]="searchPageFilter !== 'store'"></app-store-search>
+      <app-product-search [hidden]="searchPageFilter !== 'product'">
+      </app-product-search>
     </div>
   </div>
 </main>

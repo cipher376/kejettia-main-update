@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ProductCategory, StoreCategory } from 'src/app/models';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -10,7 +11,10 @@ export class CategoriesMenuItemComponent implements OnInit {
   private category: StoreCategory = new StoreCategory();
   selectedCategory1: ProductCategory = new ProductCategory();
   selectedCategory2: ProductCategory = new ProductCategory();
-  constructor() { }
+
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
@@ -22,6 +26,10 @@ export class CategoriesMenuItemComponent implements OnInit {
 
   get Category() {
     return this.category;
+  }
+
+  goToSearch(){
+    this.router.navigateByUrl('/main/pages/search;cat='+this.category?.name)
   }
 
 

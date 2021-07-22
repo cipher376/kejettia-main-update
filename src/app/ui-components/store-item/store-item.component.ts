@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { PhotoDisplayType } from './../../models/photo';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Store } from 'src/app/models';
@@ -16,7 +17,9 @@ export class StoreItemComponent implements OnInit {
   @Input() layout = 'grid'; // 'list'
 
   constructor(
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router,
+    private storeService: StoreService
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +52,12 @@ export class StoreItemComponent implements OnInit {
     if (UtilityService.calcDatesDiffInDays(this.store?.dateCreated) <= 7) // within 7 days means new
       return true;
     return false;
+  }
+
+  goToStore(){
+    this.storeService.setSelectedStoreLocal(this.store).then(()=>{
+      this.router.navigateByUrl('/stores/pages/home');
+    });
   }
 
 

@@ -36,7 +36,7 @@ export class User {
   localAuthentication?: Authentication;
   externalAuthentication?: Authentication;
   currentDeliveryAddress?: DeliveryAddress;
-  carts?: Cart[];
+  cart: Cart;
 
 
   resetPasswordRequest?: ResetRequest[];
@@ -53,7 +53,6 @@ export class User {
   favouriteProduct?: Product[];
   createdStores?: Store[];
   bargains?: Bargain[];
-
   employee?: Employee;
 
   constructor(data?: Partial<User>) {

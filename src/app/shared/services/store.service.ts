@@ -31,27 +31,27 @@ export interface StoreType {
   id: number;
   name: string;
 }
-export const STORE_TYPES: StoreType[] = [
-  { id: 1, name: 'Supermarkets' },
-  { id: 2, name: 'Department Stores' },
-  { id: 3, name: 'Mall' },
-  { id: 4, name: 'Discount Retailer' },
-  { id: 5, name: 'Convenience Store' },
-  { id: 6, name: 'Warehouse' },
-  { id: 7, name: 'Whole sale' },
-  { id: 8, name: 'Drug Store' },
-  { id: 9, name: 'Used Goods Store' },
-  { id: 10, name: 'Electronic shop' },
-  { id: 11, name: 'Garage' },
-  { id: 12, name: 'Tools shop' },
-  { id: 13, name: 'Construction material shop' },
-  { id: 14, name: 'Clothings store' },
-  { id: 15, name: 'Footwear shop' },
-  { id: 16, name: 'Food store' },
-  { id: 17, name: 'Food store' },
-  { id: 18, name: 'Hospital equipment shop' },
-  { id: 19, name: 'Heavy duty equipment' }
-];
+// export const STORE_TYPES: StoreType[] = [
+//   { id: 1, name: 'Supermarkets' },
+//   { id: 2, name: 'Department Stores' },
+//   { id: 3, name: 'Mall' },
+//   { id: 4, name: 'Discount Retailer' },
+//   { id: 5, name: 'Convenience Store' },
+//   { id: 6, name: 'Warehouse' },
+//   { id: 7, name: 'Whole sale' },
+//   { id: 8, name: 'Drug Store' },
+//   { id: 9, name: 'Used Goods Store' },
+//   { id: 10, name: 'Electronic shop' },
+//   { id: 11, name: 'Garage' },
+//   { id: 12, name: 'Tools shop' },
+//   { id: 13, name: 'Construction material shop' },
+//   { id: 14, name: 'Clothings store' },
+//   { id: 15, name: 'Footwear shop' },
+//   { id: 16, name: 'Food store' },
+//   { id: 17, name: 'Food store' },
+//   { id: 18, name: 'Hospital equipment shop' },
+//   { id: 19, name: 'Heavy duty equipment' }
+// ];
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +66,14 @@ export class StoreService {
     private http: HttpClient
   ) {
 
+  }
+
+
+  static getProductRating(product: Product){
+    // likes
+    // reviews
+    //
+    return 5;
   }
 
   static getStoreRating(store: Store){
@@ -168,7 +176,7 @@ export class StoreService {
       return undefined;
     }
     if (store.id) { // perform update
-      return this.http.patch<Address>(environment.store_api_root_url + `/stores/${store?.id}`, store).pipe(
+      return this.http.patch<Store>(environment.store_api_root_url + `/stores/${store?.id}`, store).pipe(
         map(res => {
           // console.log(res);
           return store as any;
@@ -176,7 +184,7 @@ export class StoreService {
         catchError(e => this.handleError(e))
       );
     } else {
-      return this.http.post<Address>(environment.store_api_root_url + `/stores`, store).pipe(
+      return this.http.post<Store>(environment.store_api_root_url + `/stores`, store).pipe(
         map(res => {
           // console.log(res);
           return res as any;
@@ -609,6 +617,33 @@ export class StoreService {
     );
   }
 
+  getProductById(productId: any) {
+    if (!productId) {
+      console.log('Invalid product id');
+      return undefined;
+    }
+    const filter = {
+      include: [
+        { relation: 'features' },
+        { relation: 'productCategoryItems' },
+        { relation: 'shippings' },
+        { relation: 'photos' },
+        { relation: 'videos' },
+        { relation: 'productModel' },
+        { relation: 'likes' },
+        { relation: 'reviews' },
+        { relation: 'bargains' }
+      ]
+    }
+    const url = `${environment.store_api_root_url}/products/${productId}?filter=${JSON.stringify(filter)}`
+    return this.http.get<Product>(url).pipe(
+      map((res: Product) => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
   /////////////////////////////////////////////////////////////////////////
   /*************Features access endpoints*****/
   ///////////////////////////////////////////////////////////////////////////
@@ -990,6 +1025,45 @@ export class StoreService {
       catchError(e => this.handleError(e))
     );
   }
+
+  searchProduct(searchKey = 'all', pageInfo?: PageInfo) {
+    let filter = {};
+    if (pageInfo) {
+      filter = {
+        // offset: pageInfo.offset,
+        limit: pageInfo.limit,
+        skip: pageInfo.offset,
+        include: [
+          {
+            relation: 'productCategoryItem'
+          },
+          {
+            relation: 'photos'
+          },
+          {
+            relation: 'videos'
+          },
+          {
+            relation: 'productModel'
+          }
+        ]
+      };
+    }
+    if (!searchKey) {
+      searchKey = 'all';
+    }
+    const url = environment.store_api_root_url + '/products-search/' + searchKey + '?filter=' + JSON.stringify(filter) ?? '';
+    // console.log(url);
+    return this.http.get<Store[]>(url).pipe(
+      map(res => {
+        // console.log(res);
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+
   /////////////////////////////////////////////////////////////////////////
   /*************Products shipping*****/
   ///////////////////////////////////////////////////////////////////////////
@@ -1039,6 +1113,30 @@ export class StoreService {
     return this.http.delete(url).pipe(
       map(res => {
         return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+  /////////////////////////////////////////////////////////////////////////
+  /******************OTHER QUERIES ***************************************/
+  /////////////////////////////////////////////////////////////////////////
+
+  searchAll(searchKey = 'all', pageInfo?: PageInfo) {
+    let filter;
+    if (pageInfo) {
+      filter = {
+        // order: 'id DESC',
+        limit: pageInfo.limit,
+        skip: pageInfo.offset,
+      };
+    }
+    filter = filter ? '?filter=' + JSON.stringify(filter) : '';
+    const url = environment.store_api_root_url + '/search/' + searchKey+filter;
+    // console.log(url);
+    return this.http.get<any[]>(url).pipe(
+      map(res => {
+        // console.log(res);
+        return res as any;
       }),
       catchError(e => this.handleError(e))
     );

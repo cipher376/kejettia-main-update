@@ -7,6 +7,7 @@ export class CartItem {
   quantity?: number;
   price?: number;
   product?: Product;
+  productId?: string;
   features?: Features[];
   cartId?: string;
 
@@ -18,7 +19,6 @@ export class CartItem {
 export class Cart {
 
   id?: string;
-  storeId?: string;
   userId?: string;
   cartItems?: CartItem[];
 }

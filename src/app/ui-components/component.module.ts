@@ -15,7 +15,6 @@ import { TrendProductsComponent } from './trend-products/trend-products.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { TaglineWidgetComponent } from './tagline-widget/tagline-widget.component';
 import { StoreItemComponent } from './store-item/store-item.component';
@@ -80,6 +79,8 @@ import { Home2CategoriesComponent } from './home2-categories/home2-categories.co
 import { Home2SliderComponent } from './home2-slider/home2-slider.component';
 import { Home2CategoryBadgeComponent } from './home2-category-badge/home2-category-badge.component';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
+import { MixedSearchComponent } from './mixed-search/mixed-search.component';
+import { CartMiniComponent } from './cart-mini/cart-mini.component';
 
 
 
@@ -159,6 +160,9 @@ import { FeaturedProductsComponent } from './featured-products/featured-products
     BlackFridayAdComponent,
     BrandsHorizontalComponent,
     BlogWidgetComponent,
+    MixedSearchComponent,
+    CartMiniComponent,
+
   ],
   imports: [
     CommonModule,
@@ -237,6 +241,8 @@ import { FeaturedProductsComponent } from './featured-products/featured-products
     BlackFridayAdComponent,
     BrandsHorizontalComponent,
     BlogWidgetComponent,
+    MixedSearchComponent,
+    CartMiniComponent
 
 
   ]
