@@ -81,6 +81,8 @@ import { Home2CategoryBadgeComponent } from './home2-category-badge/home2-catego
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 import { MixedSearchComponent } from './mixed-search/mixed-search.component';
 import { CartMiniComponent } from './cart-mini/cart-mini.component';
+import { LoaderMiniComponent } from './loader-mini/loader-mini.component';
+import { LoaderFullComponent } from './loader-full/loader-full.component';
 
 
 
@@ -162,7 +164,8 @@ import { CartMiniComponent } from './cart-mini/cart-mini.component';
     BlogWidgetComponent,
     MixedSearchComponent,
     CartMiniComponent,
-
+    LoaderMiniComponent,
+    LoaderFullComponent,
   ],
   imports: [
     CommonModule,

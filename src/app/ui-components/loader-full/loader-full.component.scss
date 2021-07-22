@@ -1,0 +1,39 @@
+.loader-bg {
+    z-index: 9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, .8);
+    backdrop-filter: blur(20px);
+
+}
+
+.img-loader {
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: auto;
+    max-width: 100%;
+    max-height: 100vw;
+    min-height: auto;
+    height: 80px;
+    animation: anim 3s infinite;
+}
+
+@keyframes anim {
+    0% {
+    opacity: .1;
+    }
+
+    75% {
+    opacity: 1;
+    }
+
+    100% {
+    opacity: .1;
+    }
+}
