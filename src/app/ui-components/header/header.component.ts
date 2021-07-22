@@ -1,3 +1,5 @@
+import { Urls } from 'src/app/config';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/shared/services';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { User } from 'src/app/models';
@@ -10,7 +12,8 @@ import { User } from 'src/app/models';
 export class HeaderComponent implements OnInit, AfterViewInit {
   loggedUser: User = new User();
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
   }
 
@@ -22,6 +25,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+  }
+
+  goToWishlist(){
+    this.router.navigateByUrl(Urls.wishlist);
   }
 
 }

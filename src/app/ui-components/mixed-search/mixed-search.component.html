@@ -3,7 +3,7 @@
     <app-search-nav></app-search-nav>
   </aside>
   <div class="col-lg-9 main-content">
-    <app-store-filter (itemsGridSizeEvent)="ItemsPerPage=$event" (layoutEvent)="layout=$event" (sortKeyEvent)="sortKey=$event"></app-store-filter>
+    <app-mixed-search-filter (itemsGridSizeEvent)="ItemsPerPage=$event" (layoutEvent)="layout=$event" (sortKeyEvent)="sortKey=$event"></app-mixed-search-filter>
 
 
     <div class="row cols-2 cols-sm-3 cols-md-4 product-wrapper" *ngIf="layout === 'grid'">

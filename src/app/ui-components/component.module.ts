@@ -83,6 +83,7 @@ import { MixedSearchComponent } from './mixed-search/mixed-search.component';
 import { CartMiniComponent } from './cart-mini/cart-mini.component';
 import { LoaderMiniComponent } from './loader-mini/loader-mini.component';
 import { LoaderFullComponent } from './loader-full/loader-full.component';
+import { MixedSearchFilterComponent } from './mixed-search-filter/mixed-search-filter.component';
 
 
 
@@ -166,6 +167,7 @@ import { LoaderFullComponent } from './loader-full/loader-full.component';
     CartMiniComponent,
     LoaderMiniComponent,
     LoaderFullComponent,
+    MixedSearchFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -245,7 +247,8 @@ import { LoaderFullComponent } from './loader-full/loader-full.component';
     BrandsHorizontalComponent,
     BlogWidgetComponent,
     MixedSearchComponent,
-    CartMiniComponent
+    CartMiniComponent,
+    MixedSearchFilterComponent,
 
 
   ]

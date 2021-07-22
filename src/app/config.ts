@@ -5,14 +5,15 @@ export const Urls = {
   login: '/main/pages/auth/login',
   paymentPlatform: '/main/pages/payment-platform',
   error: '/main/pages/error',
-  order: '/main/pages/order-list',
+  order: '/main/pages/order',
   checkout: '/main/pages/checkout',
   cart: '/main/pages/cart',
   faq: '/main/pages/faq',
   about: '/main/pages/about',
   contact: '/main/pages/contact',
   account: '/main/pages/my-account',
-  search: '/main/pages/search'
+  search: '/main/pages/search',
+  wishlist: '/main/pages/wishlist'
 };
 
 // export const STORE_DETAILS = {

@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Urls } from 'src/app/config';
 
 declare var $: any;
 declare var Window: any;
@@ -23,7 +24,11 @@ export class CartMiniComponent implements OnInit {
 
 
   goToCart(){
-    this.router.navigateByUrl('/stores/pages/cart')
+    this.router.navigateByUrl(Urls.cart)
+  }
+
+  goToCheckOut(){
+    this.router.navigateByUrl(Urls.checkout)
   }
 
 }
