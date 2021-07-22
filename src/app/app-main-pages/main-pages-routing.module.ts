@@ -18,6 +18,8 @@ import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { StoresComponent } from './stores/stores.component';
 import { OrderCompleteComponent } from './order-complete/order-complete.component';
+import { LoaderFullComponent } from '../ui-components/loader-full/loader-full.component';
+import { LoaderMiniComponent } from '../ui-components/loader-mini/loader-mini.component';
 
 
 
@@ -54,7 +56,11 @@ const routes: Routes = [
           { path: 'search', component: SearchComponent },
           { path: 'map', component: MapViewComponent },
           { path: 'recent-browsed', component: RecentBrowsedComponent },
-          { path: 'order', component: OrderCompleteComponent }
+          { path: 'order', component: OrderCompleteComponent },
+
+          // custom
+          { path: 'loader-f', component: LoaderFullComponent },
+          { path: 'loader-m', component: LoaderMiniComponent }
         ]
       },
 

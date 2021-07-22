@@ -80,6 +80,8 @@ import { Home2CategoriesComponent } from './home2-categories/home2-categories.co
 import { Home2SliderComponent } from './home2-slider/home2-slider.component';
 import { Home2CategoryBadgeComponent } from './home2-category-badge/home2-category-badge.component';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
+import { LoaderMiniComponent } from './loader-mini/loader-mini.component';
+import { LoaderFullComponent } from './loader-full/loader-full.component';
 
 
 
@@ -159,6 +161,8 @@ import { FeaturedProductsComponent } from './featured-products/featured-products
     BlackFridayAdComponent,
     BrandsHorizontalComponent,
     BlogWidgetComponent,
+    LoaderMiniComponent,
+    LoaderFullComponent,
   ],
   imports: [
     CommonModule,

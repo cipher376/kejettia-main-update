@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 import { AngularWebStorageModule } from 'angular-web-storage';
 import { ToastrModule } from 'ngx-toastr';
 import { Home2Component } from './app-store-pages/home2/home2.component';
-
+import { LoaderFullComponent } from './ui-components/loader-full/loader-full.component';
+import { LoaderMiniComponent } from './ui-components/loader-mini/loader-mini.component';
 
 @NgModule({
   declarations: [
