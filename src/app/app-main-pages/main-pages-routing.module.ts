@@ -20,6 +20,7 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
 import { CartComponent } from './cart/cart.component';
 import { LoaderFullComponent } from '../ui-components/loader-full/loader-full.component';
 import { LoaderMiniComponent } from '../ui-components/loader-mini/loader-mini.component';
+import { CompanyComponent } from './company/company.component';
 
 
 
@@ -59,7 +60,8 @@ const routes: Routes = [
           { path: 'order', component: OrderCompleteComponent },
           { path: 'cart', component: CartComponent },
           { path: 'loader-f', component: LoaderFullComponent },
-          { path: 'loader-m', component: LoaderMiniComponent }
+          { path: 'loader-m', component: LoaderMiniComponent },
+          { path: 'company', component: CompanyComponent }
         ]
       },
 
