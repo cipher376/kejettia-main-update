@@ -74,6 +74,9 @@ export enum MY_ACTION {
   searchInputTextChange = 11.0,
   searchDataLoaded = 11.1,
 
+  //Comments and reviews
+  loadReviews = 12
+
 }
 
 @Injectable({
@@ -95,6 +98,9 @@ export class SignalService {
 
   private videosLoadedSource = new Subject<Video[]>();
   videosLoadedSource$ = this.videosLoadedSource.asObservable();
+
+  private majorCategoryFilterSource = new Subject<string[]>();
+  majorCategoryFilterSource$ = this.majorCategoryFilterSource.asObservable();
 
 
   constructor() { }
@@ -118,6 +124,10 @@ export class SignalService {
   }
   announceVideosLoaded(videos: Video[]) {
     this.videosLoadedSource.next(videos);
+  }
+
+  announceMajorCategoryFilterChanged(cats: string[]) {
+    this.majorCategoryFilterSource.next(cats);
   }
 
   // announceNewMessageBatchNumber(batch: number) {

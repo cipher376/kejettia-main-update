@@ -1,0 +1,70 @@
+<h2 class="title justify-content-center">Related Products</h2>
+<div class="owl-carousel owl-theme owl-nav-full row cols-2 cols-md-3 cols-lg-4" data-owl-options="{
+          'items': 5,
+          'nav': false,
+          'loop': true,
+          'dots': true,
+          'margin': 20,
+          'responsive': {
+            '0': {
+              'items': 2
+            },
+            '768': {
+              'items': 3
+            },
+            '992': {
+              'items': 4,
+              'dots': false,
+              'nav': true
+            }
+          }
+        }">
+  <div class="product" *ngFor="let prod of relatedProducts, let i=index;">
+    <figure class="product-media">
+      <a href="javascript:;" (click)="goToProduct(prod)">
+        <img [src]="relatedProductPhotos[i]" alt="product" width="280" height="315">
+      </a>
+      <div class="product-label-group" *ngIf="isNew(prod)">
+        <label class="product-label label-new">new</label>
+      </div>
+      <div class="product-label-group">
+        <label class="product-label label-sale">27% off</label>
+      </div>
+      <div class="product-action-vertical">
+        <a href="javascript:;" class="btn-product-icon btn-cart" data-toggle="modal" data-target="#addCartModal"
+          title="Add to cart"><i class="d-icon-bag"></i></a>
+        <a href="javascript:;" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i
+            class="d-icon-heart"></i></a>
+      </div>
+      <div class="product-action">
+        <a href="javascript:;" class="btn-product btn-quickview" title="Quick View" (click)="goToProduct(prod)">Quick
+          View</a>
+      </div>
+    </figure>
+    <div class="product-details">
+      <div class="product-cat">
+        <a href="javascript:;" (click)="searchCategory(prod)">{{getCategory(prod)}}</a>
+      </div>
+      <h3 class="product-name">
+        <a href="javascript:;" (click)="goToProduct(prod)">{{prod?.name}}</a>
+      </h3>
+
+      <div class="product-price" *ngIf="prod?.currentPrice">
+        {{prod?.currentPrice |currency:'GHC '}}</div>
+      <ng-container *ngIf="!prod?.currentPrice">
+        <div class="product-price">{{prod?.fromPrice |currency:'GHC '}}</div> -
+        <div class="product-price">{{prod?.toPrice |currency:'GHC '}}</div>
+      </ng-container>
+
+      <div class="ratings-container">
+        <div class="ratings-full">
+          <span class="ratings" [style]="'width:'+getRating(prod)+'%'"></span>
+          <span class="tooltiptext tooltip-top"></span>
+        </div>
+        <a href="javascript:;" class="rating-reviews">( <span class="review-count">{{prod?.reviews?.length||0}}</span>
+          reviews
+          )</a>
+      </div>
+    </div>
+  </div>
+</div>

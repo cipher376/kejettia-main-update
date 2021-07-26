@@ -1,3 +1,5 @@
+import { Product } from 'src/app/models';
+import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDetailsComponent implements OnInit {
 
-  constructor() { }
+  selectedProduct: Product = new Product();
+  pageType = 'simple'; // 'detail'
+
+  constructor(
+    private storeService: StoreService
+  ) { }
 
   ngOnInit(): void {
+    this.selectedProduct = this.storeService.getSelectedProductLocalSync();
+    this.loadPage();
+  }
+
+
+  loadPage() {
+    let found = false;
+    this.selectedProduct?.features?.forEach(f => {
+      if (f.name.search('size') || f.name.search('color')) {
+        found = true;
+      }
+    })
+    if (found) {
+      this.pageType = 'detail'
+    } else {
+      this.pageType = 'simple'
+    }
   }
 
 }

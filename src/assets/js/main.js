@@ -203,8 +203,8 @@ window.Riode = {};
       paddingOffsetTop: 93,
       paddingOffsetBottom: 0,
     },
-    templateCartAddedAlert: '<div class="alert alert-simple alert-btn cart-added-alert">' +
-      '<a href="cart.html" class="btn btn-success btn-md">View Cart</a>' +
+    templateCartAddedAlert: '<div class="alert alert-simple alert-btn cart-added-alert animate__animated animate__fadeInDown">' +
+      '<a href="/main/pages/cart" class="btn btn-success btn-md">View Cart</a>' +
       '<span>"{{name}}" has been added to your cart.</span>' +
       '<button type="button" class="btn btn-link btn-close"><i class="d-icon-times"></i></button>' +
       '</div>',
@@ -1661,7 +1661,7 @@ window.Riode = {};
             imageLink: $product.find('.product-name > a').attr('href'),
             price: $product.find('.product-variation-price').length > 0 ? $product.find('.product-variation-price').children('span').html() : $product.find('.product-price .price').html(),
             count: $product.find('.quantity').val(),
-            actionTemplate: '<div class="action-group d-flex mt-3"><a href="cart.html" class="btn btn-sm btn-outline btn-primary btn-rounded mr-2">View Cart</a><a href="checkout.html" class="btn btn-sm btn-primary btn-rounded">Check Out</a></div>'
+            actionTemplate: '<div class="action-group d-flex mt-3"><a href="/main/pages/cart" class="btn btn-sm btn-outline btn-primary btn-rounded mr-2">View Cart</a><a href="checkout.html" class="btn btn-sm btn-primary btn-rounded">Check Out</a></div>'
           });
         }
       });
@@ -1697,7 +1697,7 @@ window.Riode = {};
       $slider.on('initialized.owl.carousel', function (e) {
 
         // if not quickview, make full image toggle
-        self.isQuickview || $slider.append('<a href="#" class="product-image-full"><i class="d-icon-zoom"></i></a>');
+        self.isQuickview; // || $slider.append('<a href="javascript:;" class="product-image-full"><i class="d-icon-zoom"></i></a>');
 
         // init thumbnails
         thumbsInit(self);
@@ -1804,6 +1804,7 @@ window.Riode = {};
    * @instance single
    */
   Riode.initProductSinglePage = (function () {
+
     function alertCartAdded(e) {
       var $product = $(e.currentTarget).closest('.product-single');
       $('.cart-added-alert').remove();
@@ -1816,6 +1817,7 @@ window.Riode = {};
 
     function openFullImage(e) {
       e.preventDefault();
+      console.log('open full image')
 
       var $this = $(e.currentTarget),
         $product = $this.closest('.product-single'),
@@ -1834,7 +1836,6 @@ window.Riode = {};
         // simple gallery
         $images = $product.find('.product-gallery img');
       }
-
       // if images exist
       if ($images.length) {
         var images = $images.map(function () {
@@ -1848,6 +1849,7 @@ window.Riode = {};
             };
           }).get(),
 
+
           carousel = $product.find('.product-single-carousel, .product-gallery-carousel').data('owl.carousel'),
           currentIndex = carousel ?
           // Carousel Type
@@ -1855,6 +1857,7 @@ window.Riode = {};
 
           // Gallery Type
           ($product.find('.product-gallery > *').index());
+        console.log(typeof PhotoSwipe);
 
         if (typeof PhotoSwipe !== 'undefined') {
           var pswpElement = $('.pswp')[0];
@@ -1863,6 +1866,7 @@ window.Riode = {};
             index: currentIndex,
             closeOnScroll: false,
           });
+          console.log(photoswipe);
           photoswipe.init();
           Riode.photoswipe = photoswipe;
         }
@@ -1875,7 +1879,7 @@ window.Riode = {};
         $star.addClass('active').siblings().removeClass('active');
         $star.parent().addClass('selected');
         $star.closest('.rating-form').find('select').val($star.text());
-        e.preventDefault();
+        // e.preventDefault();
       });
     }
 
@@ -1893,7 +1897,7 @@ window.Riode = {};
           .html('<i class="d-icon-heart-full"></i> Browse wishlist')
           .addClass('added')
           .attr('title', 'Browse wishlist')
-          .attr('href', 'wishlist.html');
+          .attr('href', '/main/pages/wishlist');
       }, 500);
     }
 
@@ -1903,14 +1907,16 @@ window.Riode = {};
       // Wishlist button
       Riode.$body.on('click', '.product-single .btn-wishlist', initWishlistAction);
 
+
       if ($product.length) {
         // if home page, init single products
         if (document.body.classList.contains('home')) {
           $product.each(function () {
             Riode.initProductSingle($(this));
           });
+          // console.log($product);
 
-          return null;
+          // return null;
 
           // else, init single product page
         } else {
@@ -1922,13 +1928,12 @@ window.Riode = {};
         // if no single product exists, return
         return null;
       }
-
+      // console.log('Click events bindings')
       // image full
-      Riode.$body.on('click', '.product-single .product-image-full', openFullImage);
+      // Riode.$body.on('click', '.product-single .product-image-full', openFullImage);
 
       // cart added alert
-      Riode.$body.on('click', '.single-product .btn-cart:not(.disabled)', alertCartAdded);
-
+      // Riode.$body.on('click', '.single-product .btn-cart:not(.disabled)', alertCartAdded);
       // image zoom for grid type
       Riode.zoomImage('.product-gallery.row');
 
@@ -2235,31 +2240,31 @@ window.Riode = {};
       // Add DOM elements and event listeners
       self.$value = $el.val(self.value = QuantityInput.value);
 
-      self.$minus = $el.prev()
-        .on('mousedown', function (e) {
-          e.preventDefault();
-          self.startDecrease();
-        })
-        .on('touchstart', function (e) {
-          if (e.cancelable) {
-            e.preventDefault();
-          }
-          self.startDecrease();
-        })
-        .on('mouseup', self.stop);
+      // self.$minus = $el.prev()
+      //   .on('mousedown', function (e) {
+      //     e.preventDefault();
+      //     self.startDecrease();
+      //   })
+      //   .on('touchstart', function (e) {
+      //     if (e.cancelable) {
+      //       e.preventDefault();
+      //     }
+      //     self.startDecrease();
+      //   })
+      //   .on('mouseup', self.stop);
 
-      self.$plus = $el.next()
-        .on('mousedown', function (e) {
-          e.preventDefault();
-          self.startIncrease();
-        })
-        .on('touchstart', function (e) {
-          if (e.cancelable) {
-            e.preventDefault();
-          }
-          self.startIncrease();
-        })
-        .on('mouseup', self.stop);
+      // self.$plus = $el.next()
+      //   .on('mousedown', function (e) {
+      //     e.preventDefault();
+      //     self.startIncrease();
+      //   })
+      //   .on('touchstart', function (e) {
+      //     if (e.cancelable) {
+      //       e.preventDefault();
+      //     }
+      //     self.startIncrease();
+      //   })
+      //   .on('mouseup', self.stop);
 
       Riode.$body.on('mouseup', self.stop)
         .on('touchend', self.stop)
@@ -2571,11 +2576,13 @@ window.Riode = {};
         timers.splice(index, 1)[0];
 
         // remove box
-        offset -= $box[0].offsetHeight + self.space;
-        $box.removeClass('show');
-        setTimeout(function () {
-          $box.remove();
-        }, 300);
+        if ($box) {
+          offset -= $box[0].offsetHeight + self.space;
+          $box.removeClass('show');
+          setTimeout(function () {
+            $box.remove();
+          }, 300);
+        }
 
         // slide down other boxes
         boxes.forEach(function ($box, i) {
@@ -2865,37 +2872,37 @@ window.Riode = {};
           $('.shop-sidebar .filter-items .active').removeClass('active');
           e.preventDefault();
         })
-        // Toggle filter
-        .on('click', '.filter-items a', function (e) {
-          var $ul = $(this).closest('.filter-items');
-          if (!$ul.hasClass('search-ul') && !$ul.parent().hasClass('select-menu')) {
-            if ($ul.hasClass('filter-price')) {
-              $(this).parent().siblings().removeClass('active');
-              $(this).parent().toggleClass('active');
-              e.preventDefault();
-            } else {
-              $(this).parent().toggleClass('active');
-              e.preventDefault();
-            }
-          }
-        })
+      // Toggle filter
+      // .on('click', '.filter-items a', function (e) {
+      //   var $ul = $(this).closest('.filter-items');
+      //   if (!$ul.hasClass('search-ul') && !$ul.parent().hasClass('select-menu')) {
+      //     if ($ul.hasClass('filter-price')) {
+      //       $(this).parent().siblings().removeClass('active');
+      //       $(this).parent().toggleClass('active');
+      //       e.preventDefault();
+      //     } else {
+      //       // $(this).parent().toggleClass('active');
+      //       e.preventDefault();
+      //     }
+      //   }
+      // })
     },
     initProductsQuickview: function () {
-      Riode.$body.on('click', '.btn-quickview', function (e) {
-        e.preventDefault();
-        Riode.popup({
-          items: {
-            src: "ajax/quickview.html"
-          },
-          callbacks: {
-            ajaxContentAdded: function () {
-              this.wrap.imagesLoaded(function () {
-                Riode.initProductSingle($('.mfp-product .product-single'));
-              });
-            }
-          }
-        }, 'quickview');
-      });
+      // Riode.$body.on('click', '.btn-quickview', function (e) {
+      //   e.preventDefault();
+      //   Riode.popup({
+      //     items: {
+      //       src: "ajax/quickview.html"
+      //     },
+      //     callbacks: {
+      //       ajaxContentAdded: function () {
+      //         this.wrap.imagesLoaded(function () {
+      //           Riode.initProductSingle($('.mfp-product .product-single'));
+      //         });
+      //       }
+      //     }
+      //   }, 'quickview');
+      // });
     },
     initProductsCartAction: function () {
       Riode.$body
@@ -2913,27 +2920,28 @@ window.Riode = {};
           e.preventDefault();
         })
 
-        // Add to cart in products
-        .on('click', '.product:not(.product-variable) .btn-product-icon.btn-cart, .product:not(.product-variable) .btn-product.btn-cart', function (e) {
-          e.preventDefault();
+      // Add to cart in products
+      // .on('click', '.product:not(.product-variable) .btn-product-icon.btn-cart, .product:not(.product-variable) .btn-product.btn-cart', function (e) {
+      //   e.preventDefault();
 
-          var $product = $(this).closest('.product');
+      //   var $product = $(this).closest('.product');
 
-          // if not product single, then open minipopup
-          $product.hasClass('product-single') ||
-            Riode.Minipopup.open({
-              message: 'Successfully Added',
-              productClass: ' product-cart',
-              name: $product.find('.product-name').text(),
-              nameLink: $product.find('.product-name > a').attr('href'),
-              imageSrc: $product.find('.product-media img').attr('src'),
-              imageLink: $product.find('.product-name > a').attr('href'),
-              price: $product.find('.product-price .new-price, .product-price .price').html(),
-              count: $product.find('.quantity').length > 0 ? $product.find('.quantity').val() : 1,
-              actionTemplate: '<div class="action-group d-flex"><a href="cart.html" class="btn btn-sm btn-outline btn-primary btn-rounded">View Cart</a><a href="checkout.html" class="btn btn-sm btn-primary btn-rounded">Check Out</a></div>'
-            });
-        });
+      //   // if not product single, then open minipopup
+      //   $product.hasClass('product-single') ||
+      //     Riode.Minipopup.open({
+      //       message: 'Successfully Added',
+      //       productClass: ' product-cart',
+      //       name: $product.find('.product-name').text(),
+      //       nameLink: $product.find('.product-name > a').attr('href'),
+      //       imageSrc: $product.find('.product-media img').attr('src'),
+      //       imageLink: $product.find('.product-name > a').attr('href'),
+      //       price: $product.find('.product-price .new-price, .product-price .price').html(),
+      //       count: $product.find('.quantity').length > 0 ? $product.find('.quantity').val() : 1,
+      //       actionTemplate: '<div class="action-group d-flex"><a href="cart.html" class="btn btn-sm btn-outline btn-primary btn-rounded">View Cart</a><a href="checkout.html" class="btn btn-sm btn-primary btn-rounded">Check Out</a></div>'
+      //     });
+      // });
     },
+
     initProductsLoad: function () {
       $('.btn-load').on('click', function (e) {
         var $this = $(this),

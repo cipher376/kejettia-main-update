@@ -13,7 +13,11 @@ export const Urls = {
   contact: '/main/pages/contact',
   account: '/main/pages/my-account',
   search: '/main/pages/search',
-  wishlist: '/main/pages/wishlist'
+  wishlist: '/main/pages/wishlist',
+  compare: '/main/pages/compare',
+
+  productDetails: '/stores/pages/product-details',
+  storeHome: '/stores/pages/home'
 };
 
 // export const STORE_DETAILS = {

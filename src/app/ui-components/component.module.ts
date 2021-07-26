@@ -1,3 +1,4 @@
+import { GalleryWrapperComponent } from './gallery-wrapper/gallery-wrapper.component';
 import { BlogWidgetComponent } from './blog-widget/blog-widget.component';
 import { BrandsHorizontalComponent } from './brands-horizontal/brands-horizontal.component';
 import { BlackFridayAdComponent } from './black-friday-ad/black-friday-ad.component';
@@ -84,7 +85,14 @@ import { CartMiniComponent } from './cart-mini/cart-mini.component';
 import { LoaderMiniComponent } from './loader-mini/loader-mini.component';
 import { LoaderFullComponent } from './loader-full/loader-full.component';
 import { MixedSearchFilterComponent } from './mixed-search-filter/mixed-search-filter.component';
-
+import { CompanyItemComponent } from './company-item/company-item.component';
+import { FeatureSelectComponent } from './feature-select/feature-select.component';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
+import { ReviewCommentsComponent } from './review-comments/review-comments.component';
+import { AddReviewComponent } from './add-review/add-review.component';
+import { RelatedProductComponent } from './related-product/related-product.component';
+import { VideoWidgetComponent } from './video-widget/video-widget.component';
 
 
 @NgModule({
@@ -168,6 +176,14 @@ import { MixedSearchFilterComponent } from './mixed-search-filter/mixed-search-f
     LoaderMiniComponent,
     LoaderFullComponent,
     MixedSearchFilterComponent,
+    CompanyItemComponent,
+    FeatureSelectComponent,
+    GalleryWrapperComponent,
+    ReviewCommentsComponent,
+    AddReviewComponent,
+    RelatedProductComponent,
+    VideoWidgetComponent
+
   ],
   imports: [
     CommonModule,
@@ -175,7 +191,10 @@ import { MixedSearchFilterComponent } from './mixed-search-filter/mixed-search-f
     HttpClientModule,
     FormsModule,
     NgxPaginationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GalleryModule,
+    LightboxModule,
+
   ],
   exports:[
     AccountDetailsComponent,
@@ -249,7 +268,8 @@ import { MixedSearchFilterComponent } from './mixed-search-filter/mixed-search-f
     MixedSearchComponent,
     CartMiniComponent,
     MixedSearchFilterComponent,
-
+    FeatureSelectComponent,
+    GalleryWrapperComponent
 
   ]
 })

@@ -17,9 +17,9 @@ import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { StoresComponent } from './stores/stores.component';
 import { OrderCompleteComponent } from './order-complete/order-complete.component';
-import { CartComponent } from './cart/cart.component';
 import { LoaderFullComponent } from '../ui-components/loader-full/loader-full.component';
 import { LoaderMiniComponent } from '../ui-components/loader-mini/loader-mini.component';
+import { CartComponent } from './cart/cart.component';
 
 
 

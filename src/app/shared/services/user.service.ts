@@ -11,10 +11,10 @@ import { MyLocalStorageService } from './local-storage.service';
 import { SignalService, MY_ACTION } from './signal.service';
 
 
-interface UserSearchObject {
-  score: number;
-  user: Profile;
-}
+// interface UserSearchObject {
+//   score: number;
+//   user: Profile;
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -156,21 +156,20 @@ export class UserService {
         where: {
           id: { inq: ids }
         },
-
       };
     } else {
       filter = {
         where: {
           id: { inq: ids }
         },
-
       }
     }
 
     // filter.include =  [
     //   {
     //     relation: 'profilePhoto'
-    //   },
+    //   }
+    // ]
     //   { relation: 'address' },
     //   {
     //     relation: 'profile',
@@ -187,7 +186,7 @@ export class UserService {
     // console.log(url);
     return this.http.get<User[]>(url).pipe(
       map(res => {
-        // console.log(res);
+        console.log(res);
         return res as any;
       }),
       catchError(e => this.handleError(e))

@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, AfterViewInit, AfterContentInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product, Store } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
 import { UtilityService } from 'src/app/shared/services';
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { StoreService } from 'src/app/shared/services/store.service';
+import { SEARCH_PAGE_FILTER } from '../search-nav/search-nav.component';
 
 @Component({
   selector: 'app-mixed-search',
@@ -13,9 +14,7 @@ import { StoreService } from 'src/app/shared/services/store.service';
 })
 export class MixedSearchComponent implements OnInit, AfterContentInit {
 
-  // private products: Product[] = [];
-  // private stores: Store[] = [];
-
+  private searchPageFilter;
 
   public sortKey = ''; // sorting the stores
 
@@ -52,7 +51,10 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    this.resetPage();
+    setTimeout(() => {
+      this.resetPage();
+
+    }, 100);
   }
 
   ngOnInit(): void {
@@ -96,6 +98,16 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
     return this.itemsPerPage;
   }
 
+  set SearchPageFilter(filter: string[]) {
+    setTimeout(() => {
+      this.searchPageFilter = filter;
+      const filteredItems = [];
+      this.sortedItems.forEach(item => {
+        console.log(item.constructor.name)
+      });
+    }, 100);
+
+  }
 
   resetPage() {
     this.pageInfo.limit = this.FETCH_LIMIT;
@@ -121,8 +133,11 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
     // search for store
     this.loading = true;
     this.storeService.searchAll(key, this.pageInfo).subscribe((data: any) => {
-      this.items = this.items.concat(data);
       console.log(this.items);
+      setTimeout(() => {
+        this.items = this.items.concat(data);
+        this.items = UtilityService.shuffle(this.items);
+      }, 100);
       this.itemsEvent.emit(this.items);
       this.loading = false;
       this.pageInfo.offset += this.items.length;
@@ -135,7 +150,7 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
     // return this.companyLoading || this.storeLoading || this.productLoading;
   }
 
-public onPageChanged(event) {
+  public onPageChanged(event) {
     this.page = event;
     // this.stores;
     window.scrollTo(200, 0);
@@ -174,19 +189,19 @@ public onPageChanged(event) {
     }
   }
 
-  sortByPopularity(){
+  sortByPopularity() {
 
   }
 
-  sortByRating(){
+  sortByRating() {
 
   }
 
-  sortByDate(){
+  sortByDate() {
 
   }
 
-  sortByPrice(){
+  sortByPrice() {
 
   }
 

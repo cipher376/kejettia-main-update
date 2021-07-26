@@ -1,0 +1,12 @@
+<div class="product-form product-variations product-size" *ngIf="Features?.length>0">
+  <label>{{Features[0]?.name|titlecase}}:</label>
+  <div class="product-form-group">
+    <div class="select-box">
+      <select name="size" class="form-control">
+        <option value="" selected="selected">Choose an Option</option>
+        <option [value]="f?.value" *ngFor="let f of Features">{{f?.value}}</option>
+      </select>
+    </div>
+    <a href="javascript:;" class="size-guide" style="margin-left: 11% !important;" (click)="goToGuide(Features[0]?.name)"><i class="d-icon-th-list"></i>{{Features[0]?.name |titlecase}} Guide</a>
+  </div>
+</div>

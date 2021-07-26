@@ -1,0 +1,38 @@
+<div class="title-wrapper text-left">
+  <h3 class="title title-simple text-left text-normal">Add a Review</h3>
+  <p>Your email address will not be published. Required fields are marked *</p>
+</div>
+<div class="rating-form">
+  <label for="rating" class="text-dark">Click to rate * </label>
+  <span class="rating-stars selected">
+    <a class="star-1" href="javascript:;" (click)="rating=1">1</a>
+    <a class="star-2" href="javascript:;" (click)="rating=2">2</a>
+    <a class="star-3" href="javascript:;" (click)="rating=3">3</a>
+    <a class="star-4" href="javascript:;" (click)="rating=4">4</a>
+    <a class="star-5" href="javascript:;" (click)="rating=5">5</a>
+  </span> &nbsp; &nbsp;
+
+  <select name="rating" id="rating" required="" style="" [(ngModel)]="rating">
+    <option value="">Rate…</option>
+    <option value="5">Perfect</option>
+    <option value="4">Good</option>
+    <option value="3">Average</option>
+    <option value="2">Not that bad</option>
+    <option value="1">Very poor</option>
+  </select>
+</div>
+<form  [formGroup]="reviewForm">
+  <textarea id="reply-message" cols="30" rows="6" class="form-control mb-4"
+   placeholder="Comment " formControlName="comment"
+    required></textarea>
+  <div class="form-checkbox mb-4">
+    <input type="checkbox" class="custom-checkbox" formControlName="assert"
+    id="signin-remember" name="signin-remember" />
+    <label class="form-control-label" for="signin-remember">
+      I certify that I have purchase this product and I will provide an honest
+      review for the product.
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary btn-rounded" (click)="save()">Submit<i
+      class="d-icon-arrow-right"></i></button>
+</form>

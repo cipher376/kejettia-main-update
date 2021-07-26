@@ -2,12 +2,25 @@
   <div class="page-content mb-10 pb-6">
     <div class="container">
       <app-store-carousel></app-store-carousel>
-      <app-mixed-search [hidden]="searchPageFilter !== 'mixed'"></app-mixed-search>
-      <app-store-search [hidden]="searchPageFilter !== 'store'"></app-store-search>
-      <app-product-search [hidden]="searchPageFilter !== 'product'">
-      </app-product-search>
+      <div class="row gutter-lg main-content-wrap">
+        <aside class="col-lg-3 sidebar sidebar-fixed sidebar-toggle-remain shop-sidebar sticky-sidebar-wrapper">
+          <app-search-nav></app-search-nav>
+        </aside>
+        <div class="col-lg-9 main-content">
+          <app-mixed-search [hidden]="!(SearchPageFilter?.length==2||SearchPageFilter?.length==0)"></app-mixed-search>
+          <app-store-search [hidden]="!(SearchPageFilter?.includes('store')&&SearchPageFilter?.length==1)">
+          </app-store-search>
+          <app-product-search [hidden]="!(SearchPageFilter?.includes('product')&&SearchPageFilter?.length==1)">
+          </app-product-search>
+        </div>
+      </div>
+
+      <!-- <app-company-search [hidden]="!(SearchPageFilter?.includes('company')&&SearchPageFilter?.length==1)">
+      </app-company-search> -->
     </div>
   </div>
 </main>
 <!-- Scroll Top -->
-<a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="d-icon-arrow-up"></i></a>
+<a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top">
+  <i class="d-icon-arrow-up"></i>
+</a>

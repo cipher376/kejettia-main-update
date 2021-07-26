@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, EventEmitter, OnInit } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
@@ -90,6 +90,8 @@ export class StoreSearchComponent implements OnInit, AfterContentInit {
     this.performSearch();
   }
 
+
+
   resetPage() {
     this.pageInfo.limit = this.FETCH_LIMIT;
     this.pageInfo.offset = this.FETCH_OFFSET;
@@ -113,10 +115,11 @@ export class StoreSearchComponent implements OnInit, AfterContentInit {
     // search for store
     this.storeLoading = true;
     this.storeService.searchStore(key, this.pageInfo).subscribe((data: Store[]) => {
-      this.storeItems = this.storeItems.concat(data);
-      this.storeItemsEvent.emit(this.storeItems);
-      this.storeLoading = false;
-      this.pageInfo.offset += this.storeItems.length;
+        this.storeItems = this.storeItems.concat(data);
+        this.storeItemsEvent.emit(this.storeItems);
+        this.storeService.setStoresLocal(this.storeItems);
+        this.storeLoading = false;
+        this.pageInfo.offset += this.storeItems.length;
     });
 
   }
@@ -139,44 +142,44 @@ export class StoreSearchComponent implements OnInit, AfterContentInit {
   }
 
   sort() {
-    switch (this.sortKey) {
-      case 'default':
-        this.sortedStoreItems = this.storeItems;
-        break;
-      case 'popularity':
-        this.sortByPopularity();
-        break;
-      case 'rating':
-        this.sortByRating();
-        break;
-      case 'date':
-        this.sortByDate();
-        break;
-      case 'price-low':
-        this.sortByPrice();
-        break;
-      case 'price-high':
-        this.sortByPrice()
-        break;
-      default:
-        this.sortedStoreItems = this.storeItems;
-        break;
-    }
+    // switch (this.sortKey) {
+    //   case 'default':
+    //     this.sortedStoreItems = this.storeItems;
+    //     break;
+    //   case 'popularity':
+    //     this.sortByPopularity();
+    //     break;
+    //   case 'rating':
+    //     this.sortByRating();
+    //     break;
+    //   case 'date':
+    //     this.sortByDate();
+    //     break;
+    //   case 'price-low':
+    //     this.sortByPrice();
+    //     break;
+    //   case 'price-high':
+    //     this.sortByPrice()
+    //     break;
+    //   default:
+    //     this.sortedStoreItems = this.storeItems;
+    //     break;
+    // }
   }
 
-  sortByPopularity(){
-
-  }
-
-  sortByRating(){
+  sortByPopularity() {
 
   }
 
-  sortByDate(){
+  sortByRating() {
 
   }
 
-  sortByPrice(){
+  sortByDate() {
+
+  }
+
+  sortByPrice() {
 
   }
 

@@ -16,12 +16,24 @@ export class UtilityService {
   ) { }
 
 
-
-   setSearchTermLocal(term: string) {
+  setSearchTermLocal(term: string) {
     this.localStore.setSync('searchKey', term);
   }
   getSearchTermLocal() {
-    return  this.localStore.getSync('searchKey');
+    return this.localStore.getSync('searchKey');
+  }
+
+  static arrayRemove(arr, value) {
+    return arr.filter(function (ele) {
+      return ele != value;
+    });
+  }
+  static shuffle(a: any[]) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
   }
 
   // Calculate and return difference between two date objects in days
@@ -104,7 +116,7 @@ export class UtilityService {
   static generateUniqueFileName(fileName: string): string {
     const tem = fileName.split('.');
     const ext = tem[tem.length - 1]
-    return  Math.random().toString(16).substr(2, 8) + new Date().getMilliseconds() + '_' + new Date().getSeconds() + '_'
+    return Math.random().toString(16).substr(2, 8) + new Date().getMilliseconds() + '_' + new Date().getSeconds() + '_'
       + new Date().getMinutes() + '_' + new Date().getHours() + '_' +
       new Date().getDay() + '_' + new Date().getMonth() + '_' +
       new Date().getFullYear() + '.' + ext;

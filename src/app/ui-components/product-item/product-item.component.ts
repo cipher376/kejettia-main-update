@@ -37,8 +37,8 @@ export class ProductItemComponent implements OnInit {
 
 
   getCategory() {
-    if (this.product?.productCategoryItem) {
-      return this.product?.productCategoryItem?.name
+    if (this.product?.productCategoryItems?.length>0) {
+      return this.product?.productCategoryItems[0]?.name
     }
     return '';
   }

@@ -1,3 +1,5 @@
+import { UtilityService } from 'src/app/shared/services';
+import { Review } from './../../models/review';
 import { NO_IMAGE } from 'src/app/config';
 import { ProductCategory, ProductCategoryItem, ProductModel, ProductBrand, Product, ProductToCategoryItemThrough } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
@@ -69,21 +71,41 @@ export class StoreService {
   }
 
 
-  static getProductRating(product: Product){
+  static isNew(item: Product | Store){
+    if(item.dateCreated){
+      const days = UtilityService.calcDatesDiffInDays(item.dateCreated, new Date(Date.now()));
+      if(days<=14){ // after two weeks
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  // returns rating in %
+  static getProductRating(product: Product) {
+    // likes
+    // reviews
+    //
+    let totalRatings = 0;
+    const reviews = product?.reviews;
+    if (reviews) {
+      reviews.forEach(rev => {
+        totalRatings += rev.rate;
+      });
+      return ((totalRatings / reviews?.length) / 5) * 100;
+    }
+    return 0;
+  }
+
+  static getStoreRating(store: Store) {
     // likes
     // reviews
     //
     return 5;
   }
 
-  static getStoreRating(store: Store){
-    // likes
-    // reviews
-    //
-    return 5;
-  }
-
-  static getPhotoUrlByDisplayTypeLocal(photos: Photo[], displayType: string, thumb = false) {
+  static getPhotoUrlByDisplayTypeLocal(photos: Photo[], displayType: string, thumb = false, chooseAny = false,) {
     let url = '';
     let foundPhotos: Photo[] = [];
     photos?.forEach(photo => {
@@ -92,12 +114,11 @@ export class StoreService {
       }
     })
 
-    if (foundPhotos?.length > 0) {
+    if (chooseAny && (foundPhotos?.length > 0)) {
       const tmp = foundPhotos[Math.floor(Math.random() * (foundPhotos?.length))]
       url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
     }
-
-    return url ?? NO_IMAGE;
+    return url;
   }
 
 
@@ -1131,7 +1152,28 @@ export class StoreService {
       };
     }
     filter = filter ? '?filter=' + JSON.stringify(filter) : '';
-    const url = environment.store_api_root_url + '/search/' + searchKey+filter;
+    const url = environment.store_api_root_url + '/search/' + searchKey + filter;
+    // console.log(url);
+    return this.http.get<any[]>(url).pipe(
+      map(res => {
+        // console.log(res);
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  searchCompany(searchKey = 'all', pageInfo?: PageInfo) {
+    let filter;
+    if (pageInfo) {
+      filter = {
+        // order: 'id DESC',
+        limit: pageInfo.limit,
+        skip: pageInfo.offset,
+      };
+    }
+    filter = filter ? '?filter=' + JSON.stringify(filter) : '';
+    const url = environment.store_api_root_url + '/search/' + searchKey + filter;
     // console.log(url);
     return this.http.get<any[]>(url).pipe(
       map(res => {
@@ -1143,7 +1185,28 @@ export class StoreService {
   }
 
 
+  createReview(review: Review) {
+    console.log(`${environment.store_api_root_url}/reviews`);
+    return this.http.post<Review>(`${environment.store_api_root_url}/reviews`, review).pipe(
+      map(res => {
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
 
+  getProductReviews(productId: any) {
+    const filter = {
+    };
+    const url = environment.store_api_root_url + `/products/${productId}/reviews`;
+    return this.http.get<Review[]>(url).pipe(
+      map(res => {
+        // console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
 
 
   /////////////////////////////////////////////////////////////////////////
@@ -1201,6 +1264,24 @@ export class StoreService {
   removeSelectedProductLocal() {
     this.fstore.remove('selected_product');
   }
+
+
+  async getProductsLocal(): Promise<Product[]> {
+    return await this.fstore.getObject('products');
+  }
+  getProductsLocalSync(): Product[] {
+    return this.fstore.getObjectSync('products');
+  }
+  async setProductsLocal(stores: Store[]) {
+    return await this.fstore.setObject('products', stores);
+  }
+  deleteProductsLocal() {
+    this.fstore.remove('products');
+  }
+
+
+  //********* */
+
 
 
 

@@ -1,4 +1,3 @@
-import { CartComponent } from './cart/cart.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -54,7 +53,6 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
     LayoutComponent,
     AuthComponent,
     OrderCompleteComponent,
-    CartComponent
   ]
 })
 export class MainPagesModule { }

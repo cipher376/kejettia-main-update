@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
@@ -39,7 +39,6 @@ export class ProductSearchComponent implements OnInit {
   paramKey = '';
 
   public productItemsEvent = new EventEmitter<any>();
-
 
   constructor(
     private signal: SignalService,
@@ -92,6 +91,7 @@ export class ProductSearchComponent implements OnInit {
     this.performSearch();
   }
 
+
   resetPage() {
     this.pageInfo.limit = this.FETCH_LIMIT;
     this.pageInfo.offset = this.FETCH_OFFSET;
@@ -116,6 +116,8 @@ export class ProductSearchComponent implements OnInit {
     this.productLoading = true;
     this.storeService.searchProduct(key, this.pageInfo).subscribe((data: Product[]) => {
       this.productItems = this.productItems.concat(data);
+      this.sortedProductItems = this.productItems;
+      this.storeService.setProductsLocal(this.productItems);
       this.productLoading = false;
       this.pageInfo.offset += this.productItems.length;
     });

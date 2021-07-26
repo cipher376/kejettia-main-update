@@ -1,28 +1,22 @@
-<div class="row gutter-lg main-content-wrap">
-  <aside class="col-lg-3 sidebar sidebar-fixed sidebar-toggle-remain shop-sidebar sticky-sidebar-wrapper">
-    <app-search-nav></app-search-nav>
-  </aside>
-  <div class="col-lg-9 main-content">
-    <app-product-filter (itemsGridSizeEvent)="ProductItemsPerPage=$event" (layoutEvent)="layout=$event"
-      (sortKeyEvent)="SortKey=$event"></app-product-filter>
-    <div class="row cols-2 cols-sm-3 cols-md-4 product-wrapper" *ngIf="layout === 'grid'">
-      <app-product-item [layout]='layout' [Product]="product"
-        *ngFor="let product of sortedProductItems | paginate: { id:'search_product', itemsPerPage: productItemsPerPage, currentPage: page  }">
-      </app-product-item>
-    </div>
 
-    <div class="product-lists product-wrapper" *ngIf="layout === 'list'">
-      <app-product-item [layout]="layout" [Product]="product"
-        *ngFor="let product of sortedProductItems | paginate: { id:'search_product', itemsPerPage: productItemsPerPage, currentPage: page  }">
-      </app-product-item>
-    </div>
-
-    <nav class="toolbox toolbox-pagination">
-      <p class="show-info">Showing {{getCurrentTotalItems()}} of {{productItems.length}} Products</p>
-      <pagination-controls class="search-pagination" [autoHide]="false" [maxSize]="10" [id]="'search_product'"
-        (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)" [directionLinks]="true"
-        [responsive]="true" previousLabel="Back" nextLabel="Next" screenReaderPaginationLabel="Pagination"
-        screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
-    </nav>
+  <app-product-filter (itemsGridSizeEvent)="ProductItemsPerPage=$event" (layoutEvent)="layout=$event"
+    (sortKeyEvent)="SortKey=$event"></app-product-filter>
+  <div class="row cols-2 cols-sm-3 cols-md-4 product-wrapper" *ngIf="layout === 'grid'">
+    <app-product-item [layout]='layout' [Product]="product"
+      *ngFor="let product of sortedProductItems | paginate: { id:'search_product', itemsPerPage: productItemsPerPage, currentPage: page  }">
+    </app-product-item>
   </div>
-</div>
+
+  <div class="product-lists product-wrapper" *ngIf="layout === 'list'">
+    <app-product-item [layout]="layout" [Product]="product"
+      *ngFor="let product of sortedProductItems | paginate: { id:'search_product', itemsPerPage: productItemsPerPage, currentPage: page  }">
+    </app-product-item>
+  </div>
+
+  <nav class="toolbox toolbox-pagination">
+    <p class="show-info">Showing {{getCurrentTotalItems()}} of {{productItems.length}} Products</p>
+    <pagination-controls class="search-pagination" [autoHide]="false" [maxSize]="10" [id]="'search_product'"
+      (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)" [directionLinks]="true"
+      [responsive]="true" previousLabel="Back" nextLabel="Next" screenReaderPaginationLabel="Pagination"
+      screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+  </nav>

@@ -4,7 +4,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { ErrorPageComponent } from "../app-main-pages/error-page/error-page.component";
 import { LayoutComponent } from "../app-main-pages/layout/layout.component";
 import { Home2Component } from "./home2/home2.component";
-import { CartComponent } from '../app-main-pages/cart/cart.component';
 
 
 const routes: Routes = [

@@ -24,8 +24,7 @@ export class Product {
   favouriteUsers?: User[];
   photos?: Photo[];
   videos?: Video[];
-  productCategoryItemId?: string;
-  productCategoryItem: ProductCategoryItem
+  productCategoryItems: ProductCategoryItem[];
   productModel?: ProductModel;
   features?: Features[];
   shippings?: Shipping[];

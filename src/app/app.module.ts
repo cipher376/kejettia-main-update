@@ -1,7 +1,8 @@
+import { httpInterceptorProviders } from './shared/services/my-interceptors';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularWebStorageModule } from 'angular-web-storage';
@@ -16,6 +17,7 @@ import { LoaderMiniComponent } from './ui-components/loader-mini/loader-mini.com
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AngularWebStorageModule,
     ToastrModule.forRoot({
@@ -25,7 +27,9 @@ import { LoaderMiniComponent } from './ui-components/loader-mini/loader-mini.com
     }),
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
