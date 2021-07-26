@@ -22,6 +22,8 @@ import { ComponentModule } from '../ui-components/component.module';
 import { LayoutComponent } from './layout/layout.component';
 import { AuthComponent } from './auth/auth.component';
 import { OrderCompleteComponent } from './order-complete/order-complete.component';
+import { CompanyComponent } from './company/company.component';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -53,6 +55,8 @@ import { OrderCompleteComponent } from './order-complete/order-complete.componen
     LayoutComponent,
     AuthComponent,
     OrderCompleteComponent,
+    CartComponent,
+    CompanyComponent
   ]
 })
 export class MainPagesModule { }
