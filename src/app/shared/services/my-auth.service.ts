@@ -96,6 +96,10 @@ export class MyAuthService {
         this.token = { token: res.token } as any;
         if (this.token?.token) {
           this.saveToken(this.token);
+          this.userService.getUserDeliveryAddress(res?.user?.id)?.subscribe(addresses => {
+            res.user.otherDeliveryAddresses = addresses;
+            this.userService.setLoggedUserLocalSync(res.user);
+          })
           this.userService.setLoggedUserLocal(res.user);
         }
         return res;

@@ -1,11 +1,13 @@
+import { CartService } from 'src/app/shared/services/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { MY_ACTION, SignalService } from './signal.service';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { MyLocalStorageService } from './local-storage.service';
-import { Order, ORDER_STATE } from 'src/app/models';
+import { ConsolidatedOrder, Order, ORDER_STATE } from 'src/app/models';
 import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
 
 
 
@@ -17,6 +19,8 @@ export class OrderService {
     private fstore: MyLocalStorageService,
     private http: HttpClient,
     private signal: SignalService,
+    private cartService: CartService,
+    private userService: UserService
   ) {
   }
 
@@ -24,7 +28,7 @@ export class OrderService {
     order.storeId = storeId;
     order.userId = userId;
     if (!this.validateOrder(order)) {
-      return;
+      return undefined;
     }
     // validate order
     if (order.id) { // perform update
@@ -124,7 +128,7 @@ export class OrderService {
     const url = `${environment.store_api_root_url}/orders/?filter=${JSON.stringify(filter)}`
     return this.http.get<Order[]>(url).pipe(
       map((res: Order[]) => {
-        this.saveOrdersLocal(res);
+        this.setOrdersLocal(res);
         return res;
       }),
       catchError(e => this.handleError(e))
@@ -132,45 +136,45 @@ export class OrderService {
   }
 
 
-  getOrders(state?: ORDER_STATE) {
-    const filter = {
-      order: 'id DESC',
-      include: [
-        {
-          relation: 'cartItems',
-          scope: {
-            include: [{
-              relation: 'product'
-            }]
-          }
-        },
-        {
-          relation: 'store',
-          scope: {
-            include: [{
-              relation: 'address'
-            }]
-          }
-        },
-        {
-          relation: 'deliveryAddress'
-        }
-      ]
-    } as any;
+  // getOrders(state?: ORDER_STATE) {
+  //   const filter = {
+  //     order: 'id DESC',
+  //     include: [
+  //       {
+  //         relation: 'cartItems',
+  //         scope: {
+  //           include: [{
+  //             relation: 'product'
+  //           }]
+  //         }
+  //       },
+  //       {
+  //         relation: 'store',
+  //         scope: {
+  //           include: [{
+  //             relation: 'address'
+  //           }]
+  //         }
+  //       },
+  //       {
+  //         relation: 'deliveryAddress'
+  //       }
+  //     ]
+  //   } as any;
 
-    if (state) {
-      filter.where = { state };
-    }
+  //   if (state) {
+  //     filter.where = { state };
+  //   }
 
-    const url = `${environment.store_api_root_url}/orders/?filter=${JSON.stringify(filter)}`
-    return this.http.get<Order[]>(url).pipe(
-      map((res: Order[]) => {
-        this.saveOrdersLocal(res);
-        return res;
-      }),
-      catchError(e => this.handleError(e))
-    );
-  }
+  //   const url = `${environment.store_api_root_url}/orders/?filter=${JSON.stringify(filter)}`
+  //   return this.http.get<Order[]>(url).pipe(
+  //     map((res: Order[]) => {
+  //       this.setOrdersLocal(res);
+  //       return res;
+  //     }),
+  //     catchError(e => this.handleError(e))
+  //   );
+  // }
 
 
   getOrderById(orderId: any) {
@@ -183,20 +187,165 @@ export class OrderService {
     );
   }
 
-
-  deleteOrderFromUser(userId: any, order: Order) {
-    if (userId != order.userId) {
-      console.log('Order does not belongs to user');
-      return;
+  getConsolidatedOrderById(orderId: any) {
+    const filter = {
+      include: [
+        {
+          relation: 'orders',
+          scope: {
+            include: [
+              {
+                relation: 'cartItems',
+                scope: {
+                  include: [
+                    {
+                     relation: 'product',
+                     scope: {
+                       include:[
+                         'photos'
+                       ]
+                     }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          relation: 'deliveryAddress',
+          scope: {
+            include: [
+              {
+                relation: 'address',
+              }
+            ]
+          }
+        }
+      ]
     }
-    if(!order?.storeId){
-      console.log('Order object is invalid');
-      return;
-    }
-    order.visibleToUser = false;
-    return this.createUpdateOrder(order.storeId,userId,order);
+    const url = `${environment.store_api_root_url}/consolidated-orders/${orderId}?filter=${JSON.stringify(filter)}`
+    return this.http.get<ConsolidatedOrder>(url).pipe(
+      map((res: ConsolidatedOrder) => {
+        this.setSelectedConsolidatedOrderLocal(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
   }
 
+  deleteOrderFromUser(userId: any, order: Order) {
+    // if (userId != order.userId) {
+    //   console.log('Order does not belongs to user');
+    //   return undefined;
+    // }
+    // if(!order?.storeId){
+    //   console.log('Order object is invalid');
+    //   return undefined;
+    // }
+    // order.visibleToUser = false;
+    // return this.createUpdateOrder(order.storeId,userId,order);
+  }
+
+
+
+
+  createConsolidatedOrder(userId: any, order: ConsolidatedOrder) {
+    if (!userId) {
+      userId = this.userService.getLoggedUserLocalSync()?.id;
+    }
+    if (!userId) {
+      console.error('User must logged in to create orders');
+      return undefined;
+    }
+    order.userId = userId;
+    return this.http.post<ConsolidatedOrder>(environment.store_api_root_url + `/users/${userId}/consolidated-orders`, order).pipe(
+      map(res => {
+        this.setSelectedConsolidatedOrderLocal(res);
+        // Reload the cart
+        this.cartService.getCart(userId).subscribe(() => { });
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  getConsolidatedOrders(userId: any) {
+    const filter = {
+      where: {
+        visibleToUser: true
+      },
+      include: [
+        {
+          relation: 'orders',
+          scope: {
+            include: [
+              {
+                relation: 'cartItems',
+                scope: {
+                  include: [
+                    {
+                     relation: 'product',
+                     scope: {
+                       include:[
+                         'photos'
+                       ]
+                     }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          relation: 'deliveryAddress',
+          scope: {
+            include: [
+              {
+                relation: 'address',
+              }
+            ]
+          }
+        }
+      ]
+    }
+
+    const url = `${environment.store_api_root_url}/users/${userId}/consolidated-orders?filter=${JSON.stringify(filter)}`
+    return this.http.get<ConsolidatedOrder[]>(url).pipe(
+      map(res => {
+        this.setConsolidatedOrdersLocal(res);
+        this.signal.sendAction(MY_ACTION.ordersLoaded);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+
+  deleteConsolidatedOrderFromUser(orderId: any) {
+    const url = `${environment.store_api_root_url}/consolidated-orders/${orderId}/fromUser`
+    return this.http.delete(url).pipe(
+      map(res => {
+        this.signal.sendAction(MY_ACTION.ordersLoaded);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+
+
+  verifyOrderPayment(orderId: any, ref: string) {
+    const url = `${environment.store_api_root_url}/consolidated-orders/${orderId}/verify-payment/${ref}`;
+    return this.http.get(url).pipe(
+      map(res => {
+        console.log(res);
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
 
 
   // async cancelOrder(order: Order) {
@@ -217,85 +366,50 @@ export class OrderService {
   //       });
   //     }
   //   });
-
   // }
 
-  saveOrdersLocal(orders: Order[]) {
-    this.fstore.setObject('orders', orders).then(_ => _);
-    this.signal.sendAction(MY_ACTION.ordersLoaded);
+
+
+
+
+  setSelectedConsolidatedOrderLocal(order: ConsolidatedOrder) {
+    this.fstore.setObjectSync('consolidated_order', order);
   }
 
-  async getOrdersLocal(): Promise<Order[]> {
-    return await this.fstore.getObject('orders');
-
+  getSelectedConsolidatedOrderLocal(): ConsolidatedOrder {
+    return this.fstore.getObjectSync('consolidated_order');
   }
 
-  async getSelectedOrderLocal(): Promise<Order> {
-    return await this.fstore.getObject('selected_order');
+  setConsolidatedOrdersLocal(orders: ConsolidatedOrder[]) {
+    this.fstore.setObjectSync('consolidated_orders', orders);
   }
 
-  async setSelectedOrderLocal(order: Order) {
-    this.fstore.setObject('selected_order', order).then(_ => _);
+  getConsolidatedOrdersLocal(): ConsolidatedOrder[] {
+    return this.fstore.getObjectSync('consolidated_orders');
   }
 
-  async clearOrdersLocal() {
+  setOrdersLocal(order: Order[]) {
+    this.fstore.setObjectSync('orders', order);
+  }
+
+  getOrdersLocal(): Order[] {
+    return this.fstore.getObjectSync('orders');
+  }
+
+
+  setSelectedOrderLocal(order: Order) {
+    this.fstore.setObjectSync('order', order);
+  }
+
+  getSelectedOrderLocal(): Order {
+    return this.fstore.getObjectSync('order');
+  }
+
+
+  clearOrders() {
     this.fstore.remove('orders');
   }
 
-  // async moveCartItemToOrder(item: CartItem) {
-  //   let message, status;
-  //   if (!item.orderId) {
-  //     message = 'Item cannot be purchased. It might be out of stock.';
-  //     status = 'failed';
-  //     this.snackBar.open(message, '×', {
-  //       panelClass: [status],
-  //       verticalPosition: 'top', duration: 3000
-  //     });
-  //     throwError('Some items are invalid');
-  //     return;
-  //   }
-  //   // move from cartitem
-  //   item.cartId = '';
-
-
-  //   // Check if product is in stock
-  //   const productsInStock = await this.productService.countProductInStock(item.productItemId);
-  //   if (item.quantity >= productsInStock) {
-  //     // out of stock
-  //     message = 'Some items are out of stock. Order will be cancelled!';
-  //     status = 'failed';
-  //     this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 3000 });
-  //     throwError('Some items are invalid');
-  //     return;
-  //   }
-  //   return this.cartItemApi.patchOrCreate(item).pipe(
-  //     map((res: CartItem) => {
-  //       console.log(res);
-  //       if (res) {
-  //         // message = 'Item in cart updated!';
-  //         // status = 'Success';
-  //         // this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 3000 });
-
-  //         // reload cart remote
-  //         this.cartService.getCart().subscribe(_ => _);
-  //       }
-  //       return res;
-  //     }), catchError((e) => this.handleError(e)));
-  // }
-
-
-  // saveDeliveryInfo(info: DeliveryAddress) {
-  //   if (!info) {
-  //     console.error('Order must be set for delivery information');
-  //     return;
-  //   }
-  //   return this._deliveryAddressApi.patchOrCreate(info).pipe(
-  //     map((res) => {
-  //       console.log(res);
-  //       return res;
-  //     })
-  //   );
-  // }
 
 
   handleError(e: any) {

@@ -10,7 +10,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { Home2Component } from './app-store-pages/home2/home2.component';
 import { LoaderFullComponent } from './ui-components/loader-full/loader-full.component';
 import { LoaderMiniComponent } from './ui-components/loader-mini/loader-mini.component';
-
+import { SelectModule } from 'ng-select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,8 @@ import { LoaderMiniComponent } from './ui-components/loader-mini/loader-mini.com
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
-    HttpClientModule
+    HttpClientModule,
+    SelectModule
   ],
   providers: [
     httpInterceptorProviders

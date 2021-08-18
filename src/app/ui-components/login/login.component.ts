@@ -1,6 +1,7 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Urls } from 'src/app/config';
 import { User, Credentials } from 'src/app/models';
 import { MyAuthService, UserService, MyLocalStorageService } from 'src/app/shared/services';
@@ -27,7 +28,15 @@ export class LoginComponent implements OnInit {
     private _localStore: MyLocalStorageService,
     private _router: Router,
     private _fb: FormBuilder,
+    private route: ActivatedRoute
   ) {
+
+    this.route.url.subscribe(url => {
+      if (url?.length > 0) {
+        Urls.returnUrl = this._router?.url;
+      }
+    });
+
     this._user = new User();
     this._loginForm = this._fb.group({
       email: [
@@ -60,11 +69,16 @@ export class LoginComponent implements OnInit {
 
     this._auth.login(this._loginForm.value).subscribe(
       res => {
-        // console.log(res);
         if ((res as any)?.user?.id) {
-    window.location.href = window.location.protocol + '//' + window.location.host  + Urls.home;
 
-          // this._router.navigateByUrl()
+          console.log(Urls?.returnUrl);
+
+          if (Urls.returnUrl.search('login') < 0) {
+            window.location.href = window.location.protocol + '//' + window.location.host + Urls.returnUrl;
+          } else {
+            window.location.href = window.location.protocol + '//' + window.location.host + Urls.home;
+          }
+
         } else {
           this._localStore.set('is_login', false).then(_ => { });
         }
@@ -97,14 +111,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async redirectUserToPage() {
-    this._auth.isAuthenticated(); // broadcast login successful
-    this._localStore.set('is_login', true).then(_ => { });
-    // if social update the current user object
-
-    window.location.href = window.location.protocol + '//' + window.location.host + '/#' + Urls.home;
-
-  }
 
   gotoForgotPassword() {
     this._router.navigateByUrl('/main/pages/auth/forgot');

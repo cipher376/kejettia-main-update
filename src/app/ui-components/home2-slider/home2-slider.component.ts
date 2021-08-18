@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Photo } from 'src/app/models';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home2-slider',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Home2SliderComponent implements OnInit {
 
+  private photos: Photo[] = [];
+  fileUrl = environment.file_api_download_url_root;
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+
+  }
+
+
+
+  @Input() set Photos(photos: Photo[]) {
+    this.photos = photos;
+  }
+
+  get Photos() {
+    return this.photos;
+  }
+
+  getPhotoPath(photo: Photo) {
+    return this.fileUrl + photo.source
   }
 
 }

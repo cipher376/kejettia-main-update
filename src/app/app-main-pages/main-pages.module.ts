@@ -24,6 +24,7 @@ import { AuthComponent } from './auth/auth.component';
 import { OrderCompleteComponent } from './order-complete/order-complete.component';
 import { CompanyComponent } from './company/company.component';
 import { CartComponent } from './cart/cart.component';
+import { SelectModule } from 'ng-select';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { CartComponent } from './cart/cart.component';
     NgxPaginationModule,
     ComponentModule,
     HttpClientModule,
-
+    SelectModule
   ],
   declarations: [
     MainComponent,

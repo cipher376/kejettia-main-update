@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Urls } from 'src/app/config';
 import { Product } from 'src/app/models';
 import { UtilityService } from 'src/app/shared/services';
 import { StoreService } from 'src/app/shared/services/store.service';
@@ -55,7 +56,7 @@ export class ProductItemComponent implements OnInit {
 
   goToProduct(){
     this.storeService.setSelectedProductLocal(this.product).then(()=>{
-      this.router.navigateByUrl('/stores/pages/product-details');
+      this.router.navigateByUrl(Urls.productDetails+'/'+this.product?.id);
     });
   }
 

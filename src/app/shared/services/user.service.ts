@@ -1,3 +1,4 @@
+import { DeliveryAddress } from './../../models/delivery-address';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Pipe } from '@angular/core';
@@ -404,51 +405,6 @@ export class UserService {
     }
   }
 
-  // // arg: User current Identity id if id is not specified
-  // getUserById(id: any = null) {
-  //   if (!id) {
-  //     id = this._myUserApi.getCurrentId();
-  //   }
-  //   // console.log(id);
-  //   const filter = {
-  //     fields: ['id', 'phone', 'email', 'username', 'dateCreated'],
-  //     include: [
-  //       {
-  //         relation: 'employees'
-  //       },
-  //       {
-  //         relation: 'profile',
-  //         scope: {
-  //           // further filter the owner object
-  //           include: [
-  //             { relation: 'address' },
-  //             {
-  //               relation: 'photo'
-  //             }
-  //           ]
-  //         }
-  //       },
-  //       {
-  //         relation: 'fcmDevices'
-  //       }
-  //     ]
-  //   };
-
-  //   return this._myUserApi.findById<MyUser>(id, filter).pipe(
-  //     map(res => {
-  //       // console.log(res);
-  //       // this._localStore.setObject('user', res).then(_ => {
-  //       //   this._signal.sendAction(MY_ACTION.userLoaded);
-  //       // });
-  //       return res;
-  //     }),
-  //     catchError(e => this.handleError(e))
-  //   );
-  // }
-
-
-
-
 
 
   // // arg: User current Identity id if id is not specified
@@ -488,403 +444,54 @@ export class UserService {
   }
 
 
-  // getSocialmyUserById(id: string = null) {
-  //   return this._myUserApi.findById(id).pipe(
-  //     map(res => {
-  //       // console.log(res);
-  //       return res;
-  //     }),
-  //     catchError(e => this.handleError(e))
-  //   );
-  // }
-
-
-  // countUsers() {
-  //   return this.profileApi.count().pipe(
-  //     map(res => {
-  //       console.log(res);
-  //       if (res) {
-  //         return res.count;
-  //       }
-  //       return 0;
-  //     }));
-  // }
-
-  // // get user details
-  // getUserdetails(profileId: string): Observable<any> {
-  //   const filter = {
-  //     include: [
-  //       {
-  //         relation: 'myUser',
-  //         scope: {
-  //           fields: ['id', 'phone', 'email', 'username', 'created'],
-  //           include: [
-  //             {
-  //               relation: 'employees'
-  //             }
-  //           ]
-  //         }
-  //       },
-  //       {
-  //         relation: 'address'
-  //       },
-  //       {
-  //         relation: 'photo'
-  //       }]
-  //   };
-  //   return this.profileApi.findById(profileId, filter).pipe(
-  //     map(res => {
-  //       console.log(res);
-  //       return res;
-  //     }),
-  //     catchError(e => this.handleError(e))
-  //   );
-  // }
-
-  // getUsersByIds(ids: string[], skip = 0, limit = 1000, country: string = null, state: string = null, city: string = null) {
-  //   const where = <any>{};
-  //   if (country) {
-  //     where.country = country;
-  //   }
-  //   if (state) {
-  //     where.state = state;
-  //   }
-  //   if (city) {
-  //     where.city = city;
-  //   }
-  //   if (!ids && ids.length <= 0) {
-  //     return;
-  //   }
-  //   const filter = {
-  //     where: {
-  //       id: { inq: ids }
-  //     },
-  //     include: [
-  //       {
-  //         relation: 'employees'
-  //       },
-  //       {
-  //         relation: 'profile',
-  //         scope: {
-  //           include: [
-  //             {
-  //               relation: 'address',
-  //               scope: {
-  //                 where: where
-  //               }
-  //             }, {
-  //               relation: 'address'
-  //             },
-  //             {
-  //               relation: 'photo'
-  //             }
-  //           ]
-  //         }
-  //       }
-  //     ]
-  //   };
-  //   return this._myUserApi.find(filter).pipe(
-  //     map(res => {
-  //       console.log(res);
-  //       return res;
-  //     }),
-  //     catchError(e => this.handleError(e))
-  //   );
-  // }
-
-
-
-  // getProfile(): Observable<Profile> {
-  //   return this._myUserApi.getProfile(this._myUserApi.getCurrentId());
-  // }
-
-  // /******************Get users by geopoint nested query ****************************/
-  // getUsersByGeoPointNestedQuery(point: GeoPoint, skip = 0, limit = 100,
-  //   maxDistanceFromPoint = null,
-  //   unit = 'km') {
-  //   if (!point || !point.lat) {
-  //     console.log('No geopoint');
-  //     // this.newUsers([]);
-  //     point = { lat: 0, lng: 0 };
-  //   }
-
-  //   const filt = {
-  //     order: 'id DESC',
-  //     skip: skip,
-  //     limit: limit,
-  //     include: [
-  //       {
-  //         relation: 'myUser',
-  //         scope: {
-  //           fields: ['id', 'phone', 'email', 'username', 'created'],
-  //           include: [
-  //             {
-  //               relation: 'employees'
-  //             }
-  //           ]
-  //         }
-  //       },
-  //       {
-  //         relation: 'albums'
-  //       },
-  //       {
-  //         relation: 'location'
-  //       },
-  //       {
-  //         relation: 'location',
-  //         scope: {
-  //           where:
-  //           {
-  //             gmap: {
-  //               near: point,
-  //               maxDistance: maxDistanceFromPoint,
-  //               unit: unit
-  //             }
-  //           },
-  //         }
-  //       },
-  //       // {
-  //       //   relation: 'eventBookmarks'
-  //       // },
-  //       // {
-  //       //   relation: 'assets'
-  //       // },
-  //       // {
-  //       //   relation: 'purchasedTickets'
-  //       // },
-  //       {
-  //         relation: 'name', // include the owner object
-  //         scope: {
-  //           fields: ['id', 'title', 'first', 'last', 'other']
-  //         }
-  //       }]
-  //   };
-
-  //   return this.profileApi.find<Profile>(filt).pipe(
-  //     map(res => {
-
-  //       return res;
-  //     })
-  //   );
-
-
-  // }
-
-  // /***************************Fetch 200 users at a time *********************/
-  // fetchUserProfiles(skip: number = 0, limit = 200) {
-  //   const filt = {
-  //     order: 'id DESC',
-  //     limit: limit,
-  //     skip: skip,
-  //     // where: {
-  //     //   dateCreated: { lt: new Date(Date.now() - (this.ONE_MONTH * months)) }
-  //     // },
-  //     include: [
-  //       {
-  //         relation: 'myUser',
-  //         scope: {
-  //           fields: ['id', 'phone', 'email', 'username', 'created'],
-  //           include: [
-  //             {
-  //               relation: 'employees'
-  //             }
-  //           ]
-  //         }
-  //       },
-  //       {
-  //         relation: 'albums'
-  //       },
-  //       {
-  //         relation: 'location'
-  //       },
-  //       // {
-  //       //   relation: 'eventBookmarks'
-  //       // },
-  //       {
-  //         relation: 'assets'
-  //       },
-  //       {
-  //         relation: 'purchasedTickets'
-  //       },
-  //       {
-  //         relation: 'name', // include the owner object
-  //         scope: {
-  //           // further filter the owner object
-  //           fields: ['id', 'title', 'first', 'last', 'other'] // only show two fields
-
-  //         }
-  //       }]
-  //   };
-  //   return this.profileApi.find<Profile>(filt).pipe(
-  //     map(res => {
-  //       console.log(res);
-  //       return res;
-  //     })
-  //   );
-  // }
-
-  // getUserProfileByUserId(myUserId: any) {
-  //   const filt = {
-  //     where: {
-  //       myUserId
-  //     },
-  //     include: [
-  //       {
-  //         relation: 'myUser',
-  //         scope: {
-  //           fields: ['id', 'phone', 'email', 'username', 'created'],
-  //           include: [
-  //             {
-  //               relation: 'employees'
-  //             }
-  //           ]
-  //         }
-  //       },
-  //       {
-  //         relation: 'photo'
-  //       },
-  //       {
-  //         relation: 'address'
-  //       }
-  //     ]
-  //   };
-  //   return this.profileApi.findOne<Profile>(filt).pipe(
-  //     map(res => {
-  //       console.log(res);
-  //       return res;
-  //     })
-  //   );
-  // }
-
-  // // Not profile id
-  // deleteUser(myUserId: string) {
-  //   return this._myUserApi.deleteById(myUserId).pipe(
-  //     map(res => {
-  //       console.log(res);
-  //       return res;
-  //     }),
-  //     catchError(e => this.handleError(e))
-  //   );
-  // }
-
-
-
-
-  // /***************PHOTO MANAGEMENT FUNCTION  **************/
-  updateProfilePhoto(userId: string, photo: Photo): Observable<any> {
-    if (!photo.fileId || !userId) {
-      return undefined as any;
+  getUserDeliveryAddress(userId: any) {
+    if (!userId) {
+      console.log('User id required')
+      return undefined;
     }
-    const url = `${environment.identity_api_root_url}/users/${userId}/profile-photo`
-    return this.http.post<Photo>(url, photo).pipe(
+    return this.http.get<DeliveryAddress[]>(environment.store_api_root_url + `/users/${userId}/delivery-addresses`).pipe(
       map(res => {
-        return res;
+        console.log(res);
+        const user = this.getLoggedUserLocalSync();
+        user.otherDeliveryAddresses = res;
+        this.setLoggedUserLocalSync(user);
+        return res as any;
       }),
       catchError(e => this.handleError(e))
     );
   }
 
-
-  // /*************************LOCAL FUNCTION****************/
-
-
-  // /* get logged in user details */
-  // async getUserLocal(): Promise<MyUser> {
-  //   return await this._localStore.getObject('user');
-  // }
-  // saveUserLocal(user: MyUser) {
-  //   this._localStore.setObject('user', user).then(_ => _);
-  // }
-
-  // // User currently in scope. Not the logged in user
-  // async getSelectedUser(): Promise<Profile> {
-  //   return await this._localStore.getObject('selected_user');
-  // }
-  // saveSelectedUserLocal(user: Profile) {
-  //   this._localStore.setObject('selected_user', user).then(_ => _);
-  // }
-
-  // removeSelectedUserLocal() {
-  //   this._localStore.remove('selected_user');
-  // }
-
-  // async getUsersLocal() {
-  //   return await this._localStore.getObject('users');
-  // }
-
-  // saveUsersLocal(profiles: Profile[]) {
-  //   this._localStore.setObject('users', profiles).then(_ => {
-  //     console.log('Users updated');
-  //     this._signal.sendAction(MY_ACTION.usersLoaded);
-  //   });
-  // }
-
-  // parseMyUserToProfile(user: MyUser): Profile {
-  //   if (!user) {
-  //     return;
-  //   }
-  //   let profile = user.profile;
-  //   if (!profile) {
-  //     profile = new Profile();
-  //   }
-  //   profile.myUser = user;
-  //   profile.myUser.profile = null;
-  //   return profile;
-  // }
-
-  // parseProfileToMyUser(profile: Profile): MyUser {
-  //   if (!profile) {
-  //     return;
-  //   }
-  //   let user = profile.myUser;
-  //   if (!user) {
-  //     user = new MyUser();
-  //   }
-  //   user.profile = profile;
-  //   user.profile.myUser = null;
-  //   return user;
-  // }
-
-  // filterUsers(key: string, users: Profile[]) {
-  //   // phone
-  //   // email
-  //   // address
-  //   // name
-
-  //   if (!users) {
-  //     console.log('users are not array');
-  //     return;
-  //   }
-  //   key = key.trim().toLowerCase();
-  //   return users.filter((user, index) => {
-  //     if (user.myUser) {
-  //       if (user.myUser.email.toLowerCase().trim().search(key) > -1 ||
-  //         user.myUser.phone.toLowerCase().trim().search(key) > -1 ||
-  //         user.myUser.dateCreated.toString().toLowerCase().trim().search(key) > -1) {
-  //         return true;
-  //       }
-  //     }
-  //     if (user.fname.toLowerCase().trim().search(key) > -1 ||
-  //       user.lname.toLowerCase().trim().search(key) > -1 ||
-  //       user.gender.toLowerCase().trim().search(key) > -1 ||
-  //       user.about.toLowerCase().trim().search(key) > -1 ||
-  //       user.dob.toString().toLowerCase().trim().search(key) > -1) {
-  //       return true;
-  //     }
-
-  //     if (user && user.address) {
-  //       if (user.address.appartment.toLowerCase().trim().search(key) > -1 ||
-  //         user.address.city.toLowerCase().trim().search(key) > -1 ||
-  //         user.address.postcode.toLowerCase().trim().search(key) > -1 ||
-  //         user.address.street.toLowerCase().trim().search(key) > -1 ||
-  //         user.address.state.toLowerCase().trim().search(key) > -1 ||
-  //         user.address.country.toLowerCase().trim().search(key) > -1) {
-  //         return true;
-  //       }
-  //     }
-  //     return false;
-  //   });
-  // }
+  createUpdateUserDeliveryAddress(userId: any, deliveryAddress: DeliveryAddress) {
+    if (!deliveryAddress?.address?.state || !userId) {
+      console.log('Address is invalid');
+      alert('Please complete every address field');
+      return undefined
+    }
+    const address = deliveryAddress.address;
+    delete deliveryAddress.address;
+    console.log(address);
+    if (deliveryAddress.id) { // perform update
+      return this.http.patch<DeliveryAddress>(environment.store_api_root_url + `/users/${userId}/delivery-addresses`, deliveryAddress).pipe(
+        map(res => {
+          // console.log(res);
+          this.http.patch<Address>(environment.store_api_root_url + `/delivery-addresses/${deliveryAddress.id}/address`, address).subscribe(() => { })
+          deliveryAddress.address = address;
+          return deliveryAddress as any;
+        }),
+        catchError(e => this.handleError(e))
+      );
+    } else {
+      return this.http.post<DeliveryAddress>(environment.store_api_root_url + `/users/${userId}/delivery-addresses`, deliveryAddress).pipe(
+        map(res => {
+          // console.log(res);
+          this.http.post<Address>(environment.store_api_root_url + `/delivery-addresses/${res.id}/address`, address).subscribe(() => { })
+          res.address = address;
+          return res as any;
+        }),
+        catchError(e => this.handleError(e))
+      );
+    }
+  }
 
 
 
@@ -949,14 +556,14 @@ export class UserService {
 
 
 
-  getSetLoggedUserRolesLocalSync(): string[] {
+  getLoggedUserRolesLocalSync(): string[] {
     return this.store.getObjectSync('logged_user_roles');
   }
   setLoggedUserRolesLocal(roles: string[]) {
     return this.store.setObjectSync('logged_user_roles', roles);
   }
 
-  getSetSelectedUserRolesLocalSync(): string[] {
+  getSelectedUserRolesLocalSync(): string[] {
     return this.store.getObjectSync('selected_user_roles');
   }
   setSelectedUserRolesLocal(roles: string[]) {

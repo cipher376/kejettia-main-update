@@ -19,4 +19,6 @@ export class Address {
 
   /**** Relational properties ****/
   userId?: string;
+  storeId?: string;
+  deliveryAddressId?: string;
 }

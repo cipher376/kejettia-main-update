@@ -1,8 +1,8 @@
+import { PaystackComponent } from './paystack/paystack.component';
 import { GalleryWrapperComponent } from './gallery-wrapper/gallery-wrapper.component';
 import { BlogWidgetComponent } from './blog-widget/blog-widget.component';
 import { BrandsHorizontalComponent } from './brands-horizontal/brands-horizontal.component';
 import { BlackFridayAdComponent } from './black-friday-ad/black-friday-ad.component';
-import { LatestProductsComponent } from './latest-products/latest-products.component';
 import { PopularProductsComponent } from './popular-products/popular-products.component';
 import { ProductDetailsSimpleComponent } from './product-details-simple/product-details-simple.component';
 import { ProductDetailsCustomComponent } from './product-details-custom/product-details-custom.component';
@@ -93,7 +93,14 @@ import { ReviewCommentsComponent } from './review-comments/review-comments.compo
 import { AddReviewComponent } from './add-review/add-review.component';
 import { RelatedProductComponent } from './related-product/related-product.component';
 import { VideoWidgetComponent } from './video-widget/video-widget.component';
-
+import { DeliverySelectComponent } from './delivery-select/delivery-select.component';
+import { ShippingViewComponent } from './shipping-view/shipping-view.component';
+import { CreateAddressComponent } from './create-address/create-address.component';
+import { CreateDeliveryAddressComponent } from './create-delivery-address/create-delivery-address.component';
+import { SelectModule } from 'ng-select';
+import { Angular4PaystackModule } from 'angular4-paystack';
+import { PAYSTACK_PUBLIC_KEY } from '../config';
+import { StoreProductFilterComponent } from './store-product-filter/store-product-filter.component';
 
 @NgModule({
   declarations: [
@@ -167,7 +174,6 @@ import { VideoWidgetComponent } from './video-widget/video-widget.component';
     ProductDetailsCustomComponent,
     ProductDetailsSimpleComponent,
     PopularProductsComponent,
-    LatestProductsComponent,
     BlackFridayAdComponent,
     BrandsHorizontalComponent,
     BlogWidgetComponent,
@@ -182,8 +188,13 @@ import { VideoWidgetComponent } from './video-widget/video-widget.component';
     ReviewCommentsComponent,
     AddReviewComponent,
     RelatedProductComponent,
-    VideoWidgetComponent
-
+    VideoWidgetComponent,
+    DeliverySelectComponent,
+    ShippingViewComponent,
+    CreateAddressComponent,
+    CreateDeliveryAddressComponent,
+    PaystackComponent,
+    StoreProductFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -194,9 +205,10 @@ import { VideoWidgetComponent } from './video-widget/video-widget.component';
     ReactiveFormsModule,
     GalleryModule,
     LightboxModule,
-
+    SelectModule,
+    Angular4PaystackModule.forRoot(PAYSTACK_PUBLIC_KEY),
   ],
-  exports:[
+  exports: [
     AccountDetailsComponent,
     AddressComponent,
     BannerPromotionComponent,
@@ -261,7 +273,6 @@ import { VideoWidgetComponent } from './video-widget/video-widget.component';
     ProductDetailsCustomComponent,
     ProductDetailsSimpleComponent,
     PopularProductsComponent,
-    LatestProductsComponent,
     BlackFridayAdComponent,
     BrandsHorizontalComponent,
     BlogWidgetComponent,
@@ -269,8 +280,10 @@ import { VideoWidgetComponent } from './video-widget/video-widget.component';
     CartMiniComponent,
     MixedSearchFilterComponent,
     FeatureSelectComponent,
-    GalleryWrapperComponent
-
+    GalleryWrapperComponent,
+    CreateAddressComponent,
+    CreateDeliveryAddressComponent,
+    PaystackComponent
   ]
 })
 export class ComponentModule { }

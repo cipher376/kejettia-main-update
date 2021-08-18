@@ -1,3 +1,4 @@
+import { Shipping } from './../../models/shipping';
 import { Urls } from 'src/app/config';
 import { Location } from '@angular/common';
 import { environment } from './../../../environments/environment';
@@ -20,6 +21,7 @@ declare var Window: any;
 })
 export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   selectedProduct: Product;
+  selectedProductId = '';
   selectedProductPhotos: Photo[] = [];
   products: Product[] = [];
   productReviews: Review[] = [];
@@ -35,9 +37,13 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
   sizeFeatures: Features[] = [];
   colorFeatures: Features[] = [];
+  selectedFeatures: Features[] = [];
   otherFeatures: Features[] = [];
 
   guide = '';
+
+  selectedShippingCost: number = 0;
+  selectedShipping: Shipping;
 
   @ViewChild('zoomImage') zoomImage: ElementRef<HTMLInputElement>;
   // data-zoom-image="{{ph?.source}}"
@@ -55,7 +61,9 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   ) {
     Window = window;
     // added to cart
-
+    route.params.subscribe(p => {
+      this.selectedProductId = p?.id;
+    })
   }
 
   @Input() set Product(product) {
@@ -65,6 +73,21 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
   get Product() {
     return this.selectedProduct;
+  }
+
+  set SelectedFeature(feature: Features) {
+    let found = false;
+    this.selectedFeatures.forEach((f, index) => {
+      if (feature?.name == f?.name) {
+        // replace the p
+        this.selectedFeatures[index] = feature;
+        found = true;
+      }
+    });
+    if (!found) {
+      // feature does not exist
+      this.selectedFeatures.push(feature);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -78,7 +101,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.cart = this.cartService.getCartLocal();
     this.products = this.storeService.getProductsLocalSync();
 
-    window.scrollTo(0, 500);
+    window.scrollTo(0, 10);
 
   }
 
@@ -104,12 +127,23 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   addToCart() {
-    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity)
-      .subscribe(cartItem => {
-        console.log(cartItem);
-        this.showAddedToCartAlert();
+    if ((this.selectedProduct?.shippings?.length) > 0 && (!this.selectedShipping)) {
+      alert("Please select shipping or delivery location");
+      return;
+    }
+
+    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe(cartItem => {
+      this.selectedFeatures?.forEach(feature => {
+        this.cartService.updateCartItemToFeature(this.cartItem?.id, feature?.id).subscribe(() => {
+
+        })
       })
+      this.showAddedToCartAlert();
+      // this.cartService.getCart().subscribe(()=>{})
+    })
   }
+
+
 
   addToWishList() {
     if (!this.isInWishList()) {
@@ -150,10 +184,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   refreshProduct() {
-    this.storeService.getProductById(this.selectedProduct.id).subscribe(product => {
+    this.storeService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
       this.selectedProduct = product;
       this.init();
-    })
+    });
   }
 
   getFeatures() {
@@ -168,7 +202,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
       } else {
         this.otherFeatures.push(f);
       }
-    })
+    });
   }
 
   loadPhotos() {
@@ -190,10 +224,13 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   setGuidWidget(guide: string) {
-    this.tab = 3;
+    if (guide === 'shipping') {
+      this.tab = 5
+    } else {
+      this.tab = 3;
+    }
     this.guide = guide;
     window.scrollTo(0, 500);
-
   }
 
   goBack() {
@@ -201,12 +238,13 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   goPrev() {
+    this.products = this.storeService.getProductsLocalSync();
     const prev = this.Prev;
     if (prev) {
       this.storeService.setSelectedProductLocal(prev).then(() => {
         // refresh page;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([Urls.productDetails]);
+          this.router.navigate([Urls.productDetails + '/' + this.Prev?.id]);
         });
         // window.location.href = Urls.productDetails
       })
@@ -216,19 +254,22 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   goNext() {
+    this.products = this.storeService.getProductsLocalSync();
     const next = this.Next;
+    console.log(next);
     if (next)
       this.storeService.setSelectedProductLocal(next).then(() => {
         // refresh page;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([Urls.productDetails]);
+          this.router.navigate([Urls.productDetails + '/' + this.Next?.id]);
         });
         // window.location.href = Urls.productDetails
       })
   }
 
   get Next() {
-    const index = this.products?.indexOf(this.selectedProduct);
+    let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
+    let index = found ? found[1] : 0;
     if (index && (index < this.products.length)) {
       return this.products[index + 1];
     }
@@ -236,7 +277,8 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   get Prev() {
-    const index = this.products?.indexOf(this.selectedProduct);
+    let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
+    let index = found ? found[1] : (this.products.length - 1);
     if (index && (index > 0)) {
       return this.products[index - 1];
     }
@@ -244,7 +286,8 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   getPhotoUrl(photos: Photo[]) {
-    return StoreService.getPhotoUrlByDisplayTypeLocal(photos, 'cover', true);
+    // console.log(photos);
+    return StoreService.getPhotoUrlByDisplayTypeLocal(photos, 'cover', true, true);
   }
 
   getSizeGuidePhotoUrl() {

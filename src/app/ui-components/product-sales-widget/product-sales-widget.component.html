@@ -1,18 +1,15 @@
 <section class="mb-3">
   <div class="row">
-
     <div class="col-md-4 col-sm-6 mb-4">
-      <app-top-products></app-top-products>
+      <app-top-products [title]="'Sale products'" [Products]="topProducts" ></app-top-products>
     </div>
-
 
     <div class="col-md-4 col-sm-6 mb-4 ">
-      <app-latest-products></app-latest-products>
+      <app-top-products [title]="'Latest products'"  [Products]="latestProducts"></app-top-products>
     </div>
 
-
     <div class="col-md-4 col-sm-6 mb-4">
-      <app-trend-products></app-trend-products>
+      <app-top-products [title]="'Best of the week'"  [Products]="bestOfWeek"></app-top-products>
     </div>
   </div>
 </section>

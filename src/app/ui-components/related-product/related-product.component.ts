@@ -57,7 +57,7 @@ export class RelatedProductComponent implements OnInit {
 
   goToProduct(product: Product) {
     this.storeService.setSelectedProductLocal(product).then(() => {
-      this.router.navigateByUrl(Urls.productDetails);
+      this.router.navigateByUrl(Urls.productDetails+'/'+product?.id);
     })
   }
 

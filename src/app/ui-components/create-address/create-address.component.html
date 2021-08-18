@@ -1,0 +1,49 @@
+<div [formGroup]="addForm">
+  <div class="col-xs-12">
+    <label>Country *</label>
+    <div class="form-group">
+      <ng-select formControlName="country" [allowClear]="false" [multiple]="false" [options]="countries||[]"
+        placeholder="" (selected)="setCountry($event)">
+      </ng-select>
+    </div>
+    <div class="alert alert-country" role="alert"
+      *ngIf="(addForm.get('country')?.errors) && addForm.get('country')?.dirty">
+      Select your country.
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <label>State *</label>
+      <ng-select formControlName="state" [allowClear]="false" [multiple]="false" [options]="selectedStates||[]"
+        placeholder="">
+      </ng-select>
+      <div class="alert alert-state" role="alert" *ngIf="(addForm.get('state')?.errors) && addForm.get('state')?.dirty">
+        Select your state or region.
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <label>Town / City *</label>
+      <input type="text" class="form-control" formControlName="city" placeholder="">
+      <div class="alert alert-city" role="alert" *ngIf="(addForm.get('city')?.errors) && addForm.get('city')?.dirty">
+        Input your city or town.
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <label>Street Address *</label>
+    <input type="text" formControlName="street" class="form-control" name="address1" required=""
+      placeholder="House number and street name" />
+    <input type="text" formControlName="apartment" class="form-control" name="address2" required=""
+      placeholder="Apartment, suite, unit, etc. (optional)" />
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <label>ZIP | Postal code </label>
+      <input type="text" formControlName="postcode" class="form-control" name="zip" required="" />
+      <div class="alert alert-country" role="alert"
+        *ngIf="(addForm.get('postcode')?.errors) && addForm.get('postcode')?.dirty">
+        Provide postal code.
+      </div>
+    </div>
+  </div>
+</div>

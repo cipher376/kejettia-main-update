@@ -1,15 +1,15 @@
+import { ConsolidatedOrder } from './../../models/Order';
 import { UtilityService } from './utility.service';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { MY_ACTION, SignalService } from './signal.service';
 import { UserService } from './user.service';
 import { MyLocalStorageService } from './local-storage.service';
 import { Injectable } from "@angular/core";
-import { Cart, CartItem } from 'src/app/models';
+import { Cart, CartItem, FeaturesToCartItemThrough, Order } from 'src/app/models';
 import { throwError, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
-
 
 
 @Injectable({
@@ -28,6 +28,19 @@ export class CartService {
     this.initCart();
   }
 
+  static calculateShipping(cart: Cart) {
+    let totalShipCost = 0;
+    if (cart) {
+      cart?.cartItems?.forEach(item => {
+        // if (item?.shipping?.shipTo.join(' ').toLocaleLowerCase().search('city') > -1) {
+        // user not in the same city as the product
+        totalShipCost += (item?.shipping?.flatCharge * item?.quantity);
+        // }
+      })
+    }
+    return totalShipCost;
+  }
+
   initCart() {
     this.clearCart();
     const user = this.userService.getLoggedUserLocalSync();
@@ -36,17 +49,18 @@ export class CartService {
       this.initBrowserCart();
       return;
     }
+    try {
+      const cart = new Cart();
+      cart.userId = user?.id;
+      this.createUpdateCart(user?.id, cart).subscribe(newCart => {
+        console.info('New cart item created');
+        // console.log(newCart);
+      })
+    } catch (error) {
+      console.log();
+    }
     this.getCart(user?.id)?.subscribe(cart => {
-      if (!cart) {
-        // New user, no cart
-        // create new cart
-        cart = new Cart();
-        cart.userId = user?.id;
-        this.createUpdateCart(user?.id, cart).subscribe(newCart => {
-          console.info('New cart item created');
-          console.log(newCart);
-        })
-      }
+      // console.log(cart);
     })
 
   }
@@ -94,6 +108,12 @@ export class CartService {
                     }
                   ]
                 }
+              },
+              {
+                relation: 'shipping'
+              },
+              {
+                relation: 'features'
               }
             ]
           }
@@ -133,21 +153,39 @@ export class CartService {
     }
   }
 
-  addUpdateCartItemToCart(cartId: any, productId: any, quantity = 1) {
+  deleteCartItem(cartId: any, cartItemId: any) {
+    return this.http.delete(environment.store_api_root_url + `/carts/${cartId}/cart-items?filter=${JSON.stringify({ id: cartItemId })}`).pipe(
+      map(res => {
+        this.getCart().subscribe(cart => {
+          console.log(cart);
+        })
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  addUpdateCartItemToCart(cartId: any, productId: any, quantity = 1, shipId?: any) {
+    console.log(cartId);
     // if user is not logged in create fake cart
     const user = this.userService.getLoggedUserLocalSync();
     if (!user?.id) {
+      console.log('here');
       return of(this.addToBrowserCart(cartId, productId, quantity));
     }
 
     if (!cartId || !productId) {
-      console.error('Invalid cartItem');
+      console.error('Invalid cart or product Id');
+      if (!cartId) {
+        this.initCart();
+      }
       return undefined;
     }
     const cartItem: CartItem = {} as any;
     cartItem.cartId = cartId;
     cartItem.productId = productId;
     cartItem.quantity = quantity;
+    cartItem.shippingId = shipId;
 
     return this.http.post<Cart>(environment.store_api_root_url + `/carts/${cartId}/cart-items`, cartItem).pipe(
       map(res => {
@@ -159,6 +197,65 @@ export class CartService {
       catchError(e => this.handleError(e))
     );
   }
+
+
+  linkCartItemToFeature(itemId: any, featureId: any) {
+    if (!itemId || !featureId) {
+      console.log('Invalid cartItem to feature map ids');
+      return undefined;
+    }
+    const throughItem = { cartItemId: itemId, featuresId: featureId } as FeaturesToCartItemThrough;
+
+    const url = `${environment.store_api_root_url}/features-to-cart-item-throughs`
+    return this.http.post<FeaturesToCartItemThrough>(url, throughItem).pipe(
+      map(res => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  unlinkCartItemToFeature(itemId: any, featureId: any) {
+    if (!itemId || !featureId) {
+      console.log('Invalid cartItem to feature map ids');
+      return undefined;
+    }
+    let filter: any = {
+      cartItemId: itemId,
+      featuresId: featureId
+    }
+    filter = '?where=' + JSON.stringify(filter);
+    const url = `${environment.store_api_root_url}/features-to-cart-item-throughs${filter}`
+    return this.http.delete(url).pipe(
+      map(res => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+
+  }
+
+  updateCartItemToFeature(itemId: any, featureId: any) {
+    if (!itemId || !featureId) {
+      console.log('Invalid cartItem to feature map ids');
+      return undefined;
+    }
+    const throughItem = { cartItemId: itemId, featuresId: featureId } as FeaturesToCartItemThrough;
+    const url = `${environment.store_api_root_url}/features-to-cart-item-throughs`
+    return this.http.put<FeaturesToCartItemThrough>(url, throughItem).pipe(
+      map(res => {
+        console.log(res);
+
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+
+
+
+
 
   addToBrowserCart(cartId: any, productId: any, quantity = 1) {
     let cart = this.getCartLocal();
@@ -256,9 +353,9 @@ export class CartService {
   getTotalAmount() {
     const cart = this.getCartLocal();
     let total = 0;
-    cart.cartItems.forEach(item => {
+    cart?.cartItems?.forEach(item => {
       total += (item.price * item.quantity);
-    })
+    });
     return total;
   }
 
@@ -283,7 +380,6 @@ export class CartService {
   clearCart() {
     this.fstore.remove('cart');
   }
-
 
 
   /////////////////////////////////////////////////////////////////////////

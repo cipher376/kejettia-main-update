@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComponentModule } from '../ui-components/component.module';
 import { StorePagesRoutingModule } from './store-pages-routing.module';
+import { StoreLayoutComponent } from './store-layout/store-layout.component';
+import { StoreProductListComponent } from './store-product-list/store-product-list.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { StorePagesRoutingModule } from './store-pages-routing.module';
   ],
   declarations: [
     Home2Component,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    StoreLayoutComponent,
+    StoreProductListComponent
 
   ]
 })

@@ -1,132 +1,116 @@
 <main class="main order">
-    <div class="page-content pt-7 pb-10 mb-10">
-        <div class="container mt-8">
-            <div class="step-by pr-4 pl-4">
-                <button class="pay_now btn btn-rounded btn-order order-message mr-auto ml-auto">
-                    <div class="icon-box d-inline-flex align-items-center">
-                        <div class="icon-box-icon mb-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g transform="matrix(0.9700000000000001,0,0,0.9700000000000001,7.680021743774347,7.67999999999995)"><g xmlns="http://www.w3.org/2000/svg"><g><path d="m371.239 0h-178.036c-14.892 0-27.007 12.115-27.007 27.008v206.503c-1.585 2.155-4.223 5.64-6.805 9.051-9.561 12.631-24.01 31.721-32.627 45.286-16.992 26.792-17.32 53.563-1.095 89.518.113.251.237.497.371.738 0 0 20.315 36.74 21.186 38.349 5.129 9.476 13.713 25.336 13.169 37.802-.006.145-.009.29-.009.436v29.565c0 15.298 12.446 27.744 27.744 27.744h90.364c15.298 0 27.744-12.446 27.744-27.744l-.085-25.904c.005-9.972 1.513-15.225 3.42-21.872 1.303-4.539 2.778-9.684 3.837-16.655.027-.18.05-.36.067-.542 1.479-15.354-2.511-30.181-6.735-45.878-2.397-8.908-4.954-18.414-6.785-28.929h71.283c14.892 0 27.007-12.115 27.007-27.008v-100.316c0-5.522-4.478-10-10-10s-10 4.478-10 10v100.315c0 3.864-3.144 7.008-7.007 7.008h-23.59v-304.475h23.589c3.863 0 7.007 3.144 7.007 7.008v100.316c0 5.522 4.478 10 10 10s10-4.478 10-10v-100.316c0-14.893-12.115-27.008-27.007-27.008zm-92.746 492h-90.364c-4.198 0-7.744-3.547-7.744-7.744v-29.362c.687-17.922-9.483-36.714-15.57-47.961-.833-1.538-21.084-38.165-21.084-38.165-13.298-29.633-13.311-49.342-.081-70.202 5.792-9.118 14.581-21.155 22.546-31.802v50.704c0 14.893 12.115 27.008 27.007 27.008h32.064v33.369c0 5.522 4.477 10 10 10s10-4.478 10-10v-105.305c0-9.022 7.339-16.362 16.361-16.362 4.389 0 8.53 1.734 11.66 4.883 3.075 3.093 4.755 7.149 4.729 11.419-.021 3.427-.073 25.976-.474 36.441-.355 9.256.037 17.866.888 25.903.02.583.796 6.507 1.149 8.827 2.016 13.237 5.114 24.793 7.848 34.95 3.872 14.39 7.221 26.831 6.165 38.497-.861 5.554-2.02 9.593-3.246 13.864-2.062 7.189-4.195 14.623-4.195 27.441 0 .035 0 .07.001.104l.084 25.747c0 4.199-3.546 7.746-7.744 7.746zm49.157-167.524h-29.996c-.257-4.724.343-48.476.363-51.877.057-9.636-3.688-18.741-10.546-25.639-6.912-6.953-16.091-10.782-25.844-10.782-20.049 0-36.361 16.312-36.361 36.362v51.936h-32.064c-3.864 0-7.007-3.144-7.007-7.008v-290.46c0-3.864 3.144-7.008 7.007-7.008h134.448z" fill="#ed1d25" data-original="#000000" style="" class=""/><path d="m388.246 162.252c-5.522 0-10 4.478-10 10v.028c0 5.522 4.478 9.986 10 9.986s10-4.492 10-10.015-4.478-9.999-10-9.999z" fill="#ed1d25" data-original="#000000" style="" class=""/></g></g></g></svg>
-
-
-                        </div>
-                        <div class="icon-box-content text-left">
-                            <h2 class="icon-box-title font-weight-bold lh-1 mb-1">Pay Now</h2>
-                            <p class="lh-1 ls-m">Click here to make your payment</p>
-                        </div>
-                    </div>
-                </button>
-            </div>
-
-
-            <div class="order-results">
-                <div class="overview-item">
-                    <span>Order number:</span>
-                    <strong>4935</strong>
-                </div>
-                <div class="overview-item">
-                    <span>Status:</span>
-                    <strong>Processing</strong>
-                </div>
-                <div class="overview-item">
-                    <span>Date:</span>
-                    <strong>November 20, 2020</strong>
-                </div>
-                <div class="overview-item">
-                    <span>Email:</span>
-                    <strong>12345@gmail.com</strong>
-                </div>
-                <div class="overview-item">
-                    <span>Total:</span>
-                    <strong>$312.00</strong>
-                </div>
-                <div class="overview-item">
+  <div class="page-content pt-7 pb-10 mb-10">
+    <div class="container mt-8">
+      <div class="step-by pr-4 pl-4">
+        <app-paystack></app-paystack>
+      </div>
+      <div class="order-results" *ngIf="consolidatedOrder">
+        <div class="overview-item">
+          <span>Order number:</span>
+          <strong>#{{consolidatedOrder?.id}}</strong>
+        </div>
+        <div class="overview-item">
+          <span>Status:</span>
+          <strong><span *ngIf="consolidatedOrder?.state" class="unknown"
+              [ngClass]="{'new': consolidatedOrder.state === 'NEW', 'pending': consolidatedOrder.state === 'PENDING'}">{{consolidatedOrder?.state}}</span></strong>
+        </div>
+        <div class="overview-item">
+          <span>Date:</span>
+          <strong>{{consolidatedOrder?.dateCreated | date:'dd/MM/yyyy'}}</strong>
+        </div>
+        <div class="overview-item">
+          <span>Email:</span>
+          <strong>{{consolidatedOrder?.deliveryAddress?.email}}</strong>
+        </div>
+        <div class="overview-item">
+          <span>Total:</span>
+          <strong>{{consolidatedOrder?.grandTotal | currency: 'GHC ':'GH₵ '}}</strong>
+        </div>
+        <!-- <div class="overview-item">
                     <span>Payment method:</span>
                     <strong>Cash on delivery</strong>
-                </div>
-            </div>
+                </div> -->
+      </div>
 
-            <h2 class="title title-simple text-left pt-4 font-weight-bold text-uppercase">Order Details</h2>
-            <div class="order-details">
-                <table class="order-details-table">
-                    <thead>
-                        <tr class="summary-subtotal">
-                            <td>
-                                <h3 class="summary-subtitle">Product</h3>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="product-name">Beige knitted shoes <span> <i class="fas fa-times"></i>
-                                    1</span></td>
-                            <td class="product-price">$84.00</td>
-                        </tr>
-                        <tr>
-                            <td class="product-name">Best dark blue pedestrian <span><i
-                                        class="fas fa-times"></i> 1</span></td>
-                            <td class="product-price">$76.00</td>
-                        </tr>
-                        <tr>
-                            <td class="product-name">Women's fashion handing <span><i class="fas fa-times"></i>
-                                    2</span></td>
-                            <td class="product-price">$152.00</td>
-                        </tr>
-                        <tr class="summary-subtotal">
-                            <td>
-                                <h4 class="summary-subtitle">Subtotal:</h4>
-                            </td>
-                            <td class="summary-subtotal-price">$312.00</td>
-                        </tr>
-                        <tr class="summary-subtotal">
-                            <td>
-                                <h4 class="summary-subtitle">Delivery</h4>
-                            </td>
-                            <td class="summary-subtotal-price">$2.00  </td>
-                        </tr>
-                        <tr class="summary-subtotal">
-                            <td>
-                                <h4 class="summary-subtitle">Discount</h4>
-                            </td>
-                            <td class="summary-subtotal-price">5%</td>
-                        </tr>
-                        <tr class="summary-subtotal">
-                            <td>
-                                <h4 class="summary-subtitle">Shipping:</h4>
-                            </td>
-                            <td class="summary-subtotal-price">Free shipping</td>
-                        </tr>
-                        <tr class="summary-subtotal">
-                            <td>
-                                <h4 class="summary-subtitle">Payment method:</h4>
-                            </td>
-                            <td class="summary-subtotal-price">Cash on delivery</td>
-                        </tr>
-                        <tr class="summary-subtotal">
-                            <td>
-                                <h4 class="summary-subtitle">Total:</h4>
-                            </td>
-                            <td>
-                                <p class="summary-total-price text-primary">$312.00</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <h2 class="title title-simple text-left pt-10 mb-2">Billing Address</h2>
-            <div class="address-info pb-8 mb-6">
-                <p class="address-detail pb-2">
-                    John Doe<br>
-                    Riode Company<br>
-                    Steven street<br>
-                    El Carjon, CA 92020<br>
-                    123456789
+      <h2 class="title title-simple text-left pt-4 font-weight-bold text-uppercase">Order Details</h2>
+      <div class="consolidatedOrder-details">
+        <table class="consolidatedOrder-details-table">
+          <thead>
+            <tr class="summary-subtotal">
+              <td>
+                <h3 class="summary-subtitle">Product</h3>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td class="product-name"><img [src]="getPhoto(item?.product)" height="80" width="80"
+                  style="margin-bottom: 15px;">
+                {{item?.product?.name}} <span> <i class="fas fa-times"></i>
+                  {{item?.quantity}}</span></td>
+              <td class="product-price">{{item?.price | currency:'GHC ':'GH₵ '}}</td>
+            </tr>
+            <tr class="summary-subtotal">
+              <td>
+                <h4 class="summary-subtitle">Subtotal:</h4>
+              </td>
+              <td class="summary-subtotal-price">{{subtotal | currency:'GHC ':'GH₵ '}}</td>
+            </tr>
+            <tr class="summary-subtotal" *ngIf="deliveryCost!==0">
+              <td>
+                <h4 class="summary-subtitle">Delivery</h4>
+              </td>
+              <td class="summary-subtotal-price">{{deliveryCost | currency:'GHC ':'GH₵ '}}</td>
+            </tr>
+            <tr class="summary-subtotal">
+              <td>
+                <h4 class="summary-subtitle">Discount</h4>
+              </td>
+              <td class="summary-subtotal-price">0%</td>
+            </tr>
+            <tr class="summary-subtotal" *ngIf="deliveryCost == 0">
+              <td>
+                <h4 class="summary-subtitle">Shipping:</h4>
+              </td>
+              <td class="summary-subtotal-price">Free shipping</td>
+            </tr>
+            <tr class="summary-subtotal">
+              <td>
+                <h4 class="summary-subtitle">Payment method:</h4>
+              </td>
+              <td class="summary-subtotal-price">{{consolidatedOrder?.paymentMethod}}</td>
+            </tr>
+            <tr class="summary-subtotal">
+              <td>
+                <h4 class="summary-subtitle">Total:</h4>
+              </td>
+              <td>
+                <p class="summary-total-price text-primary">{{consolidatedOrder?.grandTotal | currency:'GHC ':'GH₵ '}}
                 </p>
-                <p class="email">mail@riode.com</p>
-            </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 class="title title-simple text-left pt-10 mb-2">Billing Address</h2>
 
-            <a href="javascript:;" (click)="back()" class="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4">
-              <i class="d-icon-arrow-left"></i> Back to List</a>
-        </div>
+      <div class="address-info pb-8 mb-6">
+        <p class="address-detail pb-2">
+          {{consolidatedOrder?.deliveryAddress?.fname}} {{consolidatedOrder?.deliveryAddress?.lname}}
+          {{consolidatedOrder?.deliveryAddress?.mname}}<br>
+          {{consolidatedOrder?.deliveryAddress?.address?.street}}
+          {{consolidatedOrder?.deliveryAddress?.address?.suburb}}<br>
+          {{consolidatedOrder?.deliveryAddress?.address?.city}}<br>
+          {{consolidatedOrder?.deliveryAddress?.address?.state}} -
+          {{consolidatedOrder?.deliveryAddress?.address?.state}}
+          ({{consolidatedOrder?.deliveryAddress?.address?.postCode}})<br>
+        </p>
+        <p class="email">Phone: {{consolidatedOrder?.deliveryAddress?.phone}}</p>
+        <p class="email"> {{consolidatedOrder?.deliveryAddress?.email}} </p>
+      </div>
+      <a href="javascript:;" (click)="back()" class="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4">
+        <i class="d-icon-arrow-left"></i> Back to List</a>
     </div>
+  </div>
 </main>

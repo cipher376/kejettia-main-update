@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Product } from 'src/app/models';
 
 @Component({
   selector: 'app-featured-products',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeaturedProductsComponent implements OnInit {
 
+  products: Product[] = [];
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+
+  @Input() set Products(products: Product[]) {
+    this.products = products;
+  }
+
+  get Products() {
+    return this.products;
   }
 
 }

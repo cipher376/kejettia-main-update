@@ -39,18 +39,18 @@
                 <li class="product-nav-prev" (click)="goPrev()">
                   <a href="javascript:;">
                     <i class="d-icon-arrow-left"></i> Prev
-                    <span class="product-nav-popup" *ngIf="Prev">
-                      <img *ngIf="Prev" [src]="getPhotoUrl(Prev?.photos)" alt="No product" width="110" height="123">
-                      <span class="product-name" >{{Prev?.name || 'product list'}}</span>
+                    <span class="product-nav-popup" >
+                      <img *ngIf="Prev" [src]="getPhotoUrl(Prev?.photos)" alt="" width="110" height="123">
+                      <span class="product-name">{{Prev?.name || 'product list'}}</span>
                     </span>
                   </a>
                 </li>
                 <li class="product-nav-next" (click)="goNext()">
                   <a href="javascript:;">
                     Next <i class="d-icon-arrow-right"></i>
-                    <span class="product-nav-popup" >
-                      <img [src]="getPhotoUrl(Next?.photos)" alt="No product" width="110" height="123">
-                      <span class="product-name" >{{Next?.name || 'No product found'}}</span>
+                    <span class="product-nav-popup">
+                      <img [src]="getPhotoUrl(Next?.photos)" alt="" width="110" height="123">
+                      <span class="product-name">{{Next?.name || 'No product found'}}</span>
                     </span>
                   </a>
                 </li>
@@ -65,10 +65,14 @@
                 {{selectedProduct?.productModel?.productBrand?.location}}</span>
             </div>
             <div class="product-price" *ngIf="selectedProduct?.currentPrice">
-              {{selectedProduct?.currentPrice |currency:'GHC '}}</div>
+              {{selectedProduct?.currentPrice |currency:'GHC '}} +
+              <small>{{selectedShippingCost | currency:' ':' '}}</small> <small style="color:black; font-size:50%">
+                shipping</small></div>
             <ng-container *ngIf="!selectedProduct?.currentPrice">
-              <div class="product-price">{{selectedProduct?.fromPrice |currency:'GHC '}}</div> -
-              <div class="product-price">{{selectedProduct?.toPrice |currency:'GHC '}}</div>
+              <div class="product-price">{{selectedProduct?.fromPrice |currency:'GHC ':'GH₵ '}} -
+                {{selectedProduct?.toPrice |currency:'GHC ':'GH₵ '}}</div>
+              <div class="product-price">+ <small>{{selectedShippingCost | currency:' ':' '}}</small> <small
+                  style="color:black; font-size:50%"> shipping</small></div>
             </ng-container>
 
             <div class="ratings-container">
@@ -80,8 +84,13 @@
                 {{selectedProduct?.reviews?.length??0}} reviews )</a>
             </div>
             <p class="product-short-desc">{{selectedProduct?.about| slice:0:100}}</p>
-            <app-feature-select [Features]="colorFeatures" (guideEvent)="setGuidWidget($event)"></app-feature-select>
-            <app-feature-select [Features]="sizeFeatures" (guideEvent)="setGuidWidget($event)"></app-feature-select>
+            <app-feature-select [Features]="colorFeatures" (guideEvent)="setGuidWidget($event)" (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
+            <app-feature-select [Features]="sizeFeatures" (guideEvent)="setGuidWidget($event)" (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
+
+            <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
+              (selectedShippingCostEvent)="selectedShippingCost=$event"
+              (selectedShippingEvent)="selectedShipping=$event">
+            </app-delivery-select>
             <div class="product-form-group">
               <a href="javascript:;" class="product-variation-clean">Clean All</a>
             </div>
@@ -137,6 +146,10 @@
               information</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===5}" (click)="goToTab(5)">Shipping &
+              delivery</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===3}" (click)="goToTab(3)">Guide</a>
           </li>
           <li class="nav-item">
@@ -188,7 +201,8 @@
                       <i class="d-icon-lock"></i>
                     </div>
                     <div class="icon-box-content">
-                      <h4 class="icon-box-title lh-1 pt-1 ls-s text-normal">Contact seller through Kejettia's platform for warranty information</h4>
+                      <h4 class="icon-box-title lh-1 pt-1 ls-s text-normal">Contact seller through Kejettia's platform
+                        for warranty information</h4>
                     </div>
                   </div>
                   <div class="divider d-xl-show mr-10"></div>
@@ -248,33 +262,16 @@
             </div>
 
             <span class="divider d-lg-show"></span>
-            <div>
-              <table class="table  text-left">
-                <thead>
-                  <tr>
-                    <th class="pl-0">Shippings</th>
-                    <th>Location (Towns, cities, or country)</th>
-                    <th>Flat charge</th>
-                    <th>Range charge from</th>
-                    <th>Range charge to</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let sh of selectedProduct?.shippings">
-                    <td></td>
-                    <td class="pl-4">{{sh?.shipTo}}</td>
-                    <td class="pl-4">{{sh?.flatCharge}}</td>
-                    <td class="pl-4">{{sh?.chargeFrom}}</td>
-                    <td class="pl-4">{{sh?.chargeTo}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+
           </div>
           <div class="tab-pane animate__animated animate__fadeInUp" id="product-tab-size-guide"
             [ngClass]="{'active in': tab===3}" [hidden]="tab!==3">
             <ng-template [ngIf]="guide==''">
-              <p class="text-bold text-black">No guide specified</p>
+              <div class="row mt-6">
+                <div class="col-md-6">
+                  <h5 class="description-title mb-4 font-weight-semi-bold ls-m">No guide specified</h5>
+                </div>
+              </div>
             </ng-template>
             <ng-template [ngIf]="guide==='size'">
               <figure class="size-image mt-4 mb-4">
@@ -365,6 +362,10 @@
               <app-add-review [Product]="selectedProduct"></app-add-review>
             </div>
             <!-- End Reply -->
+          </div>
+          <div class="tab-pane animate__animated animate__fadeInUp" id="product-tab-shipping"
+            [ngClass]="{'active in': tab===5}" [hidden]="tab!==5">
+            <app-shipping-view [shippings]="selectedProduct?.shippings"></app-shipping-view>
           </div>
         </div>
       </div>

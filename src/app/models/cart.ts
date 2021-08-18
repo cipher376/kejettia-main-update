@@ -1,3 +1,4 @@
+import { Shipping } from './shipping';
 import { Product, Features } from ".";
 
 
@@ -9,8 +10,9 @@ export class CartItem {
   product?: Product;
   productId?: string;
   features?: Features[];
+  shipping: Shipping;
   cartId?: string;
-
+  shippingId?: string;
   orderId?: string;
 }
 

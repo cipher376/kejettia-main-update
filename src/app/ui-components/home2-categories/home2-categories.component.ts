@@ -1,3 +1,4 @@
+import { StoreCategory } from './../../models/store-category';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Home2CategoriesComponent implements OnInit {
 
+  storeCategories: StoreCategory[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+
+  getStoreCategories() {
+
+  }
 }

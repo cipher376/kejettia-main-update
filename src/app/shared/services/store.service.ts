@@ -71,10 +71,10 @@ export class StoreService {
   }
 
 
-  static isNew(item: Product | Store){
-    if(item.dateCreated){
+  static isNew(item: Product | Store) {
+    if (item.dateCreated) {
       const days = UtilityService.calcDatesDiffInDays(item.dateCreated, new Date(Date.now()));
-      if(days<=14){ // after two weeks
+      if (days <= 14) { // after two weeks
         return true;
       }
     }
@@ -114,10 +114,19 @@ export class StoreService {
       }
     })
 
-    if (chooseAny && (foundPhotos?.length > 0)) {
+    if ((foundPhotos?.length > 0)) {
       const tmp = foundPhotos[Math.floor(Math.random() * (foundPhotos?.length))]
       url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
     }
+    if (chooseAny && (foundPhotos?.length <= 0) && (photos?.length > 0)) {
+      const tmp = photos[Math.floor(Math.random() * (foundPhotos?.length))]
+      url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
+    }
+
+    if (!url) {
+      return NO_IMAGE;
+    }
+
     return url;
   }
 
@@ -443,6 +452,26 @@ export class StoreService {
       include: [
         {
           relation: 'photo'
+        },
+        {
+          relation: 'productCategories',
+          scope: {
+            include: [
+              {
+                relation: 'productCategoryItems',
+                scope: {
+                  include: [
+                    {
+                      relation: 'photo'
+                    }
+                  ]
+                }
+              },
+              {
+                relation: 'photo'
+              },
+            ]
+          }
         }
       ]
     }
@@ -1264,7 +1293,6 @@ export class StoreService {
   removeSelectedProductLocal() {
     this.fstore.remove('selected_product');
   }
-
 
   async getProductsLocal(): Promise<Product[]> {
     return await this.fstore.getObject('products');

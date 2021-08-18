@@ -1,32 +1,32 @@
   <div class="product text-center">
     <figure class="product-media">
-      <a href="demo3-product.html">
+      <a href="javascript:;" (click)="goToProduct()">
         <img src="assets/images/products/1.jpg" alt="product" width="280" height="315"
           style="background-color: #f5f5f5;" />
 
       </a>
-      <div class="product-label-group">
-        <label class="product-label label-new">new</label>
-        <label class="product-label label-sale">35% off</label>
-
+      <div class="product-label-group" >
+        <label class="product-label label-new" *ngIf="IsNew">new</label>
+        <label class="product-label label-sale" *ngIf="discount>0">{{discount}}% off</label>
       </div>
+
       <div class="product-action-vertical">
-        <a href="#" class="btn-product-icon btn-cart" data-toggle="modal" data-target="#addCartModal"
+        <a href="javascript:;" (click)="goToProduct()" class="btn-product-icon btn-cart" data-toggle="modal" data-target="#addCartModal"
           title="Add to cart"><i class="d-icon-bag"></i></a>
-        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i class="d-icon-heart"></i></a>
+        <a href="javascript:;" (click)="addToWishList()" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i class="d-icon-heart"></i></a>
       </div>
       <div class="product-action">
-        <a href="#" class="btn-product btn-quickview" title="Quick View">Quick View</a>
+        <a href="javascript:;" class="btn-product btn-quickview" title="Quick View" (click)="goToProduct()">Quick View</a>
       </div>
     </figure>
     <div class="product-details">
-      <div class="product-cat"><a href="demo3-shop.html">Women’s</a>
+      <div class="product-cat"><a href="javascript:;">{{getCategory()}}</a>
       </div>
       <h3 class="product-name">
-        <a href="demo3-product.html">Comfortable Brown Scarf</a>
+        <a href="javascript:;" (click)="goToProduct()">{{Product?.name}}</a>
       </h3>
       <div class="product-price">
-        <span class="price">$28.74</span>
+        <span class="price">{{Product?.currentPrice |currency:'GHC ':'GH₵ '}}</span>
       </div>
       <div class="ratings-container">
         <div class="ratings-full">

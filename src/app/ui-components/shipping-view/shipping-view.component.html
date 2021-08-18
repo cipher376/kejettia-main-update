@@ -1,0 +1,23 @@
+<div *ngIf="shippings">
+  <table class="table  text-left">
+    <thead>
+      <tr>
+        <th>Location (Towns, cities, or country)</th>
+        <th>Flat charge (GH₵)</th>
+        <th>Range charge (GH₵)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sh of shippings">
+        <td class="pl-4">{{sh?.shipTo}}</td>
+        <td class="pl-4">{{sh?.flatCharge}}</td>
+        <td class="pl-4">{{sh?.chargeFrom}} - {{sh?.chargeTo}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row mt-6"  *ngIf="!shippings">
+  <div class="col-md-6">
+    <h5 class="description-title mb-4 font-weight-semi-bold ls-m">No shipping or delivery information</h5>
+  </div>
+</div>

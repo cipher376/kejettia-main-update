@@ -1,13 +1,13 @@
 <div class="category category-absolute category-badge">
   <a href="#">
     <figure class="category-media">
-      <img src="assets/images/banners/1.jpg" alt="category" width="430" height="189"
+      <img [src]="fileUrl+Category?.photo?.source" alt="category" width="430" height="189"
         style="background-color: #eceef2;" />
     </figure>
   </a>
   <div class="category-content">
     <h4 class="category-name font-weight-bold text-uppercase">Accessories
     </h4>
-    <a href="demo3-shop.html" class="btn btn-primary">Shop Now</a>
+    <a href="javascript:;" class="btn btn-primary" (click)="shopNow()">Shop Now</a>
   </div>
 </div>

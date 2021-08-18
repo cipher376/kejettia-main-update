@@ -1,0 +1,95 @@
+<h3 class="title title-simple text-left text-uppercase">Billing Details</h3>
+
+<div *ngIf="!newAddress && deliveryAddresses?.length>0">
+  <div class="form-group">
+    <ng-select [allowClear]="false" [multiple]="false" [options]="deliveryAddresses||[]"
+      placeholder="" (selected)="SelectedDeliveryAddress=$event" placeholder="Select a previous delivery address">
+    </ng-select>
+  </div>
+</div>
+
+<!-- <div *ngIf="!newAddress">
+  <br>
+  <h4 class="title title-simple text-center text-uppercase w-100">Or</h4>
+  <br>
+</div> -->
+
+<div class="form-checkbox mb-6" (click)="newAddressBoxClicked()">
+  <input type="checkbox" class="custom-checkbox" id="different-address" name="different-address"
+    [checked]="!(deliveryAddresses?.length>0)" [(ngModel)]="newAddress" >
+  <label class="form-control-label ls-s" for="different-address">Ship to a different
+    address?</label>
+</div>
+<div [hidden]="!newAddress" [formGroup]="deliveryForm">
+  <div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <label>First Name *</label>
+      <input type="text" class="form-control" name="first-name" formControlName="firstName" required="" />
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <label>Last Name *</label>
+      <input type="text" class="form-control" name="last-name" formControlName="lastName" required="" />
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <label>Other Name(s) </label>
+      <input type="text" class="form-control" name="other-name" formControlName="otherName" required="" />
+    </div>
+  </div>
+  <div class="alert alert-danger" role="alert"
+    *ngIf="(deliveryForm.get('firstName')?.errors) && deliveryForm.get('firstName')?.dirty">
+    Provide your first name.
+  </div>
+  <div class="alert alert-danger" role="alert"
+    *ngIf="(deliveryForm.get('lastName')?.errors) && deliveryForm.get('lastName')?.dirty">
+    Provide your last name.
+  </div>
+  <div class="alert alert-danger" role="alert"
+    *ngIf="(deliveryForm.get('otherName')?.errors) && deliveryForm.get('otherName')?.dirty">
+    Provide your other name(s).
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-sm-6 col-xs-12">
+      <label>Email Address *</label>
+      <input type="text" class="form-control" name="email-address" formControlName="email" required="" />
+    </div>
+
+    <div class="col-sm-6 col-xs-12">
+      <label>Phone *</label>
+      <input type="text" class="form-control" name="phone" formControlName="phone" required="" />
+    </div>
+
+  </div>
+  <div class="alert alert-danger" role="alert"
+    *ngIf="deliveryForm.get('email')?.errors && deliveryForm.get('email')?.dirty">
+    Invalid email!
+  </div>
+  <div class="alert alert-danger" role="alert"
+    *ngIf="(deliveryForm.get('phone')?.errors || !_isPhone) && deliveryForm.get('phone')?.dirty">
+    Invalid phone number.
+  </div>
+
+  <app-create-address (addressEvent)="address = $event"></app-create-address>
+</div>
+<div *ngIf="!newAddress&&selectedDeliveryAddress?.id">
+  <div class="address-info pb-8 mb-6">
+    <p class="address-detail pb-2">
+      {{selectedDeliveryAddress?.fname}} {{selectedDeliveryAddress?.lname}} {{selectedDeliveryAddress?.mname}}<br>
+      {{selectedDeliveryAddress?.address?.street}} {{selectedDeliveryAddress?.address?.suburb}}<br>
+      {{selectedDeliveryAddress?.address?.city}}<br>
+      {{selectedDeliveryAddress?.address?.state}} - {{selectedDeliveryAddress?.address?.state}}
+      ({{selectedDeliveryAddress?.address?.postCode}})<br>
+    </p>
+    <p class="email">Phone: {{selectedDeliveryAddress?.phone}}</p>
+    <p class="email"> {{selectedDeliveryAddress?.email}} </p>
+  </div>
+</div>
+
+<!-- <h2 class="title title-simple text-uppercase text-left">Additional Information</h2>
+<label>Order Notes (Optional)</label>
+<textarea class="form-control pb-2 pt-2 mb-0" cols="30" rows="5"
+  placeholder="Notes about your order, e.g. special notes for delivery"></textarea> -->

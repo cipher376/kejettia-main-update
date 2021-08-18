@@ -97,7 +97,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
           // 401 unauthorised user
           console.log('Unauthenticated');
           myError = new HttpErrorResponse({ status: 401, statusText: 'Authentication failed' });
-          this.router.navigateByUrl('/login');
+          // this.router.navigateByUrl('/login');
           this.toaster.error('Authentication error, please login!');
         } else if (err.status === 0) {
           console.log('No connection');

@@ -5,3 +5,11 @@ export class Features {
   value?: string;
   description?: string;
 }
+
+export class FeaturesToCartItemThrough {
+
+  id?: string;
+  cartItemId: string;
+  featuresId: string;
+
+}

@@ -163,21 +163,37 @@ export class UtilityService {
 
   /****** Search for object from and array and geit its index****/
   static searchObjFromArrray(id: any, objs: any[]) {
-    if (!id || !objs || objs.length < 1) {
-      console.log('invalid args');
+    if (!id || (objs?.length < 1)) {
+      // console.log(id);
+      // console.log(objs);
+      // console.log('invalid args');
       return undefined;
     }
-    let i = 0;
-    for (let obj of objs) {
+
+
+    let found;
+    objs.forEach((obj, index) => {
       if (obj.id == id) {
-        return [obj, i];
+        found = [obj, index];
       }
-      i = i + 1;
-    }
-    return undefined;
+    })
+    return found;
   }
 
 
+  getSelectedCities(){
+    return [
+      'Accra',
+      'Kumasi',
+      'Koforidua',
+      'Takoradi',
+      'Sunyani',
+      'Tamale',
+      'Wa',
+      'Cape coast',
+
+    ]
+  }
   getStoreCountries(): Country[] {
     return [
       {
@@ -192,6 +208,18 @@ export class UtilityService {
   }
 
   /***************Get observable of countries Json array*********************/
+  getSelectedCountries(): Country[] {
+    return [
+      {
+        "name": "Ghana",
+        "states": ["Ashanti", "Brong-Ahafo", "Central", "Eastern", "Greater Accra", "Northern", "Upper East", "Upper West", "Volta", "Western"]
+      },
+      {
+        "name": "Nigeria",
+        "states": ["Abia", "Abuja Federal Capital", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nassarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"]
+      }
+    ]
+  }
   getAllCountries(): Country[] {
     return [
       {

@@ -1,0 +1,14 @@
+<span style="font-size: 100%; font-weight: bold !important;" *ngIf="Shippings">Shipment and Delivery</span>
+<div class="product-form product-variations product-size" *ngIf="Shippings" style="margin-left: 12.5%;">
+  <div class="product-form-group">
+    <br>
+    <div class="select-box">
+      <select name="size" class="form-control" [(ngModel)]="Shipping">
+        <option value="" selected="selected">Select your location </option>
+        <option [value]="s?.id" *ngFor="let s of Shippings">{{s?.shipTo}}</option>
+      </select>
+    </div>
+    <a href="javascript:;" class="size-guide" style="margin-left: 11% !important;" (click)="goToGuide('shipping')">
+      <i class="d-icon-th-list"></i>Shipping Guide</a>
+  </div>
+</div>

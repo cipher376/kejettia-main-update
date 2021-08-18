@@ -1,4 +1,4 @@
-import { Cart, CartItem, Features, Photo, Product, Review } from 'src/app/models';
+import { Cart, CartItem, Features, Photo, Product, Review, Shipping } from 'src/app/models';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { SignalService, MY_ACTION } from 'src/app/shared/services/signal.service
 import { StoreService } from 'src/app/shared/services/store.service';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
+import { UtilityService } from 'src/app/shared/services';
 
 
 declare var $: any;
@@ -33,6 +34,7 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   addedToCart = false;
 
   sizeFeatures: Features[] = [];
+  selectedFeatures: Features[] = [];
   colorFeatures: Features[] = [];
   otherFeatures: Features[] = [];
 
@@ -44,6 +46,11 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   sizeGuidePhoto = '';
   colorGuidePhoto = '';
 
+  selectedShippingCost: number = 0;
+  selectedShipping: Shipping;
+
+  selectedProductId = '';
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -53,7 +60,10 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
     private location: Location
   ) {
     Window = window;
-    // added to cart
+    route.params.subscribe(p => {
+      this.selectedProductId = p?.id;
+      this.refreshProduct();
+    })
 
   }
 
@@ -65,7 +75,20 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   get Product() {
     return this.selectedProduct;
   }
-
+  set SelectedFeature(feature: Features) {
+    let found = false;
+    this.selectedFeatures.forEach((f, index) => {
+      if (feature?.name == f?.name) {
+        // replace the p
+        this.selectedFeatures[index] = feature;
+        found = true;
+      }
+    });
+    if (!found) {
+      // feature does not exist
+      this.selectedFeatures.push(feature);
+    }
+  }
   ngAfterViewInit(): void {
     // this.Product = this.storeService.getSelectedProductLocalSync();
 
@@ -77,7 +100,7 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
     this.cart = this.cartService.getCartLocal();
     this.products = this.storeService.getProductsLocalSync();
 
-    window.scrollTo(0, 100);
+    window.scrollTo(0, 10);
 
   }
 
@@ -103,10 +126,19 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   addToCart() {
-    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity)
+    if ((this.selectedProduct?.shippings?.length) > 0 && (!this.selectedShipping)) {
+      alert("Please select shipping or delivery location");
+      return;
+    }
+    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)
       .subscribe(cartItem => {
         console.log(cartItem);
+        this.selectedFeatures?.forEach(feature => {
+          this.cartService.updateCartItemToFeature(this.cartItem?.id, feature?.id)
+        })
         this.showAddedToCartAlert();
+        // this.cartService.getCart().subscribe(()=>{})
+
       })
   }
 
@@ -149,7 +181,7 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   refreshProduct() {
-    this.storeService.getProductById(this.selectedProduct.id).subscribe(product => {
+    this.storeService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
       this.selectedProduct = product;
       this.init();
     })
@@ -189,7 +221,11 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   setGuidWidget(guide: string) {
-    this.tab = 3;
+    if (guide === 'shipping') {
+      this.tab = 5
+    } else {
+      this.tab = 3;
+    }
     this.guide = guide;
     window.scrollTo(0, 500);
 
@@ -200,12 +236,13 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   goPrev() {
+    this.products = this.storeService.getProductsLocalSync();
     const prev = this.Prev;
     if (prev) {
       this.storeService.setSelectedProductLocal(prev).then(() => {
         // refresh page;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([Urls.productDetails]);
+          this.router.navigate([Urls.productDetails + '/' + this.Prev?.id]);
         });
         // window.location.href = Urls.productDetails
       })
@@ -215,19 +252,21 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   goNext() {
+    this.products = this.storeService.getProductsLocalSync();
     const next = this.Next;
     if (next)
       this.storeService.setSelectedProductLocal(next).then(() => {
         // refresh page;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([Urls.productDetails]);
+          this.router.navigate([Urls.productDetails + '/' + this.Next?.id]);
         });
         // window.location.href = Urls.productDetails
       })
   }
 
   get Next() {
-    const index = this.products?.indexOf(this.selectedProduct);
+    let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
+    let index = found ? found[1] : 0;
     if (index && (index < this.products.length)) {
       return this.products[index + 1];
     }
@@ -235,7 +274,8 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   get Prev() {
-    const index = this.products?.indexOf(this.selectedProduct);
+    let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
+    let index = found ? found[1] : (this.products.length - 1);
     if (index && (index > 0)) {
       return this.products[index - 1];
     }
@@ -243,7 +283,7 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   getPhotoUrl(photos: Photo[]) {
-    return StoreService.getPhotoUrlByDisplayTypeLocal(photos, 'cover', true);
+    return StoreService.getPhotoUrlByDisplayTypeLocal(photos, 'cover', true, true);
   }
 
   getSizeGuidePhotoUrl() {

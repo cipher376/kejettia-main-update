@@ -1,5 +1,4 @@
 
-
 export class PhotoDisplayType {
   id?: string;
   type?: string;
