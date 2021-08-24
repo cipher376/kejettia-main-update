@@ -58,26 +58,6 @@ export const MESSAGE_API_URL_PRODUCTION = ''
 
 
 
-export const IDENTITY_API_PORT_LOCAL = '3002'
-export const IDENTITY_API_HOST_LOCAL = 'http://localhost'
-export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}:${IDENTITY_API_PORT_LOCAL}`
-
-export const STORE_API_PORT_LOCAL = '3001'
-export const STORE_API_HOST_LOCAL = 'http://localhost'
-export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
-
-export const FILE_API_PORT_LOCAL = '3003'
-export const FILE_API_HOST_LOCAL = 'http://localhost'
-export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}:${FILE_API_PORT_LOCAL}/file`
-
-export const MESSAGE_API_PORT_LOCAL = '3004'
-export const MESSAGE_API_HOST_LOCAL = 'http://localhost'
-export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}:${MESSAGE_API_PORT_LOCAL}`
-
-export const EMPLOYEE_ACCOUNT_API_PORT_LOCAL = '3005'
-export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'http://localhost'
-export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}:${EMPLOYEE_ACCOUNT_API_PORT_LOCAL}`
-
 
 
 export const NO_IMAGE = '';

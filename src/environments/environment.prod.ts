@@ -1,15 +1,24 @@
 
-import { LoopBackConfig as identityConfig } from '../app/shared/identity-sdk/lb.config';
-import { LoopBackConfig as storeConfig } from '../app/shared/store-sdk/lb.config';
-import { LoopBackConfig as companyConfig } from '../app/shared/company-sdk/lb.config';
-import {
-  identityApiVersion, identityProtocol, identityApiUrl, storeApiVersion,
-  storeProtocol, storeApiUrl, companyApiVersion, companyProtocol, companyApiUrl, companyApiUrlLocal,
-  companyApiVersionLocal, companyProtocolLocal, identityApiUrlLocal, identityApiVersionLocal, identityProtocolLocal,
-  storeApiUrlLocal, storeApiVersionLocal, storeProtocolLocal, identityFileRootUrl, storeFileRootUrl
-} from 'src/app/config';
 
-const port = window.location.port ? ':' + window.location.port : '';
+export const IDENTITY_API_PORT_PRODUCTION = '3002'
+export const IDENTITY_API_HOST_PRODUCTION = 'http://107.152.41.194'
+export const IDENTITY_API_URL_PRODUCTION = `${IDENTITY_API_HOST_PRODUCTION}:${IDENTITY_API_PORT_PRODUCTION}`
+
+export const STORE_API_PORT_PRODUCTION = '3001'
+export const STORE_API_HOST_PRODUCTION = 'http://107.152.41.194'
+export const STORE_API_URL_PRODUCTION = `${STORE_API_HOST_PRODUCTION}:${STORE_API_PORT_PRODUCTION}`
+
+export const FILE_API_PORT_PRODUCTION = '3003'
+export const FILE_API_HOST_PRODUCTION = 'http://107.152.41.194'
+export const FILE_API_URL_PRODUCTION = `${FILE_API_HOST_PRODUCTION}:${FILE_API_PORT_PRODUCTION}/file`
+
+export const MESSAGE_API_PORT_PRODUCTION = '3004'
+export const MESSAGE_API_HOST_PRODUCTION = 'http://107.152.41.194'
+export const MESSAGE_API_URL_PRODUCTION = `${MESSAGE_API_HOST_PRODUCTION}:${MESSAGE_API_PORT_PRODUCTION}`
+
+export const EMPLOYEE_ACCOUNT_API_PORT_PRODUCTION = '3005'
+export const EMPLOYEE_ACCOUNT_API_HOST_PRODUCTION = 'http://107.152.41.194'
+export const EMPLOYEE_ACCOUNT_API_URL_PRODUCTION = `${EMPLOYEE_ACCOUNT_API_HOST_PRODUCTION}:${EMPLOYEE_ACCOUNT_API_PORT_PRODUCTION}`
 
 
 
@@ -19,14 +28,6 @@ export const environment = {
   envName: 'prod',
   storeion: true,
 
-  identityApiUrl: identityProtocol + identityApiUrl,
-  identityFileRootUrl: identityProtocol + identityFileRootUrl,
-  identityApiVersion,
-
-
-  storeApiUrl: storeProtocol + storeApiUrl,
-  storeFileRootUrl: storeProtocolLocal + storeFileRootUrl,
-  storeApiVersion,
 
   // Firebase FCM configruation
   firebaseConfig: {
@@ -38,6 +39,16 @@ export const environment = {
     messagingSenderId: '514730217551',
     appId: '1:514730217551:web:2c8a2c22306e92cb'
   },
+
+
+  employee_account_api_root_url: EMPLOYEE_ACCOUNT_API_URL_PRODUCTION,
+  store_api_root_url: STORE_API_URL_PRODUCTION,
+  identity_api_root_url: IDENTITY_API_URL_PRODUCTION,
+  file_api_root_url: FILE_API_URL_PRODUCTION,
+  file_api_download_url_root: FILE_API_URL_PRODUCTION + '/download/',
+  file_api_upload_url_root: FILE_API_URL_PRODUCTION + '/upload/',
+  file_api_upload_photo_video_url_root: FILE_API_URL_PRODUCTION + '/photo-video-upload/',
+  message_api_root_url: MESSAGE_API_URL_PRODUCTION,
 
   //   fb_auth_callback_url: protocol + apiUrl + '/' + apiVersion + '/facebook/callback',
   //   fb_auth_success_url: protocol + apiUrl + '/' + apiVersion + '/FameIdentities/me?access_token=',
@@ -51,35 +62,3 @@ export const environment = {
 };
 
 
-export function initApiStagging() {
-  identityConfig.setApiVersion(identityApiVersion);
-  identityConfig.setBaseURL(identityProtocol + identityApiUrl);
-
-  storeConfig.setApiVersion(storeApiVersion);
-  storeConfig.setBaseURL(storeProtocol + storeApiUrl);
-
-  companyConfig.setApiVersion(companyApiVersion);
-  companyConfig.setBaseURL(companyProtocol + companyApiUrl);
-}
-
-export function initApiProduction() {
-  identityConfig.setApiVersion(identityApiVersion);
-  identityConfig.setBaseURL(identityProtocol + identityApiUrl);
-
-  storeConfig.setApiVersion(storeApiVersion);
-  storeConfig.setBaseURL(storeProtocol + storeApiUrl);
-
-  companyConfig.setApiVersion(companyApiVersion);
-  companyConfig.setBaseURL(companyProtocol + companyApiUrl);
-}
-
-export function initApiLocal() {
-  identityConfig.setApiVersion(identityApiVersionLocal);
-  identityConfig.setBaseURL(identityProtocolLocal + identityApiUrlLocal);
-
-  storeConfig.setApiVersion(storeApiVersionLocal);
-  storeConfig.setBaseURL(storeProtocolLocal + storeApiUrlLocal);
-
-  companyConfig.setApiVersion(companyApiVersionLocal);
-  companyConfig.setBaseURL(companyProtocolLocal + companyApiUrlLocal);
-}

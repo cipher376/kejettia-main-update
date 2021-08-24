@@ -1,6 +1,7 @@
 import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { Store, StoreCategory } from 'src/app/models';
+import { UtilityService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-home',
@@ -10,22 +11,21 @@ import { Store, StoreCategory } from 'src/app/models';
 export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   private stores: Store[] = [];
   private storeCategories: StoreCategory[] = [];
+  premiumStores: Store[] = [];
 
   constructor(
     private storeService: StoreService
   ) {
 
-   }
+  }
 
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-
-    dispatchEvent(new Event('load'));
-    dispatchEvent(new Event('mousewheel'));
-
+      dispatchEvent(new Event('load'));
+      dispatchEvent(new Event('mousewheel'));
     }, 1000);
-
+    this.loadPremiumStores();
   }
 
 
@@ -52,5 +52,14 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
       console.log(categories);
     })
   }
+
+  loadPremiumStores() {
+    this.storeService.getPremiumStores().subscribe(stores => {
+      this.premiumStores = UtilityService.shuffle(stores).slice(0, 3);
+      console.log(this.premiumStores);
+    });
+  }
+
+
 
 }

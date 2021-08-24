@@ -1,0 +1,3 @@
+
+docker build -t kejettia-main . && docker tag kejettia-main ntiamoah376/devtek:kejettia-main-testing && docker push ntiamoah376/devtek:kejettia-main-testing
+

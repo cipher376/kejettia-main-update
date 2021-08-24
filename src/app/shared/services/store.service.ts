@@ -274,7 +274,61 @@ export class StoreService {
         },
         { relation: 'videos' },
         { relation: 'reviews' },
-        { relation: 'likes' }
+        { relation: 'likes' },
+        {
+          relation: 'storeCategories',
+          scope: {
+            include: [
+              {
+                relation: 'photo'
+              },
+              {
+                relation: 'productCategories',
+                scope: {
+                  include: [
+                    {
+                      relation: 'productCategoryItems',
+                      scope: {
+                        include: [
+                          {
+                            relation: 'photo'
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      relation: 'photo'
+                    },
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          relation: 'favouriteUsers'
+        },
+        {
+          relation: 'products',
+          scope: {
+            include: [
+              {
+                relation: 'productModel',
+                scope: {
+                  include: [
+                    {
+                      relation: 'productBrand',
+                      scope: {
+                        include: ['photo']
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+
       ]
     };
     filter = filter ? '?filter=' + JSON.stringify(filter) : '';
@@ -287,6 +341,95 @@ export class StoreService {
       catchError(e => this.handleError(e))
     );
   }
+
+  getPremiumStores(): Observable<any> {
+    let filter;
+    filter = {
+      where: {
+        // isPremium: true,
+        // showOnHomePage: true
+      },
+      include: [
+        { relation: 'address' },
+        { relation: 'policyStatements' },
+        { relation: 'coupons' },
+        {
+          relation: 'photos',
+          scope: {
+            include: [{
+              relation: 'photoDisplayType'
+            }]
+          }
+        },
+        { relation: 'videos' },
+        { relation: 'reviews' },
+        { relation: 'likes' },
+        {
+          relation: 'storeCategories',
+          scope: {
+            include: [
+              {
+                relation: 'photo'
+              },
+              {
+                relation: 'productCategories',
+                scope: {
+                  include: [
+                    {
+                      relation: 'productCategoryItems',
+                      scope: {
+                        include: [
+                          {
+                            relation: 'photo'
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      relation: 'photo'
+                    },
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          relation: 'favouriteUsers'
+        },
+        {
+          relation: 'products',
+          scope: {
+            include: [
+              {
+                relation: 'productModel',
+                scope: {
+                  include: [
+                    {
+                      relation: 'productBrand',
+                      scope: {
+                        include: ['photo']
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+
+      ]
+    };
+    filter = filter ? '?filter=' + JSON.stringify(filter) : '';
+    const url = environment.store_api_root_url + `/stores` + filter;
+    return this.http.get<Store[]>(url).pipe(
+      map((res: Store[]) => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
 
   getStores(pageInfo?: PageInfo): Observable<any> {
     let filter;
@@ -483,6 +626,9 @@ export class StoreService {
       catchError(e => this.handleError(e))
     );
   }
+
+
+
   // linking store to Category item
   addStoreToCategory(storeId: any, storeCategoryId: any) {
     if (!storeId || !storeCategoryId) {
@@ -1114,6 +1260,38 @@ export class StoreService {
   }
 
 
+  getPopularProducts(): Observable<any> {
+    let filter: any = {
+      order: 'viewCount DESC',
+      limit: 15,
+      skip: 0,
+      include: [
+        { relation: 'features' },
+        { relation: 'productCategoryItems' },
+        { relation: 'shippings' },
+        { relation: 'photos' },
+        { relation: 'videos' },
+        { relation: 'productModel' },
+        { relation: 'likes' },
+        { relation: 'reviews' },
+        { relation: 'bargains' }
+      ]
+    };
+
+    filter = filter ? '?filter=' + JSON.stringify(filter) : '';
+    const url = environment.store_api_root_url + `/products${filter}`;
+    // console.log(url);
+    return this.http.get<Product[]>(url).pipe(
+      map((res: Product[]) => {
+        // console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+
+
   /////////////////////////////////////////////////////////////////////////
   /*************Products shipping*****/
   ///////////////////////////////////////////////////////////////////////////
@@ -1300,11 +1478,21 @@ export class StoreService {
   getProductsLocalSync(): Product[] {
     return this.fstore.getObjectSync('products');
   }
-  async setProductsLocal(stores: Store[]) {
-    return await this.fstore.setObject('products', stores);
+  async setProductsLocal(products: Product[]) {
+    return await this.fstore.setObject('products', products);
   }
   deleteProductsLocal() {
     this.fstore.remove('products');
+  }
+
+  getStoreCategoriesLocalSync(): Product[] {
+    return this.fstore.getObjectSync('store_categories');
+  }
+  async setStoreCategoriesLocal(cats: StoreCategory[]) {
+    return await this.fstore.setObject('store_categories', cats);
+  }
+  deleteStoreCategoriesLocal() {
+    this.fstore.remove('store_categories');
   }
 
 

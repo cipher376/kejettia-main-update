@@ -5,51 +5,28 @@
 <div class="sidebar-content">
 
   <div class="sticky-sidebar">
+    <div class="banner banner-fixed overlay-zoom overlay-dark">
+      <figure>
+        <img src="assets/images/banner2.jpg" width="280" height="312" alt="banner"
+          style="background-color: #26303c;" />
+      </figure>
+      <div class="banner-price-info font-weight-bold text-white text-uppercase">
+        20-22<sup>th</sup> April</div>
+      <div class="banner-content text-center w-100">
+        <h4 class="banner-subtitle d-inline-block bg-primary font-weight-semi-bold text-uppercase">
+          Ultimate Sale</h4>
+        <h3 class="banner-title ls-m lh-1 text-uppercase text-white font-weight-bold">
+          Up
+          to 70%</h3>
+        <p class="mb-4 font-primary text-white lh-1">Discount Selected Items</p>
+      </div>
+    </div>
     <ul class="menu vertical-menu category-menu mb-4">
-      <li><a href="demo3-shop.html" class="menu-title">Popular Categories</a></li>
-      <li>
-        <a href="demo3-shop.html"><i class="d-icon-camera1"></i>Electronics</a>
+      <li><a href="javascript:;" (click)="goToCategories()" class="menu-title">Product Categories</a></li>
+      <li *ngFor="let cat of Categories.slice(0,10)">
+        <a href="javascript:;" (click)="search(cat)"><i class="{{cat?.icon}}" ></i>{{cat?.name}}</a>
       </li>
-      <li>
-        <a href="demo3-shop.html"><i class="d-icon-officebag"></i>Backpacks &amp;
-          Fashion bags</a>
-      </li>
-      <li>
-        <a href="demo3-shop.html"><i class="d-icon-gamepad1"></i>Gaming &amp;
-          Accessories
-        </a>
-      </li>
-      <li>
-        <a href="demo3-shop.html"><i class="d-icon-basketball1"></i>Sporting
-          Goods</a>
-      </li>
-      <li>
-        <a href="demo3-shop.html">
-          <i class="d-icon-t-shirt1" style="
-                                  font-size: 23px;
-                                  margin-left: -1px;
-                                  margin-right: .8rem;
-                              "></i>Travel &amp; Clothing</a>
-      </li>
-      <li>
-        <a href="demo3-shop.html"><i class="d-icon-desktop"></i>Computer
-        </a>
-      </li>
-      <li>
-        <a href="demo3-shop.html"><i class="d-icon-cook"></i>Home &amp; Kitchen</a>
-      </li>
-      <li><a href="demo3-shop.html" class="menu-title mt-1">Today Coupon Deals</a>
-      </li>
-      <li>
-        <a href="demo3-shop.html">
-          <i class="d-icon-card"></i>Backpacks &amp; Fashion bags
-        </a>
-      </li>
-      <li>
-        <a href="demo3-shop.html">
-          <i class="d-icon-card"></i>Daily Deals
-        </a>
-      </li>
+
     </ul>
     <div class="banner banner-fixed overlay-zoom overlay-dark">
       <figure>
@@ -68,7 +45,7 @@
       </div>
     </div>
     <app-popular-products></app-popular-products>
-    <app-blog-widget></app-blog-widget>
-    <app-testimonial-widget></app-testimonial-widget>
+    <!-- <app-blog-widget></app-blog-widget> -->
+    <!-- <app-testimonial-widget></app-testimonial-widget> -->
   </div>
 </div>

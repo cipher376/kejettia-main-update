@@ -69,6 +69,7 @@ export class ProductCategory {
   id?: string;
   name?: string;
   description?: string;
+  icon?: string;
 
   storeCategoryId?: string;
   productCategoryItems?: ProductCategoryItem[];
@@ -79,6 +80,7 @@ export class ProductCategoryItem {
 
   id?: string;
   name?: string;
+  icon?: string;
   features?: string[];
 
 

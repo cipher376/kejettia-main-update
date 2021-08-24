@@ -1,60 +1,59 @@
 <main class="main">
   <div class="page-content">
-      <section class="intro-section appear-animate">
-          <div class="container">
-              <div class="row grid">
+    <section class="intro-section appear-animate">
+      <div class="container">
+        <div class="row grid">
 
-                  <!-- categories-menu -->
-                  <div class="grid-item col-xl-3 col-lg-4 height-x2 category-list d-lg-block d-none">
-                      <app-categories-menu [StoreCategories]="StoreCategories"></app-categories-menu>
-                  </div>
-
-                  <!-- main-carouel -->
-                  <div class="grid-item col-xl-6 col-lg-5 col-md-8 height-x2">
-                      <app-main-carousel [StoreCategories]="StoreCategories"></app-main-carousel>
-                  </div>
-
-                  <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
-                      <app-intro-banner-three></app-intro-banner-three>
-                  </div>
-
-                  <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
-                      <app-intro-banner-three></app-intro-banner-three>
-                  </div>
-
-                  <div class="grid-item col-lg-6 col-md-4 height-x1">
-                      <app-intro-banner-one></app-intro-banner-one>
-                  </div>
-
-                  <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
-                      <app-brands></app-brands>
-                  </div>
-
-                  <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
-                      <app-intro-banner-three></app-intro-banner-three>
-                  </div>
-
-                  <div class="grid-space col-1"></div>
-              </div>
+          <!-- categories-menu -->
+          <div class="grid-item col-xl-3 col-lg-4 height-x2 category-list d-lg-block d-none">
+            <app-categories-menu [StoreCategories]="StoreCategories"></app-categories-menu>
           </div>
-      </section>
 
-      <app-tagline-widget></app-tagline-widget>
+          <!-- main-carouel -->
+          <div class="grid-item col-xl-6 col-lg-5 col-md-8 height-x2">
+            <app-main-carousel [StoreCategories]="StoreCategories"></app-main-carousel>
+          </div>
 
-      <app-popular-categories></app-popular-categories>
+          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
+            <app-intro-banner-three *ngIf="premiumStores?.length>0" [Store]="premiumStores[0]"></app-intro-banner-three>
+          </div>
 
-      <app-other-categories  [StoreCategories]="StoreCategories"></app-other-categories>
+          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
+            <app-intro-banner-three *ngIf="premiumStores?.length>1" [Store]="premiumStores[1]"></app-intro-banner-three>
+          </div>
 
-      <app-best-sellers></app-best-sellers>
+          <div class="grid-item col-lg-6 col-md-4 height-x1">
+            <app-intro-banner-one></app-intro-banner-one>
+          </div>
 
-     <app-signup-banner></app-signup-banner>
+          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
+            <app-brands></app-brands>
+          </div>
 
-      <!-- <app-blog-section></app-blog-section> -->
+          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
+            <app-intro-banner-three *ngIf="premiumStores?.length>2" [Store]="premiumStores[2]"></app-intro-banner-three>
+          </div>
 
-      <!-- <app-instagram></app-instagram> -->
+          <div class="grid-space col-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <app-tagline-widget></app-tagline-widget>
+
+    <app-popular-categories></app-popular-categories>
+
+    <app-other-categories [StoreCategories]="StoreCategories"></app-other-categories>
+
+    <app-best-sellers></app-best-sellers>
+
+    <app-signup-banner></app-signup-banner>
+
+    <!-- <app-blog-section></app-blog-section> -->
+
+    <!-- <app-instagram></app-instagram> -->
   </div>
 </main>
 
 <!-- Scroll Top -->
 <a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="d-icon-arrow-up"></i></a>
-

@@ -22,6 +22,10 @@ export class BrandsHorizontalComponent implements OnInit {
     this.brands = brands;
   }
 
+  get Brands(){
+    return this.brands;
+  }
+
   getPhoto(brand: ProductBrand) {
     if (brand?.photo)
       return this.fileUrl + (brand?.photo?.thumbnail ?? brand?.photo?.source);
