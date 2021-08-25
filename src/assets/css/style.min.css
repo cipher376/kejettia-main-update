@@ -18987,3 +18987,23 @@ button.pay_now.btn.btn-rounded.btn-order.order-message.mr-auto.ml-auto{
 body.home.loaded {
   max-width: 100% !important;
 }
+
+
+
+
+.banner {
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  font-size: 1rem;
+}
+
+.category img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: .3rem;
+}
