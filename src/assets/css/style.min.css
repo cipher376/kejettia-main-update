@@ -18983,3 +18983,7 @@ aside .owl-nav-top .owl-nav i::before {
 button.pay_now.btn.btn-rounded.btn-order.order-message.mr-auto.ml-auto{
     border: 5px solid #ED1D25 !important;
 }
+
+body.home.loaded {
+  max-width: 100% !important;
+}

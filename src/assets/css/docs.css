@@ -10,7 +10,7 @@
 */
 /* 1. config */
 /* -------------------------------------------
-	Variables 
+	Variables
 ------------------------------------------- */
 /* 2. mixins */
 /* 3. plugins */
@@ -6101,7 +6101,7 @@ button.mfp-arrow {
     max-width: 500px;
     padding: 3.5rem 2rem; } }
 /* -------------------------------------------
-    Products 
+    Products
         - Default
         - Classic
         - Slideup
@@ -6111,7 +6111,7 @@ button.mfp-arrow {
         - List
             - List
             - Small
-        
+
         - Product Filters
 ---------------------------------------------- */
 .equal-height .product {
@@ -7931,7 +7931,7 @@ Other Styles
       color: rgba(255, 255, 255, 0.8); }
 
 /* -------------------------------------------
-	Tooltips 
+	Tooltips
 ------------------------------------------- */
 .tooltiptext {
   position: absolute;
@@ -8106,7 +8106,7 @@ Other Styles
     line-height: 0; }
 
 /* -------------------------------------------
-	Widget 
+	Widget
 ------------------------------------------- */
 .widget-title {
   margin-bottom: 2rem;
@@ -8129,7 +8129,7 @@ Other Styles
         -Header
         -Welcome-msg
         -Header Search
-        -Other 
+        -Other
             - Login
             - Call
             - Wishlist
@@ -9096,8 +9096,8 @@ Other Styles
             - MenuBanner
             - Tips
 
-        - MobileMenu 
-        
+        - MobileMenu
+
             - MobileMenuWrapper
             - MobileMenuContainer
             - MobileMenu
