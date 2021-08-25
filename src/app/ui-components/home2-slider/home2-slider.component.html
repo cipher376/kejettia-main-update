@@ -10,7 +10,7 @@
   <div class="banner banner-fixed intro-slide{{i+1}}" *ngFor="let photo of Photos; let i=index;">
     <figure>
       <img [src]="fileUrl+photo?.source" alt="intro-banner" width="880" height="474"
-        style="background-color: #d3d4d5;" />
+        style="background-color: #d3d4d5; background-size: contain !important; background-position: center;" />
     </figure>
 
     <div class="banner-content y-50 text-right" *ngIf="i%2==0">
