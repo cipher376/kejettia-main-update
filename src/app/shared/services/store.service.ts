@@ -324,6 +324,9 @@ export class StoreService {
                     }
                   ]
                 }
+              },
+              {
+                relation: 'photos'
               }
             ]
           }
