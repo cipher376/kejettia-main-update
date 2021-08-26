@@ -83,7 +83,6 @@ export class ProductCategoryItem {
   icon?: string;
   features?: string[];
 
-
   productCategoryId?: string;
   productId?: string;
   products?: Product[];

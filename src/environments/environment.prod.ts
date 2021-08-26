@@ -40,7 +40,6 @@ export const environment = {
     appId: '1:514730217551:web:2c8a2c22306e92cb'
   },
 
-
   employee_account_api_root_url: EMPLOYEE_ACCOUNT_API_URL_PRODUCTION,
   store_api_root_url: STORE_API_URL_PRODUCTION,
   identity_api_root_url: IDENTITY_API_URL_PRODUCTION,
