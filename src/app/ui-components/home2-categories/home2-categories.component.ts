@@ -34,7 +34,10 @@ export class Home2CategoriesComponent implements OnInit {
 
     if (isStoreCat) {
       cats?.forEach((c: StoreCategory) => {
-        this.categories = [...this.categories, ...c.productCategories];
+        this.categories = [...this.categories];
+        if(Array.isArray(c.productCategories)){
+          this.categories.push(...c.productCategories);
+        }
       });
     } else {
       this.categories = cats;

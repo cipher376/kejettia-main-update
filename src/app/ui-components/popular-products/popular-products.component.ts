@@ -1,3 +1,4 @@
+import { PHOTO_DISPLAY_TYPES } from './../../config';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models';
 import { StoreService } from 'src/app/shared/services/store.service';
@@ -52,6 +53,10 @@ export class PopularProductsComponent implements OnInit, AfterViewInit {
     this.storeService.setSelectedProductLocal(p).then(() => {
       this.router.navigateByUrl(Urls.productDetails + '/' + p?.id);
     });
+  }
+
+  getProductImage(prod: Product) {
+    return StoreService.getPhotoUrlByDisplayTypeLocal(prod.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
   }
 
 

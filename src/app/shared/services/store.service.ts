@@ -324,6 +324,9 @@ export class StoreService {
                     }
                   ]
                 }
+              },
+              {
+                relation: 'photos'
               }
             ]
           }
@@ -464,26 +467,27 @@ export class StoreService {
   }
 
   getAllStores(pageInfo?: PageInfo): Observable<any> {
-    let filter;
+    let filter = {} as any;
     if (pageInfo) {
       filter = {
         // order: 'id DESC',
         fields: ['id', 'name'],
         limit: pageInfo.limit,
         skip: pageInfo.offset,
-        include: [
-          { relation: 'address' },
-          {
-            relation: 'photos',
-            scope: {
-              include: [{
-                relation: 'photoDisplayType'
-              }]
-            }
-          },
-        ]
+
       };
     }
+    filter.include = [
+      { relation: 'address' },
+      {
+        relation: 'photos',
+        scope: {
+          include: [{
+            relation: 'photoDisplayType'
+          }]
+        }
+      },
+    ]
     filter = filter ? '?filter=' + JSON.stringify(filter) : '';
     const url = environment.store_api_root_url + '/stores' + filter;
     // console.log(url);

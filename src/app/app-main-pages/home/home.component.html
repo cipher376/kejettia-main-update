@@ -1,4 +1,4 @@
-<main class="main">
+<main class="main" [hidden]="showLoader">
   <div class="page-content">
     <section class="intro-section appear-animate">
       <div class="container">
@@ -43,7 +43,7 @@
 
     <app-popular-categories></app-popular-categories>
 
-    <app-other-categories [StoreCategories]="StoreCategories"></app-other-categories>
+    <app-other-categories [ProductCategoryItems]="ProductCategoryItems"></app-other-categories>
 
     <app-best-sellers></app-best-sellers>
 

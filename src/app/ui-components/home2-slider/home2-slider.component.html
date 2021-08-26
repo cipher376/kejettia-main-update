@@ -1,11 +1,13 @@
-<div class=" owl-carousel owl-theme row owl-dot-inner owl-dot-white intro-slider animation-slider cols-1 mb-4"
+<!-- <div class=" owl-carousel owl-theme row owl-dot-inner owl-dot-white intro-slider animation-slider cols-1 mb-4"
   data-owl-options="{
               'items': 1,
               'dots': true,
               'nav': false,
               'loop': true,
               'autoplay': false
-          }">
+          }"> -->
+<div class="owl-carousel owl-theme row owl-dot-inner owl-dot-white intro-slider animation-slider cols-1 mb-4" [attr.data-owl-options]="SliderConfig"
+  *ngIf="Photos?.length>0">
 
   <div class="storeslider banner banner-fixed intro-slide{{i+1}}" *ngFor="let photo of Photos; let i=index;">
     <figure>

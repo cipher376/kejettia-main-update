@@ -1,5 +1,25 @@
  <div class="row">
    <aside class="col-xl-3 col-lg-4 sidebar sidebar-fixed sticky-sidebar-wrapper home-sidebar">
+
+
+    <div class="banner banner-fixed overlay-zoom overlay-dark">
+      <figure>
+        <img [src]="logoUrl" width="280" height="312" alt="banner"
+          style="background-color: #26303c;" />
+      </figure>
+      <!-- <div class="banner-price-info font-weight-bold text-white text-uppercase">
+        20-22<sup>th</sup> April</div>
+      <div class="banner-content text-center w-100">
+        <h4 class="banner-subtitle d-inline-block bg-primary font-weight-semi-bold text-uppercase">
+          Ultimate Sale</h4>
+        <h3 class="banner-title ls-m lh-1 text-uppercase text-white font-weight-bold">
+          Up
+          to 70%</h3>
+        <p class="mb-4 font-primary text-white lh-1">Discount Selected Items</p>
+      </div> -->
+    </div>
+
+
      <app-home2-categories [Categories]="storeCategories"></app-home2-categories>
    </aside>
    <div class="col-xl-9 col-lg-8">
@@ -12,7 +32,7 @@
          <div class="col-md-6 mb-4" *ngIf="storeCategories?.length>1">
            <app-home2-category-badge [Category]="storeCategories[1]"></app-home2-category-badge>
          </div>
-         <div class="col-md-6 mb-4" *ngIf="storeCategories[0]?.productCategories?.length>0&&storeCategories?.length<=0">
+         <div class="col-md-6 mb-4" *ngIf="storeCategories[0]?.productCategories?.length>0&&storeCategories?.length<=2">
            <app-home2-category-badge [Category]="storeCategories[0]?.productCategories[0]"></app-home2-category-badge>
          </div>
        </div>

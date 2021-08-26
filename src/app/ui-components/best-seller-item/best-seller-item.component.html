@@ -1,36 +1,33 @@
 <div class="product text-center">
     <figure class="product-media" style="background-color: #f7f8fa;">
         <a href="javascript:;">
-            <img [src]="getStorePhoto()" alt="Blue Pinafore Denim Dress"
+            <img [src]="photoUrl" alt="{{Store?.name}}" alt="Blue Pinafore Denim Dress"
                 width="180" height="180">
         </a>
+        <div class="product-label-group" *ngIf="IsNew">
+          <label class="product-label label-new">new</label>
+        </div>
         <div class="product-action-vertical">
-            <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
+            <a href="javascript:;" class="btn-product-icon btn-cart" data-toggle="modal"
                 data-target="#addCartModal" title="Add to cart"><i
                     class="d-icon-bag"></i></a>
-            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i
+            <a href="javascript:;" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i
                     class="d-icon-heart"></i></a>
         </div>
-        <div class="product-action">
+        <div class="product-action" (click)="goToStore()">
             <a href="javascript:;" class="btn-product btn-quickview" title="Quick View">Quick View</a>
         </div>
     </figure>
     <div class="product-details">
-        <div class="product-cat">
-            <a href="javascript:;">Bags</a>
-        </div>
-        <h3 class="product-name">
-            <a href="javascript:;">Women’s Yellowish Band Handbag</a>
-        </h3>
-        <div class="product-price">
+      <div class="product-cat">
+        <a href="javascript:;">{{getCategory()}}</a>
+      </div>
+      <h3 class="product-name">
+        <a href="javascript:;">{{Store?.name}}</a>
+      </h3>
+        <!-- <div class="product-price">
             <span class="price">$230.99</span>
-        </div>
-        <div class="ratings-container">
-            <div class="ratings-full">
-                <span class="ratings" style="width:60%"></span>
-                <span class="tooltiptext tooltip-top"></span>
-            </div>
-            <a href="javascript:;" class="rating-reviews">( 6 reviews )</a>
-        </div>
+        </div> -->
+        <app-rating></app-rating>
     </div>
 </div>

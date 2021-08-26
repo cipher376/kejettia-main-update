@@ -1,8 +1,9 @@
+import { PhotoDisplayType } from './../../models/photo';
 import { Router } from '@angular/router';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Product } from './../../models/product';
 import { Component, Input, OnInit } from '@angular/core';
-import { Urls } from 'src/app/config';
+import { PHOTO_DISPLAY_TYPES, Urls } from 'src/app/config';
 import { UtilityService } from 'src/app/shared/services';
 
 @Component({
@@ -12,6 +13,7 @@ import { UtilityService } from 'src/app/shared/services';
 })
 export class ProductThumbHorizontalComponent implements OnInit {
   private product: Product;
+  photoUrl = '';
   discount = 0;
   constructor(
     private storeService: StoreService,
@@ -26,7 +28,9 @@ export class ProductThumbHorizontalComponent implements OnInit {
     this.product = prod;
     if (prod?.previousPrice > prod?.currentPrice)
       this.discount = ((prod.previousPrice - prod.currentPrice) / prod.previousPrice) * 100;
-    console.log(this.discount);
+    // console.log(this.discount);
+    console.log(prod);
+    this.photoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.product.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
   }
 
 
