@@ -19007,3 +19007,13 @@ body.home.loaded {
   margin-right: auto;
   border-radius: .3rem;
 }
+
+
+.product-media img:first-child {
+  position: relative;
+  opacity: 1;
+  object-fit: cover;
+  height: 300px;
+  background-color: #fddada;
+}
+

@@ -1,0 +1,11 @@
+// .storebadge.category.category-absolute.category-badge{
+//   height:189px;
+// }
+
+.storebadge.category.category-absolute.category-badge img{
+  // width: 180px;
+  width:100%;
+  height:auto;
+  max-height: 189px;
+  object-fit: cover;
+}
