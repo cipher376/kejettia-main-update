@@ -27,29 +27,12 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    Window.Riode.init();
-    Window.Riode.slider('.owl-carousel'); // Initialize slider
-
-    Window.Riode.prepare();
-    Window.Riode.status = 'loaded';
-    Window.Riode.$body.addClass('loaded');
-    Window.Riode.$window.trigger('riode_load');
-    Window.Riode.call(Window.Riode.initLayout);
-    Window.Riode.call(Window.Riode.init);
-    Window.Riode.$window.trigger('riode_complete');
-    Window.Riode.refreshSidebar();
-    Window.Riode.isotopes('.grid:not(.grid-float)');
     this.showLoader = true;
     this.loaderCount = 0;
 
     this.loadPremiumStores();
     this.getStoreCategories();
     this.getProductCategoryItems();
-    setTimeout(() => {
-      dispatchEvent(new Event('load'));
-      dispatchEvent(new Event('mousewheel'));
-    }, 1000);
-
 
   }
 
@@ -75,6 +58,12 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
       this.showLoader = false;
       dispatchEvent(new Event('load'));
       dispatchEvent(new Event('mousewheel'));
+      $('.main').hide().show(0);
+      window.scrollTo( 0, 10)
+      setTimeout(() => {
+      window.scrollTo( 0, 0)
+
+      }, 100);
     }
   }
   get LoaderCount(){

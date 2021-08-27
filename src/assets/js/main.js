@@ -1040,7 +1040,6 @@ window.Riode = {};
       Riode.appear(el, function () {
         if (el.classList.contains('appear-animate')) {
           var settings = $.extend({}, Riode.defaults.animation, Riode.parseOptions(el.getAttribute('data-animation-options')));
-
           Riode.call(function () {
             setTimeout(
               function () {
@@ -1049,6 +1048,7 @@ window.Riode = {};
                 el.classList.add('appear-animation-visible');
               },
               settings.delay ? Number(settings.delay.slice(0, -1)) * 1000 : 0
+              // 0
             );
           });
         }
@@ -2732,7 +2732,7 @@ window.Riode = {};
       this.initProductsQuickview();
       this.initProductsCartAction();
       this.initProductsLoad();
-      this.initProductsScrollLoad('.scroll-load');
+      // this.initProductsScrollLoad('.scroll-load');
       this.initProductType('slideup');
       this.initVariation();
       this.initWishlistButton('.product:not(.product-single) .btn-wishlist');

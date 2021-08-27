@@ -22,7 +22,7 @@ export class MainCarouselComponent implements OnInit {
 
   @Input() set StoreCategories(cats: StoreCategory[]) {
     this.storeCategories = cats;
-    console.log(cats);
+    // console.log(cats);
   }
 
   get StoreCategories() {
