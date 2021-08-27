@@ -2,10 +2,13 @@
 <div class="owl-carousel owl-theme row owl-dot-inner owl-dot-white intro-slider animation-slider cols-1 mb-4" [attr.data-owl-options]="SliderConfig"
   *ngIf="Photos?.length>0">
 
-  <div class="storeslider banner banner-fixed intro-slide{{i+1}}" *ngFor="let photo of Photos; let i=index;">
-    <figure>
-      <img [src]="fileUrl+photo?.source" alt="intro-banner" width="880" height="474"
-        style="background-color: #d3d4d5;" />
+  <div class="storeslider banner banner-fixed intro-slide{{i+1}}" *ngFor="let photo of Photos; let i=index;"
+   >
+    <figure  [style.background-image]="'url('+fileUrl+photo?.source+')'" style="width:880px; height:474px; background-size:cover; background-position: 0%; background-repeat:no-repeat"
+   >
+      <!-- <img [src]="fileUrl+photo?.source" alt="intro-banner" width="880" height="474"
+        style="background-color: #d3d4d5;" /> -->
+        <!-- <span>hrere</span> -->
     </figure>
 <!--
     <div class="banner-content y-50 text-right" *ngIf="i%2==0">
