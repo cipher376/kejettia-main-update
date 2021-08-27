@@ -38,11 +38,13 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
     // Window.Riode.$window.trigger('riode_complete');
     // Window.Riode.refreshSidebar();
     // Window.Riode.isotopes('.grid:not(.grid-float)');
+
+    this.loadPremiumStores();
+
   }
 
 
   ngAfterContentInit(): void {
-    this.loadPremiumStores();
     setTimeout(() => {
       // this.showLoader = false;
       dispatchEvent(new Event('load'));

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ProductBrand } from './../../models/product';
 import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,20 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrandsComponent implements OnInit {
 
-   brands: ProductBrand[] = [];
+  brands: ProductBrand[] = [];
 
   constructor(
-    private storeService: StoreService
+    private storeService: StoreService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.getBrands();
   }
 
-  getBrands(){
-    this.storeService.getProductBrands().subscribe(brands =>{
+  getBrands() {
+    this.storeService.getProductBrands().subscribe(brands => {
       this.brands = brands;
     })
+  }
+
+  search(key: string) {
+    this.router.navigateByUrl('/main/pages/search;cat=' + key)
   }
 
 }

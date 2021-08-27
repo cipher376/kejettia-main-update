@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { PHOTO_DISPLAY_TYPES } from './../../config';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, Input, OnInit, AfterContentInit } from '@angular/core';
 import { Store } from 'src/app/models';
@@ -10,7 +12,10 @@ import { Store } from 'src/app/models';
 export class IntroBannerThreeComponent implements OnInit, AfterContentInit {
   private store: Store;
   image = '';
-  constructor() { }
+  constructor(
+    private router: Router,
+    private storeService: StoreService
+  ) { }
 
 
   ngAfterContentInit(): void {
@@ -31,8 +36,15 @@ export class IntroBannerThreeComponent implements OnInit, AfterContentInit {
   }
 
   getImage() {
-
-    this.image = StoreService.getPhotoUrlByDisplayTypeLocal(this.store.photos, 'cover', true, true)
+    this.image = StoreService.getPhotoUrlByDisplayTypeLocal(this.store.photos, PHOTO_DISPLAY_TYPES.COVER, true, true)
   }
+
+
+  goToStore(){
+    this.storeService.setSelectedStoreLocal(this.store).then(()=>{
+      this.router.navigateByUrl('/stores/pages/home');
+    });
+  }
+
 
 }

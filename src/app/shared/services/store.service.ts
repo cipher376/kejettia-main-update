@@ -226,13 +226,14 @@ export class StoreService {
 
 
   searchStore(searchKey = 'all', pageInfo?: PageInfo) {
-    let filter = {};
+    let filter = {} as any;
     if (pageInfo) {
       filter = {
         // offset: pageInfo.offset,
         limit: pageInfo.limit,
         skip: pageInfo.offset,
         include: [
+
           {
             relation: 'address'
           },
@@ -245,6 +246,9 @@ export class StoreService {
     if (!searchKey) {
       searchKey = 'all';
     }
+    filter.where = {
+      showOnPage: true,
+    };
     const url = environment.store_api_root_url + '/stores-search/' + searchKey + '?filter=' + JSON.stringify(filter) ?? '';
     // console.log(url);
     return this.http.get<Store[]>(url).pipe(
@@ -260,6 +264,9 @@ export class StoreService {
   getStoreById(storeId: string): Observable<any> {
     let filter;
     filter = {
+      // where: {
+      //   showOnPage: true,
+      // },
       include: [
         { relation: 'address' },
         { relation: 'policyStatements' },
@@ -349,8 +356,9 @@ export class StoreService {
     let filter;
     filter = {
       where: {
-        // isPremium: true,
-        // showOnHomePage: true
+        isPremium: true,
+        showOnHomePage: true,
+        showOnPage: true
       },
       include: [
         { relation: 'address' },
@@ -454,6 +462,9 @@ export class StoreService {
         ]
       };
     }
+    filter.where = {
+      showOnPage: true,
+    };
     filter = filter ? '?filter=' + JSON.stringify(filter) : '';
     const url = environment.store_api_root_url + '/stores' + filter;
     // console.log(url);
@@ -467,7 +478,9 @@ export class StoreService {
   }
 
   getAllStores(pageInfo?: PageInfo): Observable<any> {
-    let filter = {} as any;
+    let filter = {
+
+    } as any;
     if (pageInfo) {
       filter = {
         // order: 'id DESC',
@@ -488,6 +501,9 @@ export class StoreService {
         }
       },
     ]
+    filter.where = {
+      showOnPage: true,
+    };
     filter = filter ? '?filter=' + JSON.stringify(filter) : '';
     const url = environment.store_api_root_url + '/stores' + filter;
     // console.log(url);
