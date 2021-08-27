@@ -40,16 +40,17 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
     // Window.Riode.isotopes('.grid:not(.grid-float)');
 
     this.loadPremiumStores();
-
-  }
-
-
-  ngAfterContentInit(): void {
     setTimeout(() => {
       // this.showLoader = false;
       dispatchEvent(new Event('load'));
       dispatchEvent(new Event('mousewheel'));
     }, 1000);
+
+  }
+
+
+  ngAfterContentInit(): void {
+
   }
 
   ngOnInit(): void {

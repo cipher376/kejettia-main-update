@@ -1,3 +1,4 @@
+import { Urls } from './../../config';
 import { Router } from '@angular/router';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { UtilityService } from './../../shared/services/utility.service';
@@ -57,9 +58,9 @@ export class Home2CategoriesComponent implements OnInit {
     // load products of that category within the store
     const products: Product[] = [];
     if (cat?.productCategories?.length > 0) { // store category
-      cat.productCategories.forEach(pc => {
+      cat.productCategories?.forEach(pc => {
         pc.productCategoryItems.forEach(pi => {
-          pi.products.forEach(p => {
+          pi.products?.forEach(p => {
             if (!products.includes(p)) {
               products.push(p);
             }
@@ -67,8 +68,8 @@ export class Home2CategoriesComponent implements OnInit {
         })
       })
     } else {
-      cat.productCategoryItems.forEach(pi => { // product category
-        pi.products.forEach(p => {
+      cat.productCategoryItems?.forEach(pi => { // product category
+        pi.products?.forEach(p => {
           if (!products.includes(p)) {
             products.push(p);
           }
@@ -78,7 +79,7 @@ export class Home2CategoriesComponent implements OnInit {
 
     // navigate to the product listing page
     this.storeService.setProductsLocal(products);
-    this.router.navigateByUrl('../products')
+    this.router.navigateByUrl(Urls.products)
   }
 
   goToCategories() {

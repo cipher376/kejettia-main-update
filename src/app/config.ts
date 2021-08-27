@@ -19,7 +19,8 @@ export const Urls = {
   compare: '/main/pages/compare',
 
   productDetails: '/stores/pages/product-details',
-  storeHome: '/stores/pages/home'
+  storeHome: '/stores/pages/home',
+  products:'/stores/pages/products'
 };
 
 // export const STORE_DETAILS = {

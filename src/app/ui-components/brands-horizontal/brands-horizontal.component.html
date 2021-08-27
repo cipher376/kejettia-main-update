@@ -1,4 +1,4 @@
-<section class="mb-10 pb-6" >
+<section class="mb-10 pb-6" *ngIf="Brands?.length>0">
   <h2 class="title title-line title-underline">Featured Brands</h2>
   <div class="container">
     <div class="owl-carousel owl-theme row brand-carousel cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2"
@@ -23,7 +23,8 @@
               }
           }
       }">
-      <figure *ngFor="let b of Brands"><img [src]="fileUrl+b?.photo?.source" [alt]="b?.manufacturer" width="180" height="100" />
+      <figure  *ngFor="let b of Brands">
+        <img *ngIf="b?.manufacturer|| b?.location" [src]="fileUrl+b?.photo?.source" [alt]="b?.manufacturer || b?.location " width="180" height="100" />
       </figure>
 
     </div>

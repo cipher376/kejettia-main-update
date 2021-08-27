@@ -39,7 +39,7 @@
          <div class="col-md-6 mb-4" *ngIf="storeCategories?.length>1">
            <app-home2-category-badge [Category]="storeCategories[1]"></app-home2-category-badge>
          </div>
-         <div class="col-md-6 mb-4" *ngIf="storeCategories[0]?.productCategories?.length>0&&storeCategories?.length<=2">
+         <div class="col-md-6 mb-4" *ngIf="storeCategories[0]?.productCategories?.length>0&&storeCategories?.length<=1">
            <app-home2-category-badge [Category]="storeCategories[0]?.productCategories[0]"></app-home2-category-badge>
          </div>
        </div>
