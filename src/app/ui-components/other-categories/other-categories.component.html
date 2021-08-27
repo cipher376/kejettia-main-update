@@ -1,4 +1,4 @@
-<section class="ellipse-section mt-10" *ngIf=" (StoreCategories?.length>0) || (ProductCategories?.length>0) || (ProductCategoryItems?.length>0)">
+<section class="ellipse-section mt-12" *ngIf=" (StoreCategories?.length>0) || (ProductCategories?.length>0) || (ProductCategoryItems?.length>0)">
   <h2 class="title title-center mb-8">Ellipse Style</h2>
   <div class="owl-carousel owl-theme container" data-owl-options="{
         'nav': false,
@@ -30,7 +30,7 @@
       <div class="category category-ellipse" *ngFor="let cat of StoreCategories; let i=index">
         <a href="#">
           <figure class="category-media">
-            <img [src]="getPhotoUrl(cat)" alt="category" width="196" height="196" />
+            <img class="homeellipse" [src]="getPhotoUrl(cat)" alt="category" width="196" height="196" />
           </figure>
         </a>
         <div class="category-content">
@@ -48,7 +48,7 @@
       <div class="category category-ellipse" *ngFor="let cat of ProductCategories; let i=index">
         <a href="#">
           <figure class="category-media">
-            <img [src]="getPhotoUrl(cat)" alt="category" width="196" height="196" />
+            <img class="homeellipse" [src]="getPhotoUrl(cat)" alt="category" width="196" height="196" />
           </figure>
         </a>
         <div class="category-content">
@@ -67,7 +67,7 @@
       <div class="category category-ellipse" *ngFor="let cat of ProductCategoryItems; let i=index">
         <a href="#">
           <figure class="category-media">
-            <img [src]="getPhotoUrl(cat)" alt="category" width="196" height="196" />
+            <img class="homeellipse" [src]="getPhotoUrl(cat)" alt="category" width="196" height="196" />
           </figure>
         </a>
         <div class="category-content">

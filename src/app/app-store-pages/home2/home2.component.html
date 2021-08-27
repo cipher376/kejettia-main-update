@@ -2,10 +2,10 @@
    <aside class="col-xl-3 col-lg-4 sidebar sidebar-fixed sticky-sidebar-wrapper home-sidebar">
 
 
-    <div class="banner banner-fixed overlay-zoom overlay-dark">
+    <div class="banner banner-fixed">
       <figure>
-        <img [src]="logoUrl" width="280" height="312" alt="banner"
-          style="background-color: #26303c;" />
+        <img class="storelogo"  [src]="logoUrl" width="280" height="312" alt="banner"
+          style="background-color: #ffffff;" />
       </figure>
       <!-- <div class="banner-price-info font-weight-bold text-white text-uppercase">
         20-22<sup>th</sup> April</div>
@@ -18,6 +18,13 @@
         <p class="mb-4 font-primary text-white lh-1">Discount Selected Items</p>
       </div> -->
     </div>
+<!--
+     <div class="banner banner-fixed">
+      <figure>
+        <img src="https://www.names.co.uk/blog/wp-content/uploads/2018/05/dotSTORE.png" alt="Store Logo" width="50" height="50" alt="banner"
+          style="background-color: #ffffff;" />
+      </figure>
+    </div> -->
 
 
      <app-home2-categories [Categories]="storeCategories"></app-home2-categories>
