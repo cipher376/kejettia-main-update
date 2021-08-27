@@ -12,3 +12,24 @@
 .category-menu  li:not(:last-child)  a {
   border-bottom: 1px solid #e4dfdf;
 }
+
+.category-menu {
+  background: transparent !important;
+  border: 1px solid #e1e1e1;
+  }
+
+  .category-menu>li:not(:last-child)>a {
+    border-bottom: 1px solid #e1e1e1;
+  }
+
+  .category-menu .menu-title {
+    padding: 1.8rem 0.2rem 1.8rem !important;
+    margin: 0 !important;
+    text-transform: capitalize !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    font-family: Poppins,sans-serif !important;
+    line-height: 1 !important;
+    letter-spacing: -.05em !important;
+    color: #222 !important;
+}
