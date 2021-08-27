@@ -107,6 +107,7 @@ import { ColorFilterComponent } from './color-filter/color-filter.component';
 import { BrandFilterComponent } from './brand-filter/brand-filter.component';
 import { PriceFilterComponent } from './price-filter/price-filter.component';
 import { ProductCategoryFilterComponent } from './product-category-filter/product-category-filter.component';
+import { ProductListWidgetComponent } from './product-list-widget/product-list-widget.component';
 
 @NgModule({
   declarations: [
@@ -207,6 +208,7 @@ import { ProductCategoryFilterComponent } from './product-category-filter/produc
     BrandFilterComponent,
     PriceFilterComponent,
     ProductCategoryFilterComponent,
+    ProductListWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -303,7 +305,9 @@ import { ProductCategoryFilterComponent } from './product-category-filter/produc
     BrandFilterComponent,
     PriceFilterComponent,
     ProductCategoryFilterComponent,
-    ProductItemComponent
+    ProductItemComponent,
+    ProductListWidgetComponent,
+
   ]
 })
 export class ComponentModule { }

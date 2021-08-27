@@ -1,0 +1,8 @@
+<section class="mt-10 pt-8 mb-8 appear-animate">
+  <div class="container">
+    <h2 class="title title-simple title-center mb-5">Recently added</h2>
+    <div class="row cols-2 cols-sm-3 cols-md-4 product-wrapper">
+      <app-product-item *ngFor="let prod of Products" [Product]="prod"></app-product-item>
+    </div>
+  </div>
+</section>

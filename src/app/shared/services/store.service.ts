@@ -843,7 +843,14 @@ export class StoreService {
         { relation: 'features' },
         { relation: 'productCategoryItems' },
         { relation: 'shippings' },
-        { relation: 'photos' },
+        {
+          relation: 'photos',
+          scope: {
+            include: [{
+              relation: 'photoDisplayType'
+            }]
+          }
+        },
         { relation: 'videos' },
         { relation: 'productModel' },
         { relation: 'likes' },
@@ -854,6 +861,39 @@ export class StoreService {
     const url = `${environment.store_api_root_url}/products/${productId}?filter=${JSON.stringify(filter)}`
     return this.http.get<Product>(url).pipe(
       map((res: Product) => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  getProducts() {
+    const filter = {
+      limit: 40,
+      skip: 0,
+      order: 'id DESC',
+      include: [
+        { relation: 'features' },
+        { relation: 'productCategoryItems' },
+        { relation: 'shippings' },
+        {
+          relation: 'photos',
+          scope: {
+            include: [{
+              relation: 'photoDisplayType'
+            }]
+          }
+        },
+        { relation: 'videos' },
+        { relation: 'productModel' },
+        { relation: 'likes' },
+        { relation: 'reviews' },
+        { relation: 'bargains' }
+      ]
+    }
+    const url = `${environment.store_api_root_url}/products?filter=${JSON.stringify(filter)}`
+    return this.http.get<Product[]>(url).pipe(
+      map((res: Product[]) => {
         return res;
       }),
       catchError(e => this.handleError(e))
