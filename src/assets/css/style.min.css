@@ -5869,7 +5869,7 @@ ul.blog-filters .nav-filter {
 }
 
 .category-ellipse img {
-    transform: rotateZ(-10deg) translateX(-14px);
+    transform: rotateZ(0) translateX(0);
     transition: transform .3s
 }
 
@@ -5891,7 +5891,8 @@ ul.blog-filters .nav-filter {
 }
 
 .category-ellipse:hover img {
-    transform: rotateZ(0) translateX(0)
+  transform: rotateZ(-10deg) translateX(-14px);
+
 }
 
 .category-classic .category-content {
