@@ -10,7 +10,7 @@
     <h3 class="banner-title ls-m text-capitalize font-weight-bold">Our Brands</h3>
     <p class="mb-0 text-uppercase ls-m">
       <span *ngFor="let brand of brands">
-        <a href="javascript:;">{{brand?.manufacturer}}</a> - <a href="javascript">{{brand?.location}}</a> - <a href=""></a><br />
+        <a href="javascript:;" (click)="search(brand?.manufacturer)">{{brand?.manufacturer}}</a> - <a href="javascript:;" (click)="search(brand?.location)">{{brand?.location}}</a> - <a href=""></a><br />
       </span>
     </p>
   </div>

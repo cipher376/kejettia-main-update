@@ -101,6 +101,11 @@ import { SelectModule } from 'ng-select';
 import { Angular4PaystackModule } from 'angular4-paystack';
 import { PAYSTACK_PUBLIC_KEY } from '../config';
 import { StoreProductFilterComponent } from './store-product-filter/store-product-filter.component';
+import { CategoryFilterComponent } from './category-filter/category-filter.component';
+import { SizeFilterComponent } from './size-filter/size-filter.component';
+import { ColorFilterComponent } from './color-filter/color-filter.component';
+import { BrandFilterComponent } from './brand-filter/brand-filter.component';
+import { PriceFilterComponent } from './price-filter/price-filter.component';
 
 @NgModule({
   declarations: [
@@ -195,6 +200,11 @@ import { StoreProductFilterComponent } from './store-product-filter/store-produc
     CreateDeliveryAddressComponent,
     PaystackComponent,
     StoreProductFilterComponent,
+    CategoryFilterComponent,
+    SizeFilterComponent,
+    ColorFilterComponent,
+    BrandFilterComponent,
+    PriceFilterComponent,
   ],
   imports: [
     CommonModule,

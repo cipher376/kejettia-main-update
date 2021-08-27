@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { PHOTO_DISPLAY_TYPES } from './../../config';
+import { ChangeDetectorRef, Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Urls } from 'src/app/config';
 import { Product } from 'src/app/models';
@@ -10,7 +11,7 @@ import { StoreService } from 'src/app/shared/services/store.service';
   templateUrl: './product-item.component.html',
   styleUrls: ['./product-item.component.scss']
 })
-export class ProductItemComponent implements OnInit {
+export class ProductItemComponent implements OnInit, AfterViewInit {
   private product: Product;
   photoUrl = '';
 
@@ -22,12 +23,19 @@ export class ProductItemComponent implements OnInit {
     private storeService: StoreService
   ) { }
 
+  ngAfterViewInit(): void {
+    // if (this.product) {
+    //   this.photoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.product?.photos, 'cover', true);
+    // }
+  }
+
   ngOnInit(): void {
   }
 
   @Input() set Product(product: Product) {
     this.product = product;
-    this.photoUrl =  StoreService.getPhotoUrlByDisplayTypeLocal(this.product?.photos, 'cover', true);
+    // console.log(this.product);
+    this.photoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.product?.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
     this.cd.detectChanges();
   }
 
@@ -38,7 +46,7 @@ export class ProductItemComponent implements OnInit {
 
 
   getCategory() {
-    if (this.product?.productCategoryItems?.length>0) {
+    if (this.product?.productCategoryItems?.length > 0) {
       return this.product?.productCategoryItems[0]?.name
     }
     return '';
@@ -54,9 +62,9 @@ export class ProductItemComponent implements OnInit {
     return false;
   }
 
-  goToProduct(){
-    this.storeService.setSelectedProductLocal(this.product).then(()=>{
-      this.router.navigateByUrl(Urls.productDetails+'/'+this.product?.id);
+  goToProduct() {
+    this.storeService.setSelectedProductLocal(this.product).then(() => {
+      this.router.navigateByUrl(Urls.productDetails + '/' + this.product?.id);
     });
   }
 

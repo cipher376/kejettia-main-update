@@ -27,8 +27,8 @@
       </h3>
       <div class="product-price" *ngIf="Product?.currentPrice">
         <span class="price"></span>
-        <ins class="new-price">{{Product?.currentPrice}}</ins><del class="old-price" *ngIf="Product?.previousPrice">
-          {{Product?.previousPrice}}</del>
+        <ins class="new-price">{{Product?.currentPrice  |currency:'GHC ':'GH₵ '}}</ins><del class="old-price" *ngIf="Product?.previousPrice">
+          {{Product?.previousPrice  |currency:'GHC ':'GH₵ '}}</del>
       </div>
       <div class="product-price"  *ngIf="!Product?.currentPrice" >
         <p>
@@ -67,13 +67,7 @@
       </p>
 
     </div>
-    <div class="ratings-container">
-      <div class="ratings-full">
-        <span class="ratings" style="width:80%"></span>
-        <span class="tooltiptext tooltip-top"></span>
-      </div>
-      <a href="javascript:;" class="rating-reviews">( 6 reviews )</a>
-    </div>
+    <app-rating></app-rating>
     <p class="product-short-desc">
       {{Product?.about}}
     </p>
