@@ -15,7 +15,7 @@ export class Home2SliderComponent implements OnInit {
   sliderConfig = {
     'items': 1,
     'dots': true,
-    'nav': true,
+    'nav': false,
     'loop': true,
     'autoplay': true
   };

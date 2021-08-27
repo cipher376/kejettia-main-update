@@ -1,11 +1,4 @@
-<!-- <div class=" owl-carousel owl-theme row owl-dot-inner owl-dot-white intro-slider animation-slider cols-1 mb-4"
-  data-owl-options="{
-              'items': 1,
-              'dots': true,
-              'nav': false,
-              'loop': true,
-              'autoplay': false
-          }"> -->
+
 <div class="owl-carousel owl-theme row owl-dot-inner owl-dot-white intro-slider animation-slider cols-1 mb-4" [attr.data-owl-options]="SliderConfig"
   *ngIf="Photos?.length>0">
 
@@ -14,7 +7,7 @@
       <img [src]="fileUrl+photo?.source" alt="intro-banner" width="880" height="474"
         style="background-color: #d3d4d5;" />
     </figure>
-
+<!--
     <div class="banner-content y-50 text-right" *ngIf="i%2==0">
       <h4 class="banner-subtitle text-body font-weight-semi-bold mb-3 slide-animate" data-animation-options="{
                           'name': 'fadeInDownShorter',
@@ -50,7 +43,7 @@
         </p>
         <a href="/stores/pages/products" class="btn btn-white btn-rounded">Shop Now</a>
       </div>
-    </div>
+    </div> -->
 
   </div>
 

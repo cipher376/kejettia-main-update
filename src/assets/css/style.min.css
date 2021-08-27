@@ -11654,7 +11654,7 @@ aside+div .product-single .product-details {
     text-transform: capitalize;
     font-size: 2.4rem;
     font-weight: 700;
-    line-height: 1;
+    line-height: 2.75;
     letter-spacing: -.0125em;
     color: #222
 }
@@ -11814,7 +11814,7 @@ aside+div .product-single .product-details {
 .with-link {
     display: flex;
     justify-content: space-between;
-    line-height: 1
+    line-height: 2.75
 }
 
 .with-link::after {

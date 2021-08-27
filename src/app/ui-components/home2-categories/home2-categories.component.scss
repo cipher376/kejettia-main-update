@@ -2,3 +2,11 @@
   width: 60% !important;
   height: auto;
 }
+.category-menu {
+background: transparent !important;
+border: 1px solid #e1e1e1;
+}
+
+.category-menu>li:not(:last-child)>a {
+  border-bottom: 1px solid #e1e1e1;
+}
