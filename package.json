@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "docker:build": "docker build -t kejettia-main-update .  && docker tag kejettia-main-update ntiamoah376/devtek:kejettia-main-update && docker push ntiamoah376/devtek:kejettia-main-update",
+    "docker:build-deploy": "docker build -t kejettia-main-update .  && docker tag kejettia-main-update ntiamoah376/devtek:kejettia-main-update && docker push ntiamoah376/devtek:kejettia-main-update",
+    "docker:build": "docker build -t kejettia-main-update . ",
     "docker:run": "docker run --network netdev --ip 172.18.0.20 -p 4200:80 -d kejettia-main-update"
   },
   "private": true,

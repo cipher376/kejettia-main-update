@@ -307,6 +307,7 @@ import { ProductListWidgetComponent } from './product-list-widget/product-list-w
     ProductCategoryFilterComponent,
     ProductItemComponent,
     ProductListWidgetComponent,
+    LoaderFullComponent
 
   ]
 })

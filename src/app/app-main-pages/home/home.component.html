@@ -1,4 +1,6 @@
-<main class="main" [hidden]="showLoader">
+
+<app-loader-full  *ngIf="showLoader"></app-loader-full>
+<main class="main" *ngIf="!showLoader">
   <div class="page-content">
     <section class="intro-section appear-animate">
       <div class="container">

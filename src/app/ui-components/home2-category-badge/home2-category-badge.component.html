@@ -1,12 +1,12 @@
 <div class="storebadge category category-absolute category-badge">
-  <a href="#">
+  <a href="javascript:;">
     <figure class="category-media">
       <img [src]="fileUrl+Category?.photo?.source" alt="category"
         style="background-color: #eceef2; background-size: cover;" />
     </figure>
   </a>
   <div class="category-content">
-    <h4 class="category-name font-weight-bold text-uppercase">Accessories
+    <h4 class="category-name font-weight-bold text-uppercase">{{Category?.name}}
     </h4>
     <a href="javascript:;" class="btn btn-primary" (click)="shopNow()">Shop Now</a>
   </div>

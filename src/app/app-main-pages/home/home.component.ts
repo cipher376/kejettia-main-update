@@ -17,7 +17,8 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   premiumStores: Store[] = [];
 
-  showLoader = false;
+  showLoader = true;
+  private loaderCount = 0;
   constructor(
     private storeService: StoreService
   ) {
@@ -29,33 +30,35 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
     Window.Riode.init();
     Window.Riode.slider('.owl-carousel'); // Initialize slider
 
-    // Window.Riode.prepare();
-    // Window.Riode.status = 'loaded';
-    // Window.Riode.$body.addClass('loaded');
-    // Window.Riode.$window.trigger('riode_load');
-    // Window.Riode.call(Window.Riode.initLayout);
-    // Window.Riode.call(Window.Riode.init);
-    // Window.Riode.$window.trigger('riode_complete');
-    // Window.Riode.refreshSidebar();
-    // Window.Riode.isotopes('.grid:not(.grid-float)');
+    Window.Riode.prepare();
+    Window.Riode.status = 'loaded';
+    Window.Riode.$body.addClass('loaded');
+    Window.Riode.$window.trigger('riode_load');
+    Window.Riode.call(Window.Riode.initLayout);
+    Window.Riode.call(Window.Riode.init);
+    Window.Riode.$window.trigger('riode_complete');
+    Window.Riode.refreshSidebar();
+    Window.Riode.isotopes('.grid:not(.grid-float)');
+    this.showLoader = true;
+    this.loaderCount = 0;
 
     this.loadPremiumStores();
+    this.getStoreCategories();
+    this.getProductCategoryItems();
     setTimeout(() => {
-      // this.showLoader = false;
       dispatchEvent(new Event('load'));
       dispatchEvent(new Event('mousewheel'));
     }, 1000);
+
 
   }
 
 
   ngAfterContentInit(): void {
-
   }
 
   ngOnInit(): void {
-    this.getStoreCategories();
-    this.getProductCategoryItems();
+
   }
 
   set StoreCategories(cat: StoreCategory[]) {
@@ -66,6 +69,18 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
     return this.storeCategories;
   }
 
+  set LoaderCount(c: number) {
+    this.loaderCount += c;
+    if (this.loaderCount >= 3) {
+      this.showLoader = false;
+      dispatchEvent(new Event('load'));
+      dispatchEvent(new Event('mousewheel'));
+    }
+  }
+  get LoaderCount(){
+    return this.loaderCount;
+  }
+
   set ProductCategoryItems(cats: ProductCategoryItem[]) {
     this.productCategoryItems = cats;
     console.log(cats);
@@ -74,24 +89,29 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   get ProductCategoryItems() {
     return this.productCategoryItems;
   }
+
+
   getStoreCategories() {
     this.storeService.getStoreCategories().subscribe(categories => {
       this.storeCategories = categories;
-      console.log(categories);
+      this.LoaderCount += 1;
+      // console.log(categories);
     })
   }
 
   getProductCategoryItems() {
     this.storeService.getProductCategoryItems().subscribe(cats => {
+      this.LoaderCount += 1;
       this.productCategoryItems = cats;
-      console.log(cats);
+      // console.log(cats);
     })
   }
 
   loadPremiumStores() {
     this.storeService.getPremiumStores().subscribe(stores => {
       this.premiumStores = UtilityService.shuffle(stores).slice(0, 3);
-      console.log(this.premiumStores);
+      this.LoaderCount += 1;
+      // console.log(this.premiumStores);
     });
   }
 
