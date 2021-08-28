@@ -287,7 +287,12 @@ export class StoreService {
           scope: {
             include: [
               {
-                relation: 'photo'
+                relation: 'photo',
+                scope: {
+                  include: [{
+                    relation: 'photoDisplayType'
+                  }]
+                }
               },
               {
                 relation: 'productCategories',
@@ -298,13 +303,23 @@ export class StoreService {
                       scope: {
                         include: [
                           {
-                            relation: 'photo'
+                            relation: 'photo',
+                            scope: {
+                              include: [{
+                                relation: 'photoDisplayType'
+                              }]
+                            }
                           }
                         ]
                       }
                     },
                     {
-                      relation: 'photo'
+                      relation: 'photo',
+                      scope: {
+                        include: [{
+                          relation: 'photoDisplayType'
+                        }]
+                      }
                     },
                   ]
                 }
@@ -333,7 +348,12 @@ export class StoreService {
                 }
               },
               {
-                relation: 'photos'
+                relation: 'photos',
+                scope: {
+                  include: [{
+                    relation: 'photoDisplayType'
+                  }]
+                }
               }
             ]
           }
@@ -424,6 +444,14 @@ export class StoreService {
                     }
                   ]
                 }
+              },
+              {
+                relation: 'photos',
+                scope: {
+                  include: [{
+                    relation: 'photoDisplayType'
+                  }]
+                }
               }
             ]
           }
@@ -443,28 +471,29 @@ export class StoreService {
 
 
   getStores(pageInfo?: PageInfo): Observable<any> {
-    let filter;
+    let filter = {} as any;
     if (pageInfo) {
       filter = {
         // order: 'id DESC',
         limit: pageInfo.limit,
         skip: pageInfo.offset,
-        include: [
-          { relation: 'address' },
-          {
-            relation: 'photos',
-            scope: {
-              include: [{
-                relation: 'photoDisplayType'
-              }]
-            }
-          },
-        ]
+
       };
     }
     filter.where = {
       showOnPage: true,
     };
+    filter.include = [
+      { relation: 'address' },
+      {
+        relation: 'photos',
+        scope: {
+          include: [{
+            relation: 'photoDisplayType'
+          }]
+        }
+      },
+    ]
     filter = filter ? '?filter=' + JSON.stringify(filter) : '';
     const url = environment.store_api_root_url + '/stores' + filter;
     // console.log(url);
@@ -1488,7 +1517,7 @@ export class StoreService {
   }
 
   async setSelectedStoreLocal(store: Store) {
-    return await this.fstore.setObject('selected_store', store);
+    return this.fstore.setObjectSync('selected_store', store);
   }
   removeSelectedStoreLocal() {
     this.fstore.remove('selected_store');

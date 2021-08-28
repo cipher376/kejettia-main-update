@@ -1,4 +1,6 @@
- <div class="row">
+
+<app-loader-mini [TopMargin]="20" *ngIf="showLoader"></app-loader-mini>
+<div class="row"[hidden]="showLoader" >
    <aside class="col-xl-3 col-lg-4 sidebar sidebar-fixed sticky-sidebar-wrapper home-sidebar">
 
 
@@ -45,7 +47,7 @@
        </div>
      </section>
 
-     <app-featured-products [Products]="featuredProducts"></app-featured-products>
+     <app-featured-products [Products]="featuredProducts" ></app-featured-products>
      <app-black-friday-ad></app-black-friday-ad>
      <app-product-sales-widget></app-product-sales-widget>
      <app-brands-horizontal [Brands]="brands" *ngIf="brands?.length>0"></app-brands-horizontal>

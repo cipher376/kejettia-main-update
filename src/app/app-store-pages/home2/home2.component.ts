@@ -16,7 +16,7 @@ declare var Window: any;
 export class Home2Component implements OnInit, AfterViewInit {
 
   selectedStore: Store = new Store();
-  logoUrl ='';
+  logoUrl = '';
   sliderPhotos: Photo[] = [];
   storeCategories: StoreCategory[] = [];
   featuredProducts: Product[] = [];
@@ -24,6 +24,8 @@ export class Home2Component implements OnInit, AfterViewInit {
   brands: ProductBrand[] = [];
 
   fileUrl = environment.file_api_download_url_root;
+
+  showLoader = true;
 
   constructor(
     private storeService: StoreService
@@ -63,54 +65,60 @@ export class Home2Component implements OnInit, AfterViewInit {
       this.selectedStore = store;
       this.storeService.setSelectedStoreLocal(store);
 
-      this.logoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedStore.photos, PHOTO_DISPLAY_TYPES.LOGO,true, true);
+      this.logoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedStore.photos, PHOTO_DISPLAY_TYPES.LOGO, true, true);
       // console.log(store);
 
       this.sliderPhotos = [];
-      this.refreshStore().then(() => {
-        this.storeCategories = UtilityService.shuffle(this.selectedStore.storeCategories);
+      // this.refreshStore().then(() => {
+      this.storeCategories = UtilityService.shuffle(this.selectedStore.storeCategories);
 
-        // this.storeService.getCategoriesByStore(this.selectedStore?.id).subscribe(cats => {
-        //   this.selectedStore.storeCategories = cats;
-        //   this.storeService.setSelectedStoreLocal(this.selectedStore);
-        // })
+      // this.storeService.getCategoriesByStore(this.selectedStore?.id).subscribe(cats => {
+      //   this.selectedStore.storeCategories = cats;
+      //   this.storeService.setSelectedStoreLocal(this.selectedStore);
+      // })
 
 
-        this.selectedStore?.photos.forEach(ph => {
-          // TODO:
-          // if (ph.photoDisplayType.type === PHOTO_DISPLAY_TYPES.BANNER) { // change to this after testing
-          if (ph.photoDisplayType.type === PHOTO_DISPLAY_TYPES.BANNER) {
-            this.sliderPhotos = [...this.sliderPhotos, ph];
-          }
-        });
-
-        this.featuredProducts = UtilityService.shuffle(this.selectedStore.products);
-        if (this.featuredProducts?.length > 0) {
-          this.featuredProducts = this.featuredProducts.slice(0, 10);
+      this.selectedStore?.photos.forEach(ph => {
+        // TODO:
+        // if (ph.photoDisplayType.type === PHOTO_DISPLAY_TYPES.BANNER) { // change to this after testing
+        if (ph.photoDisplayType.type === PHOTO_DISPLAY_TYPES.BANNER) {
+          this.sliderPhotos = [...this.sliderPhotos, ph];
         }
+      });
 
-        // brands;
-        this.brands = [];
-        this.selectedStore.products?.forEach(p => {
-          const b = p?.productModel?.productBrand;
-          console.log(b);
-          if (!this.brands.includes(b))
-            this.brands.push(b)
-        })
+      this.featuredProducts = UtilityService.shuffle(this.selectedStore.products);
+      if (this.featuredProducts?.length > 0) {
+        this.featuredProducts = this.featuredProducts.slice(0, 10);
+      }
+
+      // brands;
+      this.brands = [];
+      this.selectedStore.products?.forEach(p => {
+        const b = p?.productModel?.productBrand;
+        console.log(b);
+        if (!this.brands.includes(b))
+          this.brands.push(b)
       })
+
+      this.showLoader = false;
+      window.scrollTo( 0, 10)
+      setTimeout(() => {
+      window.scrollTo( 0, 0)
+      }, 100);
     })
+    // })
 
   }
 
-  refreshStore() {
-    return new Promise((resolve, reject) => {
-      this.storeService.getStoreById(this.selectedStore?.id).subscribe(store => {
-        this.selectedStore = store;
-        this.storeService.setSelectedStoreLocal(store);
-        resolve(true);
-      })
-    })
-  }
+  // refreshStore() {
+  //   return new Promise((resolve, reject) => {
+  //     this.storeService.getStoreById(this.selectedStore?.id).subscribe(store => {
+  //       this.selectedStore = store;
+  //       this.storeService.setSelectedStoreLocal(store);
+  //       resolve(true);
+  //     })
+  //   })
+  // }
 
   getCategories() {
 
