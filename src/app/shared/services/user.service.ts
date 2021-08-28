@@ -43,17 +43,18 @@ export class UserService {
   /****
  * ADD OR UPDATE ADDRESS
  */
-  createUpdateProfile(userId: any, address: Profile) {
-    if (address.id) { // perform update
-      return this.http.patch<Profile>(environment.identity_api_root_url + `/users/${userId}/profile`, address).pipe(
+  createUpdateProfile(userId: any, profile: Profile) {
+    if (profile.id) { // perform update
+      return this.http.patch<Profile>(environment.identity_api_root_url + `/users/${userId}/profile`, profile).pipe(
         map(res => {
-          // console.log(res);
-          return address as any;
+          console.log(profile);
+          return profile as any;
+
         }),
         catchError(e => this.handleError(e))
       );
     } else {
-      return this.http.post<Profile>(environment.identity_api_root_url + `/users/${userId}/profile`, address).pipe(
+      return this.http.post<Profile>(environment.identity_api_root_url + `/users/${userId}/profile`, profile).pipe(
         map(res => {
           // console.log(res);
           return res as any;

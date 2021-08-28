@@ -1,33 +1,57 @@
-<form action="#" class="form">
-    <div class="row">
-        <div class="col-sm-6">
-            <label>First Name *</label>
-            <input type="text" class="form-control" name="first_name" required="">
-        </div>
-        <div class="col-sm-6">
-            <label>Last Name *</label>
-            <input type="text" class="form-control" name="last_name" required="">
-        </div>
+<form class="form" [formGroup]="profForm">
+  <div class="row">
+    <div class="col-sm-4">
+      <label>First Name *</label>
+      <input type="text" class="form-control" name="first_name" required=""  formControlName="firstName">
     </div>
+    <div class="col-sm-4">
+      <label>Last Name *</label>
+      <input type="text" class="form-control" name="last_name" required=""  formControlName="lastName">
+    </div>
+    <div class="col-sm-4">
+      <label>Other name(s)</label>
+      <input type="text" class="form-control" name="other_name" required="" formControlName="otherName">
+    </div>
+  </div>
 
-    <label>Display Name *</label>
-    <input type="text" class="form-control mb-0" name="display_name" required="">
-    <small class="d-block form-text mb-7">This will be how your name will be displayed
-        in the account section and in reviews</small>
+  <label>Gender *</label>
+  <select id="gender" name="gender" formControlName="gender" class="form-control">
+    <option value="" selected="selected">Gender</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="Other">Other</option>
+  </select>
+  <div class="alert alert-danger" role="alert" *ngIf="profForm.get('gender')?.errors && profForm.get('gender')?.dirty">
+    Select your gender.
+  </div>
 
-    <label>Email Address *</label>
-    <input type="email" class="form-control" name="email" required="">
-    <fieldset>
-        <legend>Password Change</legend>
-        <label>Current password (leave blank to leave unchanged)</label>
-        <input type="password" class="form-control" name="current_password">
 
-        <label>New password (leave blank to leave unchanged)</label>
-        <input type="password" class="form-control" name="new_password">
+  <label>Date of birth *</label>
+  <input id="dob" class="form-control" type="date" name="dob" class="form-control" formControlName="dateOfBirth"
+    placeholder="Date of birth">
+  <div class="alert alert-dateOfBirth" role="alert"
+    *ngIf="(profForm.get('lastName')?.errors) && profForm.get('dateOfBirth')?.dirty">
+    Provide your date of birth.
+  </div>
 
-        <label>Confirm new password</label>
-        <input type="password" class="form-control" name="confirm_password">
-    </fieldset>
+  <label>Note about you</label>
+  <textarea id="about-profile" name="about-profile" rows="4" class="form-control" placeholder="Write about yourself."
+  formControlName="about"></textarea>
 
-    <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
+<!--
+  <label>Email Address *</label>
+  <input type="email" class="form-control" name="email" required="">
+  <fieldset>
+    <legend>Password Change</legend>
+    <label>Current password (leave blank to leave unchanged)</label>
+    <input type="password" class="form-control" name="current_password">
+
+    <label>New password (leave blank to leave unchanged)</label>
+    <input type="password" class="form-control" name="new_password">
+
+    <label>Confirm new password</label>
+    <input type="password" class="form-control" name="confirm_password">
+  </fieldset> -->
+
+  <button type="submit" class="btn btn-primary" (click)="onSaveProfile()">SAVE CHANGES</button>
 </form>
