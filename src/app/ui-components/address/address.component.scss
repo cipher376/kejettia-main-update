@@ -1,0 +1,23 @@
+.p-r{
+  padding: 8px;
+}
+
+h5.card-title.text-uppercase.card.card-address.p-r {
+  border: none;
+  border: dashed 2px #f8484e;
+}
+
+h5.card-title.text-uppercase.card.card-address.p-r:hover {
+  border: dashed 2px #f8484e;
+  background: #f8484e;
+  color: #ffffff;
+  font-style: none !important;
+}
+
+h5.card-title.text-uppercase.card.card-address.p-r:active {
+  border: dashed 2px #f8484e;
+  background: #f8484e;
+  color: #ffffff;
+  font-style: none !important;
+}
+

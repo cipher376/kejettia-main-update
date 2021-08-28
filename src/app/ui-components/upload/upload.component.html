@@ -4,10 +4,10 @@
   <div class="file-upload">
 
     <!-- {{fileName || "No file uploaded yet."}} -->
-    <a href="javascript:;" class="btn btn-link btn-secondary btn-underline mt-10" tooltip="Upload"
+    <a href="javascript:;" class="btn btn-link btn-primary btn-underline mt-5" tooltip="Upload"
       (click)="fileUpload.click()">
       <span *ngIf="!uploadButtonMessage">Edit</span>
-      <span *ngIf="uploadButtonMessage">{{uploadButtonMessage}}</span><i class="far fa-edit"></i>
+      <span *ngIf="uploadButtonMessage">{{uploadButtonMessage}}</span><i class="fas fa-edit"></i>
     </a>
   </div>
 

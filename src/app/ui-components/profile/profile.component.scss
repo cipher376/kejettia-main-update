@@ -2,9 +2,11 @@
 
 
 img.profile_r {
-    border-radius: 50%;
-    height: auto;
-    width: 100% !important;
+  border-radius: 50%;
+    width: 20vw !important;
+    object-fit: cover;
+    object-position: center;
+    // border: solid red 5px;
 }
 
 p.profile_text {
@@ -15,3 +17,9 @@ button.profile_edit {
     background: transparent !important;
     border: transparent !important;
 }
+
+.text-bd-left::before{
+  background-color: transparent !important
+
+}
+

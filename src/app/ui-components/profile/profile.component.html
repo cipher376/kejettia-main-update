@@ -6,7 +6,7 @@
                 <div class="testimonial-info">
                     <h2 class="testimonial-title">My Account</h2>
                     <figure class="">
-                        <button type="submit" class="profile_edit"><img [src]="getProfilePhoto()" alt="Blue Pinafore Denim Dress" width="80" height="80" class="profile_r"></button>
+                        <button type="submit" class="profile_edit userprofilepic"><img [src]="getProfilePhoto()" alt="Blue Pinafore Denim Dress" class="profile_r" style="height: 18vw; width: 20vw;"></button>
                     </figure>
                     <app-upload (uploadedFile)="ProfilePhoto=$event" [uploadUrl]="uploadUrl"></app-upload>
                 </div>
@@ -16,7 +16,7 @@
         <div class="col-sm-6 mb-4">
             <div class="card card-address">
                 <div class="card-body">
-                    <blockquote class="text-bd-left ">
+                    <blockquote class="text-bd-left profile_info">
                         <ul class="widget-body ion-text-left">
                             <li>
                                     <div class="icon-box-content">
