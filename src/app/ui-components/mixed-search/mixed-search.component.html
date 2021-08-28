@@ -1,28 +1,29 @@
+<app-loader-mini [TopMargin]="40" *ngIf="showLoader"></app-loader-mini>
 
-    <app-mixed-search-filter (itemsGridSizeEvent)="ItemsPerPage=$event" (layoutEvent)="layout=$event" (sortKeyEvent)="sortKey=$event"></app-mixed-search-filter>
+<app-mixed-search-filter (itemsGridSizeEvent)="ItemsPerPage=$event" (layoutEvent)="layout=$event"
+  (sortKeyEvent)="sortKey=$event"></app-mixed-search-filter>
 
-    <div class="row cols-2 cols-sm-3 cols-md-4 product-wrapper" *ngIf="layout === 'grid'">
-      <ng-container
-        *ngFor="let item of (Items??[]) | paginate: { id:'search_mixed', itemsPerPage: ItemsPerPage, currentPage: page  }">
-        <app-store-item [layout]='layout' [Store]="item" *ngIf="isStore(item)"> </app-store-item>
-        <app-product-item [layout]='layout' [Product]="item" *ngIf="!isStore(item)"></app-product-item>
-      </ng-container>
-    </div>
+<div class="row cols-2 cols-sm-3 cols-md-4 product-wrapper" *ngIf="layout === 'grid'">
+  <ng-container
+    *ngFor="let item of (Items??[]) | paginate: { id:'search_mixed', itemsPerPage: ItemsPerPage, currentPage: page  }">
+    <app-store-item [layout]='layout' [Store]="item" *ngIf="isStore(item)"> </app-store-item>
+    <app-product-item [layout]='layout' [Product]="item" *ngIf="!isStore(item)"></app-product-item>
+  </ng-container>
+</div>
 
 
-    <div class="product-lists product-wrapper" *ngIf="layout === 'list'">
-      <ng-container
-        *ngFor="let item of (Items??[]) | paginate: { id:'search_mixed', itemsPerPage: ItemsPerPage, currentPage: page  }">
-        <app-store-item [layout]='layout' [Store]="item" *ngIf="isStore(item)"> </app-store-item>
-        <app-product-item [layout]='layout' [Product]="item" *ngIf="!isStore(item)"></app-product-item>
-      </ng-container>
-    </div>
+<div class="product-lists product-wrapper" *ngIf="layout === 'list'">
+  <ng-container
+    *ngFor="let item of (Items??[]) | paginate: { id:'search_mixed', itemsPerPage: ItemsPerPage, currentPage: page  }">
+    <app-store-item [layout]='layout' [Store]="item" *ngIf="isStore(item)"> </app-store-item>
+    <app-product-item [layout]='layout' [Product]="item" *ngIf="!isStore(item)"></app-product-item>
+  </ng-container>
+</div>
 
-    <nav class="toolbox toolbox-pagination">
-      <p class="show-info">Showing {{getCurrentTotalItems()}} of {{Items.length}} Stores</p>
-      <pagination-controls class="search-pagination" [autoHide]="false" [maxSize]="10" [id]="'search_mixed'"
-        (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)" [directionLinks]="true"
-        [responsive]="true" previousLabel="Back" nextLabel="Next" screenReaderPaginationLabel="Pagination"
-        screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
-    </nav>
-
+<nav class="toolbox toolbox-pagination">
+  <p class="show-info">Showing {{getCurrentTotalItems()}} of {{Items.length}} Stores</p>
+  <pagination-controls class="search-pagination" [autoHide]="false" [maxSize]="10" [id]="'search_mixed'"
+    (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)" [directionLinks]="true"
+    [responsive]="true" previousLabel="Back" nextLabel="Next" screenReaderPaginationLabel="Pagination"
+    screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+</nav>

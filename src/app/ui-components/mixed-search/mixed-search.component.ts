@@ -34,6 +34,8 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
   paramKey = '';
   public itemsEvent = new EventEmitter<any>();
 
+  showLoader = true;
+
   constructor(
     private signal: SignalService,
     private util: UtilityService,
@@ -131,7 +133,7 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
     }
 
     // search for store
-    this.loading = true;
+    this.showLoader = true;
     this.storeService.searchAll(key, this.pageInfo).subscribe((data: any) => {
       console.log(this.items);
       setTimeout(() => {
@@ -141,6 +143,7 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
       this.itemsEvent.emit(this.items);
       this.loading = false;
       this.pageInfo.offset += this.items.length;
+      this.showLoader = false;
     });
   }
 

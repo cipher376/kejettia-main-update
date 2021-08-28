@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
       window.scrollTo( 0, 10)
       setTimeout(() => {
       window.scrollTo( 0, 0)
-
       }, 100);
     }
   }
