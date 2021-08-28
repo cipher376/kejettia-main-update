@@ -10,7 +10,7 @@ import { catchError, map, filter } from 'rxjs/operators';
 import { MyLocalStorageService } from './local-storage.service';
 import { SignalService } from './signal.service';
 import { environment } from 'src/environments/environment';
-import { Address, Features, PolicyStatement, Store, StoreCategory, Shipping, StoreToCategoryThrough, Photo } from 'src/app/models';
+import { Address, Features, PolicyStatement, Store, StoreCategory, Shipping, StoreToCategoryThrough, Photo, Favourite } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
 
 
@@ -1434,6 +1434,81 @@ export class StoreService {
       catchError(e => this.handleError(e))
     );
   }
+
+
+
+  /////////////////////////////////////////////////////////////////////////
+  /*************Products shipping*****/
+  ///////////////////////////////////////////////////////////////////////////
+
+
+  // link user to product
+  addProductToWhishlist(productId: any, userId: any) {
+    return this.http.post<Favourite>(environment.store_api_root_url + `/favourites`, {userId, productId}).pipe(
+      map(res => {
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  // remove link between user to product
+  removeProductFromWishList(productId: string, userId: string) {
+    if (!productId || !userId) {
+      console.log('Invalid product or user id.');
+      return undefined;
+    }
+    let filter: any = {
+      userId,
+      productId
+    }
+    filter = '?where=' + JSON.stringify(filter);
+    const url = `${environment.store_api_root_url}/favourites${filter}`
+    console.log(url);
+    return this.http.delete(url).pipe(
+      map(res => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+
+  getUserWishList(userId: any){
+    if (!userId) {
+      console.log('Please select user')
+      return undefined;
+    }
+    const filter = {
+      include: [
+        { relation: 'features' },
+        { relation: 'productCategoryItems' },
+        { relation: 'shippings' },
+        {
+          relation: 'photos',
+          scope: {
+            include: [{
+              relation: 'photoDisplayType'
+            }]
+          }
+        },
+        { relation: 'videos' },
+        { relation: 'productModel' },
+        { relation: 'likes' },
+        { relation: 'reviews' },
+        { relation: 'bargains' }
+      ]
+    };
+    const url = `${environment.store_api_root_url}/users/${userId}/products?filter=${JSON.stringify(filter)}`
+    return this.http.get<Product[]>(url).pipe(
+      map((res: Product[]) => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+
   /////////////////////////////////////////////////////////////////////////
   /******************OTHER QUERIES ***************************************/
   /////////////////////////////////////////////////////////////////////////

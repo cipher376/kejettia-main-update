@@ -1,12 +1,12 @@
 <main class="main animate__animated animate__fadeInRight">
-  <!-- <nav class="breadcrumb-nav">
+  <nav class="breadcrumb-nav">
     <div class="container">
       <ul class="breadcrumb">
-        <li><a href="demo1.html"><i class="d-icon-home"></i></a></li>
+        <li style="margin-left: 3%;"><a href="javascript:;" (click)="goBack()"><i class="d-icon-home"></i></a></li>
         <li>Wishlist</li>
       </ul>
     </div>
-  </nav> -->
+  </nav>
   <div class="page-content pt-10 pb-10 mb-2">
     <div class="container">
       <table class="shop-table wishlist-table mt-2 mb-4">
@@ -21,88 +21,30 @@
           </tr>
         </thead>
         <tbody class="wishlist-items-wrapper">
-          <tr>
+          <tr *ngFor="let prod of favProducts">
             <td class="product-thumbnail">
-              <a href="product-simple.html">
+              <a href="javascript:;" (click)="goToProduct(prod)">
                 <figure>
-                  <img src="images/products/product11.jpg" width="100" height="100"
-                    alt="product">
+                  <img [src]="getProductPhoto(prod)" width="100" height="100" alt="product">
                 </figure>
               </a>
             </td>
             <td class="product-name">
-              <a href="product-simple.html">Beige knitted elastic runner shoes</a>
+              <a href="javascript:;" (click)="goToProduct(prod)">{{prod?.name}}</a>
             </td>
             <td class="product-price">
-              <span class="amount">$84.00</span>
+              <span class="amount">{{prod?.currentPrice  | currency:'GHC ':'GH₵ '}}</span>
             </td>
             <td class="product-stock-status">
-              <span class="wishlist-in-stock">In Stock</span>
+              <span class="wishlist-in-stock" *ngIf="prod?.stockCount>0">In Stock</span>
+              <span class="wishlist-in-stock" *ngIf="prod?.stockCount<=0">Out of Stock</span>
             </td>
-            <td class="product-add-to-cart">
+            <!-- <td class="product-add-to-cart">
               <a href="product.html" class="btn-product btn-primary"><span>Select options</span></a>
-            </td>
+            </td> -->
             <td class="product-remove">
               <div>
-                <a href="#" class="remove" title="Remove this product"><i
-                    class="fas fa-times"></i></a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="product-thumbnail">
-              <a href="product-simple.html">
-                <figure>
-                  <img src="images/products/product12.jpg" width="100" height="100"
-                    alt="product">
-                </figure>
-              </a>
-            </td>
-            <td class="product-name">
-              <a href="product-simple.html">Sed diam nonummy nibh</a>
-            </td>
-            <td class="product-price">
-              <span class="amount">$84.00</span>
-            </td>
-            <td class="product-stock-status">
-              <span class="wishlist-in-stock">In Stock</span>
-            </td>
-            <td class="product-add-to-cart">
-              <a href="product.html" class="btn-product btn-primary"><span>Select options</span></a>
-            </td>
-            <td class="product-remove">
-              <div>
-                <a href="#" class="remove" title="Remove this product"><i
-                    class="fas fa-times"></i></a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="product-thumbnail">
-              <a href="product-simple.html">
-                <figure>
-                  <img src="images/products/product13.jpg" width="100" height="100"
-                    alt="product">
-                </figure>
-              </a>
-            </td>
-            <td class="product-name">
-              <a href="product-simple.html">Lorem ipsum dolor sit amet, consectetuer adipiscing
-                elit,</a>
-            </td>
-            <td class="product-price">
-              <span class="amount">$84.00</span>
-            </td>
-            <td class="product-stock-status">
-              <span class="wishlist-out-stock">Out of Stock</span>
-            </td>
-            <td class="product-add-to-cart">
-              <a href="product.html" class="btn-product btn-primary"><span>Select options</span></a>
-            </td>
-            <td class="product-remove">
-              <div>
-                <a href="#" class="remove" title="Remove this product"><i
-                    class="fas fa-times"></i></a>
+                <a href="javascript:;" (click)="remove(prod)" class="remove" title="Remove this product"><i class="fas fa-times"></i></a>
               </div>
             </td>
           </tr>
@@ -110,16 +52,16 @@
       </table>
       <div class="social-links share-on">
         <h5 class="text-uppercase font-weight-bold mb-0 mr-4 ls-s">Share on:</h5>
-        <a href="javascript:;" class="social-link social-icon social-facebook"
-          title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="javascript:;" class="social-link social-icon social-twitter"
-          title="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="javascript:;" class="social-link social-icon social-pinterest"
-          title="Pinterest"><i class="fab fa-pinterest-p"></i></a>
-        <a href="javascript:;" class="social-link social-icon social-email"
-          title="Email"><i class="far fa-envelope"></i></a>
-        <a href="javascript:;" class="social-link social-icon social-whatsapp"
-          title="Whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="javascript:;" class="social-link social-icon social-facebook" title="Facebook"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="javascript:;" class="social-link social-icon social-twitter" title="Twitter"><i
+            class="fab fa-twitter"></i></a>
+        <a href="javascript:;" class="social-link social-icon social-pinterest" title="Pinterest"><i
+            class="fab fa-pinterest-p"></i></a>
+        <a href="javascript:;" class="social-link social-icon social-email" title="Email"><i
+            class="far fa-envelope"></i></a>
+        <a href="javascript:;" class="social-link social-icon social-whatsapp" title="Whatsapp"><i
+            class="fab fa-whatsapp"></i></a>
       </div>
     </div>
   </div>
