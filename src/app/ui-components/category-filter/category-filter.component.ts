@@ -19,19 +19,21 @@ export class CategoryFilterComponent implements OnInit {
     this.getCategories();
   }
 
-  get Categories(){
+  get Categories() {
     return this.categories;
   }
 
-  getCategories(){
+  getCategories() {
     this.storeService.getStoreCategories().subscribe(cats => {
       this.categories = cats;
     });
   }
 
-  search(key){
-    this.router.navigateByUrl('/main/pages/search;cat=' + key).then(()=>{
-      window.location.reload();
-    })
+  search(cat: StoreCategory) {
+    if (cat?.productCategories?.length <=0 || !cat?.productCategories)  {
+      this.router.navigateByUrl('/main/pages/search;cat=' + cat?.name).then(() => {
+        window.location.reload();
+      })
+    }
   }
 }

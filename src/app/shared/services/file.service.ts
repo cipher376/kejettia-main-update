@@ -26,7 +26,7 @@ export class FileService {
   updatePhoto(photo: Photo) {
     if (!photo?.id) {
       console.log('Photo to update must have an ID')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/photos/${photo.id}`
     return this.http.patch(url, photo).pipe(
@@ -40,7 +40,7 @@ export class FileService {
   getStorePhotos(storeId: any) {
     if (!storeId) {
       console.log('Please select store')
-      return;
+      return undefined;
     }
     const filter = {
       include: [
@@ -59,7 +59,7 @@ export class FileService {
   createStorePhoto(storeId: any, photo: Photo) {
     if (!storeId || !photo) {
       console.log('Store Id or Photo object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/stores/${storeId}/photos`
     return this.http.post<Photo>(url, photo).pipe(
@@ -73,7 +73,7 @@ export class FileService {
   deleteStorePhoto(storeId: string, photoId: string) {
     if (!storeId || !photoId) {
       console.log('Store id or photo id is invalid');
-      return;
+      return undefined;
     }
     let filter: any = {
       id: photoId
@@ -93,7 +93,7 @@ export class FileService {
   getProductPhotos(productId: any) {
     if (!productId) {
       console.log('Please select product')
-      return;
+      return undefined;
     }
     const filter = {
       include: [
@@ -112,7 +112,7 @@ export class FileService {
   createProductPhoto(productId: any, photo: Photo) {
     if (!productId || !photo) {
       console.log('Product Id or Photo object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/products/${productId}/photos`
     return this.http.post<Photo>(url, photo).pipe(
@@ -126,7 +126,7 @@ export class FileService {
   deleteProductPhoto(productId: string, photoId: string) {
     if (!productId || !photoId) {
       console.log('product id or photo id is invalid');
-      return;
+      return undefined;
     }
     let filter: any = {
       id: photoId
@@ -155,7 +155,7 @@ export class FileService {
   createBrandPhoto(brandId: any, photo: Photo) {
     if (!brandId || !photo) {
       console.log('Product Id or Photo object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/product-brands/${brandId}/photo`
     return this.http.post<Photo>(url, photo).pipe(
@@ -169,7 +169,7 @@ export class FileService {
   createProductCategoryPhoto(categoryId: any, photo: Photo) {
     if (!categoryId || !photo) {
       console.log('Product category Id or Photo object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/product-categories/${categoryId}/photo`
     return this.http.post<Photo>(url, photo).pipe(
@@ -183,7 +183,7 @@ export class FileService {
   createProductCategoryItemPhoto(itemId: any, photo: Photo) {
     if (!itemId || !photo) {
       console.log('Product category item Id or Photo object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/product-category-items/${itemId}/photo`
     return this.http.post<Photo>(url, photo).pipe(
@@ -197,7 +197,7 @@ export class FileService {
   createCouponPhoto(couponId: any, photo: Photo) {
     if (!couponId || !photo) {
       console.log('Coupon Id or Photo object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/coupons/${couponId}/photo`
     return this.http.post<Photo>(url, photo).pipe(
@@ -211,7 +211,7 @@ export class FileService {
   createStoreCategoryPhoto(storeCatId: any, photo: Photo) {
     if (!storeCatId || !photo) {
       console.log('Store category Id or Photo object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/store-categories/${storeCatId}/photo`
     return this.http.post<Photo>(url, photo).pipe(
@@ -240,7 +240,7 @@ export class FileService {
   deletePhotoDisplayType(displayTypeId: any) {
     if (!displayTypeId) {
       console.log('Policy type ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/photo-display-types/${displayTypeId}`
     return this.http.delete(url).pipe(
@@ -270,7 +270,7 @@ export class FileService {
   updateVideo(vid: Video) {
     if (!vid?.id) {
       console.log('Photo to update must have an ID')
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/videos/${vid.id}`
     return this.http.patch(url, vid).pipe(
@@ -285,7 +285,7 @@ export class FileService {
   getStoreVideos(storeId: any) {
     if (!storeId) {
       console.log('Please select store')
-      return;
+      return undefined;
     }
     const filter = {
       include: [
@@ -304,7 +304,7 @@ export class FileService {
   createStoreVideo(storeId: any, video: Video) {
     if (!storeId || !video) {
       console.log('Store Id or Video object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/stores/${storeId}/videos`
     return this.http.post<Video>(url, video).pipe(
@@ -318,7 +318,7 @@ export class FileService {
   deleteStoreVideo(storeId: string, videoId: string) {
     if (!storeId || !videoId) {
       console.log('Store id or video id is invalid');
-      return;
+      return undefined;
     }
     let filter: any = {
       id: videoId
@@ -348,7 +348,7 @@ export class FileService {
   getProductVideos(productId: any) {
     if (!productId) {
       console.log('Please select product')
-      return;
+      return undefined;
     }
     const filter = {
       include: [
@@ -367,7 +367,7 @@ export class FileService {
   createProductVideo(productId: any, video: Video) {
     if (!productId || !video) {
       console.log('product Id or Video object is invalid');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/products/${productId}/videos`
     return this.http.post<Video>(url, video).pipe(
@@ -381,7 +381,7 @@ export class FileService {
   deleteProductVideo(productId: string, videoId: string) {
     if (!productId || !videoId) {
       console.log('Product id or video id is invalid');
-      return;
+      return undefined;
     }
     let filter: any = {
       id: videoId
@@ -415,7 +415,7 @@ export class FileService {
   deleteVideoDisplayType(displayTypeId: any) {
     if (!displayTypeId) {
       console.log('Policy type ID cannot be undefined');
-      return;
+      return undefined;
     }
     const url = `${environment.store_api_root_url}/video-display-types/${displayTypeId}`
     return this.http.delete(url).pipe(

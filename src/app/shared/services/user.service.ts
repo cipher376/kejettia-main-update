@@ -361,6 +361,20 @@ export class UserService {
     );
   }
 
+    // /***************PHOTO MANAGEMENT FUNCTION  **************/
+    updateProfilePhoto(userId: string, photo: Photo): Observable<any> {
+      if (!photo.fileId || !userId) {
+        return undefined as any;
+      }
+      const url = `${environment.identity_api_root_url}/users/${userId}/profile-photo`
+      return this.http.post<Photo>(url, photo).pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(e => this.handleError(e))
+      );
+    }
+
 
 
 

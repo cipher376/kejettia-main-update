@@ -7,6 +7,8 @@ import { LatLng, Photo, Video } from 'src/app/models';
 
 export enum MY_ACTION {
 
+  unknown = 0,
+
   loadAllStores = 1.1,
   loadStoresByCountry = 1.2, // selectedStoreAddress: StoreAddress should be set via localStorage
   loadStoresByState = 1.3, // selectedStoreAddress should be set

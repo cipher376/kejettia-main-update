@@ -8,7 +8,7 @@
                     <figure class="">
                         <button type="submit" class="profile_edit"><img [src]="getProfilePhoto()" alt="Blue Pinafore Denim Dress" width="80" height="80" class="profile_r"></button>
                     </figure>
-                    <a href="javascript:;" class="btn btn-link btn-secondary btn-underline mt-10">Edit <i class="far fa-edit"></i></a>
+                    <app-upload (uploadedFile)="ProfilePhoto=$event" [uploadUrl]="uploadUrl"></app-upload>
                 </div>
             </div>
 
@@ -64,7 +64,7 @@
                             <li>
                                 <div class="icon-box-content">
                                     <h6 class="icon-box-title">Date Of Birth:
-                                        <p class="profile_text">{{loggedUser?.profile?.dateOfBirth |date}}</p>
+                                        <p class="profile_text">{{loggedUser?.profile?.dateOfBirth | date:'dd/MM/yy'}}</p>
                                     </h6>
                                 </div>
                             </li>

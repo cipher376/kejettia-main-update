@@ -1,3 +1,4 @@
+import { UploadComponent } from './upload/upload.component';
 import { PaystackComponent } from './paystack/paystack.component';
 import { GalleryWrapperComponent } from './gallery-wrapper/gallery-wrapper.component';
 import { BlogWidgetComponent } from './blog-widget/blog-widget.component';
@@ -37,7 +38,6 @@ import { CategoriesMenuComponent } from './categories-menu/categories-menu.compo
 import { CategoriesSectionComponent } from './categories-section/categories-section.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryComponent } from './category/category.component';
-import { DialogComponent } from './dialog/dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import { IntroBannerOneComponent } from './intro-banner-one/intro-banner-one.component';
@@ -108,6 +108,8 @@ import { BrandFilterComponent } from './brand-filter/brand-filter.component';
 import { PriceFilterComponent } from './price-filter/price-filter.component';
 import { ProductCategoryFilterComponent } from './product-category-filter/product-category-filter.component';
 import { ProductListWidgetComponent } from './product-list-widget/product-list-widget.component';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+
 
 @NgModule({
   declarations: [
@@ -124,7 +126,6 @@ import { ProductListWidgetComponent } from './product-list-widget/product-list-w
     CategoriesMenuItemComponent,
     CategoriesSectionComponent,
     CategoryComponent,
-    DialogComponent,
     FooterComponent,
     HeaderComponent,
     InstagramComponent,
@@ -209,6 +210,7 @@ import { ProductListWidgetComponent } from './product-list-widget/product-list-w
     PriceFilterComponent,
     ProductCategoryFilterComponent,
     ProductListWidgetComponent,
+    UploadComponent,
   ],
   imports: [
     CommonModule,
@@ -220,7 +222,10 @@ import { ProductListWidgetComponent } from './product-list-widget/product-list-w
     GalleryModule,
     LightboxModule,
     SelectModule,
+    // ModalModule,
+    ProgressbarModule.forRoot(),
     Angular4PaystackModule.forRoot(PAYSTACK_PUBLIC_KEY),
+
   ],
   exports: [
     AccountDetailsComponent,
@@ -236,7 +241,6 @@ import { ProductListWidgetComponent } from './product-list-widget/product-list-w
     CategoriesMenuItemComponent,
     CategoriesSectionComponent,
     CategoryComponent,
-    DialogComponent,
     FooterComponent,
     HeaderComponent,
     InstagramComponent,
@@ -308,8 +312,8 @@ import { ProductListWidgetComponent } from './product-list-widget/product-list-w
     ProductItemComponent,
     ProductListWidgetComponent,
     LoaderFullComponent,
-    LoaderMiniComponent
-
+    LoaderMiniComponent,
+    UploadComponent,
   ]
 })
 export class ComponentModule { }

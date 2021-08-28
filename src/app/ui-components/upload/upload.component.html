@@ -1,0 +1,23 @@
+<div class="upload-button m-2">
+  <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload style="visibility:hidden">
+
+  <div class="file-upload">
+
+    <!-- {{fileName || "No file uploaded yet."}} -->
+    <a href="javascript:;" class="btn btn-link btn-secondary btn-underline mt-10" tooltip="Upload"
+      (click)="fileUpload.click()">
+      <span *ngIf="!uploadButtonMessage">Edit</span>
+      <span *ngIf="uploadButtonMessage">{{uploadButtonMessage}}</span><i class="far fa-edit"></i>
+    </a>
+  </div>
+
+
+  <div class="progress" *ngIf="(uploadProgress.length)>0">
+    <div *ngFor="let progress of uploadProgress; let i = index;">
+      <progressbar class="progress" [value]=" progress" [max]="100" *ngIf="progress">
+      </progressbar>
+      <button class="btn-sm btn-warning" (click)="cancelUpload(i)"><i class="icon-close"></i></button><br>
+    </div><br>
+    <button class="btn-sm btn-danger" (click)="cancelUpload()"><i class="icon-close"></i></button>
+  </div>
+</div>

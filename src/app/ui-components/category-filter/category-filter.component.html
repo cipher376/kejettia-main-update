@@ -1,9 +1,9 @@
   <h3 class="widget-title">All Categories</h3>
   <ul class="widget-body filter-items search-ul">
-    <li *ngFor="let cat of Categories">
+    <li *ngFor="let cat of Categories"  (click)="search(cat)">
       <a href="javascript:;" >{{cat?.name}}</a>
       <ul *ngIf="cat?.productCategories?.length>0">
-        <li *ngFor="let pcat of cat?.productCategories" (click)="search(pcat?.name)"><a href="javascript:;">{{pcat?.name}}</a></li>
+        <li *ngFor="let pcat of cat?.productCategories" (click)="search(pcat)"><a href="javascript:;">{{pcat?.name}}</a></li>
       </ul>
     </li>
   </ul>
