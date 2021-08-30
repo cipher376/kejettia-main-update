@@ -5855,8 +5855,8 @@ ul.blog-filters .nav-filter {
 }
 
 .ellipse-section .owl-stage-outer {
-    padding: 5rem;
-    margin: -5rem
+    /* padding: 5rem;
+    margin: -5rem */
 }
 
 .category-ellipse .category-media {
