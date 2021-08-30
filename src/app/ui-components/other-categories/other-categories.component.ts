@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ProductCategory, ProductCategoryItem } from './../../models/product';
 import { Component, Input, OnInit } from '@angular/core';
 import { NO_IMAGE } from 'src/app/config';
@@ -16,7 +17,8 @@ export class OtherCategoriesComponent implements OnInit {
   private productCategories: ProductCategory[] = [];
   private productCategoryItems: ProductCategoryItem[] = [];
   constructor(
-    private storeService: StoreService
+    // private storeService: StoreService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +58,12 @@ export class OtherCategoriesComponent implements OnInit {
     if (cat?.photo)
       return environment.file_api_download_url_root + cat?.photo?.source;
     return NO_IMAGE
+  }
+
+  search(cat: StoreCategory |ProductCategory) {
+    this.router.navigateByUrl('/main/pages/search;cat=' +cat?.name).then(()=>{
+      window.location.reload();
+    })
   }
 
 

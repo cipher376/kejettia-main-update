@@ -1,5 +1,5 @@
 <section class="ellipse-section mt-12" *ngIf=" (StoreCategories?.length>0) || (ProductCategories?.length>0) || (ProductCategoryItems?.length>0)">
-  <h2 class="title title-center mb-8">Ellipse Style</h2>
+  <!-- <h2 class="title title-center mb-8">Ellipse Style</h2> -->
   <div class="owl-carousel owl-theme container" data-owl-options="{
         'nav': false,
         'dots': true,
@@ -28,13 +28,13 @@
 
     <ng-container *ngIf="StoreCategories?.length>0">
       <div class="category category-ellipse" *ngFor="let cat of StoreCategories; let i=index">
-        <a href="#">
+        <a href="javascript:;" (click)="search(cat)">
           <figure class="category-media">
             <img class="homeellipse" [src]="getPhotoUrl(cat)" alt="category" />
           </figure>
         </a>
         <div class="category-content">
-          <h4 class="category-name"><a href="javascript:;">{{cat?.name}}</a></h4>
+          <h4 class="category-name"><a href="javascript:;" (click)="search(cat)">{{cat?.name}}</a></h4>
           <span class="category-count">
             <!-- <span>200</span> Products -->
             <span>{{cat?.description |slice:20}}</span>
@@ -46,13 +46,13 @@
 
     <ng-container *ngIf="ProductCategories?.length>0">
       <div class="category category-ellipse" *ngFor="let cat of ProductCategories; let i=index">
-        <a href="#">
+        <a href="javascript:;" (click)="search(cat)">
           <figure class="category-media">
             <img class="homeellipse" [src]="getPhotoUrl(cat)" alt="category" width="196" height="196" />
           </figure>
         </a>
         <div class="category-content">
-          <h4 class="category-name"><a href="javascript:;">{{cat?.name}}</a></h4>
+          <h4 class="category-name"><a href="javascript:;" (click)="search(cat)">{{cat?.name}}</a></h4>
           <span class="category-count">
             <!-- <span>200</span> Products -->
             <span>{{cat?.description |slice:20}}</span>
@@ -65,13 +65,13 @@
 
     <ng-container *ngIf="ProductCategoryItems?.length>0">
       <div class="category category-ellipse" *ngFor="let cat of ProductCategoryItems; let i=index">
-        <a href="#">
+        <a href="javascript:;" (click)="search(cat)">
           <figure class="category-media">
             <img class="homeellipse" [src]="getPhotoUrl(cat)" alt="category" width="196" height="196" />
           </figure>
         </a>
         <div class="category-content">
-          <h4 class="category-name"><a href="javascript:;">{{cat?.name}}</a></h4>
+          <h4 class="category-name"><a href="javascript:;" (click)="search(cat)">{{cat?.name}}</a></h4>
           <span class="category-count" *ngIf="cat?.products?.length">
             <span>{{cat?.products?.length}}</span> Products
           </span>
