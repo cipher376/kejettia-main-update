@@ -6,7 +6,7 @@
           <h2 class="testimonial-title">My Account</h2>
           <figure class="">
             <button type="submit" class="profile_edit userprofilepic"><img [src]="getProfilePhoto()"
-                alt="Blue Pinafore Denim Dress" class="profile_r" style="height: 18vw; width: 20vw;"></button>
+                alt="Blue Pinafore Denim Dress" class="profile_r" style="height: 18vw; width: 18vw;"></button>
           </figure>
           <app-upload (uploadedFile)="ProfilePhoto=$event" [uploadUrl]="uploadUrl"></app-upload>
         </div>
@@ -24,8 +24,22 @@
                     <p class="profile_text">{{loggedUser?.profile?.firstName}} {{loggedUser?.profile?.otherName}}
                       {{loggedUser?.profile?.lastName}}</p>
                   </h6>
+
+                  <!-- <div class="col-12">
+        <div class="row">
+        <div class="col-sm-6 mb-4">
+            <div class="testimonial testimonial-centered testimonial-border">
+                <div class="testimonial-info">
+                    <h2 class="testimonial-title">My Account</h2>
+                    <figure class="">
+                        <button type="submit" class="profile_edit userprofilepic"><img [src]="getProfilePhoto()" alt="Blue Pinafore Denim Dress" class="profile_r" style="height: 18vw; width: 18vw;"></button>
+                    </figure>
+                    <app-upload (uploadedFile)="ProfilePhoto=$event" [uploadUrl]="uploadUrl"></app-upload>
+                -->
                 </div>
               </li>
+
+
               <li>
                 <div class="icon-box-content">
                   <h6 class="icon-box-title">Email:
