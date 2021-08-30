@@ -11,6 +11,7 @@ import { User } from 'src/app/models';
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   loggedUser: User = new User();
+  isMobile= false;
   constructor(
     private userService: UserService,
     private router: Router
@@ -21,6 +22,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.loggedUser = this.userService.getLoggedUserLocalSync();
     }, 100);
+
+    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
   }
 

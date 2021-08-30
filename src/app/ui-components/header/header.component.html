@@ -37,14 +37,14 @@
 
         <a [routerLink]="['/main/pages/auth/login']" routerLinkActive="router-link-active" *ngIf="!loggedUser?.id"><i
             class="d-icon-user"></i>
-          &nbsp; Sign
-          in</a>
+          &nbsp; Login &nbsp;
+        </a>
         <span class="delimiter" *ngIf="!loggedUser?.id">/</span>
         <a class="ml-0" [routerLink]="['/main/pages/auth/register']" routerLinkActive="router-link-active"
           *ngIf="!loggedUser?.id">Register</a>
         <span class="delimiter" *ngIf="!loggedUser?.id">/</span>
-        <a class="ml-0" [routerLink]="['/main/pages/auth/forgot']" routerLinkActive="router-link-active"
-          *ngIf="!loggedUser?.id">Forgot
+        <a class="ml-0"  [routerLink]="['/main/pages/auth/forgot']" routerLinkActive="router-link-active"
+          *ngIf="!loggedUser?.id && !isMobile">Forgot
           password</a>
 
         <div *ngIf="loggedUser?.id">
@@ -61,7 +61,7 @@
   <div class="header-middle sticky-header fix-top sticky-content">
     <div class="container">
       <div class="header-left">
-        <a href="#" class="mobile-menu-toggle">
+        <a href="javascript:;" class="mobile-menu-toggle">
           <i class="d-icon-bars2"></i>
         </a>
         <a href="/main/pages/home" class="logo">
