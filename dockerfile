@@ -4,6 +4,7 @@ RUN npm install -g @angular/cli
 
 WORKDIR /opt/ng
 COPY  package.json angular.json ./
+RUN rm -rf /opt/ng/node_modules
 RUN npm install
 COPY . ./
 RUN ng build --prod

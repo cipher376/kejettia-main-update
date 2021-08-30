@@ -24,6 +24,7 @@
     "@angular/platform-browser": "~12.0.0",
     "@angular/platform-browser-dynamic": "~12.0.0",
     "@angular/router": "~12.0.0",
+    "@types/google.maps": "^3.45.6",
     "@wkoza/ngx-upload": "^6.4.0",
     "angular-geocoder": "^8.1.0",
     "angular-web-storage": "^10.0.0",

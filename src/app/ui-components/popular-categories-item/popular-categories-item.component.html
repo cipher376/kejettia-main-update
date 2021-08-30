@@ -1,12 +1,12 @@
 <div class="category category-default1 category-absolute banner-radius overlay-zoom">
-    <a href="javascript:;">
+    <a href="javascript:;" (click)="search()">
         <figure class="category-media" style="background-color: #9bc6cb;">
             <img [src]="getCatPhoto()" alt="category" width="280"
                 height="280" />
         </figure>
     </a>
     <div class="category-content font-weight-bold">
-        <h4 class="category-name ls-l"><a href="javascript:;">{{productCategory?.name}}</a>
+        <h4 class="category-name ls-l"  (click)="search()"><a href="javascript:;">{{productCategory?.name}}</a>
         </h4>
     </div>
 </div>
