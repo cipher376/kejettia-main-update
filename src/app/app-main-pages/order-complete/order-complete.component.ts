@@ -36,6 +36,11 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit {
     this.consolidatedOrder = this.orderService.getSelectedConsolidatedOrderLocal();
     this.loadItems();
 
+    if (!this.consolidatedOrder?.deliveryAddress?.email) {
+      this.orderService.getConsolidatedOrderById(this.consolidatedOrder?.id).subscribe(order => {
+        window.location.reload();
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -53,14 +58,17 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit {
 
     this.consolidatedOrder?.orders?.forEach(order => {
       this.subtotal += order?.total;
-      this.items.push(...order.cartItems)
+      if (order?.cartItems)
+        this.items.push(...order.cartItems)
+      console.log(this.subtotal);
+      console.log(order)
     })
     const cart = new Cart();
     cart.cartItems = this.items;
     this.deliveryCost = CartService.calculateShipping(cart);
   }
 
-  getPhoto(product: Product){
+  getPhoto(product: Product) {
     return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, 'cover', true, true);
   }
 

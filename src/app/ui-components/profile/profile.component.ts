@@ -1,3 +1,4 @@
+import { MY_ACTION, SignalService } from './../../shared/services/signal.service';
 import { NO_IMAGE } from './../../config';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/shared/services';
@@ -17,17 +18,24 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   uploadUrl = environment.file_api_upload_photo_video_url_root + '/true'
   constructor(
     private userService: UserService,
-    private fileService: FileService
-
+    private fileService: FileService,
+    private signal: SignalService
   ) { }
 
 
   ngAfterViewInit(): void {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
+
     this.profilePhoto = this.loggedUser?.profilePhoto;
   }
 
   ngOnInit(): void {
+    this.signal._action$.subscribe(action => {
+      if(action = MY_ACTION.reloadUser){
+        this.loggedUser = this.userService.getLoggedUserLocalSync();
+        console.log(this.loggedUser);
+      }
+    });
   }
 
   getProfilePhoto() {

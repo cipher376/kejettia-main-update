@@ -1,3 +1,4 @@
+import { SimpleModalModule } from 'ngx-simple-modal';
 import { UploadComponent } from './upload/upload.component';
 import { PaystackComponent } from './paystack/paystack.component';
 import { GalleryWrapperComponent } from './gallery-wrapper/gallery-wrapper.component';

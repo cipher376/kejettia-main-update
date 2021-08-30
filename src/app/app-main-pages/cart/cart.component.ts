@@ -113,8 +113,12 @@ export class CartComponent implements OnInit {
 
   deleteFromCart(cartItem: CartItem) {
     this.cartService.deleteCartItem(this.cart?.id, cartItem?.id).subscribe(() => {
+      this.cart = this.cartService.getCartLocal();
+
     })
   }
+
+
 
   increaseQuantity(item: CartItem) {
     if (item?.product?.stockCount > 0) {

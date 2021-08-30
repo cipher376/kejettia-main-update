@@ -30,7 +30,7 @@ export class ProductCategoryFilterComponent implements OnInit {
   }
 
   getCategories() {
-    this.storeService.getCategoriesByStore(this.store?.id).subscribe(cats => {
+    this.storeService.getCategoriesByStore(this.store?.id)?.subscribe(cats => {
       this.categories = [];
       cats?.forEach(cat => {
         this.categories.push(...cat?.productCategories)

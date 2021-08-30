@@ -1,30 +1,158 @@
-<p class="mb-2">The following addresses will be used on the checkout page by default.
-</p>
+
 <div class="row">
-    <div class="col-sm-6 mb-4">
-        <div class="">
-            <a href="" class="card-body">
-                <h5 class="card-title text-uppercase card card-address p-r active">Shipping  Address</h5>
-            </a>
-        </div>
+  <div class="col-sm-6 mb-2 ">
+    <div class="">
+      <a href="javascript:;" class="card-body" (click)="Tab='permanent'">
+        <h5 class="card-title text-uppercase card card-address p-r">Permanent Address</h5>
+      </a>
     </div>
-    <div class="col-sm-6 mb-4 ">
-        <div class="">
-            <a href="" class="card-body">
-                <h5 class="card-title text-uppercase card card-address p-r">Permanent Address</h5>
-            </a>
-        </div>
+  </div>
+  <div class="col-sm-6 mb-2">
+    <div class="">
+      <a href="javascript:;" (click)="Tab='shipping'" class="card-body">
+        <h5 class="card-title text-uppercase card card-address p-r active">Shipping Address</h5>
+      </a>
     </div>
+  </div>
 
-    <div class="col-sm-12 mb-4">
-      <div class="tab-pane">
-        <p class="mb-0">Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In
-            nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium,
-            ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget
-            blandit nunc tortor eu nibh. Nullam mollis. Ut justo.</p>
+
+  <div class="col-sm-12 mb-4 animate__animated animate__fadeInUp" *ngIf="Tab=='permanent'">
+    <div class="tab-pane">
+      <!-- PERMANENT -->
+
+      <p class="mb-2">The following addresses will be used on the checkout page by default.
+      </p>
+      <div class="card-body" [formGroup]="addForm">
+        <div class="row">
+          <div class="form-group col-8">
+            <ng-select formControlName="country" [allowClear]="false" [multiple]="false" [options]="countries||[]"
+              placeholder="Country" (selected)="setCountry($event)">
+            </ng-select>
+            <div class="alert alert-country" role="alert"
+              *ngIf="(addForm.get('country')?.errors) && addForm.get('country')?.dirty">
+              Select your country.
+            </div>
+            <div class="m-0 p-0">
+              <input type="hidden" formControlName="country">
+            </div>
+          </div>
+
+          <div class="form-group col-4 ">
+            <input type="text" formControlName="postcode" class="form-control" placeholder="Postal Code">
+            <div class="alert alert-country" role="alert"
+              *ngIf="(addForm.get('postcode')?.errors) && addForm.get('postcode')?.dirty">
+              Provide postal code.
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <ng-select formControlName="state" [allowClear]="false" [multiple]="false" [options]="selectedStates||[]"
+            placeholder="State">
+          </ng-select>
+        </div>
+        <div class="alert alert-state" role="alert"
+          *ngIf="(addForm.get('state')?.errors) && addForm.get('state')?.dirty">
+          Select your state or region.
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="city" placeholder="City">
+        </div>
+        <div class="alert alert-city" role="alert" *ngIf="(addForm.get('city')?.errors) && addForm.get('city')?.dirty">
+          Select your city or town.
+        </div>
+
+
+        <div class="form-group">
+          <input type="text" formControlName="street" class="form-control" placeholder="Street">
+        </div>
+        <div class="alert alert-street" role="alert"
+          *ngIf="(addForm.get('street')?.errors) && addForm.get('street')?.dirty">
+          Provide your street.
+        </div>
+
+        <div class="form-group">
+          <input type="text" formControlName="apartment" class="form-control" placeholder="Apartment">
+        </div>
+        <div class="alert alert-apartment" role="alert"
+          *ngIf="(addForm.get('apartment')?.errors) && addForm.get('apartment')?.dirty">
+          Provide your apartment.
+        </div>
+
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <input type="number" formControlName="lat" class="form-control" placeholder="Latitude">
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <input type="number" formControlName="lng" class="form-control" placeholder="Longitude">
+            </div>
+          </div>
+          <div class="alert alert-lat" role="alert" *ngIf="(addForm.get('lat')?.errors) && addForm.get('lat')?.dirty">
+            Provide your google map latitude.
+          </div>
+          <div class="alert alert-lng" role="alert" *ngIf="(addForm.get('lng')?.errors) && addForm.get('lng')?.dirty">
+            Provide your google map longitude.
+          </div>
+        </div>
+
+
+        <div class="col-12 col-sm-12 mb-3 ">
+          <button type="button" class="btn  btn-primary" (click)="onSaveAddress()">Save address</button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="col-sm-12 mb-4 animate__animated animate__fadeInUp" *ngIf="Tab=='shipping'">
+    <div class="tab-pane">
+      <!-- SHIPPING -->
+
+      <table class="order-table">
+        <thead>
+          <tr>
+            <th class="pl-2">Name</th>
+            <th class="pl-2">Email</th>
+            <th class="pl-2">Phone</th>
+            <th>Suburb</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Country</th>
+            <th class="pr-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let add of deliveryAddresses" (click)="view(add)">
+            <td class="order-number"><a href="javascript:;" >{{add?.fname+' '+add?.mname+' '+add?.lname}}</a></td>
+            <td class="order-date">{{add?.email}}</td>
+            <td class="order-date">{{add?.phone}}</td>
+            <td class="order-status"><span>{{add?.address?.suburb}}</span></td>
+            <td class="order-total"><span>{{add?.address?.city}}</span></td>
+            <td class="order-total"><span>{{add?.address?.state}}</span></td>
+            <td class="order-total"><span>{{add?.address?.country}}</span></td>
+            <td class="order-total"><span>{{add?.address?.country}}</span></td>
+            <td class="order-action"><a href="javascript:;" (click)="delete(add)"
+              class="btn btn-primary btn-link btn-underline">Delete</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="address-info pb-8 mb-6" *ngIf="selectedDeliveryAddress">
+        <p class="address-detail pb-2">
+          {{selectedDeliveryAddress?.fname}} {{selectedDeliveryAddress?.lname}}
+          {{selectedDeliveryAddress?.mname}}<br>
+          {{selectedDeliveryAddress?.address?.street}}
+          {{selectedDeliveryAddress?.address?.suburb}}<br>
+          {{selectedDeliveryAddress?.address?.city}}<br>
+          {{selectedDeliveryAddress?.address?.state}} -
+          {{selectedDeliveryAddress?.address?.country}}
+          ({{selectedDeliveryAddress?.address?.postCode}})<br>
+        </p>
+        <p class="email">Phone: {{selectedDeliveryAddress?.phone}}</p>
+        <p class="email"> {{selectedDeliveryAddress?.email}} </p>
+      </div>
     </div>
+  </div>
 </div>
-
-
-

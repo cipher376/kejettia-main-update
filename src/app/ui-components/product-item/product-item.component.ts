@@ -14,7 +14,7 @@ import { StoreService } from 'src/app/shared/services/store.service';
 export class ProductItemComponent implements OnInit, AfterViewInit {
   private product: Product;
   photoUrl = '';
-
+  discount = 0;
   @Input() layout = 'grid'; // 'list'
 
   constructor(
@@ -35,6 +35,8 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
   @Input() set Product(product: Product) {
     this.product = product;
     // console.log(this.product);
+    if (product?.previousPrice > product?.currentPrice)
+      this.discount = ((product.previousPrice - product.currentPrice) / product.previousPrice) * 100;
     this.photoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.product?.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
     this.cd.detectChanges();
   }

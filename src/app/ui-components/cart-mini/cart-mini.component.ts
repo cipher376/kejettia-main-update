@@ -1,3 +1,4 @@
+import { UtilityService } from './../../shared/services/utility.service';
 import { NO_IMAGE } from './../../config';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
@@ -17,7 +18,7 @@ declare var Window: any;
 })
 export class CartMiniComponent implements OnInit, AfterViewInit {
   private cart: Cart
-  totalCash: number =0; // total cash
+  totalCash: number = 0; // total cash
 
   constructor(
     private router: Router,
@@ -63,7 +64,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
     console.log('here')
     this.storeService.setSelectedProductLocal(product).then(() => {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate([Urls.productDetails+'/'+product?.id]);
+        this.router.navigate([Urls.productDetails + '/' + product?.id]);
       });
     });
   }
@@ -73,7 +74,11 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   }
 
   deleteFromCart(cartItem: CartItem) {
-
+    this.cartService.deleteCartItem(this.cart?.id, cartItem?.id).subscribe(() => {
+      console.log(this.cart?.cartItems);
+      // this.cart.cartItems = UtilityService.arrayRemove(this.cart.cartItems, cartItem);
+      this.cart = this.cartService.getCartLocal();
+    })
   }
 
 

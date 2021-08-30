@@ -57,7 +57,7 @@
                   <span class="amount">{{item?.product?.currentPrice*item?.quantity | currency: 'GHC ':'GH₵ '}}</span>
                 </td>
                 <td class="product-close">
-                  <a href="javascript:;" class="product-remove" title="Remove this product">
+                  <a href="javascript:;" (click)="deleteFromCart(item)" class="product-remove" title="Remove this product">
                     <i class="fas fa-times"></i>
                   </a>
                 </td>

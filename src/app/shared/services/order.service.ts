@@ -323,6 +323,7 @@ export class OrderService {
   }
 
 
+
   deleteConsolidatedOrderFromUser(orderId: any) {
     const url = `${environment.store_api_root_url}/consolidated-orders/${orderId}/fromUser`
     return this.http.delete(url).pipe(

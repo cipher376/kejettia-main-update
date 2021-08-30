@@ -154,7 +154,7 @@ export class CartService {
   }
 
   deleteCartItem(cartId: any, cartItemId: any) {
-    return this.http.delete(environment.store_api_root_url + `/carts/${cartId}/cart-items?filter=${JSON.stringify({ id: cartItemId })}`).pipe(
+    return this.http.delete(environment.store_api_root_url + `/carts/${cartId}/cart-items?where=${JSON.stringify({ id: cartItemId })}`).pipe(
       map(res => {
         this.getCart().subscribe(cart => {
           console.log(cart);

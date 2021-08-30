@@ -47,6 +47,7 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
+
   set SelectedDeliveryAddress(addressOption: IOption) {
     this.selectedDeliveryAddress = this.loggedUserDeliveryAddresses.find(ad => {
       return (ad.id == addressOption.value)

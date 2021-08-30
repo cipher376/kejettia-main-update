@@ -464,7 +464,15 @@ export class UserService {
       console.log('User id required')
       return undefined;
     }
-    return this.http.get<DeliveryAddress[]>(environment.store_api_root_url + `/users/${userId}/delivery-addresses`).pipe(
+    const filter = {
+      include: [
+        {
+          relation: 'address'
+        }
+      ]
+    }
+    const url = environment.store_api_root_url + `/users/${userId}/delivery-addresses?filter=${JSON.stringify(filter)}`
+    return this.http.get<DeliveryAddress[]>(url).pipe(
       map(res => {
         console.log(res);
         const user = this.getLoggedUserLocalSync();
@@ -479,7 +487,7 @@ export class UserService {
   createUpdateUserDeliveryAddress(userId: any, deliveryAddress: DeliveryAddress) {
     if (!deliveryAddress?.address?.state || !userId) {
       console.log('Address is invalid');
-      alert('Please complete every address field');
+      alert('Select existing address or create address; complete every address field if new');
       return undefined
     }
     const address = deliveryAddress.address;
@@ -506,6 +514,18 @@ export class UserService {
         catchError(e => this.handleError(e))
       );
     }
+  }
+
+  // Hide address from user
+  deleteDeliveryAddress(userId: any, deliveryAddress: DeliveryAddress){
+    delete deliveryAddress.address;
+    deliveryAddress.visibleToUser = false;
+    return this.http.patch<DeliveryAddress>(environment.store_api_root_url + `/users/${userId}/delivery-addresses`, deliveryAddress).pipe(
+      map(res => {
+        return deliveryAddress as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
   }
 
 

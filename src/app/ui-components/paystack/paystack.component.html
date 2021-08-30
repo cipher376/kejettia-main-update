@@ -1,7 +1,7 @@
 
 <button class="pay_now btn btn-rounded btn-order order-message mr-auto ml-auto" *ngIf="isNotPaid()"
 angular4-paystack  [paystackOptions]="options" (paymentInit)="paymentInit()"
-  (close)="paymentCancel()" (callback)="paymentDone($event)" [class]="'btn-project'"
+  (onClose)="paymentCancel()" (callback)="paymentDone($event)" [class]="'btn-project'"
   mat-raised-button
   [style]="style"
   color='primary'>

@@ -1,3 +1,4 @@
+import { AlertComponent } from './../alert/alert.component';
 import { ConsolidatedOrder } from './../../models/Order';
 import { User } from './../../models/user';
 import { CartService } from 'src/app/shared/services/cart.service';
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 import { OrderService } from '../../shared/services/order.service';
 import { UserService } from '../../shared/services/user.service';
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
+import { SimpleModalService } from 'ngx-simple-modal';
 
 import { Order, ORDER_STATE } from 'src/app/models';
 
@@ -38,7 +40,8 @@ export class PaystackComponent implements OnInit, AfterViewInit {
     private orderService: OrderService,
     public userService: UserService,
     public router: Router,
-    private signal: SignalService
+    private signal: SignalService,
+    private modal: SimpleModalService
   ) { }
 
 
@@ -64,6 +67,7 @@ export class PaystackComponent implements OnInit, AfterViewInit {
   paymentInit() {
     console.log('Payment initialized');
     this.signal.sendAction(MY_ACTION.paystackTransactionInitiated);
+
   }
 
   paymentDone(ref: any) {
@@ -74,15 +78,35 @@ export class PaystackComponent implements OnInit, AfterViewInit {
     // call the backend to verify the transaction
     this.orderService.verifyOrderPayment(this.consolidatedOrder?.id, ref.reference).subscribe(data => {
       if (data.status === 'success') {
-        window.location.reload();
+        this.orderService.getConsolidatedOrderById(this.consolidatedOrder?.id).subscribe(order => {
+          window.location.reload();
+        });
       }
     });
+  }
 
+  paymentAlert(message) {
+    let disposable = this.modal.addModal(AlertComponent, {
+      title: 'Payment status',
+      message
+    }).subscribe(() => {
+      setTimeout(() => {
+        disposable.unsubscribe();
+      }, 5000);
+    })
   }
 
   paymentCancel() {
-    console.log('payment failed');
-    alert('Payment cancelled');
+    let disposable = this.modal.addModal(AlertComponent, {
+      title: 'Payment status',
+      message: 'Payment Cancelled'
+    }).subscribe(() => {
+      setTimeout(() => {
+        disposable.unsubscribe();
+        window.location.reload();
+      }, 100);
+    })
+
   }
 
   initOptions() {

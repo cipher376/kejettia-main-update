@@ -1,8 +1,10 @@
 <main class="main order">
   <div class="page-content pt-7 pb-10 mb-10">
     <div class="container mt-8">
+
       <div class="step-by pr-4 pl-4">
-        <app-paystack></app-paystack>
+        <h4 *ngIf="consolidatedOrder?.state === 'PENDING'" class="pending"><i class="d-icon-check"></i> Payment successful</h4>
+        <app-paystack *ngIf="consolidatedOrder?.state === 'NEW'"></app-paystack>
       </div>
       <div class="order-results" *ngIf="consolidatedOrder">
         <div class="overview-item">
@@ -11,8 +13,10 @@
         </div>
         <div class="overview-item">
           <span>Status:</span>
-          <strong><span *ngIf="consolidatedOrder?.state" class="unknown"
-              [ngClass]="{'new': consolidatedOrder.state === 'NEW', 'pending': consolidatedOrder.state === 'PENDING'}">{{consolidatedOrder?.state}}</span></strong>
+          <strong>
+            <span *ngIf="consolidatedOrder?.state" class="unknown"
+              [ngClass]="{'new': consolidatedOrder.state === 'NEW', 'pending': consolidatedOrder.state === 'PENDING'}">
+              {{consolidatedOrder?.state}}</span></strong>
         </div>
         <div class="overview-item">
           <span>Date:</span>
@@ -103,7 +107,7 @@
           {{consolidatedOrder?.deliveryAddress?.address?.suburb}}<br>
           {{consolidatedOrder?.deliveryAddress?.address?.city}}<br>
           {{consolidatedOrder?.deliveryAddress?.address?.state}} -
-          {{consolidatedOrder?.deliveryAddress?.address?.state}}
+          {{consolidatedOrder?.deliveryAddress?.address?.country}}
           ({{consolidatedOrder?.deliveryAddress?.address?.postCode}})<br>
         </p>
         <p class="email">Phone: {{consolidatedOrder?.deliveryAddress?.phone}}</p>
