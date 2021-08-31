@@ -16,6 +16,7 @@ export class Credentials {
   password?: string;
   realm?: string;
   remember?: boolean;
+  token?: string;
 }
 
 

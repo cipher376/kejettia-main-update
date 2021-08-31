@@ -1,3 +1,5 @@
+import { EmailVerificationComponent } from './email-verification/email-verification.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AuthComponent } from './auth/auth.component';
 import { LayoutComponent } from './layout/layout.component';
 import { RecentBrowsedComponent } from './recent-browsed/recent-browsed.component';
@@ -65,7 +67,9 @@ const routes: Routes = [
           { path: 'cart', component: CartComponent },
           { path: 'loader-f', component: LoaderFullComponent },
           { path: 'loader-m', component: LoaderMiniComponent },
-          { path: 'company', component: CompanyComponent }
+          { path: 'company', component: CompanyComponent },
+          { path: 'change-password', component: ChangePasswordComponent },
+          { path: 'verify-email', component: EmailVerificationComponent },
         ]
       },
 

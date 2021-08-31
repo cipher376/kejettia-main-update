@@ -4,6 +4,7 @@ export const Urls = {
   forgotPassword: '/main/pages/auth/forgot',
   register: '/main/pages/auth/register',
   login: '/main/pages/auth/login',
+  changePassword: '/main/pages/change-password',
   paymentPlatform: '/main/pages/payment-platform',
   error: '/main/pages/error',
   order: '/main/pages/order',
@@ -27,10 +28,10 @@ export const Urls = {
 //   id: '5df207867b864246841406ae'
 // };
 
-// export const CONTACT_EMAIL = 'kejetia00@gmail.com';
-export const CONTACT_EMAIL = 'kejettia.market@gmail.com';
-export const APP_NAME = 'Kejettia';
-
+export const CONTACT_EMAIL = 'admin@kejettia.com';
+export const APP_NAME = 'Kejettia.com';
+export const LOGO_URL = 'http://107.152.41.194:4200/assets/images/logo.svg'
+export const CONTACT_PAGE = 'http://107.152.41.194:4200/main/pages/contact'
 
 // Paystack configuration
 export const  PAYSTACK_PUBLIC_KEY = 'pk_test_35e2d42391f82f0329280d5821807a52fdd0881f';
