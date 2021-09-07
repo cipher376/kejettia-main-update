@@ -43,6 +43,8 @@
               <li>
                 <div class="icon-box-content">
                   <h6 class="icon-box-title">Email:
+                    <button class="btn btn-sm btn-warning" (click)="verifyEmail()" *ngIf="!loggedUser?.emailVerified">click to verify</button>
+                    <button class="btn btn-sm btn-success verified"  *ngIf="loggedUser?.emailVerified">Verified!</button>
                     <p class="profile_text"><a href="mailto:market.kejettia@gmail.com">{{loggedUser?.email}}</a></p>
                   </h6>
                 </div>

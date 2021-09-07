@@ -1,0 +1,26 @@
+
+<main class="main  animate__animated animate__fadeInUp">
+  <div class="page-content mt-6 pb-2 mb-10">
+    <div class="container">
+      <div class="login-popup">
+        <div class="form-box">
+          <div class="tab tab-nav-simple tab-nav-boxed form-tab">
+            <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link border-no lh-1 ls-normal" href="javascript:;" routerLinkActive="router-link-active" >Email verification status</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="step-by pr-4 pl-4">
+                <h4  class="new" *ngIf="isVerified&&!showLoader"><i class="d-icon-check"></i> Your email is verified!</h4>
+                <h4  class="danger" *ngIf="!isVerified&&!showLoader"><i class="d-icon-close"></i> Your email is not verified!</h4>
+                <app-loader-mini style="margin-left: -115%;" *ngIf="showLoader"></app-loader-mini>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+

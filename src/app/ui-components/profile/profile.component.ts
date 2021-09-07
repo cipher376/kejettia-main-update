@@ -1,7 +1,7 @@
 import { MY_ACTION, SignalService } from './../../shared/services/signal.service';
 import { NO_IMAGE } from './../../config';
 import { environment } from 'src/environments/environment';
-import { UserService } from 'src/app/shared/services';
+import { UserService, MyAuthService } from 'src/app/shared/services';
 import { Photo, User } from 'src/app/models';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FileService } from 'src/app/shared/services/file.service';
@@ -19,7 +19,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   constructor(
     private userService: UserService,
     private fileService: FileService,
-    private signal: SignalService
+    private signal: SignalService,
+    private authService: MyAuthService
   ) { }
 
 
@@ -31,7 +32,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.signal._action$.subscribe(action => {
-      if(action = MY_ACTION.reloadUser){
+      if (action = MY_ACTION.reloadUser) {
         this.loggedUser = this.userService.getLoggedUserLocalSync();
         console.log(this.loggedUser);
       }
@@ -76,4 +77,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
+
+  verifyEmail() {
+    this.authService.requestEmailVerificationLink(this.loggedUser?.email).subscribe(((res: any) => {
+      if (res?.status == 'success') {
+        alert('Verification link is sent to your email');
+      }else {
+        alert('Unable to verify your email, please try again later or contact us for support');
+
+      }
+    }))
+  }
 }

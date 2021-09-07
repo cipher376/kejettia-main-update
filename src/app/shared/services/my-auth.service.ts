@@ -1,4 +1,4 @@
-import { Urls } from './../../config';
+import { Urls, APP_NAME, CONTACT_EMAIL, LOGO_URL, CONTACT_PAGE } from './../../config';
 import { environment } from './../../../environments/environment';
 import { UserService } from 'src/app/shared/services';
 import { Credentials } from './../../models/user';
@@ -135,23 +135,67 @@ export class MyAuthService {
     }
     return false;
   }
-  RequestResetLink(email: string) {
-    // return this.userIdentity.resetPassword({ email: email }).pipe(
-    //   map(res => {
-    //     return res;
-    //   }),
-    //   catchError(e => this.handleError(e))
-    // );
+
+  requestPasswordResetLink(email: string) {
+    const data = {
+      email,
+      app: {
+        name: APP_NAME,
+        logoUrl: LOGO_URL,
+        appSMTPEmail: CONTACT_EMAIL,
+        contactPageUrl: CONTACT_PAGE
+      }
+    }
+    console.log(data);
+    return this.http.post<User>(environment.identity_api_root_url + '/users/reset-password', data).pipe(
+      map(res => {
+        console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  changePassword(cred: Credentials) {
+    return this.http.post<User>(environment.identity_api_root_url + '/users/change-password', cred).pipe(
+      map(res => {
+        console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
   }
 
 
-  requestVerificationLink(email: string) {
-    // return this.userIdentity.verifyEmail(email).pipe(
-    //   map(res => {
-    //     return res;
-    //   }),
-    //   catchError(e => this.handleError(e))
-    // );
+  requestEmailVerificationLink(email: string) {
+    const data = {
+      email,
+      app: {
+        name: APP_NAME,
+        logoUrl: LOGO_URL,
+        appSMTPEmail: CONTACT_EMAIL,
+        contactPageUrl: CONTACT_PAGE
+      }
+    }
+    console.log(data);
+    return this.http.post<User>(environment.identity_api_root_url + '/users/email-verification-request', data).pipe(
+      map(res => {
+        console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
+  verifyEmail(token: string) {
+    const url=`${environment.identity_api_root_url}/users/verifyEmail/${token}`;
+    return this.http.get(url).pipe(
+      map(res => {
+        console.log(res);
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
   }
 
 
