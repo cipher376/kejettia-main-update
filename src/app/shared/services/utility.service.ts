@@ -29,7 +29,10 @@ export class UtilityService {
     });
   }
   static shuffle(a: any[]) {
-    for (let i = a.length - 1; i > 0; i--) {
+    if (!Array.isArray(a)) {
+      return [];
+    }
+    for (let i = a?.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
@@ -172,8 +175,8 @@ export class UtilityService {
 
 
     let found;
-    objs.forEach((obj, index) => {
-      if (obj.id == id) {
+    objs?.forEach((obj, index) => {
+      if (obj?.id == id) {
         found = [obj, index];
       }
     })
@@ -181,7 +184,7 @@ export class UtilityService {
   }
 
 
-  getSelectedCities(){
+  getSelectedCities() {
     return [
       'Accra',
       'Kumasi',
