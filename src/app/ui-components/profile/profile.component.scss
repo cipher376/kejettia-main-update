@@ -3,9 +3,11 @@
 
 img.profile_r {
   border-radius: 50%;
-    width: 18vw !important;
+    width: 12vw !important;
     object-fit: cover;
     object-position: center;
+    min-width: 120px;
+    min-height: 120px;
     // border: solid red 5px;
 }
 
