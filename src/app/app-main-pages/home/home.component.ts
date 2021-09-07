@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   premiumStores: Store[] = [];
 
   showLoader = true;
+  isStoreCategoriesShuffled = true;
+
   private loaderCount = 0;
   constructor(
     private storeService: StoreService
@@ -45,7 +47,11 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   }
 
   set StoreCategories(cat: StoreCategory[]) {
-    this.storeCategories = cat;
+    if (cat && !this.isStoreCategoriesShuffled) {
+      console.log(cat);
+      this.isStoreCategoriesShuffled = true;
+      this.storeCategories = UtilityService.shuffle(cat);
+    }
   }
 
   get StoreCategories() {
@@ -59,13 +65,13 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
       dispatchEvent(new Event('load'));
       dispatchEvent(new Event('mousewheel'));
       $('.main').hide().show(0);
-      window.scrollTo( 0, 10)
+      window.scrollTo(0, 10)
       setTimeout(() => {
-      window.scrollTo( 0, 0)
+        window.scrollTo(0, 0)
       }, 100);
     }
   }
-  get LoaderCount(){
+  get LoaderCount() {
     return this.loaderCount;
   }
 
@@ -78,10 +84,19 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
     return this.productCategoryItems;
   }
 
+  get MainCarouselCategories() {
+    return this.storeCategories.slice(0, 5)
+  }
+
 
   getStoreCategories() {
+    this.isStoreCategoriesShuffled = false;
     this.storeService.getStoreCategories().subscribe(categories => {
       this.storeCategories = categories;
+      if (categories && !this.isStoreCategoriesShuffled) {
+        this.isStoreCategoriesShuffled = true;
+        this.storeCategories = UtilityService.shuffle(categories);
+      }
       this.LoaderCount += 1;
       // console.log(categories);
     })

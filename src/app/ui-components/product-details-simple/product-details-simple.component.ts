@@ -130,6 +130,9 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
       alert("Please select shipping or delivery location");
       return;
     }
+    if (this.quantity <= 0) {
+      this.quantity = 1;
+    }
     this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)
       .subscribe(cartItem => {
         console.log(cartItem);

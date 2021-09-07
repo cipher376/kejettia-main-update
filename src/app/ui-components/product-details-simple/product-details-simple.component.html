@@ -92,9 +92,10 @@
 
             <hr class="product-divider">
             <div class="product-form-group">
-              <a href="javascript:;" class="">Total in stock: {{StockCount}}</a>
+              <a href="javascript:;" class=""  *ngIf="StockCount>0" >Total in stock: {{StockCount}}</a>
+              <a href="javascript:;" class=""  *ngIf="StockCount<=0">Out of stock</a>
             </div>
-            <div class="product-form product-qty">
+            <div class="product-form product-qty"  *ngIf="StockCount>0">
               <div class="product-form-group">
                 <div class="input-group mr-2">
                   <button class="quantity-minus d-icon-minus" (click)="decreaseQuantity()"></button>

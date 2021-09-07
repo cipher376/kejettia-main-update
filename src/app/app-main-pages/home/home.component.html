@@ -8,12 +8,12 @@
 
           <!-- categories-menu -->
           <div class="grid-item col-xl-3 col-lg-4 height-x2 category-list d-lg-block d-none">
-            <app-categories-menu [StoreCategories]="StoreCategories"></app-categories-menu>
+            <app-categories-menu [StoreCategories]="StoreCategories?.slice(0,7)"></app-categories-menu>
           </div>
 
           <!-- main-carouel -->
           <div class="grid-item col-xl-6 col-lg-5 col-md-8 height-x2">
-            <app-main-carousel [StoreCategories]="StoreCategories"></app-main-carousel>
+            <app-main-carousel [StoreCategories]="MainCarouselCategories"></app-main-carousel>
           </div>
 
           <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">

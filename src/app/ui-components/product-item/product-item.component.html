@@ -6,7 +6,7 @@
       </a>
       <div class="product-label-group" >
         <label class="product-label label-new" *ngIf="IsNew">new</label>
-        <label class="product-label label-sale" *ngIf="discount>0">{{discount}}% off</label>
+        <label class="product-label label-sale" *ngIf="discount>0">{{discount.toFixed(2)}}% off</label>
       </div>
       <div class="product-action-vertical">
         <a href="javascript:;" class="btn-product-icon btn-cart" data-toggle="modal" data-target="#addCartModal"
