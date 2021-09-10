@@ -23,6 +23,7 @@ import { LoaderFullComponent } from '../ui-components/loader-full/loader-full.co
 import { LoaderMiniComponent } from '../ui-components/loader-mini/loader-mini.component';
 import { CartComponent } from './cart/cart.component';
 import { CompanyComponent } from './company/company.component';
+import { BusinessPageComponent } from './business-page/business-page.component';
 
 
 
@@ -70,6 +71,7 @@ const routes: Routes = [
           { path: 'company', component: CompanyComponent },
           { path: 'change-password', component: ChangePasswordComponent },
           { path: 'verify-email', component: EmailVerificationComponent },
+          { path: 'business-page', component: BusinessPageComponent }
         ]
       },
 

@@ -27,6 +27,7 @@ import { CartComponent } from './cart/cart.component';
 import { SelectModule } from 'ng-select';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
+import { BusinessPageComponent } from './business-page/business-page.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { EmailVerificationComponent } from './email-verification/email-verificat
     CartComponent,
     CompanyComponent,
     ChangePasswordComponent,
-    EmailVerificationComponent
+    EmailVerificationComponent,
+    BusinessPageComponent
   ]
 })
 export class MainPagesModule { }
