@@ -7,9 +7,9 @@
 // export const IDENTITY_API_HOST_LOCAL = 'http://localhost'
 // export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}:${IDENTITY_API_PORT_LOCAL}`
 
-export const STORE_API_PORT_LOCAL = '3001'
-export const STORE_API_HOST_LOCAL = 'http://localhost'
-export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
+// export const STORE_API_PORT_LOCAL = '3001'
+// export const STORE_API_HOST_LOCAL = 'http://localhost'
+// export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
 
 // export const FILE_API_PORT_LOCAL = '3003'
 // export const FILE_API_HOST_LOCAL = 'http://localhost'
@@ -24,13 +24,20 @@ export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOC
 // export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}:${EMPLOYEE_ACCOUNT_API_PORT_LOCAL}`
 
 
+
+
+
+
+
+
+
 export const IDENTITY_API_PORT_LOCAL = '3002'
 export const IDENTITY_API_HOST_LOCAL = 'http://107.152.41.194'
 export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}:${IDENTITY_API_PORT_LOCAL}`
 
-// export const STORE_API_PORT_LOCAL = '3001'
-// export const STORE_API_HOST_LOCAL = 'http://107.152.41.194'
-// export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
+export const STORE_API_PORT_LOCAL = '3001'
+export const STORE_API_HOST_LOCAL = 'http://107.152.41.194'
+export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
 
 export const FILE_API_PORT_LOCAL = '3003'
 export const FILE_API_HOST_LOCAL = 'http://107.152.41.194'

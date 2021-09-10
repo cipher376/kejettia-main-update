@@ -20,7 +20,7 @@ import { AlertComponent } from './ui-components/alert/alert.component';
   declarations: [
     AppComponent,
     ConfirmDialogComponent,
-    AlertComponent
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
