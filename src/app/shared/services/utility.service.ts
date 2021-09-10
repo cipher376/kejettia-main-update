@@ -1138,6 +1138,14 @@ export class UtilityService {
         msg.title = `Invalid ${entityName} data`;
         msg.message = 'Check all required fields';
         break;
+      case 400 || 401:
+        msg.title = `Authentication error`;
+        msg.message = 'Please login gain';
+        break;
+        case 409:
+          msg.title = `Authentication error`;
+          msg.message = 'Email is alredy taken';
+          break;
     }
     return msg;
   }

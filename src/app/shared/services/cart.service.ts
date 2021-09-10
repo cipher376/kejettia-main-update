@@ -42,7 +42,7 @@ export class CartService {
   }
 
   initCart() {
-    this.clearCart();
+    // this.clearCart();
     const user = this.userService.getLoggedUserLocalSync();
     if (!user?.id) {
       console.error('User is not logged in');
@@ -50,25 +50,40 @@ export class CartService {
       return;
     }
     try {
-      const cart = new Cart();
-      cart.userId = user?.id;
-      this.createUpdateCart(user?.id, cart).subscribe(newCart => {
-        console.info('New cart item created');
-        // console.log(newCart);
+
+      // get the user cart
+      this.getCart(user?.id)?.subscribe(cart => {
+        // console.log(cart);
+      }, error => {
+        console.log(error);
+        // cart does not exist
+        const cart = new Cart();
+        cart.userId = user?.id;
+        this.createUpdateCart(user?.id, cart).subscribe(newCart => {
+          console.info('New cart item created');
+          // console.log(newCart);
+        })
       })
+
+
     } catch (error) {
-      console.log();
+      console.log(error);
+
+      // cart do not exi
     }
-    this.getCart(user?.id)?.subscribe(cart => {
-      // console.log(cart);
-    })
+
 
   }
 
   initBrowserCart() {
-    const cart = new Cart();
-    cart.id = 'kejettia_cart' + UtilityService.generateRandomNumber();
-    this.setCartLocal(cart);
+    console.log(this.getCartLocal());
+    if (!this.getCartLocal()) {
+      console.log('creating new');
+      const cart = new Cart();
+      cart.id = 'kejettia_cart' + UtilityService.generateRandomNumber();
+      this.setCartLocal(cart);
+    }
+
   }
 
   syncCart(browserCart: Cart) {
@@ -123,6 +138,7 @@ export class CartService {
     const url = `${environment.store_api_root_url}/users/${userId}/cart?filter=${JSON.stringify(filter)}`
     return this.http.get<Cart>(url).pipe(
       map(res => {
+        console.log(res);
         this.setCartLocal(res);
         this.signal.sendAction(MY_ACTION.cartChanged);
         return res;

@@ -54,6 +54,9 @@
   <div class="alert alert-danger" role="alert" *ngIf="!_isMatch&& regForm.get('reg_password2')?.dirty">
     Password do not much!
   </div>
+
+  <p *ngIf="errorMsg " style="color:#ed1d25">{{errorMsg}}</p>
+
   <div class="form-footer">
     <div class="form-checkbox">
       <input type="checkbox" class="custom-checkbox" id="register-agree" name="register-agree" required

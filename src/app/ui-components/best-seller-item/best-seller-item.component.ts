@@ -29,12 +29,15 @@ export class BestSellerItemComponent implements OnInit {
     // console.log(this.photoUrl);
     // console.log(store);
     this.cd.detectChanges();
+  }
 
+  get Store(){
+    return this.store;
   }
 
 
 
-  getCategory() {
+  get Category() {
     if (this.store?.storeCategories?.length > 0) {
       return this.store?.storeCategories[0]?.name
     }

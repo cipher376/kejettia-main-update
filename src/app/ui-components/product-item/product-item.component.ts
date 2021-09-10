@@ -27,6 +27,7 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
     // if (this.product) {
     //   this.photoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.product?.photos, 'cover', true);
     // }
+
   }
 
   ngOnInit(): void {
@@ -68,6 +69,14 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
     this.storeService.setSelectedProductLocal(this.product).then(() => {
       this.router.navigateByUrl(Urls.productDetails + '/' + this.product?.id);
     });
+  }
+
+  addToCart() {
+
+  }
+
+  addToWishlist() {
+
   }
 
 

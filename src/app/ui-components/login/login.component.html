@@ -10,6 +10,7 @@
     autocomplete="current-password" required>
   </div>
   <div class="form-footer">
+    <p *ngIf="errorMsg " style="color:#ed1d25">{{errorMsg}}</p>
       <div class="form-checkbox">
           <input type="checkbox" class="custom-checkbox" id="signin-remember"
               name="signin-remember" />
