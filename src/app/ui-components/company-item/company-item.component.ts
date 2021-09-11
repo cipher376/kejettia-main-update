@@ -44,8 +44,9 @@ export class CompanyItemComponent implements OnInit {
     return '';
   }
 
-  getRating() {
-    // this.storeService.getCompanyRating(this.company);
+  get Rating() {
+    // return this.storeService.getCompanyRating(this.company);
+    return 0;
   }
 
   get IsNew() {

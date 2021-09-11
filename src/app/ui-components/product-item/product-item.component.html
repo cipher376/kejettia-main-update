@@ -1,7 +1,7 @@
 <div class="product-wrap" *ngIf="layout === 'grid'">
   <div class="product">
-    <figure class="product-media" (click)="goToProduct()">
-      <a href="javascript:;">
+    <figure class="product-media" >
+      <a href="javascript:;" (click)="goToProduct()">
         <img [src]="photoUrl" alt="{{Product?.name}}" width="280" height="315">
       </a>
       <div class="product-label-group" >
@@ -11,7 +11,7 @@
       <div class="product-action-vertical">
         <a href="javascript:;" class="btn-product-icon btn-cart" data-toggle="modal" data-target="#addCartModal"
           title="Add to cart" (click)="addToCart()"><i class="d-icon-bag"></i></a>
-        <a href="javascript:;" (click)="addToWishlist()" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i
+        <a href="javascript:;" (click)="addToWishlist($event)" class="btn-product-icon btn-wishlist" title="Add to wishlist"><i
             class="d-icon-heart"></i></a>
       </div>
       <div class="product-action" (click)="goToProduct()">
@@ -37,7 +37,7 @@
           <span class="price">{{Product?.toPrice |currency:'GHC ':'GH₵ '}}</span>
         </p>
       </div>
-      <app-rating></app-rating>
+      <app-rating [Rating]="Rating" [Reviews]="Product?.reviews"></app-rating>
     </div>
   </div>
 </div>
@@ -68,7 +68,7 @@
       </p>
 
     </div>
-    <app-rating></app-rating>
+    <app-rating [Rating]="Rating" [Reviews]="Reviews"></app-rating>
     <p class="product-short-desc">
       {{Product?.about}}
     </p>

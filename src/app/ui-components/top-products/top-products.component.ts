@@ -33,6 +33,10 @@ export class TopProductsComponent implements OnInit, AfterViewInit {
 
   }
 
+  getRating(p: Product){
+    return StoreService.getProductRating(p);
+  }
+
   getUrl(product: Product) {
     return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
 

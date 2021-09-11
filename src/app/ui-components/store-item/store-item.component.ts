@@ -44,8 +44,8 @@ export class StoreItemComponent implements OnInit {
     return '';
   }
 
-  getRating() {
-    StoreService.getStoreRating(this.store);
+  get Rating() {
+    return StoreService.getStoreRating(this.store);
   }
 
   get IsNew() {

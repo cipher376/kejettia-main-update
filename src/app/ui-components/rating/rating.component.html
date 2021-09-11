@@ -1,7 +1,7 @@
 <div class="ratings-container">
   <div class="ratings-full">
-    <span class="ratings" style="width:100%"></span>
+    <span class="ratings" [style]="Rating" ></span>
     <span class="tooltiptext tooltip-top"></span>
   </div>
-  <a href="javascript:;" class="rating-reviews">( 6 reviews )</a>
+  <a href="javascript:;" class="rating-reviews">( {{Reviews?.length}} reviews )</a>
 </div>

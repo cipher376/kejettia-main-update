@@ -44,8 +44,11 @@ export class BestSellerItemComponent implements OnInit {
     return '';
   }
 
-  getRating() {
-    StoreService.getStoreRating(this.store);
+  get Rating() {
+    return StoreService.getStoreRating(this.store);
+  }
+  get Reviews(){
+    return this.store.reviews;
   }
 
   get IsNew() {

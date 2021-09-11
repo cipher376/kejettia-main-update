@@ -1,3 +1,4 @@
+import { Review } from './../../models/review';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -7,17 +8,27 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RatingComponent implements OnInit {
   private rate = 0;
+  private reviews: Review[] = [];
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  @Input() set Rating(rate: number){
+  @Input() set Rating(rate: any){
     this.rate = rate;
   }
 
   get Rating(){
-    return this.rate;
+    return 'width:'+this.rate+'%;';
   }
+
+  @Input() set Reviews(reviews: Review[]){
+    this.reviews = reviews;
+  }
+
+  get Reviews(){
+    return this.reviews;
+  }
+
 
 }

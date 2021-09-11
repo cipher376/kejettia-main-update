@@ -33,7 +33,7 @@
                 <span class="price">{{p?.toPrice |currency:'GHC ':'GH₵ '}}</span>
               </p>
             </div>
-            <app-rating></app-rating>
+            <app-rating [Rating]="getRating(p)" [Reviews]="p?.reviews"></app-rating>
           </div>
         </div>
 

@@ -1,8 +1,9 @@
+import { UserService } from './../../shared/services/user.service';
 import { PHOTO_DISPLAY_TYPES } from './../../config';
 import { ChangeDetectorRef, Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Urls } from 'src/app/config';
-import { Product } from 'src/app/models';
+import { Product, User } from 'src/app/models';
 import { UtilityService } from 'src/app/shared/services';
 import { StoreService } from 'src/app/shared/services/store.service';
 
@@ -17,10 +18,13 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
   discount = 0;
   @Input() layout = 'grid'; // 'list'
 
+  loggedUser: User;
+
   constructor(
     private cd: ChangeDetectorRef,
     private router: Router,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private userService: UserService
   ) { }
 
   ngAfterViewInit(): void {
@@ -31,6 +35,7 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
   }
 
   @Input() set Product(product: Product) {
@@ -55,14 +60,21 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
     return '';
   }
 
-  getRating() {
-    StoreService.getProductRating(this.product);
+  get Rating() {
+    return StoreService.getProductRating(this.product);
+  }
+  get Reviews() {
+    return this.product?.reviews;
   }
 
   get IsNew() {
     if (UtilityService.calcDatesDiffInDays(this.product?.dateCreated) <= 7) // within 7 days means new
       return true;
     return false;
+  }
+
+  InWishList(){
+
   }
 
   goToProduct() {
@@ -75,8 +87,9 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
 
   }
 
-  addToWishlist() {
-
+  addToWishlist(evt) {
+    evt?.preventDefault();
+    this.storeService.addProductToWhishlist(this.product?.id, this.loggedUser?.id)
   }
 
 
