@@ -11,7 +11,7 @@
 <div class="dropdown-box">
   <div class="cart-header">
     <h4 class="cart-title">Shopping Cart</h4>
-    <a href="#" class="btn btn-dark btn-link btn-icon-right btn-close">close<i class="d-icon-arrow-right"></i><span
+    <a href="javascript:;" class="btn btn-dark btn-link btn-icon-right btn-close">close<i class="d-icon-arrow-right"></i><span
         class="sr-only">Cart</span></a>
   </div>
   <div class="products scrollable">
@@ -28,7 +28,7 @@
         <a href="javascript:;" class="product-name" (click)="goToProduct(item?.product)">{{item?.product?.name}}</a>
         <div class="price-box">
           <span class="product-quantity">{{item?.quantity}}</span>
-          <span class="product-price">{{item?.product?.currentPrice | currency: 'GHC ':'GH₵ '}}</span>
+          <span class="product-price">{{(item?.product?.currentPrice + item?.quantity* (item?.shipping?.flatCharge||0))  | currency: 'GHC ':'GH₵ '}}</span>
         </div>
       </div>
     </div>

@@ -53,7 +53,8 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
-    this.loadWisList();
+    if (this.loggedUser)
+      this.loadWisList();
   }
 
   set StoreCategories(cat: StoreCategory[]) {

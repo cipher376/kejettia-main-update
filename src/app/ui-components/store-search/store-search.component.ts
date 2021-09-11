@@ -46,7 +46,7 @@ export class StoreSearchComponent implements OnInit, AfterContentInit {
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe(params => {
-      console.log(params);
+      // console.log(params);
       this.paramKey = params.cat;
     });
 

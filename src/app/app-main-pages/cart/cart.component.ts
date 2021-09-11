@@ -73,7 +73,8 @@ export class CartComponent implements OnInit {
     this.city = city;
 
     // calculate shipping
-    this.calculateShipping();
+    if (this.cart)
+      this.calculateShipping();
   }
   get SelectedCity() {
     return this.city;
@@ -84,6 +85,7 @@ export class CartComponent implements OnInit {
     // get user delivery address;
 
     this.cart = this.cartService.getCartLocal();
+    // console.log(this.cart);
     this.calculateShipping();
     this.totalCash = this.cartService.getTotalAmount();
   }
@@ -151,5 +153,6 @@ export class CartComponent implements OnInit {
 
   calculateShipping() {
     this.totalShipCost = CartService.calculateShipping(this.cart);
+    console.log(this.totalShipCost)
   }
 }

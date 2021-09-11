@@ -11,7 +11,7 @@ export class DeliverySelectComponent implements OnInit {
   private selectedShipping: Shipping;
 
   @Output() selectedShippingEvent = new EventEmitter<any>();
-  @Output() selectedShippingCostEvent =  new EventEmitter<number>();
+  @Output() selectedShippingCostEvent = new EventEmitter<number>();
 
   @Output() guideEvent = new EventEmitter<any>();
 
@@ -22,25 +22,26 @@ export class DeliverySelectComponent implements OnInit {
   }
 
 
-  @Input() set Shippings(ships: Shipping[]){
+  @Input() set Shippings(ships: Shipping[]) {
     this.shippings = ships;
   }
 
-  get Shippings(){
+  get Shippings() {
     return this.shippings;
   }
-  set Shipping(id: any){
+  set Shipping(id: any) {
+    let ship: Shipping;
     this.shippings.forEach(s => {
-      if(s.id == id){
-        this.selectedShipping = s;
-        this.selectedShippingCostEvent.emit(s.flatCharge);
-        this.selectedShippingEvent.emit(s);
+      if (s.id == id) {
+        ship = s;
       }
     })
-
+    this.selectedShipping = ship;
+    this.selectedShippingCostEvent.emit(ship?.flatCharge || 0);
+    this.selectedShippingEvent.emit(ship);
   }
 
-  get Shipping(){
+  get Shipping() {
     return this.selectedShipping?.id
   }
   goToGuide(guide: string) {

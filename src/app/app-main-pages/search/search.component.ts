@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { SEARCH_PAGE_FILTER } from './../../ui-components/search-nav/search-nav.component';
 import { ProductSearchComponent } from './../../ui-components/product-search/product-search.component';
 import { StoreSearchComponent } from './../../ui-components/store-search/store-search.component';
-import { Component, OnInit, AfterContentInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store, Product } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
@@ -18,7 +18,7 @@ import { MixedSearchComponent } from 'src/app/ui-components/mixed-search/mixed-s
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit, AfterContentInit, OnDestroy {
+export class SearchComponent implements OnInit, AfterContentInit, OnDestroy, AfterViewInit {
   public sortByOrder = '';   // sorting
   public page = 1;
   public tagsFilters: any[] = [];
@@ -43,16 +43,17 @@ export class SearchComponent implements OnInit, AfterContentInit, OnDestroy {
 
   sub$: Subscription;
 
+  isMobile = false;
+
   constructor(
     private signal: SignalService,
     private util: UtilityService,
     private storeService: StoreService,
     // private productService: ProductService,
-    private route: ActivatedRoute,
-    private fstore: MyLocalStorageService
-  ) {
+    private fstore: MyLocalStorageService,
+    ) {
 
-  }
+     }
 
 
   ngOnDestroy(): void {
@@ -60,7 +61,12 @@ export class SearchComponent implements OnInit, AfterContentInit, OnDestroy {
 
   }
 
-
+  ngAfterViewInit() {
+    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (this.isMobile) {
+      window.scrollTo(0,0);
+    }
+  }
   ngAfterContentInit(): void {
     this.signal.majorCategoryFilterSource$.subscribe(filter => {
       this.SearchPageFilter = filter;

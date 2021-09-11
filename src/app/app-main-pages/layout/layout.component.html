@@ -11,13 +11,9 @@
 <!-- End of Footer -->
 
 <!-- Sticky Footer -->
-<app-sticky-footer></app-sticky-footer>
-
-<!-- Scroll Top -->
-<app-sticky-footer id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i
-    class="d-icon-arrow-up"></i></app-sticky-footer>
+<app-sticky-footer  *ngIf="isMobile"></app-sticky-footer>
 
 <!-- MobileMenu -->
-<app-mobile-menu></app-mobile-menu>
+<app-mobile-menu *ngIf="isMobile"></app-mobile-menu>
 
 <!-- <app-newsletter-popup></app-newsletter-popup> -->

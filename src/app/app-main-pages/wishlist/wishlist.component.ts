@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { StoreService } from 'src/app/shared/services/store.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Product, User } from 'src/app/models';
 import { UserService } from 'src/app/shared/services';
@@ -11,9 +11,9 @@ import { PHOTO_DISPLAY_TYPES, Urls } from 'src/app/config';
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.scss']
 })
-export class WishlistComponent implements OnInit {
+export class WishlistComponent implements OnInit, AfterViewInit {
   favProducts: Product[] = [];
-
+  isMobile = false;
   loggedUser: User;
 
   constructor(
@@ -22,6 +22,14 @@ export class WishlistComponent implements OnInit {
     private userService: UserService,
     private router: Router
   ) { }
+
+  ngAfterViewInit() {
+    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (this.isMobile) {
+      window.scrollTo(0,2000);
+      window.scrollTo(0,0);
+    }
+  }
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getLoggedUserLocalSync();

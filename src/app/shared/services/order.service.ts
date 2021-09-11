@@ -292,6 +292,9 @@ export class OrderService {
                          'photos'
                        ]
                      }
+                    },
+                    {
+                      relation: 'shipping'
                     }
                   ]
                 }

@@ -1,15 +1,15 @@
 <div class="sidebar-overlay"></div>
-<a class="sidebar-close" href="#"><i class="d-icon-times"></i></a>
+<a class="sidebar-close" href="javascript:;"><i class="d-icon-times"></i></a>
 <div class="sidebar-content">
   <div class="sticky-sidebar" data-sticky-options="{'top': 10}">
     <div class="filter-actions mb-4">
-      <a href="#"
+      <a href="javascript:;" (click)="toggleFilter()"
         class="sidebar-toggle-btn toggle-remain btn btn-outline btn-primary btn-rounded btn-icon-right">Filter<i
           class="d-icon-arrow-left"></i></a>
-      <a href="#" class="filter-clean">Clean All</a>
+      <a href="javascript:;" class="filter-clean">Clean All</a>
     </div>
     <div class="widget widget-collapsible">
-      <h3 class="widget-title">Products | Shops</h3>
+      <h3 class="widget-title">SORT BY</h3>
       <ul class="widget-body filter-items">
         <li class="all active"><a href="javascript:;" (click)="setAll()">All</a></li>
         <li class="shops active"><a href="javascript:;" (click)="setShops()">Shops</a></li>
@@ -18,7 +18,7 @@
             Services</a></li> -->
       </ul>
     </div>
-    <div class="widget widget-collapsible collapsed">
+    <div class="widget widget-collapsible ">
       <app-category-filter></app-category-filter>
     </div>
     <div class="widget widget-collapsible">
