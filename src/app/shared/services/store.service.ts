@@ -1502,6 +1502,7 @@ export class StoreService {
     const url = `${environment.store_api_root_url}/users/${userId}/products?filter=${JSON.stringify(filter)}`
     return this.http.get<Product[]>(url).pipe(
       map((res: Product[]) => {
+        this.setWishListLocal(res);
         return res;
       }),
       catchError(e => this.handleError(e))
@@ -1659,6 +1660,15 @@ export class StoreService {
     this.fstore.remove('store_categories');
   }
 
+
+  // *******************WHISH LIST******************
+  getWishListLocalSync(): Product[] {
+    return this.fstore.getObjectSync('wish_list');
+  }
+
+  async setWishListLocal(products: Product[]) {
+    return this.fstore.setObjectSync('wish_list', products);
+  }
 
   //********* */
 

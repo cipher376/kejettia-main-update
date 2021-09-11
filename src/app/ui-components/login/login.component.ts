@@ -2,9 +2,11 @@ import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SimpleModalService } from 'ngx-simple-modal';
 import { Urls } from 'src/app/config';
 import { User, Credentials } from 'src/app/models';
 import { MyAuthService, UserService, MyLocalStorageService } from 'src/app/shared/services';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
   selector: 'app-login',
@@ -20,11 +22,10 @@ export class LoginComponent implements OnInit {
   _isPhone = false;
   _isPassword = false;
 
+  errorMsg = '';
 
   constructor(
-    // private _toaster: ToastrService,
     private _auth: MyAuthService,
-    private _userService: UserService,
     private _localStore: MyLocalStorageService,
     private _router: Router,
     private _fb: FormBuilder,
@@ -85,11 +86,13 @@ export class LoginComponent implements OnInit {
       },
       error => {
         console.log(error);
-        if (error.search('verified') > -1) {
+        if (error?.message?.search('verified') > -1) {
           alert(`Email is not verified. A verification link is sent to the email provided
           but it may take up 10min to show up. check spam if not in your In-box`);
         } else {
-          // this._toaster.error('Check Credentials | Network');
+
+          this.errorMsg = 'Please check your email or password and try again'
+
         }
       }
     );
@@ -121,3 +124,5 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
+

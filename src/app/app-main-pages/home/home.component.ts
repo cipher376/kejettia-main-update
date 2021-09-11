@@ -1,6 +1,7 @@
+import { UserService } from './../../shared/services/user.service';
 import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
-import { ProductCategoryItem, Store, StoreCategory } from 'src/app/models';
+import { Product, ProductCategoryItem, Store, StoreCategory, User } from 'src/app/models';
 import { UtilityService } from 'src/app/shared/services';
 
 declare var $: any;
@@ -14,6 +15,8 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   private stores: Store[] = [];
   private storeCategories: StoreCategory[] = [];
   private productCategoryItems: ProductCategoryItem[] = [];
+  private wishList: Product[] = [];
+  private loggedUser: User;
 
   premiumStores: Store[] = [];
 
@@ -22,7 +25,8 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   private loaderCount = 0;
   constructor(
-    private storeService: StoreService
+    private storeService: StoreService,
+    private userService: UserService
   ) {
     Window = window;
   }
@@ -36,6 +40,11 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
     this.getStoreCategories();
     this.getProductCategoryItems();
 
+    // load wishlist from disk
+    if (this.loggedUser) {
+      this.wishList = this.storeService.getWishListLocalSync();
+    }
+
   }
 
 
@@ -43,7 +52,9 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
+    if (this.loggedUser)
+      this.loadWisList();
   }
 
   set StoreCategories(cat: StoreCategory[]) {
@@ -91,7 +102,7 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   getStoreCategories() {
     this.isStoreCategoriesShuffled = false;
-    this.storeService.getStoreCategories().subscribe(categories => {
+    this.storeService.getStoreCategories()?.subscribe(categories => {
       this.storeCategories = categories;
       if (categories && !this.isStoreCategoriesShuffled) {
         this.isStoreCategoriesShuffled = true;
@@ -103,7 +114,7 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   }
 
   getProductCategoryItems() {
-    this.storeService.getProductCategoryItems().subscribe(cats => {
+    this.storeService.getProductCategoryItems()?.subscribe(cats => {
       this.LoaderCount += 1;
       this.productCategoryItems = cats;
       // console.log(cats);
@@ -111,7 +122,7 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   }
 
   loadPremiumStores() {
-    this.storeService.getPremiumStores().subscribe(stores => {
+    this.storeService.getPremiumStores()?.subscribe(stores => {
       this.premiumStores = UtilityService.shuffle(stores).slice(0, 3);
       this.LoaderCount += 1;
       // console.log(this.premiumStores);
@@ -119,5 +130,10 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   }
 
 
+  loadWisList() {
+    this.storeService.getUserWishList(this.loggedUser?.id)?.subscribe(prods => {
+      this.wishList = prods;
+    })
+  }
 
 }

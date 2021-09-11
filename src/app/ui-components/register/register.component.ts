@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User, Credentials } from 'src/app/models';
 import { MyAuthService, UserService } from 'src/app/shared/services';
 import { SignalService, MY_ACTION } from 'src/app/shared/services/signal.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +26,8 @@ export class RegisterComponent implements OnInit {
   public selectedUser?: User;
   public credentials: Credentials = new Credentials;
 
+  errorMsg = '';
+
   constructor(
     private fb: FormBuilder,
     private toaster: ToastrService,
@@ -38,12 +41,13 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedUser =  this.userService.getSelectedUserLocalSync()
+    this.selectedUser = this.userService.getSelectedUserLocalSync()
   }
 
   async onRegister() {
+    this.errorMsg = '';
     if (!this.getData()) {
-      this.toaster.error('Information is invalid');
+      this.errorMsg = 'Complete all required fields';
       return;
     }
 
@@ -54,7 +58,7 @@ export class RegisterComponent implements OnInit {
       // set selected user on local disk
       this.userService.setSelectedUserLocal(this.selectedUser);
       if (this.selectedUser?.id) {
-        this.toaster.info('Please check your inbox to verify your email');
+        // this.toaster.info('Please check your inbox to verify your email');
         // inform other UI components to update
         this.signal.sendAction(MY_ACTION.reloadUser);
         this.router.navigateByUrl(Urls.login)
@@ -62,24 +66,23 @@ export class RegisterComponent implements OnInit {
     },
       (error: any) => {
         console.log(error);
-        if (error.toString().indexOf('in use') > -1) {
-          this.toaster.error('Email is already in use!');
+        if (error?.toString().indexOf('in use') > -1) {
+          this.errorMsg = 'Email is already in use!';
         } else if (error.toString().indexOf('verified') > -1) {
-          this.toaster.info(`Email is not verified. A verification link is sent to ` +
+          this.errorMsg = `Email is not verified. A verification link is sent to ` +
             this.selectedUser?.email +
-            ` but it may take up 3min to show up. check spam if not in your In-box`,
-          );
+            ` but it may take up 3min to show up. check spam if not in your In-box`
           this.createRegForm();
         } else {
-          this.toaster.error('Check Credentials | Network');
+          this.errorMsg = 'Check your email, password or phone number';
         }
       });
   }
 
   getData() {
     if (!this.regForm?.value.agreement) {
-      alert('You must agree to the terms and conditions');
-      console.log('Agree')
+      this.errorMsg = 'You must agree to the terms and conditions';
+      // console.log('Agree')
       return false;
     }
     if (this.credentials) {

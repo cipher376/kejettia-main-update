@@ -50,6 +50,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   init() {
     this.cart = this.cartService.getCartLocal();
     this.totalCash = this.cartService.getTotalAmount();
+    console.log(this.cart);
   }
 
   goToCart() {

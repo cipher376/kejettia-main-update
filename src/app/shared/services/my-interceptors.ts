@@ -92,43 +92,45 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         console.log(err.status);
         console.log(err.statusText);
 
-        if (err.status === 401) {
-          // redirect the user to login page
-          // 401 unauthorised user
-          console.log('Unauthenticated');
-          myError = new HttpErrorResponse({ status: 401, statusText: 'Authentication failed' });
-          // this.router.navigateByUrl('/login');
-          this.toaster.error('Authentication error, please login!');
-        } else if (err.status === 0) {
-          console.log('No connection');
-          this.toaster.error('No connection, Try again later')
-          myError = new HttpErrorResponse({ status: 0, statusText: 'No internet connection' });
-        } else if (err.status === 423) {
-          this.toaster.error('Account deactivated');
-        } else if (err.status === 403) {
-          this.toaster.error('Access denied');
-        } else if (err.status === 403) {
-          this.toaster.error('Access denied');
-        } else if (err.status === 400) {
-          if (err.error.error.message.search('401')) {
-            this.toaster.error('Authentication failed! Please login')
-          } else {
-            this.toaster.error('Something went wrong');
-          }
-        } else if (err.status === 500) {
-          this.toaster.error('Something went wrong');
-        } else if (err.status === 409) {
-          this.toaster.error(err.error?.error?.message ?? 'Already in use');
+        // if (err.status === 401 || err.status === 400) {
+        //   // redirect the user to login page
+        //   // 401 unauthorised user
+        //   console.log('Unauthenticated');
+        //   this.toaster.error('User credentials check failed. Please try logging-in again')
+        //   myError = new HttpErrorResponse({ status: 401, statusText: 'Please login!' });
+        //   // this.router.navigateByUrl('/login');
+        //   this.toaster.error('Authentication error, please login!');
+        // } else if (err.status === 0) {
+        //   console.log('No connection');
+        //   this.toaster.error('No connection, Try again later')
+        //   myError = new HttpErrorResponse({ status: 0, statusText: 'No internet connection' });
+        // } else if (err.status === 423) {
+        //   this.toaster.error('Account deactivated');
+        // } else if (err.status === 403) {
+        //   this.toaster.error('Access denied');
+        // } else if (err.status === 403) {
+        //   this.toaster.error('Access denied');
+        // } else if (err.status === 400) {
+        //   if (err.error.error.message.search('401')) {
+        //     this.toaster.error('Authentication failed! Please login')
+        //   } else {
+        //     this.toaster.error('Something went wrong');
+        //   }
+        // } else if (err.status === 500) {
+        //   this.toaster.error('Something went wrong');
+        // } else if (err.status === 409) {
+        //   this.toaster.error(err.error?.error?.message ?? 'Already in use');
 
-        } else if (err.status === 408) {
-          if (err.error.error.message.search('401')) {
-            this.toaster.error('Authentication failed! Please login')
-          } else {
-            this.toaster.error('Something went wrong');
-          }
-        }
+        // } else if (err.status === 408) {
+        //   if (err.error.error.message.search('401')) {
+        //     this.toaster.error('Please login')
+        //   } else {
+        //     this.toaster.error('Something went wrong');
+        //   }
+        // }
       }
-      return of(myError); // forward error to service or component for proper handling
+      throw new HttpErrorResponse(err);
+      // return of(myError); // forward error to service or component for proper handling
     }));
   }
 }

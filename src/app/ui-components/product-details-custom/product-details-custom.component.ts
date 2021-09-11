@@ -127,6 +127,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   addToCart() {
+    console.log(this.selectedShipping)
     if ((this.selectedProduct?.shippings?.length) > 0 && (!this.selectedShipping)) {
       alert("Please select shipping or delivery location");
       return;

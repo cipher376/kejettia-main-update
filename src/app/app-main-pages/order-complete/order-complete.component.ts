@@ -7,7 +7,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
 import { Order } from './../../models/Order';
 import { Urls } from 'src/app/config';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/shared/services';
 
@@ -16,7 +16,7 @@ import { UserService } from 'src/app/shared/services';
   templateUrl: './order-complete.component.html',
   styleUrls: ['./order-complete.component.scss']
 })
-export class OrderCompleteComponent implements OnInit, AfterViewInit {
+export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy {
   loggedUser: User;
   consolidatedOrder: ConsolidatedOrder;
   items: CartItem[] = [];
@@ -32,6 +32,12 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit {
   ) { }
 
 
+  ngOnDestroy(): void {
+    this.consolidatedOrder.deliveryAddress.email = null;
+    this.orderService.setSelectedConsolidatedOrderLocal(this.consolidatedOrder);
+  }
+
+
   ngAfterViewInit(): void {
     this.consolidatedOrder = this.orderService.getSelectedConsolidatedOrderLocal();
     this.loadItems();
@@ -41,6 +47,7 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit {
         window.location.reload();
       });
     }
+    // console.log(this.consolidatedOrder);
   }
 
   ngOnInit(): void {
@@ -57,15 +64,18 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit {
     this.deliveryCost = 0;
 
     this.consolidatedOrder?.orders?.forEach(order => {
-      this.subtotal += order?.total;
+      // this.subtotal += order?.total;
       if (order?.cartItems)
         this.items.push(...order.cartItems)
-      console.log(this.subtotal);
-      console.log(order)
+      // console.log(this.subtotal);
+      // console.log(order)
     })
     const cart = new Cart();
     cart.cartItems = this.items;
+    console.log(cart);
+    this.subtotal = this.cartService.getTotalAmount(cart);
     this.deliveryCost = CartService.calculateShipping(cart);
+    console.log(this.deliveryCost);
   }
 
   getPhoto(product: Product) {

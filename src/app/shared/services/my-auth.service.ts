@@ -1,3 +1,4 @@
+import { CartService } from 'src/app/shared/services/cart.service';
 import { Urls, APP_NAME, CONTACT_EMAIL, LOGO_URL, CONTACT_PAGE } from './../../config';
 import { environment } from './../../../environments/environment';
 import { UserService } from 'src/app/shared/services';
@@ -25,8 +26,10 @@ export class MyAuthService {
   constructor(
     private http: HttpClient,
     private store: MyLocalStorageService,
+    // private cartService: CartService,
     private userService: UserService,
-    private router: Router) {
+    private router: Router,
+    private fstore: MyLocalStorageService) {
     this.token = this.getToken();
   }
 
@@ -90,7 +93,7 @@ export class MyAuthService {
   }
 
   login(data: Credential) {
-    console.log(environment.identity_api_root_url)
+    // console.log(environment.identity_api_root_url)
     return this.http.post<{ token: string, user: User }>(environment.identity_api_root_url + '/users/login', data).pipe(
       map((res) => {
         this.token = { token: res.token } as any;
@@ -111,6 +114,7 @@ export class MyAuthService {
   logout() {
     this.deleteToken(); // delete jwt auth token
     this.userService.deleteLoggedUserLocal(); // clear user details
+    this.fstore.clear();
     window.location.href = window.location.protocol + '//' + window.location.host + Urls.home;
 
   }
@@ -231,7 +235,7 @@ export class MyAuthService {
 
 
   private handleError(e: any): any {
-    // console.log(e);
+    console.log(e);
     return throwError(UtilityService.myHttpErrorFormat(e, 'user'));
   }
 }

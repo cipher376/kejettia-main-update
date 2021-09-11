@@ -34,7 +34,8 @@ export class CartService {
       cart?.cartItems?.forEach(item => {
         // if (item?.shipping?.shipTo.join(' ').toLocaleLowerCase().search('city') > -1) {
         // user not in the same city as the product
-        totalShipCost += (item?.shipping?.flatCharge * item?.quantity);
+        totalShipCost += ((item?.shipping?.flatCharge || 0) * item?.quantity);
+
         // }
       })
     }
@@ -42,7 +43,7 @@ export class CartService {
   }
 
   initCart() {
-    this.clearCart();
+    // this.clearCart();
     const user = this.userService.getLoggedUserLocalSync();
     if (!user?.id) {
       console.error('User is not logged in');
@@ -50,31 +51,47 @@ export class CartService {
       return;
     }
     try {
-      const cart = new Cart();
-      cart.userId = user?.id;
-      this.createUpdateCart(user?.id, cart).subscribe(newCart => {
-        console.info('New cart item created');
-        // console.log(newCart);
+
+      // get the user cart
+      this.getCart(user?.id)?.subscribe(cart => {
+        // console.log(cart);
+      }, error => {
+        console.log(error);
+        // cart does not exist
+        const cart = new Cart();
+        cart.userId = user?.id;
+        this.createUpdateCart(user?.id, cart).subscribe(newCart => {
+          console.info('New cart item created');
+          // console.log(newCart);
+        })
       })
+
+
     } catch (error) {
-      console.log();
+      console.log(error);
+
+      // cart do not exi
     }
-    this.getCart(user?.id)?.subscribe(cart => {
-      // console.log(cart);
-    })
+
 
   }
 
   initBrowserCart() {
-    const cart = new Cart();
-    cart.id = 'kejettia_cart' + UtilityService.generateRandomNumber();
-    this.setCartLocal(cart);
+    console.log(this.getCartLocal());
+    if (!this.getCartLocal()) {
+      console.log('creating new');
+      const cart = new Cart();
+      cart.id = 'kejettia_cart' + UtilityService.generateRandomNumber();
+      this.setCartLocal(cart);
+    }
+
   }
 
-  syncCart(browserCart: Cart) {
+  syncCart(browserCart: Cart, remoteCartId: any) {
+    console.log('Syncing items in cart')
     // synchronize the browser cart with the server cart
     browserCart.cartItems.forEach(item => {
-      this.addUpdateCartItemToCart(item.cartId, item.productId, item.quantity).subscribe(() => { });
+      this.addUpdateCartItemToCart(remoteCartId, item.productId, item.quantity, item?.shippingId).subscribe(() => { });
     })
   }
 
@@ -87,6 +104,7 @@ export class CartService {
       console.error('User must logged in to load cart');
       return undefined;
     }
+
     const filter = {
       include: [
         {
@@ -123,6 +141,17 @@ export class CartService {
     const url = `${environment.store_api_root_url}/users/${userId}/cart?filter=${JSON.stringify(filter)}`
     return this.http.get<Cart>(url).pipe(
       map(res => {
+        // console.log(res);
+        if (res) {
+          // check if browser side cart is available
+          //
+          const cart = this.getCartLocal();
+          if (cart?.id?.search('kejettia') >= 0) {
+            // sink the items;
+            this.syncCart(cart, res?.id);
+            res.cartItems = (res?.cartItems || []).concat(cart.cartItems)
+          }
+        }
         this.setCartLocal(res);
         this.signal.sendAction(MY_ACTION.cartChanged);
         return res;
@@ -171,7 +200,7 @@ export class CartService {
     const user = this.userService.getLoggedUserLocalSync();
     if (!user?.id) {
       console.log('here');
-      return of(this.addToBrowserCart(cartId, productId, quantity));
+      return of(this.addToBrowserCart(cartId, productId, quantity, shipId));
     }
 
     if (!cartId || !productId) {
@@ -257,13 +286,14 @@ export class CartService {
 
 
 
-  addToBrowserCart(cartId: any, productId: any, quantity = 1) {
+  addToBrowserCart(cartId: any, productId: any, quantity = 1, shippingId?: any) {
     let cart = this.getCartLocal();
     if (!cart.cartItems) {
       cart.cartItems = [];
     }
     const cartItem = this.productExistInBrowserCart(productId) ?? new CartItem();
     cartItem.quantity = quantity;
+    cartItem.shippingId = shippingId;
     if (cartItem.id) {
       // already exist so update the existing cartItem
       cart = this.removeFromBrowserCart(cartId, cartItem?.id);
@@ -350,8 +380,8 @@ export class CartService {
     }
   }
 
-  getTotalAmount() {
-    const cart = this.getCartLocal();
+  getTotalAmount(cart?: Cart) {
+    if (!cart) cart = this.getCartLocal();
     let total = 0;
     cart?.cartItems?.forEach(item => {
       total += (item.price * item.quantity);

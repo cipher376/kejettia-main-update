@@ -57,7 +57,6 @@ export class OrdersComponent implements OnInit {
   }
 
   goToOrderComplete(order: ConsolidatedOrder) {
-
     this.orderService.setSelectedConsolidatedOrderLocal(order);
     this.router.navigateByUrl(Urls.order)
 
@@ -65,7 +64,7 @@ export class OrdersComponent implements OnInit {
 
   goToOrderDetails(order: ConsolidatedOrder) {
     this.orderService.setSelectedConsolidatedOrderLocal(order);
-    this.router.navigateByUrl(Urls.order)
+    window.location.pathname = Urls.order
 
   }
 
