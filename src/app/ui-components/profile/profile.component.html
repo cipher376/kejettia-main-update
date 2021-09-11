@@ -6,7 +6,7 @@
           <h2 class="testimonial-title">My Account</h2>
           <figure class="">
             <button type="submit" class="profile_edit userprofilepic"><img [src]="getProfilePhoto()"
-                alt="Profile Image" class="profile_r" style="height: 12w; width: 12vw;"></button>
+                alt="Profile Image" class="profile_r" style="height:12vw; width: 12vw;"></button>
           </figure>
           <app-upload (uploadedFile)="ProfilePhoto=$event" [uploadUrl]="uploadUrl"></app-upload>
         </div>
