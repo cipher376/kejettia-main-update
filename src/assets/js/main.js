@@ -186,7 +186,7 @@ window.Riode = {};
       maxWidth: 767,
       top: 150,
       hide: true,
-      scrollMode: true
+      scrollMode: false
     },
     stickyToolbox: {
       minWidth: 0,
@@ -3075,7 +3075,7 @@ window.Riode = {};
     Riode.stickyContent('.product-sticky-content, .sticky-header', {
       top: false
     }); // Initialize sticky content
-    Riode.stickyContent('.sticky-footer', Riode.defaults.stickyFooter); // Initialize sticky footer
+    // Riode.stickyContent('.sticky-footer', Riode.defaults.stickyFooter); // Initialize sticky footer
     Riode.stickyContent('.sticky-toolbox', Riode.defaults.stickyToolbox); // Initialize sticky toolbox
     Riode.sidebar('sidebar'); // Initialize left sidebar
     Riode.sidebar('right-sidebar'); // Initialize right sidebar
