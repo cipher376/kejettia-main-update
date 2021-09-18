@@ -24,10 +24,24 @@ export class UtilityService {
   }
 
   static arrayRemove(arr, value) {
-    return arr.filter(function (ele) {
+    return arr?.filter(function (ele) {
       return ele != value;
     });
   }
+
+  static ObjInArray(arr: any[], obj, prop = '') {
+    let found = false;
+    arr.forEach(e => {
+      if (prop) {
+        if (e[prop] == obj[prop]) {
+          found = true;
+          return;
+        }
+      }
+    })
+    return found;
+  }
+
   static shuffle(a: any[]) {
     if (!Array.isArray(a)) {
       return [];
@@ -1142,10 +1156,10 @@ export class UtilityService {
         msg.title = `Authentication error`;
         msg.message = 'Please login gain';
         break;
-        case 409:
-          msg.title = `Authentication error`;
-          msg.message = 'Email is alredy taken';
-          break;
+      case 409:
+        msg.title = `Authentication error`;
+        msg.message = 'Email is alredy taken';
+        break;
     }
     return msg;
   }
