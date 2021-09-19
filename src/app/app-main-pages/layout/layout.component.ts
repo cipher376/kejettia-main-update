@@ -1,4 +1,7 @@
+import { UserService } from './../../shared/services/user.service';
+import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { User } from 'src/app/models';
 
 @Component({
   selector: 'app-layout',
@@ -6,10 +9,13 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit, AfterViewInit {
-
+  loggedUser: User;
   isMobile = false;
 
-  constructor() { }
+  constructor(
+    private storeService: StoreService,
+    private userService: UserService
+  ) { }
 
 
   ngAfterViewInit() {
@@ -20,6 +26,8 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
+    this.storeService.getUserWishList(this.loggedUser?.id).subscribe(()=>{});
   }
 
 }

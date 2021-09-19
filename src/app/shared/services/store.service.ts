@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, filter } from 'rxjs/operators';
 import { MyLocalStorageService } from './local-storage.service';
-import { SignalService } from './signal.service';
+import { MY_ACTION, SignalService } from './signal.service';
 import { environment } from 'src/environments/environment';
 import { Address, Features, PolicyStatement, Store, StoreCategory, Shipping, StoreToCategoryThrough, Photo, Favourite } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
@@ -33,27 +33,6 @@ export interface StoreType {
   id: number;
   name: string;
 }
-// export const STORE_TYPES: StoreType[] = [
-//   { id: 1, name: 'Supermarkets' },
-//   { id: 2, name: 'Department Stores' },
-//   { id: 3, name: 'Mall' },
-//   { id: 4, name: 'Discount Retailer' },
-//   { id: 5, name: 'Convenience Store' },
-//   { id: 6, name: 'Warehouse' },
-//   { id: 7, name: 'Whole sale' },
-//   { id: 8, name: 'Drug Store' },
-//   { id: 9, name: 'Used Goods Store' },
-//   { id: 10, name: 'Electronic shop' },
-//   { id: 11, name: 'Garage' },
-//   { id: 12, name: 'Tools shop' },
-//   { id: 13, name: 'Construction material shop' },
-//   { id: 14, name: 'Clothings store' },
-//   { id: 15, name: 'Footwear shop' },
-//   { id: 16, name: 'Food store' },
-//   { id: 17, name: 'Food store' },
-//   { id: 18, name: 'Hospital equipment shop' },
-//   { id: 19, name: 'Heavy duty equipment' }
-// ];
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +44,8 @@ export class StoreService {
 
   constructor(
     private fstore: MyLocalStorageService,
-    private http: HttpClient
+    private http: HttpClient,
+    private signal: SignalService
   ) {
 
   }
@@ -1458,12 +1438,12 @@ export class StoreService {
       console.log('Invalid product or user id.');
       return undefined;
     }
-    let filter: any = {
-      userId,
-      productId
-    }
-    filter = '?where=' + JSON.stringify(filter);
-    const url = `${environment.store_api_root_url}/favourites${filter}`
+    // let filter: any = {
+    //   userId,
+    //   productId
+    // }
+    // filter = '?where=' + JSON.stringify(filter);
+    const url = `${environment.store_api_root_url}/favourites/deleteFroWishList/${userId}/${productId}`
     console.log(url);
     return this.http.delete(url).pipe(
       map(res => {
@@ -1503,12 +1483,35 @@ export class StoreService {
     return this.http.get<Product[]>(url).pipe(
       map((res: Product[]) => {
         this.setWishListLocal(res);
+        console.log(res);
+        this.signal.sendAction(MY_ACTION.wish_list_changed)
         return res;
       }),
       catchError(e => this.handleError(e))
     );
   }
 
+
+    // remove link between user to product
+    removeProductFromFavouriteStores(storeId: string, userId: string) {
+      if (!storeId || !userId) {
+        console.log('Invalid store or user id.');
+        return undefined;
+      }
+      // let filter: any = {
+      //   userId,
+      //   productId
+      // }
+      // filter = '?where=' + JSON.stringify(filter);
+      const url = `${environment.store_api_root_url}/favourites/deleteFromFavouriteStore/${userId}/${storeId}`
+      console.log(url);
+      return this.http.delete(url).pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(e => this.handleError(e))
+      );
+    }
 
   /////////////////////////////////////////////////////////////////////////
   /******************OTHER QUERIES ***************************************/

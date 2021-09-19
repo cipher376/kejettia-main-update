@@ -6,6 +6,7 @@ import { Urls } from 'src/app/config';
 import { Product, User } from 'src/app/models';
 import { UtilityService } from 'src/app/shared/services';
 import { StoreService } from 'src/app/shared/services/store.service';
+import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 
 @Component({
   selector: 'app-product-item',
@@ -20,22 +21,30 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
 
   loggedUser: User;
 
+  wishList: Product[] = [];
+
   constructor(
     private cd: ChangeDetectorRef,
     private router: Router,
     private storeService: StoreService,
-    private userService: UserService
+    private userService: UserService,
+    private signal: SignalService
   ) { }
 
   ngAfterViewInit(): void {
-    // if (this.product) {
-    //   this.photoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.product?.photos, 'cover', true);
-    // }
+    this.wishList = this.storeService.getWishListLocalSync();
+    this.isInWishList();
+
 
   }
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
+    this.signal._action$.subscribe(action => {
+      if (action === MY_ACTION.wish_list_changed) {
+        this.wishList = this.storeService.getWishListLocalSync();
+      }
+    })
   }
 
   @Input() set Product(product: Product) {
@@ -73,8 +82,8 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  InWishList(){
-
+  isInWishList() {
+    return UtilityService.ObjInArray(this.wishList, this.product, 'id');
   }
 
   goToProduct() {
@@ -89,7 +98,14 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
 
   addToWishlist(evt) {
     evt?.preventDefault();
-    this.storeService.addProductToWhishlist(this.product?.id, this.loggedUser?.id)
+    if (!this.isInWishList()) {
+      this.storeService.addProductToWhishlist(this.product?.id, this.loggedUser?.id).subscribe(() => {
+        this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {
+          this.wishList = products;
+          console.log(this.wishList);
+        });
+      })
+    }
   }
 
 

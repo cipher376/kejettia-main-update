@@ -77,7 +77,9 @@ export enum MY_ACTION {
   searchDataLoaded = 11.1,
 
   //Comments and reviews
-  loadReviews = 12
+  loadReviews = 12,
+
+  wish_list_changed =13
 
 }
 

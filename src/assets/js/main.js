@@ -1512,17 +1512,18 @@ window.Riode = {};
 
     var thumbsInit = function (self) {
       // members for thumbnails
-      self.$thumbs = self.$wrapper.find('.product-thumbs');
-      self.$thumbsWrap = self.$thumbs.parent();
-      self.$thumbUp = self.$thumbsWrap.find('.thumb-up');
-      self.$thumbDown = self.$thumbsWrap.find('.thumb-down');
-      self.$thumbsDots = self.$thumbs.children();
-      self.thumbsCount = self.$thumbsDots.length;
-      self.$productThumb = self.$thumbsDots.eq(0);
-      self._isPgvertical = self.$thumbsWrap.parent().hasClass('pg-vertical');
-      self.thumbsIsVertical = self._isPgvertical && window.innerWidth >= Riode.minDesktopWidth;
+      setTimeout(() => {
+        self.$thumbs = self.$wrapper.find('.product-thumbs');
+        self.$thumbsWrap = self.$thumbs.parent();
+        self.$thumbUp = self.$thumbsWrap.find('.thumb-up');
+        self.$thumbDown = self.$thumbsWrap.find('.thumb-down');
+        self.$thumbsDots = self.$thumbs.children();
+        self.thumbsCount = self.$thumbsDots.length;
+        self.$productThumb = self.$thumbsDots.eq(0);
+        self._isPgvertical = self.$thumbsWrap.parent().hasClass('pg-vertical');
+        self.thumbsIsVertical = self._isPgvertical && window.innerWidth >= Riode.minDesktopWidth;
 
-      // register events
+         // register events
       self.$thumbDown.on('click', function (e) {
         self.thumbsIsVertical && thumbsDown(self);
       });
@@ -1542,6 +1543,9 @@ window.Riode = {};
       Riode.$window.on('resize', function () {
         thumbsRefresh(self);
       });
+      }, 1000);
+
+
     }
 
     var thumbsDown = function (self) {
@@ -1586,30 +1590,36 @@ window.Riode = {};
 
       if (self.thumbsIsVertical) { // enable vertical product gallery thumbs.
         // disable thumbs carousel
-        self.$thumbs.hasClass('owl-carousel') &&
-          self.$thumbs
-          .trigger('destroy.owl.carousel')
-          .removeClass('owl-carousel');
+        setTimeout(() => {
+          self.$thumbs.hasClass('owl-carousel') &&
+            self.$thumbs
+            .trigger('destroy.owl.carousel')
+            .removeClass('owl-carousel');
 
-        // enable thumbs vertical nav
-        self.thumbsHeight = self.$productThumb[0].offsetHeight * self.thumbsCount + parseInt(self.$productThumb.css('margin-bottom')) * (self.thumbsCount - 1);
-        self.$thumbUp.addClass('disabled');
-        self.$thumbDown.toggleClass('disabled', self.thumbsHeight <= self.$thumbsWrap[0].offsetHeight);
-        self.isQuickview && recalcDetailsHeight();
+          // enable thumbs vertical nav
+          self.thumbsHeight = self.$productThumb[0].offsetHeight * self.thumbsCount + parseInt(self.$productThumb.css('margin-bottom')) * (self.thumbsCount - 1);
+          self.$thumbUp.addClass('disabled');
+          self.$thumbDown.toggleClass('disabled', self.thumbsHeight <= self.$thumbsWrap[0].offsetHeight);
+          self.isQuickview && recalcDetailsHeight();
+        }, 3000);
+
       } else {
         // if not vertical, remove top property
         oldIsVertical && self.$thumbs.css('top', '');
+        setTimeout(() => {
 
-        // enable thumbs carousel
-        self.$thumbs.hasClass('owl-carousel') || self.$thumbs.addClass('owl-carousel').owlCarousel(
-          $.extend(
-            true,
-            self.isQuickview ? {
-              onInitialized: recalcDetailsHeight,
-              onResized: recalcDetailsHeight
-            } : {},
-            Riode.defaults.sliderThumbs
-          ));
+          // enable thumbs carousel
+          self.$thumbs.hasClass('owl-carousel') || self.$thumbs.addClass('owl-carousel').owlCarousel(
+            $.extend(
+              true,
+              self.isQuickview ? {
+                onInitialized: recalcDetailsHeight,
+                onResized: recalcDetailsHeight
+              } : {},
+              Riode.defaults.sliderThumbs
+            ));
+        }, 3000);
+
       }
     }
 
@@ -1896,8 +1906,8 @@ window.Riode = {};
           .removeClass('load-more-overlay loading')
           .html('<i class="d-icon-heart-full"></i> Browse wishlist')
           .addClass('added')
-          .attr('title', 'Browse wishlist')
-          .attr('href', '/main/pages/wishlist');
+        // .attr('title', 'Browse wishlist')
+        // .attr('href', '/main/pages/wishlist');
       }, 500);
     }
 

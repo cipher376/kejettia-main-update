@@ -8,9 +8,9 @@ import { StoreService } from 'src/app/shared/services/store.service';
 import { CartService } from './../../shared/services/cart.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, AfterViewInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { Cart, CartItem, Product, Features, Review } from 'src/app/models';
+import { Cart, CartItem, Product, Features, Review, User } from 'src/app/models';
 import { Subscription } from 'rxjs';
-import { UtilityService } from 'src/app/shared/services';
+import { UserService, UtilityService } from 'src/app/shared/services';
 
 declare var $: any;
 declare var Window: any;
@@ -20,6 +20,9 @@ declare var Window: any;
   styleUrls: ['./product-details-custom.component.scss']
 })
 export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
+  loggedUser: User;
+
+
   selectedProduct: Product;
   selectedProductId = '';
   selectedProductPhotos: Photo[] = [];
@@ -51,11 +54,14 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   sizeGuidePhoto = '';
   colorGuidePhoto = '';
 
+  wishList: Product[] = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private cartService: CartService,
     private storeService: StoreService,
+    private userService: UserService,
     private signal: SignalService,
     private location: Location
   ) {
@@ -92,6 +98,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // this.Product = this.storeService.getSelectedProductLocalSync();
+    this.wishList = this.storeService.getWishListLocalSync();
+    this.isInWishList();
+
+    console.log(this.wishList)
 
     if (this.selectedProduct) {
       setTimeout(() => {
@@ -106,6 +116,13 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
+    this.signal._action$.subscribe(action => {
+      if (action === MY_ACTION.wish_list_changed) {
+        this.wishList = this.storeService.getWishListLocalSync();
+        this.isInWishList();
+      }
+    })
     this.Product = this.storeService.getSelectedProductLocalSync();
     this.signal._action$.subscribe(action => {
       if (action === MY_ACTION.cartChanged) {
@@ -148,7 +165,11 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
   addToWishList() {
     if (!this.isInWishList()) {
-      //TODO: add to wishlist
+      this.storeService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id).subscribe(() => {
+        this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {
+          this.wishList = products;
+        });
+      })
     }
   }
 
@@ -305,15 +326,16 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   isInWishList() {
-    // TODO:
-    if (true) {
+    if (UtilityService.ObjInArray(this.wishList, this.selectedProduct, 'id')) {
       $('.product-single .btn-wishlist').removeClass('load-more-overlay loading')
-        .html('<i class="d-icon-heart-full"></i> Browse wishlist')
+        .html('<i class="d-icon-heart-full" style="color:#ed1d25"></i> Browse wishlist')
         .addClass('added')
         .attr('title', 'Browse wishlist')
-        .attr('href', '/main/pages/wishlist');
+        // .attr('href', '/main/pages/wishlist');
+      console.log(true)
       return true
     } else {
+
       return false;
     }
   }

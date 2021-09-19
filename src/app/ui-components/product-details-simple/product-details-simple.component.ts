@@ -1,4 +1,4 @@
-import { Cart, CartItem, Features, Photo, Product, Review, Shipping } from 'src/app/models';
+import { Cart, CartItem, Features, Photo, Product, Review, Shipping, User } from 'src/app/models';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { SignalService, MY_ACTION } from 'src/app/shared/services/signal.service
 import { StoreService } from 'src/app/shared/services/store.service';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
-import { UtilityService } from 'src/app/shared/services';
+import { UserService, UtilityService } from 'src/app/shared/services';
 
 
 declare var $: any;
@@ -19,6 +19,10 @@ declare var Window: any;
   styleUrls: ['./product-details-simple.component.scss']
 })
 export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
+
+  loggedUser: User;
+
+
   selectedProduct: Product;
   selectedProductPhotos: Photo[] = [];
   products: Product[] = [];
@@ -51,11 +55,14 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
 
   selectedProductId = '';
 
+  wishList: Product[] = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private cartService: CartService,
     private storeService: StoreService,
+    private userService: UserService,
     private signal: SignalService,
     private location: Location
   ) {
@@ -91,7 +98,10 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     // this.Product = this.storeService.getSelectedProductLocalSync();
+    this.wishList = this.storeService.getWishListLocalSync();
+    this.isInWishList();
 
+    console.log(this.wishList)
     if (this.selectedProduct) {
       setTimeout(() => {
         this.getCartItemFromCart();
@@ -105,6 +115,15 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
+
+    this.signal._action$.subscribe(action => {
+      if (action === MY_ACTION.wish_list_changed) {
+        this.wishList = this.storeService.getWishListLocalSync();
+        this.isInWishList();
+      }
+    })
+
     this.Product = this.storeService.getSelectedProductLocalSync();
     this.signal._action$.subscribe(action => {
       if (action === MY_ACTION.cartChanged) {
@@ -147,7 +166,11 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
 
   addToWishList() {
     if (!this.isInWishList()) {
-      //TODO: add to wishlist
+      this.storeService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id).subscribe(() => {
+        this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {
+          this.wishList = products;
+        });
+      })
     }
   }
 
@@ -303,13 +326,12 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   isInWishList() {
-    // TODO:
-    if (true) {
+    if (UtilityService.ObjInArray(this.wishList, this.selectedProduct, 'id')) {
       $('.product-single .btn-wishlist').removeClass('load-more-overlay loading')
-        .html('<i class="d-icon-heart-full"></i> Browse wishlist')
+        .html('<i class="d-icon-heart-full" style="color:#ed1d25"></i> Browse wishlist')
         .addClass('added')
         .attr('title', 'Browse wishlist')
-        .attr('href', '/main/pages/wishlist');
+        // .attr('href', '/main/pages/wishlist');
       return true
     } else {
       return false;

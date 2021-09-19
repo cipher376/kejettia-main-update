@@ -55,6 +55,7 @@ export class WishlistComponent implements OnInit, AfterViewInit {
   getProductPhoto(product: Product) {
     return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
   }
+
   remove(prod: Product) {
     this.storeService.removeProductFromWishList(prod?.id, this.loggedUser?.id).subscribe(()=>{
       this.getWishList();
