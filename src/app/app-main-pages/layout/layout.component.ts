@@ -27,7 +27,10 @@ export class LayoutComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
+    if (this.loggedUser) {
     this.storeService.getUserWishList(this.loggedUser?.id).subscribe(()=>{});
+
+    }
   }
 
 }
