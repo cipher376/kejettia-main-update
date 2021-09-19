@@ -43,7 +43,6 @@ export class MobileMenuComponent implements OnInit, AfterViewInit {
   search(key) {
     if (key) {
       this.utilityService.setSearchKey(key);
-
       this.router.navigate([Urls.search]).then(() => {
         window.location.reload();
       })

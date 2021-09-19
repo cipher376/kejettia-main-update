@@ -34,8 +34,8 @@ export const LOGO_URL = 'http://107.152.41.194:4200/assets/images/logo.svg'
 export const CONTACT_PAGE = 'http://107.152.41.194:4200/main/pages/contact'
 
 // Paystack configuration
-export const  PAYSTACK_PUBLIC_KEY = 'pk_test_35e2d42391f82f0329280d5821807a52fdd0881f';
-
+// export const  PAYSTACK_PUBLIC_KEY = 'pk_test_35e2d42391f82f0329280d5821807a52fdd0881f';
+export const  PAYSTACK_PUBLIC_KEY = 'pk_live_1bfcae71910ecde6cba942379e797b2a44cbcb23';
 
 export const ACCOUNTANT_EMAIL = 'manager.kejettia@gmail.com';
 export const ACCOUNTANT_PHONE = '+233544686951';
