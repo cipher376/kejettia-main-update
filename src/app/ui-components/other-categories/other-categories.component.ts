@@ -1,10 +1,11 @@
 import { Router } from '@angular/router';
 import { ProductCategory, ProductCategoryItem } from './../../models/product';
 import { Component, Input, OnInit } from '@angular/core';
-import { NO_IMAGE } from 'src/app/config';
+import { NO_IMAGE, Urls } from 'src/app/config';
 import { StoreCategory } from 'src/app/models';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { environment } from 'src/environments/environment';
+import { UtilityService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-other-categories',
@@ -18,7 +19,8 @@ export class OtherCategoriesComponent implements OnInit {
   private productCategoryItems: ProductCategoryItem[] = [];
   constructor(
     // private storeService: StoreService,
-    private router: Router
+    private router: Router,
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -61,7 +63,9 @@ export class OtherCategoriesComponent implements OnInit {
   }
 
   search(cat: StoreCategory |ProductCategory) {
-    this.router.navigateByUrl('/main/pages/search;cat=' +cat?.name).then(()=>{
+    this.utilityService.setSearchKey(cat?.name);
+
+    this.router.navigate([Urls.search]).then(()=>{
       window.location.reload();
     })
   }

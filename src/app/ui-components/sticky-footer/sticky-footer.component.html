@@ -7,11 +7,15 @@
         <i class="d-icon-volume"></i>
         <!-- <span>Categories</span> -->
     </a>
-    <a href="javascript:;" class="sticky-link" [routerLink]="['/main/pages/wishlist']" routerLinkActive="router-link-active" >
+    <a *ngIf="loggedUser" href="javascript:;" class="sticky-link" [routerLink]="['/main/pages/wishlist']" routerLinkActive="router-link-active" >
         <i class="d-icon-heart"></i>
         <!-- <span>Wishlist</span> -->
     </a>
-    <a href="javascript:;" class="sticky-link" [routerLink]="['/main/pages/my-account']" routerLinkActive="router-link-active" >
+    <a *ngIf="loggedUser" href="javascript:;" class="sticky-link" [routerLink]="['/main/pages/my-account']" routerLinkActive="router-link-active" >
+        <i class="d-icon-user"></i>
+        <!-- <span>Account</span> -->
+    </a>
+    <a  *ngIf="!loggedUser"href="javascript:;" class="sticky-link" [routerLink]="['/main/pages/auth/login']" routerLinkActive="router-link-active" >
         <i class="d-icon-user"></i>
         <!-- <span>Account</span> -->
     </a>

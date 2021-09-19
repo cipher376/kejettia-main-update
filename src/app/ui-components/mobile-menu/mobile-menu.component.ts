@@ -1,9 +1,11 @@
+import { UtilityService } from 'src/app/shared/services';
 import { UserService } from './../../shared/services/user.service';
 import { Router } from '@angular/router';
 import { StoreCategory } from './../../models/store-category';
 import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { Urls } from 'src/app/config';
 
 @Component({
   selector: 'app-mobile-menu',
@@ -19,12 +21,13 @@ export class MobileMenuComponent implements OnInit, AfterViewInit {
   constructor(
     private storeService: StoreService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private utilityService: UtilityService
   ) { }
 
 
   ngAfterViewInit(): void {
-    this.userService.getLoggedUserLocalSync();
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
   }
 
   ngOnInit(): void {
@@ -38,10 +41,13 @@ export class MobileMenuComponent implements OnInit, AfterViewInit {
   }
 
   search(key) {
-    if (key)
-      this.router.navigateByUrl('/main/pages/search;cat=' + key).then(() => {
+    if (key) {
+      this.utilityService.setSearchKey(key);
+
+      this.router.navigate([Urls.search]).then(() => {
         window.location.reload();
       })
+    }
   }
 
 

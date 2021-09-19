@@ -33,15 +33,14 @@ export class ProductCategoryFilterComponent implements OnInit {
     this.storeService.getCategoriesByStore(this.store?.id)?.subscribe(cats => {
       this.categories = [];
       cats?.forEach(cat => {
-        this.categories.push(...cat?.productCategories)
+        if (cat?.productCategories)
+          this.categories.push(...cat?.productCategories)
       })
     });
   }
 
   search(key) {
-    // this.router.navigateByUrl('/main/pages/search;cat=' + key).then(()=>{
-    //   window.location.reload();
-    // })
+
   }
 
 }

@@ -106,6 +106,9 @@ export class SignalService {
   private majorCategoryFilterSource = new Subject<string[]>();
   majorCategoryFilterSource$ = this.majorCategoryFilterSource.asObservable();
 
+  private searchKeySource = new Subject<string>();
+  searchKeySource$ = this.searchKeySource.asObservable();
+
 
   constructor() { }
 
@@ -132,6 +135,10 @@ export class SignalService {
 
   announceMajorCategoryFilterChanged(cats: string[]) {
     this.majorCategoryFilterSource.next(cats);
+  }
+
+  announceSearchKey(key: string){
+    this.searchKeySource.next(key);
   }
 
   // announceNewMessageBatchNumber(batch: number) {

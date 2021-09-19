@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Urls } from 'src/app/config';
 import { UtilityService } from 'src/app/shared/services';
 import { SignalService, MY_ACTION } from 'src/app/shared/services/signal.service';
 
@@ -40,7 +41,7 @@ export class SearchInputComponent implements OnInit {
     if (this.searchTermChanged) {
       this.util.setSearchTermLocal(this.searchTerm);
       this.signal.sendAction(MY_ACTION.searchInputTextChange);
-      this.router.navigateByUrl('/main/pages/search');
+      this.router.navigate([Urls.search]);
       this.searchTermChanged = false;
     }
   }

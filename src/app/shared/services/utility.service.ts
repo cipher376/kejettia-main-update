@@ -1,3 +1,4 @@
+import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { MyFile as File } from './../../models/file';
 import { LatLng } from './../../models/LatLng';
 import { Injectable } from '@angular/core';
@@ -13,11 +14,13 @@ export class UtilityService {
 
   constructor(
     private localStore: MyLocalStorageService,
+    private signal: SignalService
   ) { }
 
 
   setSearchTermLocal(term: string) {
     this.localStore.setSync('searchKey', term);
+    this.signal.announceSearchKey(term);
   }
   getSearchTermLocal() {
     return this.localStore.getSync('searchKey');

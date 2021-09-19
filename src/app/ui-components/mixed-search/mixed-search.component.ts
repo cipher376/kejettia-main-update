@@ -44,10 +44,15 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
 
   ) {
 
-    this.route.params.subscribe(params => {
-      console.log(params);
-      this.paramKey = params.cat;
-    });
+    // this.route.params.subscribe(params => {
+    //   console.log(params);
+    //   this.paramKey = params.cat;
+    // });
+
+    this.signal.searchKeySource$.subscribe(key => {
+      this.paramKey = key;
+    })
+
 
     this.resetPage();
   }

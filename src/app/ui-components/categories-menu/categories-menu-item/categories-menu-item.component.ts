@@ -1,6 +1,8 @@
+import { UtilityService } from 'src/app/shared/services';
 import { Router } from '@angular/router';
 import { ProductCategory, StoreCategory } from 'src/app/models';
 import { Component, Input, OnInit } from '@angular/core';
+import { Urls } from 'src/app/config';
 
 @Component({
   selector: 'app-categories-menu-item',
@@ -13,7 +15,8 @@ export class CategoriesMenuItemComponent implements OnInit {
   selectedCategory2: ProductCategory = new ProductCategory();
 
   constructor(
-    private router: Router
+    private router: Router,
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +32,8 @@ export class CategoriesMenuItemComponent implements OnInit {
   }
 
   goToSearch(){
-    this.router.navigateByUrl('/main/pages/search;cat='+this.category?.name)
+    this.utilityService.setSearchKey(this.category?.name);
+    this.router.navigate([Urls.search])
   }
 
 

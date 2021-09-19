@@ -6,6 +6,7 @@ import { PageInfo } from './../../models/page';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models';
+import { UtilityService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-related-product',
@@ -22,7 +23,8 @@ export class RelatedProductComponent implements OnInit {
 
   constructor(
     private storeService: StoreService,
-    private router: Router
+    private router: Router,
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -74,7 +76,9 @@ export class RelatedProductComponent implements OnInit {
 
   searchCategory(product) {
     if (product?.productCategoryItems?.length > 0) {
-      this.router.navigateByUrl(Urls.search + ';cat=' + (product?.productCategoryItems[0]?.name))
+    this.utilityService.setSearchKey(product?.productCategoryItems[0]?.name);
+
+      this.router.navigate([Urls.search])
     }
   }
 

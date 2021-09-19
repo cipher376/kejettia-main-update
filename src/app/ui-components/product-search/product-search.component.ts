@@ -46,10 +46,14 @@ export class ProductSearchComponent implements OnInit {
     private storeService: StoreService,
     private route: ActivatedRoute
   ) {
-    this.route.params.subscribe(params => {
-      // console.log(params);
-      this.paramKey = params.cat;
-    });
+    // this.route.params.subscribe(params => {
+    //   // console.log(params);
+    //   this.paramKey = params.cat;
+    // });
+
+    this.signal.searchKeySource$.subscribe(key => {
+      this.paramKey = key;
+    })
 
     this.resetPage();
   }

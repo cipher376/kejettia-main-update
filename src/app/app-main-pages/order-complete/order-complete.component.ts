@@ -28,7 +28,8 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
     private router: Router,
     private location: Location,
     private cartService: CartService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private utilityService: UtilityService
   ) { }
 
 
@@ -55,7 +56,8 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
 
   back() {
     // this.location.back()
-    this.router.navigateByUrl(Urls.search + ';cart=all')
+    this.utilityService.setSearchKey('all')
+    this.router.navigate([Urls.search])
   }
 
   loadItems() {

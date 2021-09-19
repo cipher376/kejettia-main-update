@@ -1,3 +1,4 @@
+import { UtilityService } from 'src/app/shared/services';
 import { Router } from '@angular/router';
 import { NO_IMAGE } from './../../config';
 import { environment } from 'src/environments/environment';
@@ -13,7 +14,8 @@ export class PopularCategoriesItemComponent implements OnInit {
   productCategory = new ProductCategory();
 
   constructor(
-    private router: Router
+    private router: Router,
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +32,8 @@ export class PopularCategoriesItemComponent implements OnInit {
   }
 
   search() {
-    this.router.navigateByUrl('/main/pages/search;cat=' + this.productCategory?.name).then(()=>{
+    this.utilityService.setSearchKey(this.productCategory?.name);
+    this.router.navigateByUrl('/main/pages/search' ).then(()=>{
       window.location.reload();
     })
   }

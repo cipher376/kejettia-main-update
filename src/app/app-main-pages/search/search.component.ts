@@ -67,6 +67,7 @@ export class SearchComponent implements OnInit, AfterContentInit, OnDestroy, Aft
       window.scrollTo(0,0);
     }
   }
+
   ngAfterContentInit(): void {
     this.signal.majorCategoryFilterSource$.subscribe(filter => {
       this.SearchPageFilter = filter;

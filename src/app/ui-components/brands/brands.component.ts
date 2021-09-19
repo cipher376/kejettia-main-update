@@ -1,7 +1,9 @@
+import { UtilityService } from 'src/app/shared/services';
 import { Router } from '@angular/router';
 import { ProductBrand } from './../../models/product';
 import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
+import { Urls } from 'src/app/config';
 
 @Component({
   selector: 'app-brands',
@@ -14,7 +16,8 @@ export class BrandsComponent implements OnInit {
 
   constructor(
     private storeService: StoreService,
-    private router: Router
+    private router: Router,
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit() {
@@ -28,7 +31,8 @@ export class BrandsComponent implements OnInit {
   }
 
   search(key: string) {
-    this.router.navigateByUrl('/main/pages/search;cat=' + key)
+    this.utilityService.setSearchKey(key);
+    this.router.navigate([Urls.search])
   }
 
 }

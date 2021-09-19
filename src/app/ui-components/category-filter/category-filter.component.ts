@@ -1,7 +1,9 @@
+import { Urls } from 'src/app/config';
 import { StoreCategory } from './../../models/store-category';
 import { Router } from '@angular/router';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { UtilityService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-category-filter',
@@ -15,7 +17,8 @@ export class CategoryFilterComponent implements OnInit, AfterViewInit {
 
   constructor(
     private storeService: StoreService,
-    private router: Router
+    private router: Router,
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +44,9 @@ export class CategoryFilterComponent implements OnInit, AfterViewInit {
 
   search(cat: StoreCategory) {
     if (cat?.productCategories?.length <=0 || !cat?.productCategories)  {
-      this.router.navigateByUrl('/main/pages/search;cat=' + cat?.name).then(() => {
+    this.utilityService.setSearchKey(cat?.name);
+
+      this.router.navigate([Urls.search]).then(() => {
         window.location.reload();
       })
     }
