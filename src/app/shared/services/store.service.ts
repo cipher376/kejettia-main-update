@@ -89,7 +89,7 @@ export class StoreService {
     let url = '';
     let foundPhotos: Photo[] = [];
     photos?.forEach(photo => {
-      if (photo.photoDisplayType?.type?.toLowerCase() == displayType) {
+      if (photo?.photoDisplayType?.type?.toLowerCase() == displayType) {
         foundPhotos.push(photo);
       }
     })

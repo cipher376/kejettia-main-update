@@ -34,7 +34,7 @@ export class UtilityService {
 
   static ObjInArray(arr: any[], obj, prop = '') {
     let found = false;
-    arr.forEach(e => {
+    arr?.forEach(e => {
       if (prop) {
         if (e[prop] == obj[prop]) {
           found = true;
