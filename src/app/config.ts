@@ -1,5 +1,7 @@
+import { environment, MAIN_IDENTITY_API_URL_LOCAL } from "src/environments/environment";
+
 export const Urls = {
-  returnUrl:'/main/pages/home',
+  returnUrl: '/main/pages/home',
   home: '/main/pages/home',
   forgotPassword: '/main/pages/auth/forgot',
   register: '/main/pages/auth/register',
@@ -21,7 +23,11 @@ export const Urls = {
 
   productDetails: '/stores/pages/product-details',
   storeHome: '/stores/pages/home',
-  products:'/stores/pages/products'
+  products: '/stores/pages/products',
+
+  googleAuthUrl: environment.googleAuthUrl,
+  facebookAuthUrl: environment.facebookAuthUrl,
+  twitterAuthUrl: environment.twitterAuthUrl
 };
 
 // export const STORE_DETAILS = {
@@ -35,7 +41,7 @@ export const CONTACT_PAGE = 'http://107.152.41.194:4200/main/pages/contact'
 
 // Paystack configuration
 // export const  PAYSTACK_PUBLIC_KEY = 'pk_test_35e2d42391f82f0329280d5821807a52fdd0881f';
-export const  PAYSTACK_PUBLIC_KEY = 'pk_live_1bfcae71910ecde6cba942379e797b2a44cbcb23';
+export const PAYSTACK_PUBLIC_KEY = 'pk_live_1bfcae71910ecde6cba942379e797b2a44cbcb23';
 
 export const ACCOUNTANT_EMAIL = 'manager.kejettia@gmail.com';
 export const ACCOUNTANT_PHONE = '+233544686951';
@@ -59,9 +65,6 @@ export const MESSAGE_API_URL_PRODUCTION = ''
 
 
 
-
-
-
 export const NO_IMAGE = '';
 export const NO_STORE_IMAGE = '/assets/img/store/no_image.png';
 export const NO_PRODUCT_IMAGE = '';
@@ -79,6 +82,6 @@ export enum PHOTO_DISPLAY_TYPES {
   SIZE_GUIDE = 'size-guide',
   COLOR_GUIDE = 'color_guide',
   BANNER = 'banner',
-  THUMBNAIL ='thumbnail',
+  THUMBNAIL = 'thumbnail',
 
 }

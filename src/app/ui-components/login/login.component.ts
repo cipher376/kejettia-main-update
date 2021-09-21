@@ -24,6 +24,12 @@ export class LoginComponent implements OnInit {
 
   errorMsg = '';
 
+
+  googleAuthUrl = Urls.googleAuthUrl;
+  facebookAuthUrl = Urls.facebookAuthUrl;
+  twitterAuthUrl = Urls.twitterAuthUrl;
+
+
   constructor(
     private _auth: MyAuthService,
     private _localStore: MyLocalStorageService,

@@ -1,4 +1,7 @@
 
+export const MAIN_IDENTITY_API_PORT_PRODUCTION = '3000'
+export const MAIN_IDENTITY_API_HOST_PRODUCTION = 'http://107.152.41.194'
+export const MAIN_IDENTITY_API_URL_PRODUCTION = `${MAIN_IDENTITY_API_HOST_PRODUCTION}:${MAIN_IDENTITY_API_PORT_PRODUCTION}`
 
 export const IDENTITY_API_PORT_PRODUCTION = '3002'
 export const IDENTITY_API_HOST_PRODUCTION = 'http://107.152.41.194'
@@ -48,6 +51,10 @@ export const environment = {
   file_api_upload_url_root: FILE_API_URL_PRODUCTION + '/upload/',
   file_api_upload_photo_video_url_root: FILE_API_URL_PRODUCTION + '/photo-video-upload/',
   message_api_root_url: MESSAGE_API_URL_PRODUCTION,
+
+  googleAuthUrl: MAIN_IDENTITY_API_URL_PRODUCTION + '/api/auth/thirdparty/google',
+  facebookAuthUrl: MAIN_IDENTITY_API_URL_PRODUCTION + '/api/auth/thirdparty/facebook',
+  twitterAuthUrl: MAIN_IDENTITY_API_URL_PRODUCTION + '/api/auth/thirdparty/twitter'
 
   //   fb_auth_callback_url: protocol + apiUrl + '/' + apiVersion + '/facebook/callback',
   //   fb_auth_success_url: protocol + apiUrl + '/' + apiVersion + '/FameIdentities/me?access_token=',

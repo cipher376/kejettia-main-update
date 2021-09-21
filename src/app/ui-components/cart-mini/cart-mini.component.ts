@@ -6,7 +6,8 @@ import { CartService } from 'src/app/shared/services/cart.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Urls } from 'src/app/config';
-import { Cart, CartItem, Product } from 'src/app/models';
+import { Cart, CartItem, Product, User } from 'src/app/models';
+import { UserService } from 'src/app/shared/services';
 
 declare var $: any;
 declare var Window: any;
@@ -20,11 +21,13 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   private cart: Cart
   totalCash: number = 0; // total cash
 
+  private loggedUser: User;
   constructor(
     private router: Router,
     private cartService: CartService,
     private signal: SignalService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private userService: UserService
   ) {
     Window = window;
   }
@@ -32,6 +35,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.init();
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
 
   }
 
@@ -58,7 +62,11 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   }
 
   goToCheckOut() {
-    this.router.navigateByUrl(Urls.checkout)
+    if (this.loggedUser) {
+      this.router.navigateByUrl(Urls.checkout);
+    } else {
+      this.router.navigateByUrl(Urls.login);
+    }
   }
 
   goToProduct(product: Product) {

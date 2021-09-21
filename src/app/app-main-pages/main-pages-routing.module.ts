@@ -1,3 +1,4 @@
+import { AuthGuard } from './../shared/services/guards/authGuard.service';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AuthComponent } from './auth/auth.component';
@@ -52,7 +53,10 @@ const routes: Routes = [
           { path: 'stores', component: StoresComponent },
           { path: 'search', component: SearchComponent },
           { path: 'login', component: LoginComponent },
-          { path: 'my-account', component: MyAccountComponent },
+          {
+            canActivate: [AuthGuard],
+            path: 'my-account', component: MyAccountComponent
+          },
           { path: 'about', component: AboutUsComponent },
           { path: 'checkout', component: CheckoutComponent },
           { path: 'faq', component: FaqComponent },

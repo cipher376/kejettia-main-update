@@ -92,12 +92,16 @@ export class CartComponent implements OnInit {
 
 
   goToCart() {
-    this.router.navigateByUrl(Urls.cart)
+    this.router.navigateByUrl(Urls.login);
   }
 
   goToCheckOut() {
-    this.cartService.setCartLocal(this.cart);
-    this.router.navigateByUrl(Urls.checkout);
+    if (this.selectedUser) {
+      this.cartService.setCartLocal(this.cart);
+      this.router.navigateByUrl(Urls.checkout);
+    } else {
+      this.router.navigateByUrl(Urls.login);
+    }
   }
 
   goToProduct(product: Product) {
@@ -116,7 +120,6 @@ export class CartComponent implements OnInit {
   deleteFromCart(cartItem: CartItem) {
     this.cartService.deleteCartItem(this.cart?.id, cartItem?.id).subscribe(() => {
       this.cart = this.cartService.getCartLocal();
-
     })
   }
 
@@ -153,6 +156,6 @@ export class CartComponent implements OnInit {
 
   calculateShipping() {
     this.totalShipCost = CartService.calculateShipping(this.cart);
-    console.log(this.totalShipCost)
+    // console.log(this.totalShipCost)
   }
 }

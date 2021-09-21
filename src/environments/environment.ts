@@ -2,6 +2,10 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+export const MAIN_IDENTITY_API_PORT_LOCAL = '3000'
+export const MAIN_IDENTITY_API_HOST_LOCAL = 'http://localhost'
+export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}:${MAIN_IDENTITY_API_PORT_LOCAL}`
+
 
 // export const IDENTITY_API_PORT_LOCAL = '3002'
 // export const IDENTITY_API_HOST_LOCAL = 'http://localhost'
@@ -26,10 +30,9 @@
 
 
 
-
-
-
-
+// export const MAIN_IDENTITY_API_PORT_LOCAL = '3000'
+// export const MAIN_IDENTITY_API_HOST_LOCAL = 'http://107.152.41.194'
+// export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}:${MAIN_IDENTITY_API_PORT_LOCAL}`
 
 export const IDENTITY_API_PORT_LOCAL = '3002'
 export const IDENTITY_API_HOST_LOCAL = 'http://107.152.41.194'
@@ -63,6 +66,10 @@ export const environment = {
   file_api_upload_url_root: FILE_API_URL_LOCAL + '/upload/',
   file_api_upload_photo_video_url_root: FILE_API_URL_LOCAL + '/photo-video-upload/',
   message_api_root_url: MESSAGE_API_URL_LOCAL,
+
+  googleAuthUrl: MAIN_IDENTITY_API_URL_LOCAL + '/api/auth/thirdparty/google',
+  facebookAuthUrl: MAIN_IDENTITY_API_URL_LOCAL + '/api/auth/thirdparty/facebook',
+  twitterAuthUrl: MAIN_IDENTITY_API_URL_LOCAL + '/api/auth/thirdparty/twitter'
 };
 
 /*
