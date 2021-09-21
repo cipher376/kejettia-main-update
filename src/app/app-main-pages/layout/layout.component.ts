@@ -21,13 +21,15 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (this.isMobile) {
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   }
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
-    this.storeService.getUserWishList(this.loggedUser?.id)?.subscribe(()=>{});
+    if (this.loggedUser) {
+      this.storeService.getUserWishList(this.loggedUser?.id)?.subscribe(() => { });
+    }
   }
 
 }
