@@ -94,8 +94,13 @@ export class CreateAddressComponent implements OnInit {
       country: [
         this.selectedCountry?.value || '', [Validators.minLength(2),
         Validators.maxLength(100)]],
-      postcode: [this.address.postCode],
-      apartment: [this.address.apartment],
+      postcode: [this.address.postCode || '',
+      Validators.minLength(2),
+      Validators.maxLength(100)],
+      apartment: [this.address.apartment || '',
+      Validators.minLength(2),
+      Validators.maxLength(100)
+      ],
       lat: [this.util.getLatLngArray(this.address?.latLng).lat],
       lng: [this.util.getLatLngArray(this.address?.latLng).lng]
     });
@@ -106,12 +111,12 @@ export class CreateAddressComponent implements OnInit {
     if (!this.addForm?.valid) {
       console.log(this.addForm);
       // alert("Invalid data")
-      this.toaster.error('Provide valid address data!');
+      alert('Provide valid address data!');
       return false;
     }
     if (!this.selectedCountry) {
-      this.toaster.error('Please select country ');
-      return undefined;
+      alert('Please select country ');
+      return false;
     }
     this.address.street = this.addForm?.value.street ?? '';
     this.address.city = this.addForm?.value.city ?? '';

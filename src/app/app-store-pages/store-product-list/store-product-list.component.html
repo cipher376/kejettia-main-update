@@ -46,7 +46,7 @@
         </div>
 
         <nav class="toolbox toolbox-pagination">
-          <p class="show-info">Showing {{getCurrentTotalItems()}} of {{productItems.length}} Products</p>
+          <p class="show-info">Showing {{getCurrentTotalItems()}} of {{productItems?.length}} Products</p>
           <pagination-controls class="search-pagination" [autoHide]="false" [maxSize]="10" [id]="'search_product'"
             (pageChange)="onPageChanged($event)" (pageBoundsCorrection)="onPageChanged($event)" [directionLinks]="true"
             [responsive]="true" previousLabel="Back" nextLabel="Next" screenReaderPaginationLabel="Pagination"

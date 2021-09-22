@@ -58,23 +58,37 @@ const routes: Routes = [
             path: 'my-account', component: MyAccountComponent
           },
           { path: 'about', component: AboutUsComponent },
-          { path: 'checkout', component: CheckoutComponent },
+          {
+            canActivate: [AuthGuard],
+            path: 'checkout', component: CheckoutComponent
+          },
           { path: 'faq', component: FaqComponent },
           { path: 'contact', component: ContactComponent },
-          { path: 'wishlist', component: WishlistComponent },
-          { path: 'compare', component: CompareComponent },
-          { path: 'my-account', component: MyAccountComponent },
+          {
+            canActivate: [AuthGuard],
+            path: 'wishlist', component: WishlistComponent
+          },
+          {
+            canActivate: [AuthGuard],
+            path: 'compare', component: CompareComponent
+          },
           { path: 'error', component: ErrorPageComponent },
           { path: 'search', component: SearchComponent },
           { path: 'map', component: MapViewComponent },
           { path: 'recent-browsed', component: RecentBrowsedComponent },
-          { path: 'order', component: OrderCompleteComponent },
+          {
+            canActivate: [AuthGuard],
+            path: 'order', component: OrderCompleteComponent
+          },
           { path: 'cart', component: CartComponent },
           { path: 'loader-f', component: LoaderFullComponent },
           { path: 'loader-m', component: LoaderMiniComponent },
           { path: 'company', component: CompanyComponent },
           { path: 'change-password', component: ChangePasswordComponent },
-          { path: 'verify-email', component: EmailVerificationComponent },
+          {
+            canActivate: [AuthGuard],
+            path: 'verify-email', component: EmailVerificationComponent
+          },
           { path: 'business-page', component: BusinessPageComponent }
         ]
       },

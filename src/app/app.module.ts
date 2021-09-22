@@ -15,6 +15,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SimpleModalModule, defaultSimpleModalOptions } from 'ngx-simple-modal';
 import { ConfirmDialogComponent } from './ui-components/confirm-dialog/confirm-dialog.component';
 import { AlertComponent } from './ui-components/alert/alert.component';
+import { AuthGuard } from './shared/services/guards/authGuard.service';
 
 @NgModule({
   declarations: [
@@ -47,8 +48,11 @@ import { AlertComponent } from './ui-components/alert/alert.component';
     }),
   ],
   providers: [
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    AuthGuard
+
   ],
+
   entryComponents: [
     ConfirmDialogComponent,
     AlertComponent

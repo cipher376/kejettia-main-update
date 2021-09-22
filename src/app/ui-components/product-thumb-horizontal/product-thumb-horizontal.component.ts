@@ -59,7 +59,10 @@ export class ProductThumbHorizontalComponent implements OnInit {
   }
 
   addToWishList() {
-
+    // if(!this.loggedUser){
+    //   alert('Please log in to add to your wishlist')
+    //   return;
+    // }
   }
 
   addToCart() {

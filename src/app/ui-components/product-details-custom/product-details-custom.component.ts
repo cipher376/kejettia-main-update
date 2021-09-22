@@ -164,6 +164,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
 
   addToWishList() {
+    if(!this.loggedUser){
+      alert('Please login to add to your wishlist')
+      return;
+    }
     if (!this.isInWishList()) {
       this.storeService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id).subscribe(() => {
         this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {

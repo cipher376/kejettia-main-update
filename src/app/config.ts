@@ -46,6 +46,8 @@ export const PAYSTACK_PUBLIC_KEY = 'pk_live_1bfcae71910ecde6cba942379e797b2a44cb
 export const ACCOUNTANT_EMAIL = 'manager.kejettia@gmail.com';
 export const ACCOUNTANT_PHONE = '+233544686951';
 
+export const HUBSPOT_CLIENT_KEY = '';
+export const HUBSPOT_CLIENT_DEVELOPER_KEY = '';
 
 /*****************  API CONFIGURATION URLS ********************/
 

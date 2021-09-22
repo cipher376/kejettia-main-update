@@ -1,3 +1,4 @@
+import { UtilityService } from 'src/app/shared/services';
 import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
 import { ProductCategory } from 'src/app/models';
@@ -20,7 +21,7 @@ export class PopularCategoriesComponent implements OnInit {
 
   getProductCategories(){
     this.storeService.getProductCategories().subscribe(cats => {
-      this.productCategories = cats;
+      this.productCategories = UtilityService.shuffle(cats);
     })
   }
 

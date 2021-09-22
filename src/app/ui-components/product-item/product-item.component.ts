@@ -98,6 +98,10 @@ export class ProductItemComponent implements OnInit, AfterViewInit {
 
   addToWishlist(evt) {
     evt?.preventDefault();
+    if(!this.loggedUser){
+      alert('Please log in to add to your wishlist')
+      return;
+    }
     if (!this.isInWishList()) {
       this.storeService.addProductToWhishlist(this.product?.id, this.loggedUser?.id).subscribe(() => {
         this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {

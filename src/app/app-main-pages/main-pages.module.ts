@@ -28,7 +28,6 @@ import { SelectModule } from 'ng-select';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { BusinessPageComponent } from './business-page/business-page.component';
-import { AuthGuard } from '../shared/services/guards/authGuard.service';
 
 
 @NgModule({
@@ -66,8 +65,5 @@ import { AuthGuard } from '../shared/services/guards/authGuard.service';
     EmailVerificationComponent,
     BusinessPageComponent
   ],
-  providers: [
-    AuthGuard
-  ]
 })
 export class MainPagesModule { }
