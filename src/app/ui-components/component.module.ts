@@ -110,7 +110,6 @@ import { PriceFilterComponent } from './price-filter/price-filter.component';
 import { ProductCategoryFilterComponent } from './product-category-filter/product-category-filter.component';
 import { ProductListWidgetComponent } from './product-list-widget/product-list-widget.component';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { HubspotChatComponent } from './hubspot-chat/hubspot-chat.component';
 
 
 @NgModule({
@@ -213,7 +212,6 @@ import { HubspotChatComponent } from './hubspot-chat/hubspot-chat.component';
     ProductCategoryFilterComponent,
     ProductListWidgetComponent,
     UploadComponent,
-    HubspotChatComponent,
   ],
   imports: [
     CommonModule,

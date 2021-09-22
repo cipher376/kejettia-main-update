@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from './../../shared/services/utility.service';
 import { StoreCategory } from './../../models/store-category';
 import { PHOTO_DISPLAY_TYPES } from './../../config';
@@ -27,11 +28,19 @@ export class Home2Component implements OnInit, AfterViewInit {
 
   showLoader = true;
 
+  storeId = '';
+
   constructor(
-    private storeService: StoreService
+    private storeService: StoreService,
+    private route: ActivatedRoute
   ) {
     Window = window;
-
+    route.params.subscribe(p => {
+      this.storeId = p.id;
+      // console.log(this.storeId);
+      if (this.storeId)
+        this.init();
+    })
   }
 
 
@@ -61,7 +70,7 @@ export class Home2Component implements OnInit, AfterViewInit {
   }
 
   init() {
-    this.storeService.getStoreById(this.selectedStore?.id).subscribe(store => {
+    this.storeService.getStoreById(this.storeId ?? this.selectedStore?.id).subscribe(store => {
       this.selectedStore = store;
       this.storeService.setSelectedStoreLocal(store);
 
@@ -101,9 +110,9 @@ export class Home2Component implements OnInit, AfterViewInit {
       })
 
       this.showLoader = false;
-      window.scrollTo( 0, 10)
+      window.scrollTo(0, 10)
       setTimeout(() => {
-      window.scrollTo( 0, 0)
+        window.scrollTo(0, 0)
       }, 100);
     })
     // })

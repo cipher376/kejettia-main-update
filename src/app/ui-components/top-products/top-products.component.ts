@@ -1,4 +1,5 @@
-import { PHOTO_DISPLAY_TYPES } from './../../config';
+import { Router } from '@angular/router';
+import { PHOTO_DISPLAY_TYPES, Urls } from './../../config';
 import { Product } from './../../models/product';
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { StoreService } from 'src/app/shared/services/store.service';
@@ -18,7 +19,8 @@ export class TopProductsComponent implements OnInit, AfterViewInit {
   @Input() title = '';
 
   constructor(
-    private storeService: StoreService
+    private storeService: StoreService,
+    private router: Router
   ) { }
 
   ngAfterViewInit(): void {
@@ -33,7 +35,7 @@ export class TopProductsComponent implements OnInit, AfterViewInit {
 
   }
 
-  getRating(p: Product){
+  getRating(p: Product) {
     return StoreService.getProductRating(p);
   }
 
@@ -45,5 +47,12 @@ export class TopProductsComponent implements OnInit, AfterViewInit {
   get Products() {
     return this.products;
   }
+
+  goToProduct(product: Product) {
+    this.storeService.setSelectedProductLocal(product).then(() => {
+      this.router.navigateByUrl(Urls.productDetails + '/' + product?.id);
+    });
+  }
+
 
 }

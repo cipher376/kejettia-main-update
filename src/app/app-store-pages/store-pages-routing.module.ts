@@ -24,6 +24,7 @@ const routes: Routes = [
           {
             path: '', component: StoreLayoutComponent,
             children: [
+              { path: 'home/:id', component: Home2Component },
               { path: 'home', component: Home2Component },
               { path: 'products', component: StoreProductListComponent },
 

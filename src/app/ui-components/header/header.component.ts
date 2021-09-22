@@ -1,5 +1,6 @@
+import { Route } from '@angular/compiler/src/core';
 import { Urls } from 'src/app/config';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/shared/services';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Product, User } from 'src/app/models';
@@ -15,13 +16,27 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   loggedUser: User = new User();
   isMobile = false;
 
+  logUrl = 'assets/images/logo.svg';
+
   wishList: Product[] = [];;
   constructor(
     private userService: UserService,
     private router: Router,
     private signal: SignalService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private route: ActivatedRoute
   ) {
+    // this.route.params.subscribe(p=>{
+    //   if (this.router.url.indexOf(Urls.businessPage) > -1) {
+    //     this.logUrl = 'assets/images/kbusiness.svg'
+    //   } else {
+    //     this.logUrl = 'assets/images/logo.svg';
+
+    //   }
+    // })
+    // this.route.url.subscribe(url => {
+
+    // })
   }
 
   ngAfterViewInit() {
@@ -39,6 +54,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.wishList = this.storeService.getWishListLocalSync();
       }
     })
+
+
   }
 
   goToWishlist() {

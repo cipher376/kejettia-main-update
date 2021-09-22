@@ -1,4 +1,4 @@
-import { environment, MAIN_IDENTITY_API_URL_LOCAL } from "src/environments/environment";
+import { environment } from "src/environments/environment";
 
 export const Urls = {
   returnUrl: '/main/pages/home',
@@ -25,6 +25,8 @@ export const Urls = {
   storeHome: '/stores/pages/home',
   products: '/stores/pages/products',
 
+  businessPage:'/main/pages/business-page',
+
   googleAuthUrl: environment.googleAuthUrl,
   facebookAuthUrl: environment.facebookAuthUrl,
   twitterAuthUrl: environment.twitterAuthUrl
@@ -46,8 +48,8 @@ export const PAYSTACK_PUBLIC_KEY = 'pk_live_1bfcae71910ecde6cba942379e797b2a44cb
 export const ACCOUNTANT_EMAIL = 'manager.kejettia@gmail.com';
 export const ACCOUNTANT_PHONE = '+233544686951';
 
-export const HUBSPOT_CLIENT_KEY = '';
-export const HUBSPOT_CLIENT_DEVELOPER_KEY = '';
+// export const HUBSPOT_CLIENT_KEY = '';
+// export const HUBSPOT_CLIENT_DEVELOPER_KEY = '';
 
 /*****************  API CONFIGURATION URLS ********************/
 
