@@ -4,8 +4,9 @@
        <a href="javascript:;">
          <img [src]="photoUrl" alt="{{Store?.name}}" width="280" height="315">
        </a>
-       <div class="product-label-group" *ngIf="IsNew">
-        <label class="product-label label-new">new</label>
+       <div class="product-label-group">
+        <label class="product-label label-new" *ngIf="IsNew">new</label>
+        <label class="product-label label-sale" style="background-color:#f89c1c;">shop</label>
       </div>
        <div class="product-action-vertical">
          <a href="javascript:;" class="btn-product-icon btn-cart" data-toggle="modal" data-target="#addCartModal"
@@ -14,8 +15,7 @@
              class="d-icon-heart"></i></a>
        </div>
        <div class="product-action" (click)="goToStore()">
-         <a href="javascript:;" class="btn-product btn-quickview" title="Quick View">Quick
-           View</a>
+         <a href="javascript:;" class="btn-product btn-quickview" title="Quick View">Open shop</a>
        </div>
      </figure>
      <div class="product-details">
