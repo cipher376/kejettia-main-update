@@ -182,10 +182,15 @@ export class CartService {
     }
   }
 
-  deleteCartItem(cartId: any, cartItemId: any) {
+  deleteCartItem(cartId: any, cartItemId: any): any {
+    const user = this.userService.getLoggedUserLocalSync();
+    if (!user?.id) {
+      this.removeFromBrowserCart(cartId, cartItemId);
+      return;
+    }
     return this.http.delete(environment.store_api_root_url + `/carts/${cartId}/cart-items?where=${JSON.stringify({ id: cartItemId })}`).pipe(
       map(res => {
-        this.getCart().subscribe(cart => {
+        this.getCart()?.subscribe(cart => {
           console.log(cart);
         })
         return res as any;

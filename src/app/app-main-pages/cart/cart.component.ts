@@ -118,9 +118,14 @@ export class CartComponent implements OnInit {
   }
 
   deleteFromCart(cartItem: CartItem) {
-    this.cartService.deleteCartItem(this.cart?.id, cartItem?.id).subscribe(() => {
+    const sub = this.cartService.deleteCartItem(this.cart?.id, cartItem?.id);
+    if (sub) {
+      sub.subscribe(() => {
+        this.cart = this.cartService.getCartLocal();
+      })
+    } else {
       this.cart = this.cartService.getCartLocal();
-    })
+    }
   }
 
 

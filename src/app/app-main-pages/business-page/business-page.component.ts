@@ -12,4 +12,9 @@ export class BusinessPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  sendRequest(){
+    // TODO:
+  }
+
 }

@@ -346,6 +346,7 @@ export class StoreService {
     // console.log(url);
     return this.http.get<Store>(url).pipe(
       map((res: Store) => {
+        this.setSelectedStoreLocal(res);
         return res;
       }),
       catchError(e => this.handleError(e))
@@ -443,6 +444,7 @@ export class StoreService {
     const url = environment.store_api_root_url + `/stores` + filter;
     return this.http.get<Store[]>(url).pipe(
       map((res: Store[]) => {
+        console.log(res);
         return res;
       }),
       catchError(e => this.handleError(e))
@@ -881,6 +883,9 @@ export class StoreService {
       limit: 40,
       skip: 0,
       order: 'id DESC',
+      where: {
+        showOnPage: true
+      },
       include: [
         { relation: 'features' },
         { relation: 'productCategoryItems' },
@@ -903,6 +908,7 @@ export class StoreService {
     const url = `${environment.store_api_root_url}/products?filter=${JSON.stringify(filter)}`
     return this.http.get<Product[]>(url).pipe(
       map((res: Product[]) => {
+        // console.log(res);
         return res;
       }),
       catchError(e => this.handleError(e))
@@ -1067,7 +1073,7 @@ export class StoreService {
     console.log(url);
     return this.http.get<ProductModel>(url).pipe(
       map((res: ProductModel) => {
-        console.log(res);
+        // console.log(res);
         return res;
       }),
       catchError(e => this.handleError(e))
@@ -1250,6 +1256,9 @@ export class StoreService {
         // order: 'id DESC',
         limit: pageInfo.limit,
         skip: pageInfo.offset,
+        where: {
+          showOnPage: true
+        },
         include: [
           { relation: 'features' },
           { relation: 'productCategoryItems' },
@@ -1298,6 +1307,9 @@ export class StoreService {
         // offset: pageInfo.offset,
         limit: pageInfo.limit,
         skip: pageInfo.offset,
+        where: {
+          showOnPage: true
+        },
         include: [
           {
             relation: 'productCategoryItem'
@@ -1424,7 +1436,7 @@ export class StoreService {
 
   // link user to product
   addProductToWhishlist(productId: any, userId: any) {
-    return this.http.post<Favourite>(environment.store_api_root_url + `/favourites`, {userId, productId}).pipe(
+    return this.http.post<Favourite>(environment.store_api_root_url + `/favourites`, { userId, productId }).pipe(
       map(res => {
         return res as any;
       }),
@@ -1454,7 +1466,7 @@ export class StoreService {
   }
 
 
-  getUserWishList(userId: any){
+  getUserWishList(userId: any) {
     if (!userId) {
       console.log('Please select user')
       return undefined;
@@ -1492,40 +1504,48 @@ export class StoreService {
   }
 
 
-    // remove link between user to product
-    removeProductFromFavouriteStores(storeId: string, userId: string) {
-      if (!storeId || !userId) {
-        console.log('Invalid store or user id.');
-        return undefined;
-      }
-      // let filter: any = {
-      //   userId,
-      //   productId
-      // }
-      // filter = '?where=' + JSON.stringify(filter);
-      const url = `${environment.store_api_root_url}/favourites/deleteFromFavouriteStore/${userId}/${storeId}`
-      console.log(url);
-      return this.http.delete(url).pipe(
-        map(res => {
-          return res;
-        }),
-        catchError(e => this.handleError(e))
-      );
+  // remove link between user to product
+  removeProductFromFavouriteStores(storeId: string, userId: string) {
+    if (!storeId || !userId) {
+      console.log('Invalid store or user id.');
+      return undefined;
     }
+    // let filter: any = {
+    //   userId,
+    //   productId
+    // }
+    // filter = '?where=' + JSON.stringify(filter);
+    const url = `${environment.store_api_root_url}/favourites/deleteFromFavouriteStore/${userId}/${storeId}`
+    console.log(url);
+    return this.http.delete(url).pipe(
+      map(res => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
 
   /////////////////////////////////////////////////////////////////////////
   /******************OTHER QUERIES ***************************************/
   /////////////////////////////////////////////////////////////////////////
 
   searchAll(searchKey = 'all', pageInfo?: PageInfo) {
-    let filter;
+    let filter = {
+      where: {
+        showOnPage: true
+      }
+    } as any;
     if (pageInfo) {
       filter = {
         // order: 'id DESC',
         limit: pageInfo.limit,
         skip: pageInfo.offset,
+        where: {
+          showOnPage: true
+        },
       };
     }
+
     filter = filter ? '?filter=' + JSON.stringify(filter) : '';
     const url = environment.store_api_root_url + '/search/' + searchKey + filter;
     // console.log(url);

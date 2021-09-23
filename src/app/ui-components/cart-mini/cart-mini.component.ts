@@ -58,6 +58,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   }
 
   goToCart() {
+    console.log(this.cart);
     this.router.navigateByUrl(Urls.cart)
   }
 
@@ -83,7 +84,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   }
 
   deleteFromCart(cartItem: CartItem) {
-    this.cartService.deleteCartItem(this.cart?.id, cartItem?.id).subscribe(() => {
+    this.cartService.deleteCartItem(this.cart?.id, cartItem?.id)?.subscribe(() => {
       console.log(this.cart?.cartItems);
       // this.cart.cartItems = UtilityService.arrayRemove(this.cart.cartItems, cartItem);
       this.cart = this.cartService.getCartLocal();
