@@ -1,12 +1,12 @@
 <section class="mt-5 pt-8 mb-8" data-animation-options="{
     'name': 'fadeIn',
-    'delay': '0s'
+    'delay': '.5s'
 }" *ngIf="stores?.length>0">
   <div class="container">
     <!-- <h2 class="title title-simple title-center mb-5">Best Sellers</h2> -->
     <div class="owl-carousel owl-theme row owl-nav-full cols-lg-4 cols-md-3 cols-2" data-owl-options="{
             'items': 4,
-            'dots': true,
+            'dots': false,
             'nav': true,
             'loop': true,
             'margin': 20,
@@ -25,7 +25,7 @@
                 },
                 '1200': {
                     'items': 6,
-                    'dots': true,
+                    'dots': false,
                     'nav': true
                 }
             }

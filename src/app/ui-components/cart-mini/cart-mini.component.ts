@@ -84,11 +84,14 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   }
 
   deleteFromCart(cartItem: CartItem) {
-    this.cartService.deleteCartItem(this.cart?.id, cartItem?.id)?.subscribe(() => {
-      console.log(this.cart?.cartItems);
-      // this.cart.cartItems = UtilityService.arrayRemove(this.cart.cartItems, cartItem);
+    const sub = this.cartService.deleteCartItem(this.cart?.id, cartItem?.id);
+    if (sub) {
+      sub.subscribe(() => {
+        this.cart = this.cartService.getCartLocal();
+      })
+    } else {
       this.cart = this.cartService.getCartLocal();
-    })
+    }
   }
 
 
