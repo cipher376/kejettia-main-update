@@ -305,7 +305,7 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
 
   get Prev() {
     let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
-    let index = found ? found[1] : (this.products?.length - 1);
+    let index = found ? found[1] : ((this.products?.length??0) - 1);
     if (index && (index > 0)) {
       return this.products[index - 1];
     }
