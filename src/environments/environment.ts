@@ -3,22 +3,22 @@
 // The list of file replacements can be found in `angular.json`.
 
 
-export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'http://employee-account.api.devtek-limited.tech'
+export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'https://employee-account.api.devtek-limited.tech'
 export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}`
 
-export const MESSAGE_API_HOST_LOCAL = 'http://message-api.devtek-limited.tech'
+export const MESSAGE_API_HOST_LOCAL = 'https://message-api.devtek-limited.tech'
 export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}`
 
-export const FILE_API_HOST_LOCAL = 'http://file-api.devtek-limited.tech'
+export const FILE_API_HOST_LOCAL = 'https://file-api.devtek-limited.tech'
 export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}/file`
 
-export const IDENTITY_API_HOST_LOCAL = 'http://kejettia-identity.api.devtek-limited.tech'
+export const IDENTITY_API_HOST_LOCAL = 'https://kejettia-identity.api.devtek-limited.tech'
 export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}`
 
-export const MAIN_IDENTITY_API_HOST_LOCAL = 'http://main-identity.api.devtek-limited.tech'
+export const MAIN_IDENTITY_API_HOST_LOCAL = 'https://main-identity.api.devtek-limited.tech'
 export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}`
 
-export const STORE_API_HOST_LOCAL = 'http://store-api.devtek-limited.tech'
+export const STORE_API_HOST_LOCAL = 'https://store-api.devtek-limited.tech'
 export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}`
 
 
