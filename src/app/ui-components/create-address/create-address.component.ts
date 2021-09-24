@@ -92,14 +92,17 @@ export class CreateAddressComponent implements OnInit {
         ]
       ],
       country: [
-        this.selectedCountry?.value || '', [Validators.minLength(2),
+        this.selectedCountry?.value || '',
+        [Validators.minLength(2),
         Validators.maxLength(100)]],
       postcode: [this.address.postCode || '',
-      Validators.minLength(2),
-      Validators.maxLength(100)],
+      [
+        Validators.minLength(2),
+        Validators.maxLength(100)
+      ]],
       apartment: [this.address.apartment || '',
-      Validators.minLength(2),
-      Validators.maxLength(100)
+      [Validators.minLength(2),
+      Validators.maxLength(100)]
       ],
       lat: [this.util.getLatLngArray(this.address?.latLng).lat],
       lng: [this.util.getLatLngArray(this.address?.latLng).lng]
