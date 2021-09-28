@@ -110,6 +110,7 @@ import { PriceFilterComponent } from './price-filter/price-filter.component';
 import { ProductCategoryFilterComponent } from './product-category-filter/product-category-filter.component';
 import { ProductListWidgetComponent } from './product-list-widget/product-list-widget.component';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { WhatsappComponent } from './whatsapp/whatsapp.component';
 
 
 @NgModule({
@@ -212,6 +213,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
     ProductCategoryFilterComponent,
     ProductListWidgetComponent,
     UploadComponent,
+    WhatsappComponent,
   ],
   imports: [
     CommonModule,
@@ -315,6 +317,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
     LoaderFullComponent,
     LoaderMiniComponent,
     UploadComponent,
+    WhatsappComponent,
   ]
 })
 export class ComponentModule { }
