@@ -84,7 +84,7 @@
               <a href="javascript:;" (click)="goToTab(4)" class="link-to-tab rating-reviews">(
                 {{selectedProduct?.reviews?.length??0}} reviews )</a>
             </div>
-            <p class="product-short-desc">{{selectedProduct?.about| slice:0:100}}</p>
+            <p class="product-short-desc">{{selectedProduct?.about| slice:0:210}}</p>
             <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
               (selectedShippingCostEvent)="selectedShippingCost=$event"
               (selectedShippingEvent)="selectedShipping=$event">
@@ -161,11 +161,11 @@
                 <p class="mb-2">
                   {{selectedProduct?.about}}
                 </p>
-                <p class="mb-2">
+                <!-- <p class="mb-2">
                   Features describe the other qualities of the product that helps you the customer to make a good
                   decisions about the
                   purchase. Find below are further description of the products based on know features.
-                </p>
+                </p> -->
                 <ul class="mb-8">
                   <li *ngFor="let f of otherFeatures">{{f?.name}}</li>
                 </ul>
