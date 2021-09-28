@@ -227,7 +227,7 @@ export class StoreService {
       searchKey = 'all';
     }
     filter.where = {
-      showOnPage: true,
+      // showOnPage: true,
     };
     const url = environment.store_api_root_url + '/stores-search/' + searchKey + '?filter=' + JSON.stringify(filter) ?? '';
     // console.log(url);
@@ -1308,7 +1308,7 @@ export class StoreService {
         limit: pageInfo.limit,
         skip: pageInfo.offset,
         where: {
-          showOnPage: true
+          // showOnPage: true
         },
         include: [
           {
@@ -1346,6 +1346,9 @@ export class StoreService {
       order: 'viewCount DESC',
       limit: 15,
       skip: 0,
+      where: {
+        showOnPage: true
+      },
       include: [
         { relation: 'features' },
         { relation: 'productCategoryItems' },
@@ -1532,7 +1535,7 @@ export class StoreService {
   searchAll(searchKey = 'all', pageInfo?: PageInfo) {
     let filter = {
       where: {
-        showOnPage: true
+        // showOnPage: true
       }
     } as any;
     if (pageInfo) {
@@ -1541,7 +1544,7 @@ export class StoreService {
         limit: pageInfo.limit,
         skip: pageInfo.offset,
         where: {
-          showOnPage: true
+          // showOnPage: true
         },
       };
     }
