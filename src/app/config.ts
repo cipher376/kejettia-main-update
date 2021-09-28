@@ -38,8 +38,8 @@ export const Urls = {
 
 export const CONTACT_EMAIL = 'admin@kejettia.com';
 export const APP_NAME = 'Kejettia.com';
-export const LOGO_URL = 'http://107.152.41.194:4200/assets/images/logo.svg'
-export const CONTACT_PAGE = 'http://107.152.41.194:4200/main/pages/contact'
+export const LOGO_URL = 'https://kejettia.com/assets/images/logo.svg'
+export const CONTACT_PAGE = 'https://kejettia.com/main/pages/contact'
 
 // Paystack configuration
 // export const  PAYSTACK_PUBLIC_KEY = 'pk_test_35e2d42391f82f0329280d5821807a52fdd0881f';
