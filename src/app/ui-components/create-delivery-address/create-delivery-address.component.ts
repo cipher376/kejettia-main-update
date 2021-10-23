@@ -83,7 +83,7 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
 
   saveDeliveryAddress() {
     if (!this.getData()) {
-      this.toaster.error('Delivery address information is invalid');
+      // this.toaster.error('Delivery address information is invalid');
       alert('Delivery address information is invalid');
       return undefined;
     }

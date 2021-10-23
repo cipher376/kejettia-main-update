@@ -51,6 +51,7 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
 
     this.signal.searchKeySource$.subscribe(key => {
       this.paramKey = key;
+      console.log(key);
     })
 
 
@@ -69,13 +70,12 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
       if (action === MY_ACTION.searchInputTextChange) {
         this.resetPage();
         this.performSearch(this.paramKey);
-        this.paramKey = '';
+        console.log(this.paramKey);
       }
     });
 
     this.resetPage();
     this.performSearch(this.paramKey);
-    this.paramKey = '';
   }
 
 
@@ -149,6 +149,8 @@ export class MixedSearchComponent implements OnInit, AfterContentInit {
       this.loading = false;
       this.pageInfo.offset += this.items.length;
       this.showLoader = false;
+      this.paramKey = '';
+
     });
   }
 

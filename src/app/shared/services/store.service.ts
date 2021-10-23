@@ -1550,11 +1550,12 @@ export class StoreService {
     }
 
     filter = filter ? '?filter=' + JSON.stringify(filter) : '';
+    console.log(filter);
     const url = environment.store_api_root_url + '/search/' + searchKey + filter;
     // console.log(url);
     return this.http.get<any[]>(url).pipe(
       map(res => {
-        // console.log(res);
+        console.log(res);
         return res as any;
       }),
       catchError(e => this.handleError(e))
