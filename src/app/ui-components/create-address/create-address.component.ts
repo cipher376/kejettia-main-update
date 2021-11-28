@@ -100,10 +100,7 @@ export class CreateAddressComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(100)
       ]],
-      apartment: [this.address.apartment || '',
-      [Validators.minLength(2),
-      Validators.maxLength(100)]
-      ],
+      // apartment: [this.address.apartment || '',[]],
       lat: [this.util.getLatLngArray(this.address?.latLng).lat],
       lng: [this.util.getLatLngArray(this.address?.latLng).lng]
     });
@@ -126,7 +123,7 @@ export class CreateAddressComponent implements OnInit {
     this.address.country = this.addForm?.value.country ?? '';
     this.address.postCode = this.addForm?.value.postcode ?? '';
     this.address.state = this.addForm?.value.state ?? '';
-    this.address.apartment = this.addForm?.value.apartment ?? '';
+    // this.address.apartment = this.addForm?.value.apartment ?? '';
     this.address.suburb = this.addForm?.value.suburb ?? '';
     this.address.latLng = this.addForm?.value.lat + ',' + this.addForm?.value.lng;
     console.log(this.address);

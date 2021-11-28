@@ -14,49 +14,56 @@ export class WhatsappComponent implements OnInit {
     setInterval(this.showTime, 1000)
   }
 
-   showTime() {
+
+  convertFormat(time) {
+    let format = 'PM'
+    if (time >= 12) {
+      format = 'AM'
+    }
+    return format;
+  }
+
+  checkTime(time) {
+    if (time > 12) {
+      time = time - 12;
+    }
+    if (time === 0) {
+      time = 12;
+    }
+    return time
+  }
+
+  addZero(time) {
+    if (time < 10) {
+      time = "0" + time;
+    }
+    return time
+  }
+
+  showTime() {
 
     let date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
 
-    let formatHours = this.convertFormat(hours)
+    try {
+      let formatHours = this.convertFormat(hours)
+      hours = this.checkTime(hours)
 
-    hours = this.checkTime(hours)
+      hours = this.addZero(hours)
+      minutes = this.addZero(minutes)
+      seconds = this.addZero(seconds)
+      document.getElementById('clock').innerHTML = `${hours}:${minutes}:${seconds}${formatHours}`
 
-    hours = this.addZero(hours)
-    minutes = this.addZero(minutes)
-    seconds = this.addZero(seconds)
+    } catch (error) {
 
-    document.getElementById('clock').innerHTML = `${hours}:${minutes}:${seconds}${formatHours}`
-
-}
-
- convertFormat(time) {
-    let formmat = 'PM'
-    if (time >= 12) {
-      formmat = 'AM'
     }
-    return formmat;
-}
 
- checkTime(time) {
-    if (time > 12) {
-        time = time - 12;
-    }
-    if (time === 0) {
-        time = 12;
-    }
-    return time
-}
 
- addZero(time) {
-    if (time < 10) {
-        time = "0" + time;
-    }
-    return time
-}
+
+  }
+
 
 
 
