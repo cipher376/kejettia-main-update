@@ -11,7 +11,7 @@ import { Urls } from 'src/app/config';
 })
 export class IntroBannerOneComponent implements OnInit {
 
-  backgroundImage = 'assets/images/demos/demo5/banners/3.jpg';
+  backgroundImage = 'assets/images/demos/demo5/banners/3_gif.gif';
   title ='THIS MONTH SALE';
   content = '70% OFF ON  XBOX & PS4/PS5';
 
