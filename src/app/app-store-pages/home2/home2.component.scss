@@ -5,3 +5,8 @@
   min-width: 40%;
 }
 
+@media (max-width:768px) {
+  img.storelogo {
+    display: none;
+  }
+}
