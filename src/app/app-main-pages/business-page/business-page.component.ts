@@ -13,8 +13,8 @@ export class BusinessPageComponent implements OnInit {
   }
 
 
-  sendRequest(){
-    // TODO:
-  }
+  // sendRequest(){
+  //   // TODO:
+  // }
 
 }

@@ -2,39 +2,53 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+export const IDENTITY_API_PORT_LOCAL = '3002'
+export const IDENTITY_API_HOST_LOCAL = 'http://localhost'
+export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}:${IDENTITY_API_PORT_LOCAL}`
 
-// export const MAIN_IDENTITY_API_PORT_LOCAL = '3000'
-// export const MAIN_IDENTITY_API_HOST_LOCAL = 'http://localhost'
-// export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}:${MAIN_IDENTITY_API_PORT_LOCAL}`
+export const STORE_API_PORT_LOCAL = '3001'
+export const STORE_API_HOST_LOCAL = 'http://localhost'
+export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
 
-// export const IDENTITY_API_PORT_LOCAL = '3002'
-// export const IDENTITY_API_HOST_LOCAL = 'http://localhost'
-// export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}:${IDENTITY_API_PORT_LOCAL}`
+export const FILE_API_PORT_LOCAL = '3003'
+export const FILE_API_HOST_LOCAL = 'http://localhost'
+export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}:${FILE_API_PORT_LOCAL}/file`
 
-// export const STORE_API_PORT_LOCAL = '3001'
-// export const STORE_API_HOST_LOCAL = 'http://localhost'
-// export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
+export const MESSAGE_API_PORT_LOCAL = '3004'
+export const MESSAGE_API_HOST_LOCAL = 'http://localhost'
+export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}:${MESSAGE_API_PORT_LOCAL}`
+
+export const EMPLOYEE_ACCOUNT_API_PORT_LOCAL = '3005'
+export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'http://localhost'
+export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}:${EMPLOYEE_ACCOUNT_API_PORT_LOCAL}`
+
+export const MAIN_IDENTITY_API_PORT_LOCAL = '3000'
+export const MAIN_IDENTITY_API_HOST_LOCAL = 'http://localhost'
+export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}:${MAIN_IDENTITY_API_PORT_LOCAL}`
 
 
 
 
-export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'https://employee-account.api.devtek-limited.tech'
-export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}`
 
-export const MESSAGE_API_HOST_LOCAL = 'https://message-api.devtek-limited.tech'
-export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}`
+/********************************* REMOTE SERVER CONNECTIONS ************************************/
 
-export const FILE_API_HOST_LOCAL = 'https://file-api.devtek-limited.tech'
-export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}/file`
+// export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'https://employee-account.api.devtek-limited.tech'
+// export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}`
 
-export const IDENTITY_API_HOST_LOCAL = 'https://kejettia-identity.api.devtek-limited.tech'
-export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}`
+// export const MESSAGE_API_HOST_LOCAL = 'https://message-api.devtek-limited.tech'
+// export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}`
 
-export const MAIN_IDENTITY_API_HOST_LOCAL = 'https://main-identity.api.devtek-limited.tech'
-export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}`
+// export const FILE_API_HOST_LOCAL = 'https://file-api.devtek-limited.tech'
+// export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}/file`
 
-export const STORE_API_HOST_LOCAL = 'https://store-api.devtek-limited.tech'
-export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}`
+// export const IDENTITY_API_HOST_LOCAL = 'https://kejettia-identity.api.devtek-limited.tech'
+// export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}`
+
+// export const MAIN_IDENTITY_API_HOST_LOCAL = 'https://main-identity.api.devtek-limited.tech'
+// export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}`
+
+// export const STORE_API_HOST_LOCAL = 'https://store-api.devtek-limited.tech'
+// export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}`
 
 
 

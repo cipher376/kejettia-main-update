@@ -72,7 +72,7 @@ export class MessageService {
       this.toaster.error('Provide the message sender');
       return;
     } else if (!message.to) {
-      this.toaster.error('Provide the message reciever');
+      this.toaster.error('Provide the message receiver');
       return;
     } else if (!message.content) {
       this.toaster.error('Blank messages are not allowed');

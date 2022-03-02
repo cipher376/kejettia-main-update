@@ -1,12 +1,14 @@
+import { MessageService } from './../../shared/services/message.service';
 import { Urls } from 'src/app/config';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User, Credentials } from 'src/app/models';
 import { MyAuthService, UserService } from 'src/app/shared/services';
 import { SignalService, MY_ACTION } from 'src/app/shared/services/signal.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Message } from 'src/app/models/message';
 
 @Component({
   selector: 'app-register',
@@ -28,13 +30,16 @@ export class RegisterComponent implements OnInit {
 
   errorMsg = '';
 
+  @Input() isBusinessRequest = false;
+
   constructor(
     private fb: FormBuilder,
     private toaster: ToastrService,
     private auth: MyAuthService,
     private signal: SignalService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.createRegForm();
 
@@ -61,7 +66,14 @@ export class RegisterComponent implements OnInit {
         // this.toaster.info('Please check your inbox to verify your email');
         // inform other UI components to update
         this.signal.sendAction(MY_ACTION.reloadUser);
-        this.router.navigateByUrl(Urls.login)
+        if (this.isBusinessRequest) {
+          this.sendBusinessRequestMail();
+          setTimeout(() => {
+            this.router.navigateByUrl(Urls.login)
+          }, 10000);
+        } else {
+          this.router.navigateByUrl(Urls.login)
+        }
       }
     },
       (error: any) => {
@@ -209,4 +221,20 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+
+  sendBusinessRequestMail() {
+    const message = new Message();
+    message.from = this.credentials?.email;
+    message.to = 'customerservice@kejettia.com';
+    message.fullname = this.credentials.firstName + ' ' + this.credentials.lastName + ' ' + this.credentials.otherName;
+    message.subject = "Request for business account";
+    message.content = 'I would like to have a business account with Kejettia.com';
+    message.phone = this.credentials.phone;
+
+    this.messageService.sendMessage(message).subscribe(m => {
+      if (m) {
+        this.toaster.success('A customer service representative will contact you shortly. Thank');
+      }
+    })
+  }
 }
