@@ -46,7 +46,6 @@ import { IntroBannerThreeComponent } from './intro-banner-three/intro-banner-thr
 import { IntroBannerTwoComponent } from './intro-banner-two/intro-banner-two.component';
 import { MainCarouselComponent } from './main-carousel/main-carousel.component';
 import { MapComponent } from './map/map.component';
-import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { NewsletterPopupComponent } from './newsletter-popup/newsletter-popup.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OtherCategoriesComponent } from './other-categories/other-categories.component';
@@ -111,6 +110,7 @@ import { ProductCategoryFilterComponent } from './product-category-filter/produc
 import { ProductListWidgetComponent } from './product-list-widget/product-list-widget.component';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { WhatsappComponent } from './whatsapp/whatsapp.component';
+import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 
 
 @NgModule({

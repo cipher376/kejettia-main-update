@@ -4,6 +4,7 @@ import { LatLng } from './../../models/LatLng';
 import { Injectable } from '@angular/core';
 import { MyLocalStorageService } from './local-storage.service';
 import { Country } from 'src/app/models';
+import { Location } from '@angular/common'
 
 
 
@@ -14,7 +15,8 @@ export class UtilityService {
 
   constructor(
     private localStore: MyLocalStorageService,
-    private signal: SignalService
+    private signal: SignalService,
+    private location: Location
   ) { }
 
 
@@ -1176,7 +1178,12 @@ export class UtilityService {
     this.localStore.setSync('searchKey', key);
   }
 
-
+  reload(){
+    this.location.back();
+    setTimeout(() => {
+      this.location.forward();
+    }, 500);
+  }
 
 
 }

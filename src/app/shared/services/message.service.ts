@@ -70,13 +70,13 @@ export class MessageService {
   sendMessage(message: Message) {
     if (!message.from) {
       this.toaster.error('Provide the message sender');
-      return;
+      return undefined;
     } else if (!message.to) {
       this.toaster.error('Provide the message receiver');
-      return;
+      return undefined;
     } else if (!message.content) {
       this.toaster.error('Blank messages are not allowed');
-      return;
+      return undefined;
     }
 
     return this.http.post<Message>(environment.message_api_root_url + `/messages/create`, message).pipe(
@@ -92,7 +92,7 @@ export class MessageService {
     if (!message?.id) {
       this.toaster.error('Something bad happened');
       console.log('Message do not have id');
-      return;
+      return undefined;
     }
     return this.http.patch<Message>(environment.message_api_root_url + `/messages/update`, message).pipe(
       map(res => {
@@ -106,7 +106,7 @@ export class MessageService {
   getReceivedMessagesByEmail(email: string, skip = 0, limit = 1000) {
     if (!email) {
       this.toaster.error('User email is not provided!');
-      return;
+      return undefined;
     }
     console.log(email);
     console.log(skip);
@@ -141,7 +141,7 @@ export class MessageService {
   countReceivedMessage(email: string) {
     if (!email) {
       this.toaster.error('User email is not provided!');
-      return;
+      return undefined;
     }
     let filter: any = {
       to: email,
@@ -162,7 +162,7 @@ export class MessageService {
   countNewMessage(email: string) {
     if (!email) {
       this.toaster.error('User email is not provided!');
-      return;
+      return undefined;
     }
     let filter: any = {
       to: email,
@@ -185,7 +185,7 @@ export class MessageService {
   getSentMessagesByEmail(email: string, skip = 0, limit = 1000) {
     if (!email) {
       this.toaster.error('Email is not provided!');
-      return;
+      return undefined;
     }
     let filter: any = {
       order: 'id DESC',
@@ -218,7 +218,7 @@ export class MessageService {
   countSentMessage(email: string) {
     if (!email) {
       this.toaster.error('Email is not provided!');
-      return;
+      return undefined;
     }
     let filter: any = {
       from: email
@@ -238,7 +238,7 @@ export class MessageService {
   getImportantMessagesByEmail(email: string, skip = 0, limit = 1000) {
     if (!email) {
       this.toaster.error('Email is not provided!');
-      return;
+      return undefined;
     }
     let filter: any = {
       order: 'id DESC',
@@ -271,7 +271,7 @@ export class MessageService {
   countImportantMessage(email: string) {
     if (!email) {
       this.toaster.error('Email is not provided!');
-      return;
+      return undefined;
     }
     let filter: any = {
       and: [{ isImportant: true }, { or: [{ from: email }, { to: email }] }],
@@ -295,7 +295,7 @@ export class MessageService {
   getTrashMessagesByEmail(email: string, skip = 0, limit = 1000) {
     if (!email) {
       this.toaster.error('Email is not provided!');
-      return;
+      return undefined;
     }
     let filter: any = {
       order: 'id DESC',
@@ -329,7 +329,7 @@ export class MessageService {
   countTrashMessage(email: string) {
     if (!email) {
       this.toaster.error('Email is not provided!');
-      return;
+      return undefined;
     }
     let filter: any = {
       isTrash: true,

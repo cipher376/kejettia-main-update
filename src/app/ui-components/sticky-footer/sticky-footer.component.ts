@@ -1,3 +1,4 @@
+import { Urls } from 'src/app/config';
 import { UserService } from 'src/app/shared/services';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -31,7 +32,7 @@ export class StickyFooterComponent implements OnInit, AfterViewInit {
   }
   openMenuCategories() {
     // navigate to search and then open filter
-    this.router.navigateByUrl('/main/pages/search;fromMenu=true');
+    this.router.navigateByUrl(Urls.search+';fromMenu=true');
   }
 
 }

@@ -1,9 +1,11 @@
+import { Urls } from 'src/app/config';
 import { UtilityService } from 'src/app/shared/services';
 import { Router } from '@angular/router';
 import { NO_IMAGE } from './../../config';
 import { environment } from 'src/environments/environment';
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductCategory } from 'src/app/models';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-popular-categories-item',
@@ -15,6 +17,7 @@ export class PopularCategoriesItemComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private location: Location,
     private utilityService: UtilityService
   ) { }
 
@@ -33,8 +36,14 @@ export class PopularCategoriesItemComponent implements OnInit {
 
   search() {
     this.utilityService.setSearchKey(this.productCategory?.name);
-    this.router.navigateByUrl('/main/pages/search' ).then(()=>{
-      window.location.reload();
-    })
+    if(window.location.pathname?.indexOf('search')>-1){
+      // on search page
+      this.location.back();
+      setTimeout(() => {
+         this.router.navigate([Urls.search]);
+      }, 500);
+    } else {
+      this.router.navigate([Urls.search]);
+    }
   }
 }
