@@ -19122,3 +19122,12 @@ body.home.loaded {
     }
 
 }
+
+@media screen and (max-width: 600px) {
+  .gist-messenger-bubble-iframe {
+    display: none;
+}
+.removefoot{
+  display: none;
+}
+}

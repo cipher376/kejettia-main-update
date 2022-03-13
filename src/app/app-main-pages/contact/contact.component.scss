@@ -1,1 +1,6 @@
 // @import url(../../../../assets/css/style.min.css);
+@media screen and (max-width: 600px) {
+  .gist-messenger-bubble-iframe {
+    display:flex !important;
+}
+}
