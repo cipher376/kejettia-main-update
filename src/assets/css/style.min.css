@@ -19122,10 +19122,16 @@ body.home.loaded {
     }
 
 }
+.gist-messenger-bubble-iframe iframe {
+  margin-bottom: 5em;
+  margin-right: 1em;
+
+}
 
 @media screen and (max-width: 600px) {
-  .gist-messenger-bubble-iframe {
-    display: none;
+  .gist-messenger-bubble-iframe iframe {
+    margin-bottom: 5em;
+    margin-right: 0.1em;
 }
 .removefoot{
   display: none;

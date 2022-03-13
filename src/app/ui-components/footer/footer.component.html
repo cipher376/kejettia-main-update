@@ -69,10 +69,10 @@
             <h4 class="widget-title">My Account</h4>
             <ul class="widget-body">
               <li>
-                <a href="javascript:;">About Us</a>
+                <a [routerLink]="['/main/pages/about']" routerLinkActive="router-link-active">About</a>
               </li>
               <li>
-                <a href="javascript:;">Custom Service</a>
+                <a [routerLink]="['/main/pages/contact']" routerLinkActive="router-link-active">Contact</a>
               </li>
               <li>
                 <a href="javascript:;">Terms &amp; Condition</a>
@@ -89,12 +89,12 @@
                 <a href="javascript:;">View Cart</a>
               </li>
               <li>
-                <a href="javascript:;">My Wishlist</a>
-              </li>
-              <li>
-                <a href="javascript:;">FAQ</a>
+                <a [routerLink]="['/main/pages/faq']" routerLinkActive="router-link-active">FAQ</a>
               </li>
             </ul>
+
+
+
           </div>
           <!-- End Widget -->
         </div>
