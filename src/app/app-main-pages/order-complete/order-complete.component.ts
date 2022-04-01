@@ -45,7 +45,7 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
 
     if (!this.consolidatedOrder?.deliveryAddress?.email) {
       this.orderService.getConsolidatedOrderById(this.consolidatedOrder?.id).subscribe(order => {
-        window.location.reload();
+        this.utilityService.reload();
       });
     }
     // console.log(this.consolidatedOrder);

@@ -15,6 +15,7 @@ import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service
 import { SimpleModalService } from 'ngx-simple-modal';
 
 import { Order, ORDER_STATE } from 'src/app/models';
+import { UtilityService } from 'src/app/shared/services';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class PaystackComponent implements OnInit, AfterViewInit {
     public userService: UserService,
     public router: Router,
     private signal: SignalService,
-    private modal: SimpleModalService
+    private modal: SimpleModalService,
+    private utilityService: UtilityService
   ) { }
 
 
@@ -79,7 +81,7 @@ export class PaystackComponent implements OnInit, AfterViewInit {
     this.orderService.verifyOrderPayment(this.consolidatedOrder?.id, ref.reference).subscribe(data => {
       if (data.status === 'success') {
         this.orderService.getConsolidatedOrderById(this.consolidatedOrder?.id).subscribe(order => {
-          window.location.reload();
+          this.utilityService.reload();
         });
       }
     });
@@ -103,7 +105,8 @@ export class PaystackComponent implements OnInit, AfterViewInit {
     }).subscribe(() => {
       setTimeout(() => {
         disposable.unsubscribe();
-        window.location.reload();
+        this.utilityService.reload();
+
       }, 100);
     })
 

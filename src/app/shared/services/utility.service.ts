@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { MyFile as File } from './../../models/file';
 import { LatLng } from './../../models/LatLng';
@@ -5,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { MyLocalStorageService } from './local-storage.service';
 import { Country } from 'src/app/models';
 import { Location } from '@angular/common'
+import { Urls } from 'src/app/config';
 
 
 
@@ -16,7 +18,8 @@ export class UtilityService {
   constructor(
     private localStore: MyLocalStorageService,
     private signal: SignalService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) { }
 
 
@@ -1178,12 +1181,19 @@ export class UtilityService {
     this.localStore.setSync('searchKey', key);
   }
 
-  reload(){
-    this.location.back();
-    setTimeout(() => {
-      this.location.forward();
-    }, 500);
+  reload() {
+    if (!this.isMobile()) {
+      window.location.reload()
+    } else {
+      this.router.navigate([Urls.home]);
+      setTimeout(() => {
+        this.location.back();
+      }, 100);
+    }
   }
 
+  isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
 
 }

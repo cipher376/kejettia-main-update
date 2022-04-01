@@ -47,7 +47,7 @@ export class CategoryFilterComponent implements OnInit, AfterViewInit {
     this.utilityService.setSearchKey(cat?.name);
 
       this.router.navigate([Urls.search]).then(() => {
-        window.location.reload();
+        this.utilityService.reload();
       })
     }
   }

@@ -38,10 +38,7 @@ export class PopularCategoriesItemComponent implements OnInit {
     this.utilityService.setSearchKey(this.productCategory?.name);
     if(window.location.pathname?.indexOf('search')>-1){
       // on search page
-      this.location.back();
-      setTimeout(() => {
-         this.router.navigate([Urls.search]);
-      }, 500);
+      this.utilityService.reload();
     } else {
       this.router.navigate([Urls.search]);
     }

@@ -28,6 +28,7 @@ import { SelectModule } from 'ng-select';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { BusinessPageComponent } from './business-page/business-page.component';
+import { TermsComponent } from './terms/terms.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { BusinessPageComponent } from './business-page/business-page.component';
     CompanyComponent,
     ChangePasswordComponent,
     EmailVerificationComponent,
-    BusinessPageComponent
+    BusinessPageComponent,
+    TermsComponent
   ],
 })
 export class MainPagesModule { }
