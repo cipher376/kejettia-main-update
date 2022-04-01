@@ -1,11 +1,7 @@
 <section class="product-wrapper">
-  <h2 class="title title-line title-underline with-link appear-animate" data-animation-options="{
-      'delay': '.3s'
-  }">Featured Product
+  <h2 class="title title-line title-underline with-link appear-animate">Featured Product
     <a href="/stores/stores/pages/products" class="font-weight-semi-bold">View more<i class="d-icon-arrow-right"></i></a></h2>
-  <div class="row gutter-xs appear-animate" data-animation-options="{
-      'delay': '.3s'
-  }">
+  <div class="row gutter-xs appear-animate">
 
     <div class="col-md-3 col-6 mb-4" *ngFor="let prod of Products">
       <app-product-thumb-horizontal [Product]="prod"></app-product-thumb-horizontal>
