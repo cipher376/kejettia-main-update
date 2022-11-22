@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "kejettia-main-update": {
+    "kejettia-main-mobile": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kejettia-main-update",
+            "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -46,7 +46,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
+                  "maximumWarning": "250kb",
                   "maximumError": "300kb"
                 }
               ],
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "kejettia-main-update:build:production"
+              "browserTarget": "kejettia-main-mobile:build:production"
             },
             "development": {
-              "browserTarget": "kejettia-main-update:build:development"
+              "browserTarget": "kejettia-main-mobile:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "kejettia-main-update:build"
+            "browserTarget": "kejettia-main-mobile:build"
           }
         },
         "test": {
@@ -111,5 +111,5 @@
       }
     }
   },
-  "defaultProject": "kejettia-main-update"
+  "defaultProject": "kejettia-main-mobile"
 }

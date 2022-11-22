@@ -1,22 +1,22 @@
 
 
 
-export const EMPLOYEE_ACCOUNT_API_HOST_PRODUCTION = 'https://employee-account.api.devtek-limited.tech'
+export const EMPLOYEE_ACCOUNT_API_HOST_PRODUCTION = 'https://employee-account.api.kejettia.com'
 export const EMPLOYEE_ACCOUNT_API_URL_PRODUCTION = `${EMPLOYEE_ACCOUNT_API_HOST_PRODUCTION}`
 
-export const MESSAGE_API_HOST_PRODUCTION = 'https://message-api.devtek-limited.tech'
+export const MESSAGE_API_HOST_PRODUCTION = 'https://message.api.kejettia.com'
 export const MESSAGE_API_URL_PRODUCTION = `${MESSAGE_API_HOST_PRODUCTION}`
 
-export const FILE_API_HOST_PRODUCTION = 'https://file-api.devtek-limited.tech'
+export const FILE_API_HOST_PRODUCTION = 'https://file.api.kejettia.com'
 export const FILE_API_URL_PRODUCTION = `${FILE_API_HOST_PRODUCTION}/file`
 
-export const IDENTITY_API_HOST_PRODUCTION = 'https://kejettia-identity.api.devtek-limited.tech'
+export const IDENTITY_API_HOST_PRODUCTION = 'https://kejettia-identity.api.kejettia.com'
 export const IDENTITY_API_URL_PRODUCTION = `${IDENTITY_API_HOST_PRODUCTION}`
 
-export const MAIN_IDENTITY_API_HOST_PRODUCTION = 'https://main-identity.api.devtek-limited.tech'
+export const MAIN_IDENTITY_API_HOST_PRODUCTION = 'https://main-identity.api.kejettia.com'
 export const MAIN_IDENTITY_API_URL_PRODUCTION = `${MAIN_IDENTITY_API_HOST_PRODUCTION}`
 
-export const STORE_API_HOST_PRODUCTION = 'https://store-api.devtek-limited.tech'
+export const STORE_API_HOST_PRODUCTION = 'https://store.api.kejettia.com'
 export const STORE_API_URL_PRODUCTION = `${STORE_API_HOST_PRODUCTION}`
 
 
