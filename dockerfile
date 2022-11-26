@@ -1,4 +1,4 @@
-FROM node:14.17.0 AS compile-image
+FROM node:14-alpine3.15 AS compile-image
 
 RUN npm install -g @angular/cli
 
@@ -7,8 +7,8 @@ COPY  package.json angular.json ./
 RUN rm -rf /opt/ng/node_modules
 RUN npm install
 COPY . ./
-RUN ng build --prod
+RUN ng build --configuration production
 
-FROM nginx:1.17.1-alpine
+FROM nginx:1.23.2-alpine
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=compile-image /opt/ng/dist/kejettia-main-update /usr/share/nginx/html
+COPY --from=compile-image /opt/ng/www /usr/share/nginx/html

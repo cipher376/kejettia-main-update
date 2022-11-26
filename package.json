@@ -1,5 +1,5 @@
 {
-  "name": "kejettia-main-update",
+  "name": "kejettia-main-ca",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,9 +7,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "docker:build-deploy": "docker build -t kejettia-main-update .  && docker tag kejettia-main-update ntiamoah376/devtek:kejettia-main-update && docker push ntiamoah376/devtek:kejettia-main-update",
-    "docker:build": "docker build -t kejettia-main-update . ",
-    "docker:run": "docker run --network netdev --ip 172.18.0.20 -p 4200:80 -d kejettia-main-update"
+    "docker:build-deploy": "docker build -t kejettia-main-ca .  && docker tag kejettia-main-ca ntiamoah376/devtek:kejettia-main-ca && docker push ntiamoah376/devtek:kejettia-main-ca",
+    "docker:build": "docker build -t kejettia-main-ca . ",
+    "docker:run1": "docker run --network netdev --ip 172.18.0.20 -p 4200:80 -d kejettia-main-ca",
+    "docker:run": "docker run  -p 4200:80 -d kejettia-main-ca"
   },
   "private": true,
   "dependencies": {
