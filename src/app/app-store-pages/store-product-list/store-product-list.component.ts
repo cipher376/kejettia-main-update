@@ -1,8 +1,9 @@
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Store } from 'src/app/models/store';
-import { Product } from 'src/app/models';
 import { Location } from '@angular/common';
+import { WcProduct } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 @Component({
   selector: 'app-store-product-list',
@@ -17,11 +18,12 @@ export class StoreProductListComponent implements OnInit, AfterViewInit {
   public layout = 'grid'; // list
 
   productItemsPerPage = 20;
-  productItems: Product[] = [];
-  sortedProductItems: Product[] = [];
+  productItems: WcProduct[] = [];
+  sortedProductItems: WcProduct[] = [];
 
   constructor(
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private location: Location
   ) { }
 
@@ -63,7 +65,7 @@ export class StoreProductListComponent implements OnInit, AfterViewInit {
   loadProducts(){
     this.productItems = this.selectedStore.products;
     this.sortedProductItems = this.productItems;
-    this.storeService.setProductsLocal(this.productItems);
+    this.wcStoreService.setProductsLocal(this.productItems);
 
   }
 

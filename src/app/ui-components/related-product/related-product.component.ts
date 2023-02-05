@@ -5,8 +5,9 @@ import { environment } from './../../../environments/environment';
 import { PageInfo } from './../../models/page';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models';
 import { UtilityService } from 'src/app/shared/services';
+import { WcProduct } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 @Component({
   selector: 'app-related-product',
@@ -15,75 +16,67 @@ import { UtilityService } from 'src/app/shared/services';
 })
 export class RelatedProductComponent implements OnInit {
 
-  selectedProduct: Product;
+  selectedProduct: WcProduct;
 
-  relatedProducts: Product[] = [];
+  relatedProducts: WcProduct[] = [];
   relatedProductPhotos: string[] = [];
 
 
   constructor(
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private router: Router,
     private utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
-    this.selectedProduct = this.storeService.getSelectedProductLocalSync();
+    this.selectedProduct = this.wcStoreService.getSelectedProductLocalSync();
   }
 
   refreshProduct() {
-    this.storeService.getProductById(this.selectedProduct.id).subscribe(product => {
+    this.wcStoreService.getProductById(this.selectedProduct.id).subscribe(product => {
       this.selectedProduct = product;
       this.loadRelatedProducts();
     });
   }
 
   loadRelatedProducts() {
-    let searchKey = '';
-    this.selectedProduct?.productCategoryItems?.forEach(item => {
-      searchKey += ' ' + item?.name;
-    });
-
-    const pageInfo = {} as PageInfo;
-    pageInfo.limit = 15;
-    pageInfo.limit = 0;
-    pageInfo.pageSize = 15;
-
-    this.storeService.searchProduct(searchKey, pageInfo).subscribe((products: Product[]) => {
+    this.wcStoreService.getLinkedProduct(this.selectedProduct?.id).subscribe((products: WcProduct[]) => {
       this.relatedProducts = products;
       products?.forEach(prod => {
-        this.relatedProductPhotos.push(StoreService.getPhotoUrlByDisplayTypeLocal(prod.photos, 'cover', true, true) || NO_IMAGE)
+        this.relatedProductPhotos.push(StoreService.getPhotoUrlByDisplayTypeLocal(prod.images, 'cover', true, true) || NO_IMAGE)
       });
     })
+  
   }
 
-  goToProduct(product: Product) {
-    this.storeService.setSelectedProductLocal(product).then(() => {
+  goToProduct(product: WcProduct) {
+    this.wcStoreService.setSelectedProductLocal(product).then(() => {
       this.router.navigateByUrl(Urls.productDetails+'/'+product?.id);
     })
   }
 
-  isNew(product: Product) {
-    return StoreService.isNew(product);
+  isNew(product: WcProduct) {
+    return this.wcStoreService.isNew(product);
   }
 
-  getCategory(product: Product) {
-    if (product?.productCategoryItems?.length > 0) {
-      return product?.productCategoryItems[0]?.name
+  getCategory(product: WcProduct) {
+    if (product?.categories?.length > 0) {
+      return product?.categories[0]?.name
     }
     return '';
   }
 
   searchCategory(product) {
-    if (product?.productCategoryItems?.length > 0) {
-    this.utilityService.setSearchKey(product?.productCategoryItems[0]?.name);
+    if (product?.categories?.length > 0) {
+    this.utilityService.setSearchKey(product?.categories[0]?.name);
 
       this.router.navigate([Urls.search])
     }
   }
 
-  getRating(prod: Product){
-    return StoreService.getProductRating(prod);
+  getRating(prod: WcProduct){
+    return this.wcStoreService.getProductRating(prod);
   }
 
 }

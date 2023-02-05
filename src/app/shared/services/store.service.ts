@@ -1,7 +1,7 @@
 import { UtilityService } from 'src/app/shared/services';
 import { Review } from './../../models/review';
 import { NO_IMAGE } from 'src/app/config';
-import { ProductCategory, ProductCategoryItem, ProductModel, ProductBrand, Product, ProductToCategoryItemThrough } from './../../models/product';
+import { ProductCategory, ProductCategoryItem, ProductModel, ProductBrand, ProductToCategoryItemThrough, Product } from './../../models/product';
 import { HttpClient } from '@angular/common/http';
 import { PolicyType } from './../../models/store-policy';
 import { Injectable } from '@angular/core';
@@ -52,8 +52,9 @@ export class StoreService {
 
 
   static isNew(item: Product | Store) {
-    if (item.dateCreated) {
-      const days = UtilityService.calcDatesDiffInDays(item.dateCreated, new Date(Date.now()));
+    const dateCreated = (item as any).dateCreated??(item as any).date_created;
+    if (dateCreated) {
+      const days = UtilityService.calcDatesDiffInDays(dateCreated, new Date(Date.now()));
       if (days <= 14) { // after two weeks
         return true;
       }
@@ -62,21 +63,7 @@ export class StoreService {
   }
 
 
-  // returns rating in %
-  static getProductRating(product: Product) {
-    // likes
-    // reviews
-    //
-    let totalRatings = 0;
-    const reviews = product?.reviews;
-    if (reviews) {
-      reviews.forEach(rev => {
-        totalRatings += rev.rate;
-      });
-      return ((totalRatings / reviews?.length) / 5) * 100;
-    }
-    return 0;
-  }
+ 
 
   static getStoreRating(store: Store) {
     // likes
@@ -96,11 +83,20 @@ export class StoreService {
 
     if ((foundPhotos?.length > 0)) {
       const tmp = foundPhotos[Math.floor(Math.random() * (foundPhotos?.length))]
+  
       url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
+      if((tmp as any)?.src){
+        url = (tmp as any).src;
+      }
     }
+
+
     if (chooseAny && (foundPhotos?.length <= 0) && (photos?.length > 0)) {
       const tmp = photos[Math.floor(Math.random() * (foundPhotos?.length))]
       url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
+      if((tmp as any)?.src){
+        url = (tmp as any).src;
+      }
     }
 
     if (!url) {
@@ -1448,7 +1444,7 @@ export class StoreService {
   }
 
   // remove link between user to product
-  removeProductFromWishList(productId: string, userId: string) {
+  removeProductFromWishList(productId: any, userId: string) {
     if (!productId || !userId) {
       console.log('Invalid product or user id.');
       return undefined;

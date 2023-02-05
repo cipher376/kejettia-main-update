@@ -3,15 +3,15 @@
     <thead>
       <tr>
         <th>Location (Towns, cities, or country)</th>
-        <th>Flat charge (GH₵)</th>
-        <th>Range charge (GH₵)</th>
+        <th>Flat charge ($)</th>
+        <th>Range charge ($)</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let sh of shippings">
-        <td class="pl-4">{{sh?.shipTo}}</td>
-        <td class="pl-4">{{sh?.flatCharge}}</td>
-        <td class="pl-4">{{sh?.chargeFrom}} - {{sh?.chargeTo}}</td>
+        <td class="pl-4">{{sh?.address_1}}</td>
+        <td class="pl-4">Free shipping --todo</td>
+        <td class="pl-4">None</td>
       </tr>
     </tbody>
   </table>

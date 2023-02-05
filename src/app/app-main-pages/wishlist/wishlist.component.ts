@@ -2,9 +2,11 @@ import { Router } from '@angular/router';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Product, User } from 'src/app/models';
 import { UserService } from 'src/app/shared/services';
 import { PHOTO_DISPLAY_TYPES, Urls } from 'src/app/config';
+import { WcProduct } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
+import { User } from 'src/app/models';
 
 @Component({
   selector: 'app-wishlist',
@@ -12,13 +14,14 @@ import { PHOTO_DISPLAY_TYPES, Urls } from 'src/app/config';
   styleUrls: ['./wishlist.component.scss']
 })
 export class WishlistComponent implements OnInit, AfterViewInit {
-  favProducts: Product[] = [];
+  favProducts: WcProduct[] = [];
   isMobile = false;
   loggedUser: User;
 
   constructor(
     private location: Location,
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private userService: UserService,
     private router: Router
   ) { }
@@ -41,22 +44,22 @@ export class WishlistComponent implements OnInit, AfterViewInit {
   }
 
   getWishList() {
-    this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {
+    this.wcStoreService.getUserWishList(this.loggedUser?.id).subscribe(products => {
       this.favProducts = products;
     });
   }
 
-  goToProduct(product: Product) {
-    this.storeService.setSelectedProductLocal(product).then(() => {
+  goToProduct(product: WcProduct) {
+    this.wcStoreService.setSelectedProductLocal(product).then(() => {
       this.router.navigateByUrl(Urls.productDetails + '/' + product?.id);
     });
   }
 
-  getProductPhoto(product: Product) {
-    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
+  getProductPhoto(product: WcProduct) {
+    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.images, PHOTO_DISPLAY_TYPES.COVER, true, true);
   }
 
-  remove(prod: Product) {
+  remove(prod: WcProduct) {
     this.storeService.removeProductFromWishList(prod?.id, this.loggedUser?.id).subscribe(()=>{
       this.getWishList();
     });

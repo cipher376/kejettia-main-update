@@ -1,5 +1,6 @@
 import { Shipping } from './shipping';
 import { Product, Features } from ".";
+import { WcProduct } from './woocommerce.model';
 
 
 export class CartItem {
@@ -7,7 +8,7 @@ export class CartItem {
   id?: string;
   quantity?: number;
   price?: number;
-  product?: Product;
+  product?: WcProduct;
   productId?: string;
   features?: Features[];
   shipping: Shipping;

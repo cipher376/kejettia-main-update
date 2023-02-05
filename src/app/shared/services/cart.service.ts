@@ -10,6 +10,7 @@ import { throwError, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
+import { WooCommerceStoreService } from './wc-store.service';
 
 
 @Injectable({
@@ -23,7 +24,8 @@ export class CartService {
     private http: HttpClient,
     private userService: UserService,
     private signal: SignalService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService
   ) {
     this.initCart();
   }
@@ -310,10 +312,10 @@ export class CartService {
       cartItem.cartId = cartId;
       cartItem.productId = productId;
       cartItem.id = 'cart_item' + UtilityService.generateRandomNumber() + UtilityService.generateRandomNumber();
-      const sub$ = this.storeService.getProductById(productId).subscribe(product => {
+      const sub$ = this.wcStoreService.getProductById(productId).subscribe(product => {
         cartItem.product = product;
-        cartItem.price = product.currentPrice;
-        if (product?.currentPrice > 0) {
+        cartItem.price = product.price;
+        if (product?.price > 0) {
           cart.cartItems.push(cartItem);
           this.setCartLocal(cart);
           this.signal.sendAction(MY_ACTION.cartChanged);

@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RatingComponent implements OnInit {
   private rate = 0;
-  private reviews: Review[] = [];
+  private reviewsCount: number;
   constructor() { }
 
   ngOnInit(): void {
@@ -19,15 +19,16 @@ export class RatingComponent implements OnInit {
   }
 
   get Rating(){
+    // console.log(this.rate);
     return 'width:'+this.rate+'%;';
   }
 
-  @Input() set Reviews(reviews: Review[]){
-    this.reviews = reviews;
+  @Input() set ReviewsCount(count: number){
+    this.reviewsCount = count;
   }
 
-  get Reviews(){
-    return this.reviews;
+  get ReviewsCount(){
+    return this.reviewsCount;
   }
 
 

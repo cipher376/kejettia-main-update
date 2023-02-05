@@ -8,7 +8,7 @@ export class Product {
   currentPrice?: number;
   fromPrice?: number;
   toPrice?: number;
-  previousPrice?: number;
+  regular_price?: number;
   dateCreated?: Date;
   dateModified?: Date;
   about?: string;

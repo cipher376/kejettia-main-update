@@ -2,7 +2,7 @@ import { UtilityService } from './../../shared/services/utility.service';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Store } from './../../models/store';
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models';
+import { WcProduct } from 'src/app/models/woocommerce.model';
 
 @Component({
   selector: 'app-product-sales-widget',
@@ -13,9 +13,9 @@ export class ProductSalesWidgetComponent implements OnInit {
 
   selectedStore: Store;
 
-  topProducts: Product[] = [];
-  latestProducts: Product[] = [];
-  bestOfWeek: Product[] = [];
+  topProducts: WcProduct[] = [];
+  latestProducts: WcProduct[] = [];
+  bestOfWeek: WcProduct[] = [];
 
 
 

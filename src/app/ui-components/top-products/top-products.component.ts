@@ -1,10 +1,11 @@
 import { Router } from '@angular/router';
 import { PHOTO_DISPLAY_TYPES, Urls } from './../../config';
-import { Product } from './../../models/product';
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Store } from 'src/app/models';
 import { UtilityService } from 'src/app/shared/services';
+import { WcProduct } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 @Component({
   selector: 'app-top-products',
@@ -13,13 +14,14 @@ import { UtilityService } from 'src/app/shared/services';
 })
 export class TopProductsComponent implements OnInit, AfterViewInit {
 
-  private products: Product[] = [];
+  private products: WcProduct[] = [];
   private selectedStore: Store;
   photoUrl = '';
   @Input() title = '';
 
   constructor(
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private router: Router
   ) { }
 
@@ -30,26 +32,25 @@ export class TopProductsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
-  @Input() set Products(prods: Product[]) {
+  @Input() set Products(prods: WcProduct[]) {
     this.products = prods;
 
   }
 
-  getRating(p: Product) {
-    return StoreService.getProductRating(p);
+  getRating(p: WcProduct) {
+    return this.wcStoreService.getProductRating(p);
   }
 
-  getUrl(product: Product) {
-    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
-
+  getUrl(product: WcProduct) {
+    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.images, PHOTO_DISPLAY_TYPES.COVER, true, true);
   }
 
   get Products() {
     return this.products;
   }
 
-  goToProduct(product: Product) {
-    this.storeService.setSelectedProductLocal(product).then(() => {
+  goToProduct(product: WcProduct) {
+    this.wcStoreService.setSelectedProductLocal(product).then(() => {
       this.router.navigateByUrl(Urls.productDetails + '/' + product?.id);
     });
   }

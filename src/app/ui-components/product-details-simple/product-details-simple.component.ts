@@ -1,14 +1,16 @@
-import { Cart, CartItem, Features, Photo, Product, Review, Shipping, User } from 'src/app/models';
+import { Cart, CartItem, Features, Photo, Review, Shipping, User } from 'src/app/models';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Urls } from 'src/app/config';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { SignalService, MY_ACTION } from 'src/app/shared/services/signal.service';
-import { StoreService } from 'src/app/shared/services/store.service';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
 import { UserService, UtilityService } from 'src/app/shared/services';
+import { ProductShippingClass, WcCustomerShipping, WcProduct, WcProductReview } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
+import { StoreService } from 'src/app/shared/services/store.service';
 
 
 declare var $: any;
@@ -23,10 +25,10 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   loggedUser: User;
 
 
-  selectedProduct: Product;
-  selectedProductPhotos: Photo[] = [];
-  products: Product[] = [];
-  productReviews: Review[] = [];
+  selectedProduct: WcProduct;
+  selectedProductPhotos: any[] = [];
+  products: WcProduct[] = [];
+  productReviews: WcProductReview[] = [];
 
   quantity = 0;
   cartItem?: CartItem;
@@ -51,17 +53,19 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   colorGuidePhoto = '';
 
   selectedShippingCost: number = 0;
-  selectedShipping: Shipping;
+  selectedShipping: ProductShippingClass;
+  shippings: ProductShippingClass[]=[];
 
   selectedProductId = '';
 
-  wishList: Product[] = [];
+  wishList: WcProduct[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private cartService: CartService,
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private userService: UserService,
     private signal: SignalService,
     private location: Location
@@ -71,7 +75,6 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
       this.selectedProductId = p?.id;
       this.refreshProduct();
     })
-
   }
 
   @Input() set Product(product) {
@@ -97,8 +100,8 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
     }
   }
   ngAfterViewInit(): void {
-    // this.Product = this.storeService.getSelectedProductLocalSync();
-    this.wishList = this.storeService.getWishListLocalSync();
+    // this.WcProduct = this.wcStoreService.getSelectedProductLocalSync();
+    this.wishList = this.wcStoreService.getWishListLocalSync();
     this.isInWishList();
 
     console.log(this.wishList)
@@ -108,9 +111,11 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
       }, 100);
     }
     this.cart = this.cartService.getCartLocal();
-    this.products = this.storeService.getProductsLocalSync();
+    this.products = this.wcStoreService.getProductsLocalSync();
 
     window.scrollTo(0, 10);
+    this.loadPhotos();
+
 
   }
 
@@ -119,12 +124,12 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
 
     this.signal._action$.subscribe(action => {
       if (action === MY_ACTION.wish_list_changed) {
-        this.wishList = this.storeService.getWishListLocalSync();
+        this.wishList = this.wcStoreService.getWishListLocalSync();
         this.isInWishList();
       }
     })
 
-    this.Product = this.storeService.getSelectedProductLocalSync();
+    this.Product = this.wcStoreService.getSelectedProductLocalSync();
     this.signal._action$.subscribe(action => {
       if (action === MY_ACTION.cartChanged) {
         this.cart = this.cartService.getCartLocal();
@@ -136,8 +141,8 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   init() {
+    this.getShipping();
     this.getFeatures();
-    this.loadPhotos();
     this.loadReviews();
     this.getCartItemFromCart();
     this.getColorGuidePhotoUrl();
@@ -145,7 +150,7 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   addToCart() {
-    if ((this.selectedProduct?.shippings?.length) > 0 && (!this.selectedShipping)) {
+    if ((this.shippings?.length) > 0 && (!this.selectedShipping)) {
       alert("Please select shipping or delivery location");
       return;
     }
@@ -170,8 +175,8 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
       return;
     }
     if (!this.isInWishList()) {
-      this.storeService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id).subscribe(() => {
-        this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {
+      this.wcStoreService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id).subscribe(() => {
+        this.wcStoreService.getUserWishList(this.loggedUser?.id).subscribe(products => {
           this.wishList = products;
         });
       })
@@ -211,36 +216,42 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   refreshProduct() {
-    this.storeService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
+    this.wcStoreService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
       this.selectedProduct = product;
       this.init();
     })
   }
 
   getFeatures() {
-    this.sizeFeatures = [];
-    this.colorFeatures = [];
-    this.otherFeatures = [];
-    this.selectedProduct?.features?.forEach(f => {
-      if (f.name.search('size')) {
-        this.sizeFeatures.push(f);
-      } else if (f.name.search('color')) {
-        this.colorFeatures.push(f);
-      } else {
-        this.otherFeatures.push(f);
-      }
-    })
+    // this.sizeFeatures = [];
+    // this.colorFeatures = [];
+    // this.otherFeatures = [];
+    // this.selectedProduct?.features?.forEach(f => {
+    //   if (f.name.search('size')) {
+    //     this.sizeFeatures.push(f);
+    //   } else if (f.name.search('color')) {
+    //     this.colorFeatures.push(f);
+    //   } else {
+    //     this.otherFeatures.push(f);
+    //   }
+    // })
   }
 
   loadPhotos() {
     this.selectedProductPhotos = [];
-    this.selectedProduct?.photos?.forEach(p => {
-      const ph = new Photo();
+    this.selectedProduct?.images?.forEach(p => {
+      // console.log(p)
+      const ph: any = new Photo();
       ph.source = environment.file_api_download_url_root + p.source;
       ph.thumbnail = environment.file_api_download_url_root + p.thumbnail;
+      if(p.src){
+        ph.source = p.src;
+        ph.thumbnail = p.src;
+      }
       this.selectedProductPhotos.push(ph);
       return ph;
     });
+    // console.log(this.selectedProductPhotos);
   }
 
 
@@ -266,10 +277,10 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   goPrev() {
-    this.products = this.storeService.getProductsLocalSync();
+    this.products = this.wcStoreService.getProductsLocalSync();
     const prev = this.Prev;
     if (prev) {
-      this.storeService.setSelectedProductLocal(prev).then(() => {
+      this.wcStoreService.setSelectedProductLocal(prev).then(() => {
         // refresh page;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate([Urls.productDetails + '/' + this.Prev?.id]);
@@ -282,10 +293,10 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   goNext() {
-    this.products = this.storeService.getProductsLocalSync();
+    this.products = this.wcStoreService.getProductsLocalSync();
     const next = this.Next;
     if (next)
-      this.storeService.setSelectedProductLocal(next).then(() => {
+      this.wcStoreService.setSelectedProductLocal(next).then(() => {
         // refresh page;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate([Urls.productDetails + '/' + this.Next?.id]);
@@ -312,21 +323,21 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
     return undefined
   }
 
-  getPhotoUrl(photos: Photo[]) {
+  getPhotoUrl(photos: any[]) {
     return StoreService.getPhotoUrlByDisplayTypeLocal(photos, 'cover', true, true);
   }
 
   getSizeGuidePhotoUrl() {
-    this.sizeGuidePhoto = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedProduct?.photos, 'size-guide') || 'assets/images/product/size_guide.png';
+    this.sizeGuidePhoto = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedProduct?.images, 'size-guide') || 'assets/images/product/size_guide.png';
   }
 
   getColorGuidePhotoUrl() {
-    this.colorGuidePhoto = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedProduct?.photos, 'color-guide');
+    this.colorGuidePhoto = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedProduct?.images, 'color-guide');
   }
 
 
   calculateRating() {
-    return StoreService.getProductRating(this.selectedProduct);
+    return this.wcStoreService.getProductRating(this.selectedProduct);
   }
 
   isInWishList() {
@@ -352,23 +363,28 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   get StockCount() {
-    const currentStock = (this.selectedProduct?.stockCount - this.quantity)
+    const currentStock = (this.selectedProduct?.stock_quantity - this.quantity)
     return currentStock;
   }
 
   loadReviews() {
-    this.storeService.getProductReviews(this.selectedProduct?.id).subscribe(reviews => {
+    this.wcStoreService.getProductReviews(this.selectedProduct?.id).subscribe(reviews => {
       // console.log(reviews);
       this.productReviews = reviews;
     });
   }
 
   getVideo() {
-    if (this.selectedProduct?.videos?.length > 0)
-      return this.selectedProduct?.videos[0];
-    return undefined;
+    // if (this.selectedProduct?.videos?.length > 0)
+    //   return this.selectedProduct?.videos[0];
+    // return undefined;
   }
 
+  async getShipping(){
+    this.wcStoreService.getProductShippings(this.selectedProduct?.id).subscribe(shps => {
+      this.shippings = shps;
+    })
+  }
 
 
   // UI function
@@ -381,4 +397,6 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
       .insertBefore($product).fadeIn();
     $('.sticky-sidebar').trigger('recalc.pin');
   }
+
+  
 }

@@ -1,4 +1,5 @@
 import { User, Photo, Video, Address, Coupon, PolicyStatement, Product, Order, StoreCategory, Like, Review } from ".";
+import { WcProduct } from "./woocommerce.model";
 
 export class Store {
 
@@ -16,7 +17,7 @@ export class Store {
   policyStatements?: PolicyStatement[];
   coupons?: Coupon[];
   storeCategories?: StoreCategory[];
-  products?: Product[];
+  products?: WcProduct[];
   address?: Address;
   orders?: Order[];
   buyers?: User[];

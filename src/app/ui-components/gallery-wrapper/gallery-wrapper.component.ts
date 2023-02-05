@@ -44,8 +44,8 @@ export class GalleryWrapperComponent implements OnInit, OnDestroy {
     this.images = [];
     if (photos?.length > 0) {
       photos?.forEach(ph => {
-        const src = environment.file_api_download_url_root+ ph.source ?? '';
-        const thumb = environment.file_api_download_url_root + ph.thumbnail ?? '';
+        const src = ph?.src??environment.file_api_download_url_root+ ph.source ?? '';
+        const thumb = ph?.src??environment.file_api_download_url_root + ph.thumbnail ?? '';
         this.images.push({
           id: ph.id, src, thumb
         });

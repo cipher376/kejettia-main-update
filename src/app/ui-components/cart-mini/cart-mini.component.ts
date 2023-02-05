@@ -6,8 +6,10 @@ import { CartService } from 'src/app/shared/services/cart.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Urls } from 'src/app/config';
-import { Cart, CartItem, Product, User } from 'src/app/models';
+import { Cart, CartItem, User } from 'src/app/models';
 import { UserService } from 'src/app/shared/services';
+import { WcProduct } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 declare var $: any;
 declare var Window: any;
@@ -27,6 +29,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
     private cartService: CartService,
     private signal: SignalService,
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private userService: UserService
   ) {
     Window = window;
@@ -70,17 +73,17 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
     }
   }
 
-  goToProduct(product: Product) {
+  goToProduct(product: WcProduct) {
     console.log('here')
-    this.storeService.setSelectedProductLocal(product).then(() => {
+    this.wcStoreService.setSelectedProductLocal(product).then(() => {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate([Urls.productDetails + '/' + product?.id]);
       });
     });
   }
 
-  getProductPhoto(product: Product) {
-    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, 'cover', true, true);
+  getProductPhoto(product: WcProduct) {
+    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.images, 'cover', true, true);
   }
 
   deleteFromCart(cartItem: CartItem) {

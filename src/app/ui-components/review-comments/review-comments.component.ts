@@ -2,7 +2,8 @@ import { environment } from './../../../environments/environment';
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { UserService } from './../../shared/services/user.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { Review, User } from 'src/app/models';
+import { User } from 'src/app/models';
+import { WcProductReview } from 'src/app/models/woocommerce.model';
 
 @Component({
   selector: 'app-review-comments',
@@ -10,7 +11,7 @@ import { Review, User } from 'src/app/models';
   styleUrls: ['./review-comments.component.scss']
 })
 export class ReviewCommentsComponent implements OnInit {
-  private reviews: Review[] = [];
+  private reviews: WcProductReview[] = [];
   users: User[] = [];
 
   fileRootUrl = environment.file_api_download_url_root;
@@ -23,7 +24,7 @@ export class ReviewCommentsComponent implements OnInit {
 
   }
 
-  @Input() set Reviews(reviews: Review[]) {
+  @Input() set Reviews(reviews: WcProductReview[]) {
     if ((reviews?.length != this.reviews?.length)&&(reviews!=this.reviews)) {
       this.reviews = reviews.reverse();
       this.getReviewUsers();
@@ -35,17 +36,17 @@ export class ReviewCommentsComponent implements OnInit {
   }
 
   getReviewUsers() {
-    let usersIds = [];
-    // console.log(this.reviews)
-    this.reviews.forEach(r => {
-      usersIds.push(r.reviewerId);
-    })
+    // let usersIds = [];
+    // // console.log(this.reviews)
+    // this.reviews.forEach(r => {
+    //   usersIds.push(r.reviewerId);
+    // })
 
-    usersIds= [...new Set(usersIds)]; // remove duplicates;
-    if (usersIds?.length > 0)
-      this.userService.getUsersByIds(usersIds).subscribe(users => {
-        this.users = users;
-      })
+    // usersIds= [...new Set(usersIds)]; // remove duplicates;
+    // if (usersIds?.length > 0)
+    //   this.userService.getUsersByIds(usersIds).subscribe(users => {
+    //     this.users = users;
+    //   })
   }
 
   getRatePerCent(rate: number) {

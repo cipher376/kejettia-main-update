@@ -1,7 +1,8 @@
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models';
 import { UtilityService } from 'src/app/shared/services';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
+import { WcProduct } from 'src/app/models/woocommerce.model';
 
 @Component({
   selector: 'app-product-list-widget',
@@ -10,14 +11,16 @@ import { UtilityService } from 'src/app/shared/services';
 })
 export class ProductListWidgetComponent implements OnInit {
 
-  private products: Product[] = [];
+  private products: WcProduct[] = [];
 
   constructor(
-    private storeService: StoreService
+    private storeService: StoreService, 
+    private wcStoreService: WooCommerceStoreService
   ) { }
 
   ngOnInit(): void {
-    this.getProducts();
+    // this.getProducts();
+    this.getWcProducts();
   }
 
   get Products() {
@@ -26,6 +29,12 @@ export class ProductListWidgetComponent implements OnInit {
 
   getProducts() {
     this.storeService.getProducts().subscribe(prods => {
+      this.products = UtilityService.shuffle(prods);
+    })
+  }
+
+  getWcProducts(){
+    this.wcStoreService.getWcProducts().subscribe(prods => {
       this.products = UtilityService.shuffle(prods);
     })
   }

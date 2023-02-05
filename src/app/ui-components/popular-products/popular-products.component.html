@@ -22,18 +22,18 @@
             <h3 class="product-name">
               <a href="javascript:;" (click)="goToProduct(p)">{{p?.name}}</a>
             </h3>
-            <div class="product-price" *ngIf="p?.currentPrice">
+            <div class="product-price" *ngIf="p?.price">
               <span class="price"></span>
-              <ins class="new-price">{{p?.currentPrice |currency:'GHC ':'GH₵ '}}</ins><del class="old-price" *ngIf="p?.previousPrice">
-                {{p?.previousPrice}}</del>
+              <ins class="new-price">{{p?.price |currency:'USD ':'$ '}}</ins><del class="old-price" *ngIf="p?.regular_price">
+                {{p?.regular_price}}</del>
             </div>
-            <div class="product-price"  *ngIf="!p?.currentPrice" >
+            <!-- <div class="product-price"  *ngIf="!p?.price" >
               <p>
-                <span class="price">{{p?.fromPrice |currency:'GHC ':'GH₵ '}}</span> -
-                <span class="price">{{p?.toPrice |currency:'GHC ':'GH₵ '}}</span>
+                <span class="price">{{p?.fromPrice |currency:'USD ':'$ '}}</span> -
+                <span class="price">{{p?.toPrice |currency:'USD ':'$ '}}</span>
               </p>
-            </div>
-            <app-rating [Rating]="getRating(p)" [Reviews]="p?.reviews"></app-rating>
+            </div> -->
+            <app-rating [Rating]="getRating(p)" [ReviewsCount]="p?.rating_count"></app-rating>
           </div>
         </div>
 

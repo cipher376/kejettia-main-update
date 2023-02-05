@@ -8,6 +8,8 @@ import { StoreService } from 'src/app/shared/services/store.service';
 import { Location } from '@angular/common';
 import { UtilityService, UserService } from 'src/app/shared/services';
 import { IOption } from 'ng-select';
+import { WcProduct } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 
 declare var $: any;
@@ -35,6 +37,7 @@ export class CartComponent implements OnInit {
     private cartService: CartService,
     private signal: SignalService,
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private location: Location,
     private util: UtilityService,
     private userService: UserService
@@ -104,17 +107,17 @@ export class CartComponent implements OnInit {
     }
   }
 
-  goToProduct(product: Product) {
+  goToProduct(product: WcProduct) {
     console.log('here')
-    this.storeService.setSelectedProductLocal(product).then(() => {
+    this.wcStoreService.setSelectedProductLocal(product).then(() => {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate([Urls.productDetails + '/' + product?.id]);
       });
     });
   }
 
-  getProductPhoto(product: Product) {
-    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, 'cover', true, true);
+  getProductPhoto(product: WcProduct) {
+    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.images, 'cover', true, true);
   }
 
   deleteFromCart(cartItem: CartItem) {
@@ -131,9 +134,9 @@ export class CartComponent implements OnInit {
 
 
   increaseQuantity(item: CartItem) {
-    if (item?.product?.stockCount > 0) {
+    if (item?.product?.stock_quantity > 0) {
       item.quantity += 1
-      item.product.stockCount -= 1;
+      item.product.stock_quantity -= 1;
       this.updateCartItem(item);
     }
   }
@@ -141,7 +144,7 @@ export class CartComponent implements OnInit {
   decreaseQuantity(item: CartItem) {
     if (item?.quantity > 1) {
       item.quantity -= 1;
-      item.product.stockCount += 1;
+      item.product.stock_quantity += 1;
       this.updateCartItem(item);
     }
   }

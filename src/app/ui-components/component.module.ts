@@ -53,7 +53,6 @@ import { PopularCategoriesItemComponent } from './popular-categories-item/popula
 import { PopularCategoriesComponent } from './popular-categories/popular-categories.component';
 import { PopularStoresComponent } from './popular-stores/popular-stores.component';
 import { PriceComponent } from './price/price.component';
-import { ProductComponent } from './product/product.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SignupBannerComponent } from './signup-banner/signup-banner.component';
@@ -111,6 +110,7 @@ import { ProductListWidgetComponent } from './product-list-widget/product-list-w
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { WhatsappComponent } from './whatsapp/whatsapp.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
+import { SanitizeHtmlPipe } from '../shared/pipes/sanitize-html.pipe';
 
 
 @NgModule({
@@ -144,7 +144,6 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
     PopularCategoriesItemComponent,
     PopularStoresComponent,
     PriceComponent,
-    ProductComponent,
     ProfileComponent,
     SidebarComponent,
     SignupBannerComponent,
@@ -214,6 +213,7 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
     ProductListWidgetComponent,
     UploadComponent,
     WhatsappComponent,
+    SanitizeHtmlPipe
   ],
   imports: [
     CommonModule,
@@ -260,7 +260,6 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
     PopularCategoriesItemComponent,
     PopularStoresComponent,
     PriceComponent,
-    ProductComponent,
     ProfileComponent,
     SidebarComponent,
     SignupBannerComponent,
@@ -318,6 +317,8 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
     LoaderMiniComponent,
     UploadComponent,
     WhatsappComponent,
+    SanitizeHtmlPipe
+
   ]
 })
 export class ComponentModule { }

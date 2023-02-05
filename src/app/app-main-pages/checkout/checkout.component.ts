@@ -66,7 +66,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.consolidatedOrder.userId = this.loggedUser?.id;
         this.consolidatedOrder.deliveryAddressId = this.deliveryAddress?.selectedDeliveryAddress?.id;
         this.consolidatedOrder.userId = this.loggedUser?.id;
-        this.consolidatedOrder.currency = 'GHC';
+        this.consolidatedOrder.currency = 'USD';
         this.consolidatedOrder.state  = ORDER_STATE.NEW;
 
         this.orderService.createConsolidatedOrder(this.loggedUser?.id, this.consolidatedOrder).subscribe((consOrder) => {

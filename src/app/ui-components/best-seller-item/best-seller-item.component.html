@@ -29,6 +29,6 @@
         <!-- <div class="product-price">
             <span class="price">$230.99</span>
         </div> -->
-        <app-rating [Rating]="Rating" [Reviews]="Reviews"></app-rating>
+        <app-rating [Rating]="Rating" [ReviewsCount]="Reviews?.length || 0"></app-rating>
     </div>
 </div>

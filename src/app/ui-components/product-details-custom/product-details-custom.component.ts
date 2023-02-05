@@ -8,9 +8,11 @@ import { StoreService } from 'src/app/shared/services/store.service';
 import { CartService } from './../../shared/services/cart.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, AfterViewInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { Cart, CartItem, Product, Features, Review, User } from 'src/app/models';
+import { Cart, CartItem, Features, Review, User } from 'src/app/models';
 import { Subscription } from 'rxjs';
 import { UserService, UtilityService } from 'src/app/shared/services';
+import { WcProduct, WcProductReview } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 declare var $: any;
 declare var Window: any;
@@ -22,12 +24,11 @@ declare var Window: any;
 export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   loggedUser: User;
 
-
-  selectedProduct: Product;
+  selectedProduct: WcProduct;
   selectedProductId = '';
   selectedProductPhotos: Photo[] = [];
-  products: Product[] = [];
-  productReviews: Review[] = [];
+  products: WcProduct[] = [];
+  productReviews: WcProductReview[] = [];
 
   quantity = 0;
   cartItem?: CartItem;
@@ -54,13 +55,14 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   sizeGuidePhoto = '';
   colorGuidePhoto = '';
 
-  wishList: Product[] = [];
+  wishList: WcProduct[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private cartService: CartService,
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private userService: UserService,
     private signal: SignalService,
     private location: Location
@@ -97,8 +99,8 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.Product = this.storeService.getSelectedProductLocalSync();
-    this.wishList = this.storeService.getWishListLocalSync();
+    // this.WcProduct = this.storeService.getSelectedProductLocalSync();
+    this.wishList = this.wcStoreService.getWishListLocalSync();
     this.isInWishList();
 
     console.log(this.wishList)
@@ -109,7 +111,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
       }, 100);
     }
     this.cart = this.cartService.getCartLocal();
-    this.products = this.storeService.getProductsLocalSync();
+    this.products = this.wcStoreService.getProductsLocalSync();
 
     window.scrollTo(0, 10);
 
@@ -119,11 +121,11 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
     this.signal._action$.subscribe(action => {
       if (action === MY_ACTION.wish_list_changed) {
-        this.wishList = this.storeService.getWishListLocalSync();
+        this.wishList = this.wcStoreService.getWishListLocalSync();
         this.isInWishList();
       }
     })
-    this.Product = this.storeService.getSelectedProductLocalSync();
+    this.Product = this.wcStoreService.getSelectedProductLocalSync();
     this.signal._action$.subscribe(action => {
       if (action === MY_ACTION.cartChanged) {
         this.cart = this.cartService.getCartLocal();
@@ -144,37 +146,37 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   addToCart() {
-    console.log(this.selectedShipping)
-    if ((this.selectedProduct?.shippings?.length) > 0 && (!this.selectedShipping)) {
-      alert("Please select shipping or delivery location");
-      return;
-    }
+    // console.log(this.selectedShipping)
+    // if ((this.selectedProduct?.shippings?.length) > 0 && (!this.selectedShipping)) {
+    //   alert("Please select shipping or delivery location");
+    //   return;
+    // }
 
-    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe(cartItem => {
-      this.selectedFeatures?.forEach(feature => {
-        this.cartService.updateCartItemToFeature(this.cartItem?.id, feature?.id).subscribe(() => {
+    // this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe(cartItem => {
+    //   this.selectedFeatures?.forEach(feature => {
+    //     this.cartService.updateCartItemToFeature(this.cartItem?.id, feature?.id).subscribe(() => {
 
-        })
-      })
-      this.showAddedToCartAlert();
+    //     })
+    //   })
+    //   this.showAddedToCartAlert();
       // this.cartService.getCart().subscribe(()=>{})
-    })
+    // })
   }
 
 
 
   addToWishList() {
-    if(!this.loggedUser){
-      alert('Please login to add to your wishlist')
-      return;
-    }
-    if (!this.isInWishList()) {
-      this.storeService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id).subscribe(() => {
-        this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {
-          this.wishList = products;
-        });
-      })
-    }
+    // if(!this.loggedUser){
+    //   alert('Please login to add to your wishlist')
+    //   return;
+    // }
+    // if (!this.isInWishList()) {
+    //   this.storeService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id).subscribe(() => {
+    //     this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {
+    //       this.wishList = products;
+    //     });
+    //   })
+    // }
   }
 
   addToCompare() {
@@ -210,7 +212,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   refreshProduct() {
-    this.storeService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
+    this.wcStoreService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
       this.selectedProduct = product;
       this.init();
     });
@@ -220,20 +222,20 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.sizeFeatures = [];
     this.colorFeatures = [];
     this.otherFeatures = [];
-    this.selectedProduct?.features?.forEach(f => {
-      if (f.name.search('size')) {
-        this.sizeFeatures.push(f);
-      } else if (f.name.search('color')) {
-        this.colorFeatures.push(f);
-      } else {
-        this.otherFeatures.push(f);
-      }
-    });
+    // this.selectedProduct?.features?.forEach(f => {
+    //   if (f.name.search('size')) {
+    //     this.sizeFeatures.push(f);
+    //   } else if (f.name.search('color')) {
+    //     this.colorFeatures.push(f);
+    //   } else {
+    //     this.otherFeatures.push(f);
+    //   }
+    // });
   }
 
   loadPhotos() {
     this.selectedProductPhotos = [];
-    this.selectedProduct?.photos?.forEach(p => {
+    this.selectedProduct?.images?.forEach(p => {
       const ph = new Photo();
       ph.source = environment.file_api_download_url_root + p.source;
       ph.thumbnail = environment.file_api_download_url_root + p.thumbnail;
@@ -264,10 +266,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   goPrev() {
-    this.products = this.storeService.getProductsLocalSync();
+    this.products = this.wcStoreService.getProductsLocalSync();
     const prev = this.Prev;
     if (prev) {
-      this.storeService.setSelectedProductLocal(prev).then(() => {
+      this.wcStoreService.setSelectedProductLocal(prev).then(() => {
         // refresh page;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate([Urls.productDetails + '/' + this.Prev?.id]);
@@ -280,11 +282,11 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   goNext() {
-    this.products = this.storeService.getProductsLocalSync();
+    this.products = this.wcStoreService.getProductsLocalSync();
     const next = this.Next;
     console.log(next);
     if (next)
-      this.storeService.setSelectedProductLocal(next).then(() => {
+      this.wcStoreService.setSelectedProductLocal(next).then(() => {
         // refresh page;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate([Urls.productDetails + '/' + this.Next?.id]);
@@ -317,16 +319,16 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   getSizeGuidePhotoUrl() {
-    this.sizeGuidePhoto = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedProduct?.photos, 'size-guide') || 'assets/images/product/size_guide.png';
+    this.sizeGuidePhoto = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedProduct?.images, 'size-guide') || 'assets/images/product/size_guide.png';
   }
 
   getColorGuidePhotoUrl() {
-    this.colorGuidePhoto = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedProduct?.photos, 'color-guide');
+    this.colorGuidePhoto = StoreService.getPhotoUrlByDisplayTypeLocal(this.selectedProduct?.images, 'color-guide');
   }
 
 
   calculateRating() {
-    return StoreService.getProductRating(this.selectedProduct);
+    return this.wcStoreService.getProductRating(this.selectedProduct);
   }
 
   isInWishList() {
@@ -354,20 +356,20 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   get StockCount() {
-    const currentStock = (this.selectedProduct?.stockCount - this.quantity)
+    const currentStock = (this.selectedProduct?.stock_quantity - this.quantity)
     return currentStock;
   }
 
   loadReviews() {
-    this.storeService.getProductReviews(this.selectedProduct?.id).subscribe(reviews => {
+    this.wcStoreService.getProductReviews(this.selectedProduct?.id).subscribe(reviews => {
       // console.log(reviews);
       this.productReviews = reviews;
     });
   }
 
   getVideo() {
-    if (this.selectedProduct?.videos?.length > 0)
-      return this.selectedProduct?.videos[0];
+    // if (this.selectedProduct?.videos?.length > 0)
+    //   return this.selectedProduct?.videos[0];
     return undefined;
   }
 

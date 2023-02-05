@@ -1,6 +1,8 @@
 import { Product } from 'src/app/models';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit } from '@angular/core';
+import { WcProduct } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 @Component({
   selector: 'app-product-details',
@@ -9,22 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDetailsComponent implements OnInit {
 
-  selectedProduct: Product = new Product();
+  selectedProduct: WcProduct = new WcProduct();
   pageType = 'simple'; // 'detail'
 
   constructor(
-    private storeService: StoreService
+    private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
   ) { }
 
   ngOnInit(): void {
-    this.selectedProduct = this.storeService.getSelectedProductLocalSync();
+    this.selectedProduct = this.wcStoreService.getSelectedProductLocalSync();
     this.loadPage();
   }
 
 
   loadPage() {
     let found = false;
-    this.selectedProduct?.features?.forEach(f => {
+    (this.selectedProduct as any)?.features?.forEach(f => {
       if (f.name.search('size') || f.name.search('color')) {
         found = true;
       }

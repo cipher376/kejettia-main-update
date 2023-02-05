@@ -10,6 +10,10 @@ export const STORE_API_PORT_LOCAL = '3001'
 export const STORE_API_HOST_LOCAL = 'http://localhost'
 export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
 
+export const WC_STORE_API_PORT_LOCAL = '3006'
+export const WC_STORE_API_HOST_LOCAL = 'http://localhost'
+export const WC_STORE_API_URL_LOCAL = `${WC_STORE_API_HOST_LOCAL}:${WC_STORE_API_PORT_LOCAL}`
+
 export const FILE_API_PORT_LOCAL = '3003'
 export const FILE_API_HOST_LOCAL = 'http://localhost'
 export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}:${FILE_API_PORT_LOCAL}/file`
@@ -58,6 +62,7 @@ export const environment = {
 
   employee_account_api_root_url: EMPLOYEE_ACCOUNT_API_URL_LOCAL,
   store_api_root_url: STORE_API_URL_LOCAL,
+  wc_store_api_root_url: WC_STORE_API_URL_LOCAL,
   identity_api_root_url: IDENTITY_API_URL_LOCAL,
   file_api_root_url: FILE_API_URL_LOCAL,
   file_api_download_url_root: FILE_API_URL_LOCAL + '/download/',

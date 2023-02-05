@@ -26,7 +26,7 @@
         <a href="javascript:;" (click)="goToProduct()">{{Product?.name}}</a>
       </h3>
       <div class="product-price">
-        <span class="price">{{Product?.currentPrice |currency:'GHC ':'GH₵ '}}</span>
+        <span class="price">{{Product?.price |currency:'USD ':'$ '}}</span>
       </div>
       <div class="ratings-container">
         <div class="ratings-full">

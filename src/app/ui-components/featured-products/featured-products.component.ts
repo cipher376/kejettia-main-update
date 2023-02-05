@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Product } from 'src/app/models';
+import { WcProduct } from 'src/app/models/woocommerce.model';
 
 @Component({
   selector: 'app-featured-products',
@@ -8,14 +8,14 @@ import { Product } from 'src/app/models';
 })
 export class FeaturedProductsComponent implements OnInit {
 
-  products: Product[] = [];
+  products: WcProduct[] = [];
   constructor() { }
 
   ngOnInit(): void {
   }
 
 
-  @Input() set Products(products: Product[]) {
+  @Input() set Products(products: WcProduct[]) {
     this.products = products;
   }
 

@@ -3,9 +3,11 @@ import { Urls } from 'src/app/config';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/shared/services';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Product, User } from 'src/app/models';
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { StoreService } from 'src/app/shared/services/store.service';
+import { WcProduct } from 'src/app/models/woocommerce.model';
+import { User } from 'src/app/models';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 @Component({
   selector: 'app-header',
@@ -18,12 +20,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   logUrl = 'assets/images/logo.svg';
 
-  wishList: Product[] = [];;
+  wishList: WcProduct[] = [];;
   constructor(
     private userService: UserService,
     private router: Router,
     private signal: SignalService,
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private route: ActivatedRoute
   ) {
     // this.route.params.subscribe(p=>{
@@ -51,7 +54,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.signal._action$.subscribe(action => {
       if (action === MY_ACTION.wish_list_changed) {
-        this.wishList = this.storeService.getWishListLocalSync();
+        this.wishList = this.wcStoreService.getWishListLocalSync();
       }
     })
 

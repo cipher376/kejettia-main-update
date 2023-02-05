@@ -6,6 +6,7 @@ import { environment } from './../../../environments/environment';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Photo, Product, ProductBrand, Store } from 'src/app/models';
 import { StoreService } from 'src/app/shared/services/store.service';
+import { WcProduct } from 'src/app/models/woocommerce.model';
 
 declare var $: any;
 declare var Window: any;
@@ -20,7 +21,7 @@ export class Home2Component implements OnInit, AfterViewInit {
   logoUrl = '';
   sliderPhotos: Photo[] = [];
   storeCategories: StoreCategory[] = [];
-  featuredProducts: Product[] = [];
+  featuredProducts: WcProduct[] = [];
 
   brands: ProductBrand[] = [];
 
@@ -102,12 +103,12 @@ export class Home2Component implements OnInit, AfterViewInit {
 
       // brands;
       this.brands = [];
-      this.selectedStore.products?.forEach(p => {
-        const b = p?.productModel?.productBrand;
-        console.log(b);
-        if (!this.brands.includes(b))
-          this.brands.push(b)
-      })
+      // this.selectedStore.products?.forEach(p => {
+      //   const b = p?.productModel?.productBrand;
+      //   console.log(b);
+      //   if (!this.brands.includes(b))
+      //     this.brands.push(b)
+      // })
 
       this.showLoader = false;
       window.scrollTo(0, 10)

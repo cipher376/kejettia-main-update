@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from 'src/app/models';
+
 import { PageInfo } from 'src/app/models/page';
+import { WcProduct, WcRequestFilter } from 'src/app/models/woocommerce.model';
 import { UtilityService } from 'src/app/shared/services';
 import { SignalService, MY_ACTION } from 'src/app/shared/services/signal.service';
 import { StoreService } from 'src/app/shared/services/store.service';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 @Component({
   selector: 'app-product-search',
@@ -26,10 +28,10 @@ export class ProductSearchComponent implements OnInit {
   FETCH_LIMIT = 100;
   FETCH_OFFSET = 0;
 
-  pageInfo = {} as PageInfo;
+  pageInfo = {} as WcRequestFilter;
 
-  productItems: Product[] = [];
-  sortedProductItems: Product[] = [];
+  productItems: WcProduct[] = [];
+  sortedProductItems: WcProduct[] = [];
   productItemsPerPage = 20;
 
   productLoading = false;
@@ -44,6 +46,7 @@ export class ProductSearchComponent implements OnInit {
     private signal: SignalService,
     private util: UtilityService,
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private route: ActivatedRoute
   ) {
     // this.route.params.subscribe(params => {
@@ -97,7 +100,7 @@ export class ProductSearchComponent implements OnInit {
 
 
   resetPage() {
-    this.pageInfo.limit = this.FETCH_LIMIT;
+    this.pageInfo.per_page = this.FETCH_LIMIT;
     this.pageInfo.offset = this.FETCH_OFFSET;
     this.productItems = [];
   }
@@ -118,10 +121,10 @@ export class ProductSearchComponent implements OnInit {
 
     // search for product
     this.productLoading = true;
-    this.storeService.searchProduct(key, this.pageInfo).subscribe((data: Product[]) => {
+    this.wcStoreService.searchProduct(key, this.pageInfo).subscribe((data: WcProduct[]) => {
       this.productItems = this.productItems.concat(data);
       this.sortedProductItems = this.productItems;
-      this.storeService.setProductsLocal(this.productItems);
+      this.wcStoreService.setProductsLocal(this.productItems);
       this.productLoading = false;
       this.pageInfo.offset += this.productItems.length;
     });

@@ -37,20 +37,20 @@
                       <td class="product-name">{{item?.product?.name}}
                         <span class="product-quantity">×&nbsp;{{item?.quantity}}</span>
                       </td>
-                      <td class="product-total text-body">{{item?.price |currency:' ':'GH₵ '}}</td>
+                      <td class="product-total text-body">{{item?.price |currency:' ':'$ '}}</td>
                     </tr>
 
                     <tr class="summary-subtotal">
                       <td>
                         <h4 class="summary-subtitle">Subtotal</h4>
                       </td>
-                      <td class="summary-subtotal-price pb-0 pt-0">{{totalCash |currency:' ':'GH₵ '}}
+                      <td class="summary-subtotal-price pb-0 pt-0">{{totalCash |currency:' ':'$ '}}
                       </td>
                     </tr>
 
                     <tr>
                       <td class="product-name">Delivery</td>
-                      <td class="product-total text-body">{{totalShipCost |currency:' ':'GH₵ '}}</td>
+                      <td class="product-total text-body">{{totalShipCost |currency:' ':'$ '}}</td>
                     </tr>
                     <tr>
                       <td class="product-name">Discount</td>
@@ -98,7 +98,7 @@
                       </td>
                       <td class=" pt-0 pb-0">
                         <p class="summary-total-price ls-s text-primary">
-                          {{(totalShipCost+totalCash) | currency:' ':'GH₵ '}}</p>
+                          {{(totalShipCost+totalCash) | currency:' ':'$ '}}</p>
                       </td>
                     </tr>
                   </tbody>

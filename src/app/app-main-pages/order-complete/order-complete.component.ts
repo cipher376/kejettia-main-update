@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/shared/services';
+import { WcProduct } from 'src/app/models/woocommerce.model';
 
 @Component({
   selector: 'app-order-complete',
@@ -80,8 +81,8 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
     console.log(this.deliveryCost);
   }
 
-  getPhoto(product: Product) {
-    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, 'cover', true, true);
+  getPhoto(product: WcProduct) {
+    return StoreService.getPhotoUrlByDisplayTypeLocal(product?.images, 'cover', true, true);
   }
 
 

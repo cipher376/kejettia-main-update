@@ -1,9 +1,10 @@
 import { PHOTO_DISPLAY_TYPES } from './../../config';
 import { Router } from '@angular/router';
-import { Product } from 'src/app/models';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Urls } from 'src/app/config';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
+import { WcProduct } from 'src/app/models/woocommerce.model';
 
 @Component({
   selector: 'app-popular-products',
@@ -12,11 +13,12 @@ import { Urls } from 'src/app/config';
 })
 export class PopularProductsComponent implements OnInit, AfterViewInit {
 
-  private products: Product[][] = [];
+  private products: WcProduct[][] = [];
   COLUMNS_LENGTH = 4;
 
   constructor(
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private router: Router
   ) { }
 
@@ -25,7 +27,7 @@ export class PopularProductsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.storeService.getPopularProducts().subscribe(ps => {
       console.log(ps);
-      let prods: Product[][] = [];
+      let prods: WcProduct[][] = [];
       let cols = Math.floor((ps?.length ?? 0) / this.COLUMNS_LENGTH);
       if (cols < (ps?.length / this.COLUMNS_LENGTH)) {
         cols += 1;
@@ -49,18 +51,18 @@ export class PopularProductsComponent implements OnInit, AfterViewInit {
     return this.products;
   }
 
-  getRating(p: Product){
-    return StoreService.getProductRating(p);
+  getRating(p: WcProduct){
+    return p.average_rating;
   }
 
-  goToProduct(p: Product) {
-    this.storeService.setSelectedProductLocal(p).then(() => {
+  goToProduct(p: WcProduct) {
+    this.wcStoreService.setSelectedProductLocal(p).then(() => {
       this.router.navigateByUrl(Urls.productDetails + '/' + p?.id);
     });
   }
 
-  getProductImage(prod: Product) {
-    return StoreService.getPhotoUrlByDisplayTypeLocal(prod.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
+  getProductImage(prod: WcProduct) {
+    return StoreService.getPhotoUrlByDisplayTypeLocal(prod.images, PHOTO_DISPLAY_TYPES.COVER, true, true);
   }
 
 

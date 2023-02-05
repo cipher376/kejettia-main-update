@@ -26,18 +26,18 @@
       <h3 class="product-name">
         <a href="javascript:;">{{Product?.name}}</a>
       </h3>
-      <div class="product-price" *ngIf="Product?.currentPrice">
+      <div class="product-price" *ngIf="Product?.price">
         <span class="price"></span>
-        <ins class="new-price">{{Product?.currentPrice  |currency:'GHC ':'GH₵ '}}</ins><del class="old-price" *ngIf="Product?.previousPrice">
-          {{Product?.previousPrice  |currency:'GHC ':'GH₵ '}}</del>
+        <ins class="new-price">{{Product?.price  |currency:'USD ':'$ '}}</ins><del class="old-price" *ngIf="Product?.regular_price">
+          {{Product?.regular_price  |currency:'USD ':'$ '}}</del>
       </div>
-      <div class="product-price"  *ngIf="!Product?.currentPrice" >
+      <!-- <div class="product-price"  *ngIf="!WcProduct?.price" >
         <p>
-          <span class="price">{{Product?.fromPrice |currency:'GHC ':'GH₵ '}}</span> -
-          <span class="price">{{Product?.toPrice |currency:'GHC ':'GH₵ '}}</span>
+          <span class="price">{{WcProduct?.fromPrice |currency:'USD ':'$ '}}</span> -
+          <span class="price">{{WcProduct?.toPrice |currency:'USD ':'$ '}}</span>
         </p>
-      </div>
-      <app-rating [Rating]="Rating" [Reviews]="Product?.reviews"></app-rating>
+      </div> -->
+      <app-rating [Rating]="Rating" [ReviewsCount]="Product?.rating_count"></app-rating>
     </div>
   </div>
 </div>
@@ -58,20 +58,20 @@
     <h3 class="product-name">
       <a href="javascript:;"  (click)="goToProduct()">{{Product?.name}}</a>
     </h3>
-    <div class="product-price" *ngIf="Product?.currentPrice">
-      <span class="price">{{Product?.currentPrice |currency:'GHC ':'GH₵ '}}</span>
+    <div class="product-price" *ngIf="Product?.price">
+      <span class="price">{{Product?.price |currency:'USD ':'$ '}}</span>
     </div>
-    <div class="product-price" *ngIf="!Product?.currentPrice">
+    <!-- <div class="product-price" *ngIf="!WcProduct?.price">
       <p>
-        <span class="price">{{Product?.fromPrice |currency:'GHC ':'GH₵ '}}</span> -
-        <span class="price">{{Product?.toPrice |currency:'GHC ':'GH₵ '}}</span>
+        <span class="price">{{WcProduct?.fromPrice |currency:'USD ':'$ '}}</span> -
+        <span class="price">{{WcProduct?.toPrice |currency:'USD ':'$ '}}</span>
       </p>
-
-    </div>
-    <app-rating [Rating]="Rating" [Reviews]="Reviews"></app-rating>
-    <p class="product-short-desc">
-      {{Product?.about}}
-    </p>
+    </div> -->
+    <app-rating [Rating]="Rating" [ReviewsCount]="Product?.rating_count"></app-rating>
+    <!-- <p class="product-short-desc"> -->
+      <!-- {{WcProduct?.description}} -->
+      <div [innerHTML]=" Product?.description | sanitizeHtml "> </div>
+    <!-- </p> -->
     <div class="product-action">
       <a href="javascript:;"  (click)="goToProduct()" class="btn-product btn-cart" data-toggle="modal" data-target="#addCartModal"
         title="Add to cart"><i class="d-icon-bag"></i><label>Add to cart</label></a>

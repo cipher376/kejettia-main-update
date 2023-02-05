@@ -1,5 +1,6 @@
 import { Shipping } from './../../models/shipping';
 import { Component, Input, OnInit, Output } from '@angular/core';
+import { WcCustomerShipping } from 'src/app/models/woocommerce.model';
 
 @Component({
   selector: 'app-shipping-view',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 })
 export class ShippingViewComponent implements OnInit {
 
-  @Input() shippings: Shipping[] = [];
+  @Input() shippings: WcCustomerShipping[] = [];
   constructor() { }
 
   ngOnInit(): void {

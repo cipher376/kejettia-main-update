@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
 
     this.loadPremiumStores();
     this.getStoreCategories();
-    this.getProductCategoryItems();
+    // this.getProductCategoryItems();
 
     // load wishlist from disk
     if (this.loggedUser) {

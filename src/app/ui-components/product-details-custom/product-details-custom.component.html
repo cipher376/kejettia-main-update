@@ -22,7 +22,7 @@
             <div class="product-label-group">
               <label class="product-label label-new">new</label>
             </div>
-            <app-gallery-wrapper [Images]="selectedProduct?.photos" class="m-0 p-0"
+            <app-gallery-wrapper [Images]="selectedProduct?.images" class="m-0 p-0"
               *ngIf="selectedProductPhotos?.length>0"></app-gallery-wrapper>
           </div>
         </div>
@@ -40,7 +40,7 @@
                   <a href="javascript:;">
                     <i class="d-icon-arrow-left"></i> Prev
                     <span class="product-nav-popup" >
-                      <img *ngIf="Prev" [src]="getPhotoUrl(Prev?.photos)" alt="" width="110" height="123">
+                      <img *ngIf="Prev" [src]="getPhotoUrl(Prev?.images)" alt="" width="110" height="123">
                       <span class="product-name">{{Prev?.name || 'product list'}}</span>
                     </span>
                   </a>
@@ -49,7 +49,7 @@
                   <a href="javascript:;">
                     Next <i class="d-icon-arrow-right"></i>
                     <span class="product-nav-popup">
-                      <img [src]="getPhotoUrl(Next?.photos)" alt="" width="110" height="123">
+                      <img [src]="getPhotoUrl(Next?.images)" alt="" width="110" height="123">
                       <span class="product-name">{{Next?.name || 'No product found'}}</span>
                     </span>
                   </a>
@@ -58,22 +58,22 @@
             </div>
 
             <h1 class="product-name">{{selectedProduct?.name}}</h1>
-            <div class="product-meta" *ngIf="selectedProduct?.productModel">
+            <!-- <div class="product-meta" *ngIf="selectedProduct?.productModel">
               SKU: <span
                 class="product-sku">{{(selectedProduct?.productModel?.serialNumber+' '+selectedProduct?.productModel?.version)??selectedProduct?.productModel?.description}}</span>
               BRAND: <span class="product-brand">{{selectedProduct?.productModel?.productBrand?.manufacturer}} -
                 {{selectedProduct?.productModel?.productBrand?.location}}</span>
-            </div>
-            <div class="product-price" *ngIf="selectedProduct?.currentPrice">
-              {{selectedProduct?.currentPrice |currency:'GHC '}} +
+            </div> -->
+            <div class="product-price" *ngIf="selectedProduct?.price">
+              {{selectedProduct?.price |currency:'USD '}} +
               <small>{{selectedShippingCost | currency:' ':' '}}</small> <small style="color:black; font-size:50%">
                 shipping</small></div>
-            <ng-container *ngIf="!selectedProduct?.currentPrice">
-              <div class="product-price">{{selectedProduct?.fromPrice |currency:'GHC ':'GH₵ '}} -
-                {{selectedProduct?.toPrice |currency:'GHC ':'GH₵ '}}</div>
+            <!-- <ng-container *ngIf="!selectedProduct?.price">
+              <div class="product-price">{{selectedProduct?.fromPrice |currency:'USD ':'$ '}} -
+                {{selectedProduct?.toPrice |currency:'USD ':'$ '}}</div>
               <div class="product-price">+ <small>{{selectedShippingCost | currency:' ':' '}}</small> <small
                   style="color:black; font-size:50%"> shipping</small></div>
-            </ng-container>
+            </ng-container> -->
 
             <div class="ratings-container">
               <div class="ratings-full">
@@ -81,16 +81,16 @@
                 <span class="tooltiptext tooltip-top"></span>
               </div>
               <a href="javascript:;" (click)="goToTab(4)" class="link-to-tab rating-reviews">(
-                {{selectedProduct?.reviews?.length??0}} reviews )</a>
+                {{selectedProduct?.rating_count??0}} reviews )</a>
             </div>
-            <p class="product-short-desc">{{selectedProduct?.about| slice:0:100}}</p>
+            <p class="product-short-desc">{{selectedProduct?.short_description| slice:0:100}}</p>
             <app-feature-select [Features]="colorFeatures" (guideEvent)="setGuidWidget($event)" (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
             <app-feature-select [Features]="sizeFeatures" (guideEvent)="setGuidWidget($event)" (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
 
-            <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
+            <!-- <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
               (selectedShippingCostEvent)="selectedShippingCost=$event"
               (selectedShippingEvent)="selectedShipping=$event">
-            </app-delivery-select>
+            </app-delivery-select> -->
             <div class="product-form-group">
               <a href="javascript:;" class="product-variation-clean">Clean All</a>
             </div>
@@ -164,9 +164,11 @@
             <div class="row mt-6">
               <div class="col-md-6">
                 <h5 class="description-title mb-4 font-weight-semi-bold ls-m">Features</h5>
-                <p class="mb-2">
+                <!-- <p class="mb-2">
                   {{selectedProduct?.about}}
-                </p>
+                </p> -->
+                <div class="mb-2" [innerHTML]=" selectedProduct?.description | sanitizeHtml "> </div>
+
                 <p class="mb-2">
                   Features describe the other qualities of the product that helps you the customer to make a good
                   decisions about the
@@ -225,12 +227,12 @@
           </div>
           <div class="tab-pane animate__animated animate__fadeInUp" id="product-tab-additional"
             [ngClass]="{'active in': tab===2}" [hidden]="tab!==2">
-            <ul class="list-none">
+            <!-- <ul class="list-none">
               <li><label>Brand:</label>
                 <p>{{selectedProduct?.productModel?.productBrand?.manufacturer}}
                   {{selectedProduct?.productModel?.productBrand?.location}}</p>
               </li>
-            </ul>
+            </ul> -->
             <span class="divider d-lg-show"></span>
 
             <div>
@@ -241,7 +243,7 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <!-- <tbody>
                   <tr>
                     <th class="font-weight-semi-bold text-dark pl-0">Serial number</th>
                     <th class="pl-4">{{selectedProduct?.productModel?.serialNumber}}</th>
@@ -258,7 +260,7 @@
                     <th class="font-weight-semi-bold text-dark pl-0">Other</th>
                     <th class="pl-4">{{selectedProduct?.productModel?.description}}</th>
                   </tr>
-                </tbody>
+                </tbody> -->
               </table>
             </div>
 
@@ -360,13 +362,13 @@
             </div>
             <!-- End Comments -->
             <div class="reply">
-              <app-add-review [Product]="selectedProduct"></app-add-review>
+              <!-- <app-add-review [Product]="selectedProduct"></app-add-review> -->
             </div>
             <!-- End Reply -->
           </div>
           <div class="tab-pane animate__animated animate__fadeInUp" id="product-tab-shipping"
             [ngClass]="{'active in': tab===5}" [hidden]="tab!==5">
-            <app-shipping-view [shippings]="selectedProduct?.shippings"></app-shipping-view>
+            <!-- <app-shipping-view [shippings]="selectedProduct?.shippings"></app-shipping-view> -->
           </div>
         </div>
       </div>

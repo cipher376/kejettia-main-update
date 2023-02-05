@@ -1,11 +1,12 @@
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { UserService } from './../../shared/services/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { Review } from './../../models/review';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Store, Product, User, Company } from 'src/app/models';
+import { WcProductReview } from 'src/app/models/woocommerce.model';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
 
 @Component({
   selector: 'app-add-review',
@@ -14,7 +15,7 @@ import { Store, Product, User, Company } from 'src/app/models';
 })
 export class AddReviewComponent implements OnInit {
   reviewForm: FormGroup = this.fb.group({});
-  review: Review = {} as any;
+  review: WcProductReview = {} as any;
 
   private selectedStore: Store;
   private selectedProduct: Product;
@@ -27,6 +28,7 @@ export class AddReviewComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private toaster: ToastrService,
     private userService: UserService,
     private signal: SignalService
@@ -39,11 +41,11 @@ export class AddReviewComponent implements OnInit {
   }
 
   set rating(rate: number) {
-    this.review.rate = rate;
+    this.review.rating = rate;
   }
 
   get rating() {
-    return this.review.rate;
+    return this.review.rating;
   }
 
   @Input() set Store(store: Store) {
@@ -68,7 +70,7 @@ export class AddReviewComponent implements OnInit {
   createForm() {
     this.reviewForm = this.fb.group({
       comment: [
-        this.review.comment,
+        this.review.review,
         [
           Validators.minLength(0),
           Validators.maxLength(400)
@@ -85,8 +87,8 @@ export class AddReviewComponent implements OnInit {
 
   getData() {
     if (this.reviewForm.valid) {
-      this.review.comment = this.reviewForm?.value?.comment;
-      this.review.rate = this.rating;
+      this.review.review = this.reviewForm?.value?.comment;
+      this.review.rating = this.rating;
       return true;
     }
     return false;
@@ -111,29 +113,29 @@ export class AddReviewComponent implements OnInit {
       return;
     }
 
-    this.review.reviewerEmail = this.loggedUser?.email;
-    this.review.reviewerName = this.loggedUser?.profile?.firstName + ' ' +
+    this.review.email = this.loggedUser?.email;
+    this.review.name = this.loggedUser?.profile?.firstName + ' ' +
       this.loggedUser?.profile?.lastName;
-    this.review.reviewerId = this.loggedUser?.id;
+    // this.review.reviewerId = this.loggedUser?.id;
 
-    if (this.selectedProduct) {
-      this.review.productId = this.selectedProduct?.id;
+    // if (this.selectedProduct) {
+    //   this.review.productId = this.selectedProduct?.id;
 
-    } else if (this.selectedStore) {
-      this.review.storeId = this.selectedStore?.id;
+    // } else if (this.selectedStore) {
+    //   this.review.storeId = this.selectedStore?.id;
 
-    } else if (this.selectedCompany) {
-      this.review.companyId = this.selectedCompany?.id
-    }
+    // } else if (this.selectedCompany) {
+    //   this.review.companyId = this.selectedCompany?.id
+    // }
 
     // console.log(this.review);
-    this.storeService.createReview(this.review)?.subscribe(review => {
-      console.log(review);
-      this.review = {} as any;
-      this.rating = 0;
-      this.assert = false;
-      this.signal.sendAction(MY_ACTION.loadReviews);
-    });
+    // this.wcStoreService.createReview(this.review)?.subscribe(review => {
+    //   console.log(review);
+    //   this.review = {} as any;
+    //   this.rating = 0;
+    //   this.assert = false;
+    //   this.signal.sendAction(MY_ACTION.loadReviews);
+    // });
   }
 
 

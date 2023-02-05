@@ -2,9 +2,11 @@ import { Urls } from './../../config';
 import { Router } from '@angular/router';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { UtilityService } from './../../shared/services/utility.service';
-import { Product, ProductCategory } from './../../models/product';
 import { StoreCategory } from './../../models/store-category';
 import { Component, Input, OnInit } from '@angular/core';
+import { WooCommerceStoreService } from 'src/app/shared/services/wc-store.service';
+import { ProductCategory } from 'src/app/models';
+import { WcProduct } from 'src/app/models/woocommerce.model';
 
 @Component({
   selector: 'app-home2-categories',
@@ -17,6 +19,7 @@ export class Home2CategoriesComponent implements OnInit {
 
   constructor(
     private storeService: StoreService,
+    private wcStoreService: WooCommerceStoreService,
     private router: Router
   ) { }
 
@@ -56,7 +59,7 @@ export class Home2CategoriesComponent implements OnInit {
 
   search(cat: any) {
     // load products of that category within the store
-    const products: Product[] = [];
+    const products: WcProduct[] = [];
     if (cat?.productCategories?.length > 0) { // store category
       cat.productCategories?.forEach(pc => {
         pc.productCategoryItems.forEach(pi => {
@@ -78,7 +81,7 @@ export class Home2CategoriesComponent implements OnInit {
     }
 
     // navigate to the product listing page
-    this.storeService.setProductsLocal(products);
+    this.wcStoreService.setProductsLocal(products);
     this.router.navigateByUrl(Urls.products)
   }
 

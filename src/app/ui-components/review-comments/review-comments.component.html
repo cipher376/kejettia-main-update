@@ -3,24 +3,26 @@
     <div class="comment">
       <figure class="comment-media">
         <a href="javascript:;">
-          <img *ngIf="getUserWithId(rev?.reviewerId)?.profilePhoto" [src]="fileRootUrl+getUserWithId(rev?.reviewerId)?.profilePhoto?.thumbnail" alt="avatar">
-          <img *ngIf="!(getUserWithId(rev?.reviewerId)?.profilePhoto)" [src]="'assets/images/blog/comments/1.jpg'" alt="avatar">
+          <!-- <img *ngIf="getUserWithId(rev?.reviewerId)?.profilePhoto" [src]="fileRootUrl+getUserWithId(rev?.reviewerId)?.profilePhoto?.thumbnail" alt="avatar"> -->
+          <!-- <img *ngIf="!(getUserWithId(rev?.reviewerId)?.profilePhoto)" [src]="'assets/images/blog/comments/1.jpg'" alt="avatar"> -->
+        
+          <img [src]="'assets/images/blog/comments/1.jpg'" alt="avatar">
         </a>
       </figure>
       <div class="comment-body">
         <div class="comment-rating ratings-container mb-0">
           <div class="ratings-full">
-            <span class="ratings" [style]="'width:'+getRatePerCent(rev?.rate)+'%'"></span>
-            <span class="tooltiptext tooltip-top">{{rev?.rate}}</span>
+            <span class="ratings" [style]="'width:'+getRatePerCent(rev?.rating)+'%'"></span>
+            <span class="tooltiptext tooltip-top">{{rev?.rating}}</span>
           </div>
         </div>
         <div class="comment-user">
-          <span class="comment-date text-body">{{rev?.dateCreated | date:'medium'}}</span>
-          <h4><a href="javascript:;">{{rev?.reviewerName}}</a></h4>
+          <span class="comment-date text-body">{{rev?.date_created | date:'medium'}}</span>
+          <h4><a href="javascript:;">{{rev?.name}}</a></h4>
         </div>
 
         <div class="comment-content">
-          <p>{{rev?.comment}}</p>
+          <p>{{rev?.review}}</p>
         </div>
       </div>
     </div>
