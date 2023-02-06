@@ -24,13 +24,13 @@
             </h3>
             <div class="product-price" *ngIf="p?.currentPrice">
               <span class="price"></span>
-              <ins class="new-price">{{p?.currentPrice |currency:'GHC ':'GH₵ '}}</ins><del class="old-price" *ngIf="p?.previousPrice">
+              <ins class="new-price">{{p?.currentPrice |currency:'USD ':'$ '}}</ins><del class="old-price" *ngIf="p?.previousPrice">
                 {{p?.previousPrice}}</del>
             </div>
             <div class="product-price"  *ngIf="!p?.currentPrice" >
               <p>
-                <span class="price">{{p?.fromPrice |currency:'GHC ':'GH₵ '}}</span> -
-                <span class="price">{{p?.toPrice |currency:'GHC ':'GH₵ '}}</span>
+                <span class="price">{{p?.fromPrice |currency:'USD ':'$ '}}</span> -
+                <span class="price">{{p?.toPrice |currency:'USD ':'$ '}}</span>
               </p>
             </div>
             <app-rating [Rating]="getRating(p)" [Reviews]="p?.reviews"></app-rating>

@@ -111,7 +111,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         // } else if (err.status === 403) {
         //   this.toaster.error('Access denied');
         // } else if (err.status === 400) {
-        //   if (err.error.error.message.search('401')) {
+        //   if (err.error.error.message.includes('401')) {
         //     this.toaster.error('Authentication failed! Please login')
         //   } else {
         //     this.toaster.error('Something went wrong');
@@ -122,7 +122,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         //   this.toaster.error(err.error?.error?.message ?? 'Already in use');
 
         // } else if (err.status === 408) {
-        //   if (err.error.error.message.search('401')) {
+        //   if (err.error.error.message.includes('401')) {
         //     this.toaster.error('Please login')
         //   } else {
         //     this.toaster.error('Something went wrong');

@@ -87,7 +87,7 @@ export class Home2Component implements OnInit, AfterViewInit {
       // })
 
 
-      this.selectedStore?.photos.forEach(ph => {
+      this.selectedStore?.photos?.forEach(ph => {
         // TODO:
         // if (ph.photoDisplayType.type === PHOTO_DISPLAY_TYPES.BANNER) { // change to this after testing
         if (ph.photoDisplayType?.type === PHOTO_DISPLAY_TYPES.BANNER) {

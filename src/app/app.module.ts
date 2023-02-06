@@ -16,6 +16,7 @@ import { SimpleModalModule, defaultSimpleModalOptions } from 'ngx-simple-modal';
 import { ConfirmDialogComponent } from './ui-components/confirm-dialog/confirm-dialog.component';
 import { AlertComponent } from './ui-components/alert/alert.component';
 import { AuthGuard } from './shared/services/guards/authGuard.service';
+import { SanitizeHtmlPipe } from './shared/pipes/sanitize-html.pipe';
 
 @NgModule({
   declarations: [

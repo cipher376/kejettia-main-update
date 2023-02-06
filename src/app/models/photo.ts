@@ -7,6 +7,7 @@ export class PhotoDisplayType {
 
 export class Photo {
   id?: string;
+  remoteId?: string;
   mimeType?: string;
   source?: string;
   description?: string;

@@ -28,13 +28,13 @@
       </h3>
       <div class="product-price" *ngIf="Product?.currentPrice">
         <span class="price"></span>
-        <ins class="new-price">{{Product?.currentPrice  |currency:'GHC ':'GH₵ '}}</ins><del class="old-price" *ngIf="Product?.previousPrice">
-          {{Product?.previousPrice  |currency:'GHC ':'GH₵ '}}</del>
+        <ins class="new-price">{{Product?.currentPrice  |currency:'USD ':'$ '}}</ins><del class="old-price" *ngIf="Product?.previousPrice">
+          {{Product?.previousPrice  |currency:'USD ':'$ '}}</del>
       </div>
       <div class="product-price"  *ngIf="!Product?.currentPrice" >
         <p>
-          <span class="price">{{Product?.fromPrice |currency:'GHC ':'GH₵ '}}</span> -
-          <span class="price">{{Product?.toPrice |currency:'GHC ':'GH₵ '}}</span>
+          <span class="price">{{Product?.fromPrice |currency:'USD ':'$ '}}</span> -
+          <span class="price">{{Product?.toPrice |currency:'USD ':'$ '}}</span>
         </p>
       </div>
       <app-rating [Rating]="Rating" [Reviews]="Product?.reviews"></app-rating>
@@ -59,12 +59,12 @@
       <a href="javascript:;"  (click)="goToProduct()">{{Product?.name}}</a>
     </h3>
     <div class="product-price" *ngIf="Product?.currentPrice">
-      <span class="price">{{Product?.currentPrice |currency:'GHC ':'GH₵ '}}</span>
+      <span class="price">{{Product?.currentPrice |currency:'USD ':'$ '}}</span>
     </div>
     <div class="product-price" *ngIf="!Product?.currentPrice">
       <p>
-        <span class="price">{{Product?.fromPrice |currency:'GHC ':'GH₵ '}}</span> -
-        <span class="price">{{Product?.toPrice |currency:'GHC ':'GH₵ '}}</span>
+        <span class="price">{{Product?.fromPrice |currency:'USD ':'$ '}}</span> -
+        <span class="price">{{Product?.toPrice |currency:'USD ':'$ '}}</span>
       </p>
 
     </div>

@@ -118,9 +118,9 @@ export class CartService {
                     {
                       relation: 'photos'
                     },
-                    {
-                      relation: 'features'
-                    },
+                    // {
+                    //   relation: 'features'
+                    // },
                     {
                       relation: 'shippings'
                     }
@@ -235,6 +235,8 @@ export class CartService {
 
   linkCartItemToFeature(itemId: any, featureId: any) {
     if (!itemId || !featureId) {
+      console.log("item: "+itemId)
+      console.log("feature: "+featureId)
       console.log('Invalid cartItem to feature map ids');
       return undefined;
     }
@@ -279,7 +281,6 @@ export class CartService {
     return this.http.put<FeaturesToCartItemThrough>(url, throughItem).pipe(
       map(res => {
         console.log(res);
-
         return res;
       }),
       catchError(e => this.handleError(e))

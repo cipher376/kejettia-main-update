@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
   totalShipCost: number = 0;
 
   public cities: Array<IOption> = [];
-
+  
   constructor(
     private router: Router,
     private cartService: CartService,
@@ -54,13 +54,20 @@ export class CartComponent implements OnInit {
 
 
   ngAfterViewInit(): void {
-    this.init();
+    this.selectedUser = this.userService.getLoggedUserLocalSync();
+    this.cartService.getCart(this.selectedUser?.id)?.subscribe(cart => {
+      this.cart = cart;
+      console.log(this.cart);
+    });
   }
 
   ngOnInit(): void {
     this.signal._action$.subscribe(action => {
       if ((action === MY_ACTION.cartChanged) || (action === MY_ACTION.cartLoaded)) {
-        this.init();
+        this.cart = this.cartService.getCartLocal();
+        // console.log(this.cart);
+        this.calculateShipping();
+        this.totalCash = this.cartService.getTotalAmount();
       }
     })
   }
@@ -78,16 +85,6 @@ export class CartComponent implements OnInit {
   }
   get SelectedCity() {
     return this.city;
-  }
-
-  init() {
-    this.selectedUser = this.userService.getLoggedUserLocalSync();
-    // get user delivery address;
-
-    this.cart = this.cartService.getCartLocal();
-    // console.log(this.cart);
-    this.calculateShipping();
-    this.totalCash = this.cartService.getTotalAmount();
   }
 
 

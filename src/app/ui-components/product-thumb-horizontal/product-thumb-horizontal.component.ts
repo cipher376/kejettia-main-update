@@ -29,7 +29,7 @@ export class ProductThumbHorizontalComponent implements OnInit {
     if (prod?.previousPrice > prod?.currentPrice)
       this.discount = ((prod.previousPrice - prod.currentPrice) / prod.previousPrice) * 100;
     // console.log(this.discount);
-    console.log(prod);
+    // console.log(prod);
     this.photoUrl = StoreService.getPhotoUrlByDisplayTypeLocal(this.product.photos, PHOTO_DISPLAY_TYPES.COVER, true, true);
   }
 

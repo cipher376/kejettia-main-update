@@ -16,11 +16,11 @@
           <a href="javascript:;">{{prod?.name}}</a>
         </h3>
         <div class="product-price" *ngIf="prod?.currentPrice">
-          <span class="price">{{prod?.currentPrice |currency:'GHC ':'GH₵ '}}</span>
+          <span class="price">{{prod?.currentPrice |currency:'USD ':'$ '}}</span>
         </div>
         <div class="product-price" *ngIf="!prod?.currentPrice">
-          <span class="price">{{prod?.fromPrice |currency:'GHC ':'GH₵ '}}</span> -
-          <span class="price">{{prod?.toPrice |currency:'GHC ':'GH₵ '}}</span>
+          <span class="price">{{prod?.fromPrice |currency:'USD ':'$ '}}</span> -
+          <span class="price">{{prod?.toPrice |currency:'USD ':'$ '}}</span>
         </div>
         <app-rating [Rating]="getRating(prod)" [Reviews]="prod?.reviews"></app-rating>
       </div>

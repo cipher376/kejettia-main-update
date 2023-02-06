@@ -30,7 +30,7 @@ export class PaystackComponent implements OnInit, AfterViewInit {
 
   reference = '';
   title = '';
-  currency = 'GHS';
+  currency = 'USD';
 
   key = PAYSTACK_PUBLIC_KEY;
   options = {} as any;

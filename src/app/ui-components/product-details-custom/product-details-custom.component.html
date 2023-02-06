@@ -39,7 +39,7 @@
                 <li class="product-nav-prev" (click)="goPrev()">
                   <a href="javascript:;">
                     <i class="d-icon-arrow-left"></i> Prev
-                    <span class="product-nav-popup" >
+                    <span class="product-nav-popup">
                       <img *ngIf="Prev" [src]="getPhotoUrl(Prev?.photos)" alt="" width="110" height="123">
                       <span class="product-name">{{Prev?.name || 'product list'}}</span>
                     </span>
@@ -59,18 +59,19 @@
 
             <h1 class="product-name">{{selectedProduct?.name}}</h1>
             <div class="product-meta" *ngIf="selectedProduct?.productModel">
-              SKU: <span
-                class="product-sku">{{(selectedProduct?.productModel?.serialNumber+' '+selectedProduct?.productModel?.version)??selectedProduct?.productModel?.description}}</span>
+              SKU: <span class="product-sku">{{(selectedProduct?.productModel?.serialNumber+'
+                '+selectedProduct?.productModel?.version)??selectedProduct?.productModel?.description}}</span>
               BRAND: <span class="product-brand">{{selectedProduct?.productModel?.productBrand?.manufacturer}} -
                 {{selectedProduct?.productModel?.productBrand?.location}}</span>
             </div>
             <div class="product-price" *ngIf="selectedProduct?.currentPrice">
-              {{selectedProduct?.currentPrice |currency:'GHC '}} +
+              {{selectedProduct?.currentPrice |currency:'USD '}} +
               <small>{{selectedShippingCost | currency:' ':' '}}</small> <small style="color:black; font-size:50%">
-                shipping</small></div>
+                shipping</small>
+            </div>
             <ng-container *ngIf="!selectedProduct?.currentPrice">
-              <div class="product-price">{{selectedProduct?.fromPrice |currency:'GHC ':'GH₵ '}} -
-                {{selectedProduct?.toPrice |currency:'GHC ':'GH₵ '}}</div>
+              <div class="product-price">{{selectedProduct?.fromPrice |currency:'USD ':'$ '}} -
+                {{selectedProduct?.toPrice |currency:'USD ':'$ '}}</div>
               <div class="product-price">+ <small>{{selectedShippingCost | currency:' ':' '}}</small> <small
                   style="color:black; font-size:50%"> shipping</small></div>
             </ng-container>
@@ -83,9 +84,15 @@
               <a href="javascript:;" (click)="goToTab(4)" class="link-to-tab rating-reviews">(
                 {{selectedProduct?.reviews?.length??0}} reviews )</a>
             </div>
-            <p class="product-short-desc">{{selectedProduct?.about| slice:0:100}}</p>
-            <app-feature-select [Features]="colorFeatures" (guideEvent)="setGuidWidget($event)" (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
-            <app-feature-select [Features]="sizeFeatures" (guideEvent)="setGuidWidget($event)" (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
+            <p class="product-short-desc" [innerHTML]=" selectedProduct?.about??'' | slice:0:210 | sanitizeHtml "></p>
+            <p class="product-short-desc" *ngIf="shipFrom"><b>Ships from: {{shipFrom}}</b></p>
+
+            <app-feature-select [Features]="colorFeatures" (guideEvent)="setGuidWidget($event)"
+              (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
+            <app-feature-select [Features]="sizeFeatures" (guideEvent)="setGuidWidget($event)"
+              (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
+            <app-feature-select [Features]="lengthFeatures" (guideEvent)="setGuidWidget($event)"
+              (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
 
             <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
               (selectedShippingCostEvent)="selectedShippingCost=$event"
@@ -100,10 +107,10 @@
 
             <hr class="product-divider">
             <div class="product-form-group">
-              <a href="javascript:;" class=""  *ngIf="StockCount>0" >Total in stock: {{StockCount}}</a>
-              <a href="javascript:;" class=""  *ngIf="StockCount<=0">Out of stock</a>
+              <a href="javascript:;" class="" *ngIf="StockCount>0">Total in stock: {{StockCount}}</a>
+              <a href="javascript:;" class="" *ngIf="StockCount<=0">Out of stock</a>
             </div>
-            <div class="product-form product-qty"  *ngIf="StockCount>0">
+            <div class="product-form product-qty" *ngIf="StockCount>0">
               <div class="product-form-group">
                 <div class="input-group mr-2">
                   <button class="quantity-minus d-icon-minus" (click)="decreaseQuantity()"></button>
@@ -143,6 +150,13 @@
             <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===1}" (click)="goToTab(1)">Description</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===4}" (click)="goToTab(4)">Reviews
+              ({{productReviews?.length||0}})</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===3}" (click)="goToTab(3)">Guide</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===2}" (click)="goToTab(2)">Additional
               information</a>
           </li>
@@ -150,13 +164,7 @@
             <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===5}" (click)="goToTab(5)">Shipping &
               delivery</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===3}" (click)="goToTab(3)">Guide</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:;" [ngClass]="{'active': tab===4}" (click)="goToTab(4)">Reviews
-              ({{productReviews?.length||0}})</a>
-          </li>
+          
         </ul>
         <div class="tab-content ">
           <div class="tab-pane animate__animated animate__fadeInUp" id="product-tab-description"
@@ -164,9 +172,6 @@
             <div class="row mt-6">
               <div class="col-md-6">
                 <h5 class="description-title mb-4 font-weight-semi-bold ls-m">Features</h5>
-                <p class="mb-2">
-                  {{selectedProduct?.about}}
-                </p>
                 <p class="mb-2">
                   Features describe the other qualities of the product that helps you the customer to make a good
                   decisions about the
@@ -222,6 +227,8 @@
                 </div>
               </div>
             </div>
+            <p class="mb-2" [innerHTML]=" selectedProduct?.about??'' | sanitizeHtml "></p>
+
           </div>
           <div class="tab-pane animate__animated animate__fadeInUp" id="product-tab-additional"
             [ngClass]="{'active in': tab===2}" [hidden]="tab!==2">
@@ -263,7 +270,7 @@
             </div>
 
             <span class="divider d-lg-show"></span>
-
+            
           </div>
           <div class="tab-pane animate__animated animate__fadeInUp" id="product-tab-size-guide"
             [ngClass]="{'active in': tab===3}" [hidden]="tab!==3">
@@ -289,42 +296,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <!-- <tr>
                       <th>XS</th>
                       <td>34-36</td>
                       <td>27-29</td>
                       <td>34.5-36.5</td>
                     </tr>
-                    <tr>
-                      <th>S</th>
-                      <td>36-38</td>
-                      <td>29-31</td>
-                      <td>36.5-38.5</td>
-                    </tr>
-                    <tr>
-                      <th>M</th>
-                      <td>38-40</td>
-                      <td>31-33</td>
-                      <td>38.5-40.5</td>
-                    </tr>
-                    <tr>
-                      <th>L</th>
-                      <td>40-42</td>
-                      <td>33-36</td>
-                      <td>40.5-43.5</td>
-                    </tr>
-                    <tr>
-                      <th>XL</th>
-                      <td>42-45</td>
-                      <td>36-40</td>
-                      <td>43.5-47.5</td>
-                    </tr>
-                    <tr>
-                      <th>XXL</th>
-                      <td>45-48</td>
-                      <td>40-44</td>
-                      <td>47.5-51.5</td>
-                    </tr>
+                     -->
                   </tbody>
                 </table>
               </figure>

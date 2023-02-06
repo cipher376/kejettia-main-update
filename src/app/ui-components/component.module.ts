@@ -111,6 +111,7 @@ import { ProductListWidgetComponent } from './product-list-widget/product-list-w
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { WhatsappComponent } from './whatsapp/whatsapp.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
+import { SanitizeHtmlPipe } from '../shared/pipes/sanitize-html.pipe';
 
 
 @NgModule({
@@ -214,6 +215,8 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
     ProductListWidgetComponent,
     UploadComponent,
     WhatsappComponent,
+    SanitizeHtmlPipe
+
   ],
   imports: [
     CommonModule,
@@ -318,6 +321,8 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
     LoaderMiniComponent,
     UploadComponent,
     WhatsappComponent,
+    SanitizeHtmlPipe
+
   ]
 })
 export class ComponentModule { }

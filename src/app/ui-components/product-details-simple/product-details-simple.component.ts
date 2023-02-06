@@ -41,6 +41,7 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   selectedFeatures: Features[] = [];
   colorFeatures: Features[] = [];
   otherFeatures: Features[] = [];
+  lengthFeatures: Features[] = [];
 
   guide = '';
 
@@ -222,10 +223,12 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
     this.colorFeatures = [];
     this.otherFeatures = [];
     this.selectedProduct?.features?.forEach(f => {
-      if (f.name.search('size')) {
+      if (f.name.includes('size')) {
         this.sizeFeatures.push(f);
-      } else if (f.name.search('color')) {
+      } else if (f.name.includes('color')) {
         this.colorFeatures.push(f);
+      } else if (f.name.includes('length')) {
+        this.lengthFeatures.push(f);
       } else {
         this.otherFeatures.push(f);
       }
@@ -236,8 +239,13 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
     this.selectedProductPhotos = [];
     this.selectedProduct?.photos?.forEach(p => {
       const ph = new Photo();
-      ph.source = environment.file_api_download_url_root + p.source;
-      ph.thumbnail = environment.file_api_download_url_root + p.thumbnail;
+      if(!p.remoteId){
+        ph.source = environment.file_api_download_url_root + p.source;
+        ph.thumbnail = environment.file_api_download_url_root + p.thumbnail;
+      } else {
+        ph.source = p.source;
+        ph.thumbnail =  p.thumbnail;
+      }
       this.selectedProductPhotos.push(ph);
       return ph;
     });
@@ -295,6 +303,9 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   get Next() {
+    if(this.products?.length<=0){
+      return undefined;
+    }
     let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
     let index = found ? found[1] : 0;
     if (index && (index < this.products?.length)) {
@@ -304,6 +315,9 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   }
 
   get Prev() {
+    if(this.products?.length<=0){
+      return undefined;
+    }
     let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
     let index = found ? found[1] : ((this.products?.length??0) - 1);
     if (index && (index > 0)) {

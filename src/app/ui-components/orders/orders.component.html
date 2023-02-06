@@ -17,7 +17,7 @@
       <td class="order-number"><a href="javascript:;" (click)="goToOrderComplete(order)">#{{order?.id}}</a></td>
       <td class="order-date"><time>{{order?.dateCreated}}</time></td>
       <td class="order-status"><span>{{order?.state}}</span></td>
-      <td class="order-total"><span>{{order?.grandTotal | currency:'GHC ':'GH₵ '}} for {{countItems(order)}}
+      <td class="order-total"><span>{{order?.grandTotal | currency:'USD ':'$ '}} for {{countItems(order)}}
           items</span></td>
       <td class="order-action"></td>
       <td class="order-action" *ngIf="order?.invoice"><a href="javascript:;" (click)="goToOrderDetails(order)"

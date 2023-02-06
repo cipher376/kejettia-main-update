@@ -40,9 +40,11 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
   sizeFeatures: Features[] = [];
   colorFeatures: Features[] = [];
+  lengthFeatures: Features[] = [];
+  modelFeatures: Features[] = [];
   selectedFeatures: Features[] = [];
   otherFeatures: Features[] = [];
-
+  shipFrom = '';
   guide = '';
 
   selectedShippingCost: number = 0;
@@ -110,6 +112,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     }
     this.cart = this.cartService.getCartLocal();
     this.products = this.storeService.getProductsLocalSync();
+    console.log(this.products)
 
     window.scrollTo(0, 10);
 
@@ -152,8 +155,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
     this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe(cartItem => {
       this.selectedFeatures?.forEach(feature => {
-        this.cartService.updateCartItemToFeature(this.cartItem?.id, feature?.id).subscribe(() => {
-
+        console.log(feature);
+        console.log(cartItem);
+        if(cartItem?.id && feature?.id)
+          this.cartService.updateCartItemToFeature(cartItem?.id, feature?.id)?.subscribe(() => {
         })
       })
       this.showAddedToCartAlert();
@@ -220,23 +225,42 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.sizeFeatures = [];
     this.colorFeatures = [];
     this.otherFeatures = [];
+    this.lengthFeatures = [];
+    this.modelFeatures = [];
+    this.shipFrom = '';
     this.selectedProduct?.features?.forEach(f => {
-      if (f.name.search('size')) {
+      if (f.name.includes('size')) {
         this.sizeFeatures.push(f);
-      } else if (f.name.search('color')) {
+      } else if (f.name.includes('color')) {
         this.colorFeatures.push(f);
+      } else if (f.name.includes('length')) {
+        this.lengthFeatures.push(f);
+      }  else if (f.name.includes('model')) {
+        this.modelFeatures.push(f);
+      } else if(f.name.toLowerCase().includes('ship')){
+        this.shipFrom = f.value;
       } else {
         this.otherFeatures.push(f);
       }
     });
+    // console.log(this.sizeFeatures);
+    // console.log(this.colorFeatures);
+    // console.log(this.otherFeatures);
+
   }
+
 
   loadPhotos() {
     this.selectedProductPhotos = [];
     this.selectedProduct?.photos?.forEach(p => {
       const ph = new Photo();
-      ph.source = environment.file_api_download_url_root + p.source;
-      ph.thumbnail = environment.file_api_download_url_root + p.thumbnail;
+      if(!p.remoteId){
+        ph.source = environment.file_api_download_url_root + p.source;
+        ph.thumbnail = environment.file_api_download_url_root + p.thumbnail;
+      }else {
+        ph.source =  p.source;
+        ph.thumbnail =  p.thumbnail;
+      }
       this.selectedProductPhotos.push(ph);
       return ph;
     });
@@ -280,7 +304,6 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   goNext() {
-    this.products = this.storeService.getProductsLocalSync();
     const next = this.Next;
     console.log(next);
     if (next)
@@ -294,9 +317,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   get Next() {
+    this.products = this.storeService.getProductsLocalSync();
     let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
     let index = found ? found[1] : 0;
-    if (index && (index < this.products.length)) {
+    if (index && (index < this.products?.length)) {
       return this.products[index + 1];
     }
     return undefined
@@ -304,7 +328,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
   get Prev() {
     let found = (UtilityService.searchObjFromArrray(this.selectedProduct?.id, this.products));
-    let index = found ? found[1] : ((this.products.length??0) - 1);
+    let index = found ? found[1] : ((this.products?.length??0) - 1);
     if (index && (index > 0)) {
       return this.products[index - 1];
     }

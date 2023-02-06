@@ -42,7 +42,7 @@ export class UploadComponent implements OnInit {
     private signal: SignalService,
     private simpleModalService: SimpleModalService
   ) {
-    if (this.requiredFileType?.search('image') || this.requiredFileType?.search('video')) {
+    if (this.requiredFileType?.includes('image') || this.requiredFileType?.includes('video')) {
       this.uploadUrl = this.uploadUrl || (environment.file_api_upload_photo_video_url_root);
     } else {
       this.uploadUrl = this.uploadUrl || (environment.file_api_upload_url_root);

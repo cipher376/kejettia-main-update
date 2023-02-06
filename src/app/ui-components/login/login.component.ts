@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
 
           console.log(Urls?.returnUrl);
 
-          if (Urls.returnUrl.search('login') < 0) {
+          if (Urls.returnUrl.includes('login')) {
             window.location.href = window.location.protocol + '//' + window.location.host + Urls.returnUrl;
           } else {
             window.location.href = window.location.protocol + '//' + window.location.host + Urls.home;
@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
       },
       error => {
         console.log(error);
-        if (error?.message?.search('verified') > -1) {
+        if (error?.message?.includes('verified')) {
           alert(`Email is not verified. A verification link is sent to the email provided
           but it may take up 10min to show up. check spam if not in your In-box`);
         } else {

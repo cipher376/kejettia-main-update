@@ -96,11 +96,20 @@ export class StoreService {
 
     if ((foundPhotos?.length > 0)) {
       const tmp = foundPhotos[Math.floor(Math.random() * (foundPhotos?.length))]
+      if(tmp.remoteId){
+        url = (thumb ? tmp.thumbnail : tmp.source);
+      } else {
       url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
+
+      }
     }
     if (chooseAny && (foundPhotos?.length <= 0) && (photos?.length > 0)) {
       const tmp = photos[Math.floor(Math.random() * (foundPhotos?.length))]
-      url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
+      if(tmp.remoteId){
+        url = (thumb ? tmp.thumbnail : tmp.source);
+      } else {
+        url = environment.file_api_download_url_root + (thumb ? tmp.thumbnail : tmp.source);
+      }
     }
 
     if (!url) {
@@ -909,6 +918,7 @@ export class StoreService {
     return this.http.get<Product[]>(url).pipe(
       map((res: Product[]) => {
         // console.log(res);
+        this.setProductsLocal(res);
         return res;
       }),
       catchError(e => this.handleError(e))

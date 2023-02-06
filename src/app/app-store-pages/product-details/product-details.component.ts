@@ -25,7 +25,7 @@ export class ProductDetailsComponent implements OnInit {
   loadPage() {
     let found = false;
     this.selectedProduct?.features?.forEach(f => {
-      if (f.name.search('size') || f.name.search('color')) {
+      if (f.name.includes('size') || f.name.includes('color')) {
         found = true;
       }
     })
