@@ -26,6 +26,8 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
   _isEmail = false;
   _isPhone = false;
 
+  hideForm = false;
+
   @Output() savedEvent = new EventEmitter<boolean>();
 
   @ViewChild(CreateAddressComponent) createAddressComponent: CreateAddressComponent;
@@ -42,6 +44,7 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
     this.createDeliveryForm();
     this.loadUserDeliveryAddress();
+
   }
 
   ngOnInit(): void {
@@ -56,7 +59,25 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
     this.address = this.selectedDeliveryAddress?.address;
   }
 
+
+
+  get HideForm(){
+    if(this.deliveryAddresses.length == 0){
+      return false;
+    }else {
+      return this.newAddress;
+    }
+  }
+
+
   newAddressBoxClicked(){
+    console.log(this.hideForm);
+    if(this.hideForm){
+      this.hideForm = false;
+    } else {
+      this.hideForm = true;
+    }
+
     if(!this.newAddress){
       this.selectedDeliveryAddress = new DeliveryAddress();
       this.address = new Address();
@@ -68,6 +89,7 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
     this.userService.getUserDeliveryAddress(this.loggedUser?.id)?.subscribe((addresses: DeliveryAddress[]) => {
       this.loggedUserDeliveryAddresses = addresses;
       this.newAddress = (this.deliveryAddresses?.length > 0)
+     
       this.loggedUserDeliveryAddresses.forEach(deliv => {
         if (deliv?.visibleToUser)
           this.deliveryAddresses.push({
@@ -77,7 +99,15 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
             disabled: false
           });
       })
+
+      if(this.deliveryAddresses?.length>0){
+        this.hideForm = true;
+      } else {
+        this.hideForm = false;
+      }
     })
+
+    console.log(this.loggedUserDeliveryAddresses)
   }
 
 
@@ -95,20 +125,26 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
         return;
       }
       this.createAddressComponent.onSaveAddress();
-      this.selectedDeliveryAddress.address = this.address;
-      console.log(this.selectedDeliveryAddress);
-      this.userService.createUpdateUserDeliveryAddress(this.loggedUser?.id, this.selectedDeliveryAddress)?.subscribe((deliveryAddress) => {
-        this.selectedDeliveryAddress = deliveryAddress;
-        this.userService.getUserDeliveryAddress(this.loggedUser?.id)?.subscribe(addresses => { });
-        // inform neighboring components
-        if (deliveryAddress?.id) {
-          this.savedEvent.emit(true);
-          resolve(true);
-        } else {
-          this.savedEvent.emit(false);
-          resolve(false);
-        }
-      });
+
+      if(this.address?.country && this.address?.state && this.address?.postCode && this.address?.city){
+        this.selectedDeliveryAddress.address = this.address;
+        console.log(this.selectedDeliveryAddress);
+        this.userService.createUpdateUserDeliveryAddress(this.loggedUser?.id, this.selectedDeliveryAddress)?.subscribe((deliveryAddress) => {
+          this.selectedDeliveryAddress = deliveryAddress;
+          this.userService.getUserDeliveryAddress(this.loggedUser?.id)?.subscribe(addresses => { });
+          // inform neighboring components
+          if (deliveryAddress?.id) {
+            this.savedEvent.emit(true);
+            resolve(true);
+          } else {
+            this.savedEvent.emit(false);
+            resolve(false);
+          }
+        })
+      } else {
+        // alert("Invalid address information provided")
+        return;
+      }
     })
   }
 
@@ -209,15 +245,5 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
     });
   }
 
-  set hideForm($e:any){
-    console.log($e);
-    this.newAddress = $e;
-  }
-  get hideForm(){
-    if(this.deliveryAddresses.length == 0){
-      return false;
-    }else {
-      return !this.newAddress;
-    }
-  }
+  
 }

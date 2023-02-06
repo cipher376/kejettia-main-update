@@ -17,6 +17,9 @@
     <div class="container mt-7 mb-2">
       <div class="row">
         <div class="col-lg-8 col-md-12 pr-lg-4">
+          <div *ngIf="!allProductInStock()" class="alert-body collapsed" id="alert-body1" style="padding: 0 10%; color:brown">
+            <h5 style="color: red;">Some of your products are out of stock. Please review your cart</h5>
+          </div>
           <table class="shop-table cart-table" *ngIf="Cart">
             <thead>
               <tr>
@@ -37,7 +40,7 @@
                   </figure>
                 </td>
                 <td class="product-name">
-                  <div class="product-name-section">
+                  <div class="product-name-section" ngClass="allProductInStock()? '': 'red' ">
                     <a href="javascript:;" (click)="goToProduct(item?.product)">{{item?.product?.name}}</a><br>
                     <ng-container *ngFor="let f of item?.features">
                       <a href="javascript:;" style="font-size: small;" (click)="goToProduct(item?.product)" >{{f?.name}}: {{f?.value}}</a><br>
@@ -142,7 +145,7 @@
                   </td>
                 </tr>
               </table>
-              <a href="javascript:;" (click)="goToCheckOut()" class="btn btn-dark btn-rounded btn-checkout">Proceed to
+              <a href="javascript:;"  *ngIf="allProductInStock()" (click)="goToCheckOut()" class="btn btn-dark btn-rounded btn-checkout">Proceed to
                 checkout</a>
             </div>
           </div>

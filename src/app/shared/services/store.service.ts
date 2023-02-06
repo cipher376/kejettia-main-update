@@ -1617,6 +1617,17 @@ export class StoreService {
     );
   }
 
+  verifyProductStock(productId: any){
+    const url = environment.store_api_root_url + `/products/verify-stock/${productId}`;
+    return this.http.get<boolean>(url).pipe(
+      map(res => {
+        // console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+
 
   /////////////////////////////////////////////////////////////////////////
   /*************Local store access*****/

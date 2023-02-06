@@ -20,12 +20,14 @@
     <div class="tab-pane">
       <!-- PERMANENT -->
 
+      <h5 class="mb-2"> Provide your home address.
+      </h5>
       <p class="mb-2">The following addresses will be used on the checkout page by default.
       </p>
       <div class="card-body" [formGroup]="addForm">
         <div class="row">
           <div class="form-group col-8">
-            <ng-select formControlName="country" [allowClear]="false" [multiple]="false" [options]="countries||[]"
+            <ng-select style="height: 45px !important;" formControlName="country" [allowClear]="false" [multiple]="false" [options]="countries||[]"
               placeholder="Country" (selected)="setCountry($event)">
             </ng-select>
             <div class="alert alert-country" role="alert"
@@ -38,7 +40,7 @@
           </div>
 
           <div class="form-group col-4 ">
-            <input type="text" formControlName="postcode" class="form-control" placeholder="Postal Code">
+            <input type="text" formControlName="postcode" class="form-control" placeholder="Zip / Postal Code">
             <div class="alert alert-country" role="alert"
               *ngIf="(addForm.get('postcode')?.errors) && addForm.get('postcode')?.dirty">
               Provide postal code.
@@ -81,7 +83,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group" [hidden]="hideCoordinate">
           <div class="row">
             <div class="col-md-6 col-sm-12">
               <input type="number" formControlName="lat" class="form-control" placeholder="Latitude">

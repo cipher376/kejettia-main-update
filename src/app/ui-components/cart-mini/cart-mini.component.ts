@@ -22,6 +22,9 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   totalCash: number = 0; // total cash
 
   private loggedUser: User;
+
+  inStock:boolean[] = [];
+
   constructor(
     private router: Router,
     private cartService: CartService,
@@ -53,6 +56,12 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
 
   init() {
     this.cart = this.cartService.getCartLocal();
+    this.inStock= [];
+    this.cart.cartItems.forEach(item => {
+      this.storeService.verifyProductStock(item?.productId).subscribe((status)=> {
+        this.inStock.push(status);
+      });
+    })
     this.totalCash = this.cartService.getTotalAmount();
     // console.log(this.cart);
   }
@@ -63,6 +72,11 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   }
 
   goToCheckOut() {
+    if(this.inStock?.includes(false)){
+      alert('Some items are out of stock, please review your items'); 
+      return;
+    }
+
     if (this.loggedUser) {
       this.router.navigateByUrl(Urls.checkout);
     } else {

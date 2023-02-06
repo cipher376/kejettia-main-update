@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Address, User } from 'src/app/models';
 import { UtilityService, UserService } from 'src/app/shared/services';
 import { MY_ACTION } from 'src/app/shared/services/signal.service';
+import { Urls } from 'src/app/config';
 
 @Component({
   selector: 'app-address',
@@ -32,6 +33,9 @@ export class AddressComponent implements OnInit, AfterViewInit {
   selectedDeliveryAddress: DeliveryAddress;
 
   tab = "permanent" // shipping
+
+  hideCoordinate = false;
+
   constructor(
     private fb: FormBuilder,
     private util: UtilityService,
@@ -64,6 +68,10 @@ export class AddressComponent implements OnInit, AfterViewInit {
   }
   get Tab() {
     return this.tab;
+  }
+
+  @Input() set HideCoordinate(h: boolean){
+    this.hideCoordinate = h;
   }
 
 
@@ -164,6 +172,29 @@ export class AddressComponent implements OnInit, AfterViewInit {
         // this.toaster.info('Address saved!');
         this.signal.sendAction(MY_ACTION.reloadUser);
 
+        // Save for shipping 
+        if(this.loggedUser.otherDeliveryAddresses?.length <=0 && !this.loggedUser?.currentDeliveryAddress?.id){
+          const deliveryAddress = new DeliveryAddress();
+          deliveryAddress.fname = this.loggedUser?.profile?.firstName;
+          deliveryAddress.lname = this.loggedUser?.profile?.lastName;
+          deliveryAddress.mname = this.loggedUser?.profile?.otherName;
+          deliveryAddress.email = this.loggedUser?.email;
+          deliveryAddress.phone = this.loggedUser?.phone;
+          deliveryAddress.visibleToUser = true;
+
+          let add = new Address();
+          add.country = address.country
+          add.city = address.city
+          add.apartment = address.apartment
+          add.latLng = address.latLng
+          add.postCode = address.postCode
+          add.state = address.state
+          add.suburb = address.suburb;
+          add.zipCode = address.zipCode;
+          deliveryAddress.address = add;
+          this.userService.createUpdateUserDeliveryAddress(this.loggedUser?.id, deliveryAddress)?.subscribe(dAddress => {
+          });
+        }
         alert("Address saved")
       }
     }, error => {

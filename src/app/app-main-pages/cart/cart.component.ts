@@ -30,6 +30,8 @@ export class CartComponent implements OnInit {
 
   public cities: Array<IOption> = [];
   
+  inStock:boolean[] = [];
+
   constructor(
     private router: Router,
     private cartService: CartService,
@@ -57,6 +59,7 @@ export class CartComponent implements OnInit {
     this.selectedUser = this.userService.getLoggedUserLocalSync();
     this.cartService.getCart(this.selectedUser?.id)?.subscribe(cart => {
       this.cart = cart;
+      this.fillInStock();
       console.log(this.cart);
     });
   }
@@ -65,11 +68,29 @@ export class CartComponent implements OnInit {
     this.signal._action$.subscribe(action => {
       if ((action === MY_ACTION.cartChanged) || (action === MY_ACTION.cartLoaded)) {
         this.cart = this.cartService.getCartLocal();
+        this.fillInStock();
         // console.log(this.cart);
         this.calculateShipping();
         this.totalCash = this.cartService.getTotalAmount();
       }
     })
+  }
+
+  fillInStock(){
+    this.inStock= [];
+    this.cart.cartItems.forEach(item => {
+      this.storeService.verifyProductStock(item?.productId).subscribe((status)=> {
+        this.inStock.push(status);
+      });
+    })
+  }
+
+  allProductInStock(){
+    if(this.inStock.includes(false)){
+      return false; // some products are out of stock;
+    } else {
+      return true;
+    }
   }
 
   get Cart() {

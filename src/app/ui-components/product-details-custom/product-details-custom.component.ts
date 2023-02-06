@@ -58,6 +58,8 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
   wishList: Product[] = [];
 
+  inStock = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -134,6 +136,9 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
       if (action === MY_ACTION.loadReviews) {
         this.loadReviews();
       }
+    });
+    this.storeService.verifyProductStock(this.Product.id).subscribe((status)=> {
+      this.inStock = status;
     });
   }
 

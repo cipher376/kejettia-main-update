@@ -80,10 +80,15 @@ export class LoginComponent implements OnInit {
 
           console.log(Urls?.returnUrl);
 
-          if (Urls.returnUrl.includes('login')) {
+          if (!Urls.returnUrl.includes('login')) {
             window.location.href = window.location.protocol + '//' + window.location.host + Urls.returnUrl;
           } else {
-            window.location.href = window.location.protocol + '//' + window.location.host + Urls.home;
+            // if customer has no address, direct to profile
+            if(this._user?.address?.id){
+              window.location.href = window.location.protocol + '//' + window.location.host + Urls.home;
+            }else {
+              window.location.href = window.location.protocol + '//' + window.location.host + Urls.account+`?page=address`;
+            }
           }
 
         } else {

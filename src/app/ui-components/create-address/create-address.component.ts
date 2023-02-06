@@ -36,8 +36,8 @@ export class CreateAddressComponent implements OnInit {
       });
     })
     this.selectedCountry = {
-      label: 'Ghana',
-      value: 'Ghana',
+      label: '',
+      value: '',
       disabled: false
     }
     this.createAddressForm();

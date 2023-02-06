@@ -1,9 +1,9 @@
 <h3 class="title title-simple text-left text-uppercase">Billing Details</h3>
 
-<div *ngIf="!newAddress && deliveryAddresses?.length>0">
+<div *ngIf="hideForm && deliveryAddresses?.length>0">
   <div class="form-group">
-    <ng-select [allowClear]="false" [multiple]="false" [options]="deliveryAddresses||[]"
-      placeholder="" (selected)="SelectedDeliveryAddress=$event" placeholder="Select a previous delivery address">
+    <ng-select [allowClear]="false" [multiple]="false" [options]="deliveryAddresses||[]" placeholder=""
+      (selected)="SelectedDeliveryAddress=$event" placeholder="Select a previous delivery address">
     </ng-select>
   </div>
 </div>
@@ -15,14 +15,15 @@
 </div> -->
 
 <!-- <div class="form-checkbox mb-6" (click)="newAddressBoxClicked()" > -->
-  <div class="form-checkbox mb-6" (click)="newAddressBoxClicked()"*ngIf="deliveryAddresses?.length>0">
-  <input type="checkbox" class="custom-checkbox" id="different-address" name="different-address"
-  [(ngModel)]="hideForm" >
-  <label class="form-control-label ls-s" for="different-address">Ship to a different
-    address?</label>
+<div class="form-checkbox mb-6 " style="cursor:pointer;"  *ngIf=" deliveryAddresses?.length>0">
+  <!-- <input type="checkbox" class="custom-checkbox" id="different-address" name="different-address" [(ngModel)]="hideForm"> -->
+  <label class="ls-s" style="cursor:pointer;" for="different-address" (click)="newAddressBoxClicked()">
+    <button class="btn btn-rounded btn-sm"><i class="fa fa-address-book"></i></button>
+  <u *ngIf="hideForm">Click to ship to a different address?</u>
+  <u *ngIf="!hideForm">Click to select old shipping address?</u></label>
 </div>
 
-<div [hidden]="hideForm" [formGroup]="deliveryForm">
+<div [hidden]="hideForm " [formGroup]="deliveryForm">
   <div class="row">
     <div class="col-md-4 col-sm-6 col-xs-12">
       <label>First Name *</label>
@@ -78,7 +79,7 @@
   <app-create-address (addressEvent)="address = $event"></app-create-address>
 </div>
 
-<div *ngIf="!newAddress&&selectedDeliveryAddress?.id">
+<div *ngIf="hideForm && this.selectedDeliveryAddress?.id">
   <div class="address-info pb-8 mb-6">
     <p class="address-detail pb-2">
       {{selectedDeliveryAddress?.fname}} {{selectedDeliveryAddress?.lname}} {{selectedDeliveryAddress?.mname}}<br>

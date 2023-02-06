@@ -61,19 +61,19 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.deliveryAddress.saveDeliveryAddress()?.then(value => {
       if (value) {
         // save order object
-        //
-        this.consolidatedOrder = new ConsolidatedOrder();
-        this.consolidatedOrder.userId = this.loggedUser?.id;
-        this.consolidatedOrder.deliveryAddressId = this.deliveryAddress?.selectedDeliveryAddress?.id;
-        this.consolidatedOrder.userId = this.loggedUser?.id;
-        this.consolidatedOrder.currency = 'USD';
-        this.consolidatedOrder.state  = ORDER_STATE.NEW;
+        // //
+        // this.consolidatedOrder = new ConsolidatedOrder();
+        // this.consolidatedOrder.userId = this.loggedUser?.id;
+        // this.consolidatedOrder.deliveryAddressId = this.deliveryAddress?.selectedDeliveryAddress?.id;
+        // this.consolidatedOrder.userId = this.loggedUser?.id;
+        // this.consolidatedOrder.currency = 'USD';
+        // this.consolidatedOrder.state  = ORDER_STATE.NEW;
 
-        this.orderService.createConsolidatedOrder(this.loggedUser?.id, this.consolidatedOrder).subscribe((consOrder) => {
-          this.consolidatedOrder = consOrder;
-          // reload the cart
-          this.router.navigateByUrl(Urls.order);
-        })
+        // this.orderService.createConsolidatedOrder(this.loggedUser?.id, this.consolidatedOrder).subscribe((consOrder) => {
+        //   this.consolidatedOrder = consOrder;
+        //   // reload the cart
+        //   this.router.navigateByUrl(Urls.order);
+        // })
       }
     })
   }

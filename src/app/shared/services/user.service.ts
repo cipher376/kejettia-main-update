@@ -3,7 +3,7 @@ import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Pipe } from '@angular/core';
 import { Observable, throwError, Subject, from } from 'rxjs';
-import { catchError, map, filter } from 'rxjs/operators';
+import { catchError, map, filter, isEmpty } from 'rxjs/operators';
 import { Address, MyDevice, Photo, Profile, User, UserConfig } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
 import { UtilityService } from '.';
@@ -485,7 +485,11 @@ export class UserService {
   }
 
   createUpdateUserDeliveryAddress(userId: any, deliveryAddress: DeliveryAddress) {
-    if (!deliveryAddress?.address?.state || !userId) {
+    
+    console.log(userId);
+    console.log(deliveryAddress);
+
+    if (!userId && deliveryAddress?.address?.country?.length<=0) {
       console.log('Address is invalid');
       alert('Select existing address or create address; complete every address field if new');
       return undefined
@@ -507,6 +511,7 @@ export class UserService {
       return this.http.post<DeliveryAddress>(environment.store_api_root_url + `/users/${userId}/delivery-addresses`, deliveryAddress).pipe(
         map(res => {
           // console.log(res);
+          address.deliveryAddressId
           this.http.post<Address>(environment.store_api_root_url + `/delivery-addresses/${res.id}/address`, address).subscribe(() => { })
           res.address = address;
           return res as any;

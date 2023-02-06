@@ -1,8 +1,8 @@
 import { User } from 'src/app/models';
 import { Urls } from 'src/app/config';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MyAuthService } from 'src/app/shared/services';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-my-account',
@@ -13,9 +13,14 @@ export class MyAccountComponent implements OnInit, AfterViewInit {
   loggedUser: User = new User();
   isMobile = false;
 
+  // page = '';
+
+  @ViewChild('addressDiv') addressDiv: ElementRef<HTMLElement>;
+
   constructor(
     private auth: MyAuthService,
-    private router: Router
+    private router: Router, 
+    private route: ActivatedRoute
   ) { }
 
 
@@ -24,7 +29,20 @@ export class MyAccountComponent implements OnInit, AfterViewInit {
     if (this.isMobile) {
       window.scrollTo(0,0);
     }
+
+  this.route.queryParams.subscribe(p => {
+    // this.page = p?.page;
+    if(p?.page == 'address'){
+      setTimeout(() => {
+        let el: HTMLElement = this.addressDiv.nativeElement;
+        el.click();
+      }, (2000));
+    }
+    
+  })
   }
+
+
   ngOnInit(): void {
   }
 

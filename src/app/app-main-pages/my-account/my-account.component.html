@@ -11,7 +11,7 @@
                         <a class="nav-link" href="#orders">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#address">Address</a>
+                        <a class="nav-link" #addressDiv href="#address">Address</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#account">Account details</a>
@@ -33,7 +33,7 @@
 
 
                     <div class="tab-pane" id="address">
-                      <app-address></app-address>
+                      <app-address [HideCoordinate]="true"></app-address>
                     </div>
 
                     <div class="tab-pane" id="account">

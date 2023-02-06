@@ -57,6 +57,7 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
   selectedProductId = '';
 
   wishList: Product[] = [];
+  inStock = false;
 
   constructor(
     private router: Router,
@@ -133,6 +134,10 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
       if (action === MY_ACTION.loadReviews) {
         this.loadReviews();
       }
+    });
+
+    this.storeService.verifyProductStock(this.Product.id).subscribe((status)=> {
+      this.inStock = status;
     });
   }
 
