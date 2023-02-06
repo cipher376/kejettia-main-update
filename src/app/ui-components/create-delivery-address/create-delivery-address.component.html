@@ -14,13 +14,15 @@
   <br>
 </div> -->
 
-<div class="form-checkbox mb-6" (click)="newAddressBoxClicked()">
+<!-- <div class="form-checkbox mb-6" (click)="newAddressBoxClicked()" > -->
+  <div class="form-checkbox mb-6" (click)="newAddressBoxClicked()"*ngIf="deliveryAddresses?.length>0">
   <input type="checkbox" class="custom-checkbox" id="different-address" name="different-address"
-    [checked]="!(deliveryAddresses?.length>0)" [(ngModel)]="newAddress" >
+  [(ngModel)]="hideForm" >
   <label class="form-control-label ls-s" for="different-address">Ship to a different
     address?</label>
 </div>
-<div [hidden]="!newAddress" [formGroup]="deliveryForm">
+
+<div [hidden]="hideForm" [formGroup]="deliveryForm">
   <div class="row">
     <div class="col-md-4 col-sm-6 col-xs-12">
       <label>First Name *</label>
@@ -75,6 +77,7 @@
 
   <app-create-address (addressEvent)="address = $event"></app-create-address>
 </div>
+
 <div *ngIf="!newAddress&&selectedDeliveryAddress?.id">
   <div class="address-info pb-8 mb-6">
     <p class="address-detail pb-2">

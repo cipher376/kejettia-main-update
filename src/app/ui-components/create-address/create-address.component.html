@@ -11,8 +11,9 @@
       Select your country.
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-6">
+  <b></b>
+  <div class="row col-xs-12" style="top: 14px;position: relative;">
+    <div class="col-xs-6 form-group">
       <label>State *</label>
       <ng-select formControlName="state" [allowClear]="false" [multiple]="false" [options]="selectedStates||[]"
         placeholder="">
@@ -21,7 +22,7 @@
         Select your state or region.
       </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-6 form-group">
       <label>Town / City *</label>
       <input type="text" class="form-control" formControlName="city" placeholder="">
       <div class="alert alert-city" role="alert" *ngIf="(addForm.get('city')?.errors) && addForm.get('city')?.dirty">

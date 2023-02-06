@@ -208,4 +208,16 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
       ]
     });
   }
+
+  set hideForm($e:any){
+    console.log($e);
+    this.newAddress = $e;
+  }
+  get hideForm(){
+    if(this.deliveryAddresses.length == 0){
+      return false;
+    }else {
+      return !this.newAddress;
+    }
+  }
 }
