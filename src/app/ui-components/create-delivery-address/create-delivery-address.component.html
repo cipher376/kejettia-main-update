@@ -1,4 +1,4 @@
-<h3 class="title title-simple text-left text-uppercase">Billing Details</h3>
+<h3 class="title title-simple text-left text-uppercase">Delivery Address</h3>
 
 <div *ngIf="hideForm && deliveryAddresses?.length>0">
   <div class="form-group">
@@ -79,18 +79,66 @@
   <app-create-address (addressEvent)="address = $event"></app-create-address>
 </div>
 
-<div *ngIf="hideForm && this.selectedDeliveryAddress?.id">
+<!-- <div *ngIf="hideForm && this.selectedDeliveryAddress?.id">
   <div class="address-info pb-8 mb-6">
-    <p class="address-detail pb-2">
-      {{selectedDeliveryAddress?.fname}} {{selectedDeliveryAddress?.lname}} {{selectedDeliveryAddress?.mname}}<br>
-      {{selectedDeliveryAddress?.address?.street}} {{selectedDeliveryAddress?.address?.suburb}}<br>
-      {{selectedDeliveryAddress?.address?.city}}<br>
-      {{selectedDeliveryAddress?.address?.state}} - {{selectedDeliveryAddress?.address?.state}}
-      ({{selectedDeliveryAddress?.address?.postCode}})<br>
-    </p>
+    <div class="address-detail p-8" style="background: #f3f3f3; padding: 2%">
+     <p> {{selectedDeliveryAddress?.fname}} {{selectedDeliveryAddress?.lname}} {{selectedDeliveryAddress?.mname}}</p>
+      <p>{{selectedDeliveryAddress?.address?.street}} {{selectedDeliveryAddress?.address?.suburb}}</p>
+      <p>{{selectedDeliveryAddress?.address?.city}}</p>
+      <p>{{selectedDeliveryAddress?.address?.state}}</p>
+      <p>{{selectedDeliveryAddress?.address?.country}}</p>
+      <p>({{selectedDeliveryAddress?.address?.postCode}})</p>
     <p class="email">Phone: {{selectedDeliveryAddress?.phone}}</p>
     <p class="email"> {{selectedDeliveryAddress?.email}} </p>
+    </div>
   </div>
+</div> -->
+
+<div class="summary pt-5"   *ngIf="hideForm && this.selectedDeliveryAddress?.id">
+  <h3 class="title title-simple text-left text-uppercase">Selectd Address</h3>
+  <table class="order-table">
+    <thead>
+      <!-- <tr>
+        <th>Product</th>
+        <th></th>
+      </tr> -->
+    </thead>
+    <tbody>
+      <tr>
+        <td class="product-name">Full name </td>
+        <td class="product-total text-body">{{selectedDeliveryAddress?.fname}} {{selectedDeliveryAddress?.lname}} {{selectedDeliveryAddress?.mname}}</td>
+      </tr>
+      <tr>
+        <td class="product-name">Email</td>
+        <td class="product-total text-body">{{selectedDeliveryAddress?.email}}</td>
+      </tr>
+      <tr>
+        <td class="product-name">Phone</td>
+        <td class="product-total text-body">{{selectedDeliveryAddress?.phone}}</td>
+      </tr>
+      <tr>
+        <td class="product-name">Address line 1</td>
+        <td class="product-total text-body">{{selectedDeliveryAddress?.address?.street}} {{selectedDeliveryAddress?.address?.suburb}}</td>
+      </tr>
+      <tr>
+        <td class="product-name">City</td>
+        <td class="product-total text-body">{{selectedDeliveryAddress?.address?.city}}</td>
+      </tr>
+      <tr>
+        <td class="product-name">Province | State</td>
+        <td class="product-total text-body">{{selectedDeliveryAddress?.address?.state}}</td>
+      </tr>
+      <tr>
+        <td class="product-name">Country</td>
+        <td class="product-total text-body">{{selectedDeliveryAddress?.address?.country}}</td>
+      </tr>
+      <tr>
+        <td class="product-name">Zip | Postal code</td>
+        <td class="product-total text-body">{{selectedDeliveryAddress?.address?.postCode}}</td>
+      </tr>
+      
+    </tbody>
+  </table>
 </div>
 
 <!-- <h2 class="title title-simple text-uppercase text-left">Additional Information</h2>

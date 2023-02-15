@@ -1,5 +1,4 @@
-
-<app-loader-full  *ngIf="showLoader"></app-loader-full>
+<app-loader-full *ngIf="showLoader"></app-loader-full>
 <main class="main" *ngIf="!showLoader">
   <div class="page-content">
     <section class="intro-section appear-animate">
@@ -16,25 +15,26 @@
             <app-main-carousel [StoreCategories]="MainCarouselCategories"></app-main-carousel>
           </div>
 
-          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
+          <!-- <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
             <app-intro-banner-three *ngIf="premiumStores?.length>0" [Store]="premiumStores[0]"></app-intro-banner-three>
-          </div>
+          </div> -->
 
-          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
+          <!-- <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
             <app-intro-banner-three *ngIf="premiumStores?.length>1" [Store]="premiumStores[1]"></app-intro-banner-three>
-          </div>
+          </div> -->
 
           <div class="grid-item col-lg-6 col-md-4 height-x1 into_banner_one">
-            <app-intro-banner-one [Title] = "'THIS MONTH SALE'" [Content] = "'70% DISCOUNT'" [SearchKey] = "'bag'"></app-intro-banner-one>
+            <app-intro-banner-one [Title]="'THIS MONTH SALE'" [Content]="'70% DISCOUNT'"
+              [SearchKey]="'bag'"></app-intro-banner-one>
           </div>
 
           <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1 ph_remove_banner">
             <app-brands></app-brands>
           </div>
 
-          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1 ph_remove_banner">
+          <!-- <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1 ph_remove_banner">
             <app-intro-banner-three *ngIf="premiumStores?.length>2" [Store]="premiumStores[2]"></app-intro-banner-three>
-          </div>
+          </div> -->
 
           <div class="grid-space col-1"></div>
         </div>
@@ -47,20 +47,22 @@
 
 
     <div class="container">
-    <div class="row mt-10">
-    <div class="grid-item col-lg-6 col-md-6 height-x1">
-      <app-intro-banner-one [BackgroundImage] = "'assets/images/demos/demo5/banners/gifme.gif'" [Title] = "''" [Content] = "''" [SearchKey] = "'kitchen'"></app-intro-banner-one>
+      <div class="row mt-10">
+        <div class="grid-item col-lg-6 col-md-6 height-x1">
+          <app-intro-banner-one [BackgroundImage]="'assets/images/demos/demo5/banners/gifme.gif'" [Title]="''"
+            [Content]="''" [SearchKey]="'kitchen'"></app-intro-banner-one>
+        </div>
+        <div class="grid-item col-lg-6 col-md-6 height-x1">
+          <app-intro-banner-one [BackgroundImage]="'assets/images/demos/demo5/banners/gifme2.gif'"
+            [Title]="'HOME & KITCHEN'" [Content]="'APPLIANCES'" [SearchKey]="''"></app-intro-banner-one>
+        </div>
+      </div>
     </div>
-    <div class="grid-item col-lg-6 col-md-6 height-x1">
-      <app-intro-banner-one  [BackgroundImage] = "'assets/images/demos/demo5/banners/gifme2.gif'" [Title] = "'HOME & KITCHEN'" [Content] = "'APPLIANCES'" [SearchKey] = "''"></app-intro-banner-one>
-    </div>
-</div>
-</div>
 
 
     <app-other-categories [ProductCategoryItems]="ProductCategoryItems"></app-other-categories>
 
-    <app-best-sellers></app-best-sellers>
+    <!-- <app-best-sellers></app-best-sellers> -->
 
     <app-product-list-widget></app-product-list-widget>
 

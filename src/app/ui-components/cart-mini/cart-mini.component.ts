@@ -37,12 +37,14 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.init();
-    this.loggedUser = this.userService.getLoggedUserLocalSync();
+    
 
   }
 
   ngOnInit(): void {
+    this.init();
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
+    
     this.signal._action$.subscribe(action => {
       if ((action === MY_ACTION.cartChanged) || (action === MY_ACTION.cartLoaded)) {
         this.init();
@@ -57,7 +59,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   init() {
     this.cart = this.cartService.getCartLocal();
     this.inStock= [];
-    this.cart.cartItems.forEach(item => {
+    this.cart?.cartItems?.forEach(item => {
       this.storeService.verifyProductStock(item?.productId).subscribe((status)=> {
         this.inStock.push(status);
       });

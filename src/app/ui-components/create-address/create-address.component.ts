@@ -58,12 +58,13 @@ export class CreateAddressComponent implements OnInit {
 
 
   createAddressForm() {
-    this.selectedCountry = { value: this.address.country || 'Ghana', label: this.address.country || 'Ghana' };
+    this.selectedCountry = { value: this.address.country || '', label: this.address.country || '' };
     this.setCountry(this.selectedCountry);
     this.addForm = this.fb.group({
       street: [
         this.address.street || '',
         [
+          Validators.required,
           Validators.minLength(2),
           Validators.maxLength(100)
         ]
@@ -100,7 +101,7 @@ export class CreateAddressComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(100)
       ]],
-      // apartment: [this.address.apartment || '',[]],
+      apartment: [this.address.apartment || '',[]],
       lat: [this.util.getLatLngArray(this.address?.latLng).lat],
       lng: [this.util.getLatLngArray(this.address?.latLng).lng]
     });
@@ -111,7 +112,7 @@ export class CreateAddressComponent implements OnInit {
     if (!this.addForm?.valid) {
       console.log(this.addForm);
       // alert("Invalid data")
-      alert('Provide valid address data!');
+      alert('Fill all required fields');
       return false;
     }
     if (!this.selectedCountry) {
@@ -123,10 +124,16 @@ export class CreateAddressComponent implements OnInit {
     this.address.country = this.addForm?.value.country ?? '';
     this.address.postCode = this.addForm?.value.postcode ?? '';
     this.address.state = this.addForm?.value.state ?? '';
-    // this.address.apartment = this.addForm?.value.apartment ?? '';
+    this.address.apartment = this.addForm?.value.apartment ?? '';
     this.address.suburb = this.addForm?.value.suburb ?? '';
     this.address.latLng = this.addForm?.value.lat + ',' + this.addForm?.value.lng;
+
     console.log(this.address);
+    if(!this.address.street){
+      alert("Street name is required");
+      return false;
+    }
+
     return true;
   }
 

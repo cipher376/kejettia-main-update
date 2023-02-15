@@ -1126,11 +1126,11 @@ export class UtilityService {
   countryToCurrency(country: string) {
     switch (country.toLowerCase()) {
       case 'ghana':
-        return 'USD'
+        return 'CAD'
       case 'nigeria':
         return 'N'
       default:
-        return 'USD'
+        return 'CAD'
     }
   }
 

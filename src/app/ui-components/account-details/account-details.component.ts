@@ -69,8 +69,7 @@ export class AccountDetailsComponent implements OnInit {
       otherName: [
         this.profile.otherName ?? '',
         [
-          Validators.minLength(2),
-          Validators.maxLength(100)
+          
         ]
       ],
       gender: [this.profile.gender || '', Validators.required],
@@ -84,12 +83,13 @@ export class AccountDetailsComponent implements OnInit {
     if (!this.profForm?.valid) {
       // console.log(this.profForm);
       // alert("Invalid data")
-      this.toaster.error('Provide valid data!');
+      // this.toaster.error('Provide valid data!');
+      alert("Provide information for all required * fields")
       return false;
     }
 
     if (!this.loggedUser || !this.loggedUser.id) {
-      this.toaster.error('Please select user or create new user ');
+      alert('Please select user or create new user ');
       return false;
     }
 

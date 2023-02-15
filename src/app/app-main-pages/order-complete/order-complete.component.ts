@@ -40,18 +40,28 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
 
 
   ngAfterViewInit(): void {
+    
+    // console.log(this.consolidatedOrder);
+    this.loadOrder();
+  }
+
+  ngOnInit(): void {
     this.consolidatedOrder = this.orderService.getSelectedConsolidatedOrderLocal();
     this.loadItems();
 
     if (!this.consolidatedOrder?.deliveryAddress?.email) {
       this.orderService.getConsolidatedOrderById(this.consolidatedOrder?.id).subscribe(order => {
         this.utilityService.reload();
+        console.log(order);
       });
     }
-    // console.log(this.consolidatedOrder);
   }
 
-  ngOnInit(): void {
+  loadOrder() {
+    this.orderService.getConsolidatedOrderById(this.consolidatedOrder?.id)?.subscribe(consOrder => {
+      this.consolidatedOrder = consOrder;
+      this.loadItems();
+    });
   }
 
   back() {

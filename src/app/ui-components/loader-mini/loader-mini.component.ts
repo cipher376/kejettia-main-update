@@ -7,6 +7,7 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 })
 export class LoaderMiniComponent implements OnInit, AfterViewInit {
   topMargin = 0;
+  message = '';
   constructor() {
     // const script = document.createElement('script');
     // script.id = 'loader';
@@ -27,8 +28,13 @@ export class LoaderMiniComponent implements OnInit, AfterViewInit {
   }
 
 
-  @Input() set TopMargin(m: number) {
+  @Input() set TopMargin(m: any) {
     this.topMargin = m;
+  }
+
+
+  @Input() set Message(m: string){
+    this.message = m;
   }
 
   ngOnInit(): void {

@@ -90,7 +90,7 @@ export class CartService {
   syncCart(browserCart: Cart, remoteCartId: any) {
     console.log('Syncing items in cart')
     // synchronize the browser cart with the server cart
-    browserCart.cartItems.forEach(item => {
+    browserCart?.cartItems?.forEach(item => {
       this.addUpdateCartItemToCart(remoteCartId, item.productId, item.quantity, item?.shippingId).subscribe(() => { });
     })
   }

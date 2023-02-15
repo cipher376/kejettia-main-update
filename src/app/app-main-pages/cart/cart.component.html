@@ -48,7 +48,7 @@
                   </div>
                 </td>
                 <td class="product-subtotal">
-                  <span class="amount">{{item?.product?.currentPrice | currency: 'USD ':'$ '}}</span>
+                  <span class="amount">{{item?.product?.currentPrice | currency: 'CAD ':'$ '}}</span>
                 </td>
                 <td class="product-quantity">
                   <div class="input-group">
@@ -59,7 +59,7 @@
                   </div>
                 </td>
                 <td class="product-price">
-                  <span class="amount">{{item?.product?.currentPrice*item?.quantity | currency: 'USD ':'$ '}}</span>
+                  <span class="amount">{{item?.product?.currentPrice*item?.quantity | currency: 'CAD ':'$ '}}</span>
                 </td>
                 <td class="product-close">
                   <a href="javascript:;" (click)="deleteFromCart(item)" class="product-remove" title="Remove this product">
@@ -92,7 +92,7 @@
                     <h4 class="summary-subtitle">Subtotal</h4>
                   </td>
                   <td>
-                    <p class="summary-subtotal-price">{{totalCash | currency:'USD ':'$ '}}</p>
+                    <p class="summary-subtotal-price">{{totalCash | currency:'CAD ':'$ '}}</p>
                   </td>
                 </tr>
                 <tr class="sumnary-shipping shipping-row-last">
@@ -104,7 +104,7 @@
                           <input type="radio" id="flat_rate" name="shipping" class="custom-control-input" disabled
                           [checked] ="totalShipCost>0">
                           <label class="custom-control-label" for="flat_rate">Flat rate &nbsp;&nbsp;
-                            {{totalShipCost | currency:'USD ':'$ '}}</label>
+                            {{totalShipCost | currency:'CAD ':'$ '}}</label>
                         </div>
                       </li>
                       <li>
@@ -141,11 +141,11 @@
                     <h4 class="summary-subtitle">Total</h4>
                   </td>
                   <td>
-                    <p class="summary-total-price ls-s">{{(totalCash+totalShipCost) | currency:'USD ':'$ '}}</p>
+                    <p class="summary-total-price ls-s">{{(totalCash+totalShipCost) | currency:'CAD ':'$ '}}</p>
                   </td>
                 </tr>
               </table>
-              <a href="javascript:;"  *ngIf="allProductInStock()" (click)="goToCheckOut()" class="btn btn-dark btn-rounded btn-checkout">Proceed to
+              <a href="javascript:;"  *ngIf="allProductInStock() && Cart?.cartItems" (click)="goToCheckOut()" class="btn btn-dark btn-rounded btn-checkout">Proceed to
                 checkout</a>
             </div>
           </div>

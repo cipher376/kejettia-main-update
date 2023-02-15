@@ -4,6 +4,7 @@ import { CartItem, DeliveryAddress, OperationState, Store, User } from ".";
 export class Order {
 
   id?: string;
+  remote?: any;
   total?: number;
   dateCreated?: Date;
   dateModified?: Date;
@@ -14,7 +15,35 @@ export class Order {
   store?: Store;
   user?: User;
   productReturnId?: string;
+  paymentUrl?: string
 }
+
+export class PaymentGateway{
+  id?: string;
+  remoteId: string;
+  title: string;
+  description?: string;
+  order?: number;
+  enabled?: boolean;
+  method_title?: string;
+  method_description?: string;
+  settings?: object;
+  storeId?: string;
+  consolidatedOrders?: ConsolidatedOrder[];
+}
+
+export class ShippingMethod {
+  id?: string;
+  remoteId?: string;
+  description?: string;
+  title?: string;
+  cost?: number;
+  storeId: string;
+  consolidatedOrders?: ConsolidatedOrder[];
+  constructor(data?: Partial<ShippingMethod>) {
+  }
+}
+
 
 export class ConsolidatedOrder {
   id: string;
@@ -33,5 +62,9 @@ export class ConsolidatedOrder {
   orders?: Order[]
   deliveryAddress?: DeliveryAddress;
   deliveryAddressId?: string;
+  shippingMethod?: ShippingMethod;
+  paymentGateway?: PaymentGateway;
+  shippingMethodId?: string;
+  paymentGatewayId?: string;
 
 }

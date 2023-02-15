@@ -43,8 +43,8 @@ export class OrdersComponent implements OnInit {
 
   countItems(con: ConsolidatedOrder) {
     let items = 0;
-    con.orders.forEach(order => {
-      items += order.cartItems?.length;
+    con.orders?.forEach(order => {
+      items += order?.cartItems?.length;
     })
     return items;
   }

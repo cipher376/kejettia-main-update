@@ -50,10 +50,10 @@
       </h3>
 
       <div class="product-price" *ngIf="prod?.currentPrice">
-        {{prod?.currentPrice |currency:'USD '}}</div>
+        {{prod?.currentPrice |currency:'CAD '}}</div>
       <ng-container *ngIf="!prod?.currentPrice">
-        <div class="product-price">{{prod?.fromPrice |currency:'USD '}}</div> -
-        <div class="product-price">{{prod?.toPrice |currency:'USD '}}</div>
+        <div class="product-price">{{prod?.fromPrice |currency:'CAD '}}</div> -
+        <div class="product-price">{{prod?.toPrice |currency:'CAD '}}</div>
       </ng-container>
 
       <div class="ratings-container">

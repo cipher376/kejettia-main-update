@@ -65,13 +65,13 @@
                 {{selectedProduct?.productModel?.productBrand?.location}}</span>
             </div>
             <div class="product-price" *ngIf="selectedProduct?.currentPrice">
-              {{selectedProduct?.currentPrice |currency:'USD '}} +
+              {{selectedProduct?.currentPrice |currency:'CAD '}} +
               <small>{{selectedShippingCost | currency:' ':' '}}</small> <small style="color:black; font-size:50%">
                 shipping</small>
             </div>
             <ng-container *ngIf="!selectedProduct?.currentPrice">
-              <div class="product-price">{{selectedProduct?.fromPrice |currency:'USD ':'$ '}} -
-                {{selectedProduct?.toPrice |currency:'USD ':'$ '}}</div>
+              <div class="product-price">{{selectedProduct?.fromPrice |currency:'CAD ':'$ '}} -
+                {{selectedProduct?.toPrice |currency:'CAD ':'$ '}}</div>
               <div class="product-price">+ <small>{{selectedShippingCost | currency:' ':' '}}</small> <small
                   style="color:black; font-size:50%"> shipping</small></div>
             </ng-container>
@@ -102,12 +102,12 @@
               <a href="javascript:;" class="product-variation-clean">Clean All</a>
             </div>
             <!-- <div class="product-variation-price">
-              <span>$239.00</span>
+              <span>$event239.00</span>
             </div> -->
 
             <hr class="product-divider">
             <div class="product-form-group">
-              <a href="javascript:;" class="" *ngIf="inStock">Total in stock: {{StockCount}}</a>
+              <a href="javascript:;" class="" *ngIf="inStock">Total in stock: {{StockCount>100?50:StockCount}}</a>
               <a href="javascript:;" class="" *ngIf="!inStock">Out of stock</a>
             </div>
             <div class="product-form product-qty" *ngIf="inStock">

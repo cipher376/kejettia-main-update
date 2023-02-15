@@ -345,7 +345,7 @@ export class OrderService {
     const url = `${environment.store_api_root_url}/consolidated-orders/${orderId}/verify-payment/${ref}`;
     return this.http.get(url).pipe(
       map(res => {
-        console.log(res);
+        // console.log(res);
         return res as any;
       }),
       catchError(e => this.handleError(e))

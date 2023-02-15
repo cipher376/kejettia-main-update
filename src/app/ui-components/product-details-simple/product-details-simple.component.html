@@ -63,13 +63,13 @@
             </div>
 
             <div class="product-price" *ngIf="selectedProduct?.currentPrice">
-              {{selectedProduct?.currentPrice |currency:'USD '}} +
+              {{selectedProduct?.currentPrice |currency:'CAD '}} +
               <small>{{selectedShippingCost | currency:' ':' '}}</small> <small style="color:black; font-size:50%">
                 shipping</small>
             </div>
             <ng-container *ngIf="!selectedProduct?.currentPrice">
-              <div class="product-price">{{selectedProduct?.fromPrice |currency:'USD ':'$ '}} -
-                {{selectedProduct?.toPrice |currency:'USD ':'$ '}}</div>
+              <div class="product-price">{{selectedProduct?.fromPrice |currency:'CAD ':'$ '}} -
+                {{selectedProduct?.toPrice |currency:'CAD ':'$ '}}</div>
               <div class="product-price">+ <small>{{selectedShippingCost | currency:' ':' '}}</small> <small
                   style="color:black; font-size:50%"> shipping</small></div>
             </ng-container>

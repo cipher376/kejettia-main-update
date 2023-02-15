@@ -98,6 +98,10 @@ export class Home2Component implements OnInit, AfterViewInit {
       this.featuredProducts = UtilityService.shuffle(this.selectedStore.products);
       if (this.featuredProducts?.length > 0) {
         this.featuredProducts = this.featuredProducts.slice(0, 10);
+        setTimeout(() => {
+          window.scrollTo(200,0)
+          console.log("Hello im scrolling ******************")
+          }, 3000);
       }
 
       // brands;

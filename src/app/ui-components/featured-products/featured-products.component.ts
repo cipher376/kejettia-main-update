@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Product } from 'src/app/models';
 
 @Component({
@@ -6,7 +6,7 @@ import { Product } from 'src/app/models';
   templateUrl: './featured-products.component.html',
   styleUrls: ['./featured-products.component.scss']
 })
-export class FeaturedProductsComponent implements OnInit {
+export class FeaturedProductsComponent implements OnInit, AfterViewInit {
 
   products: Product[] = [];
   constructor() { }
@@ -14,9 +14,13 @@ export class FeaturedProductsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngAfterViewInit(): void {
+    
+  }
 
   @Input() set Products(products: Product[]) {
     this.products = products;
+    
   }
 
   get Products() {

@@ -106,7 +106,6 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
         this.hideForm = false;
       }
     })
-
     console.log(this.loggedUserDeliveryAddresses)
   }
 

@@ -10,7 +10,7 @@ import { catchError, map, filter } from 'rxjs/operators';
 import { MyLocalStorageService } from './local-storage.service';
 import { MY_ACTION, SignalService } from './signal.service';
 import { environment } from 'src/environments/environment';
-import { Address, Features, PolicyStatement, Store, StoreCategory, Shipping, StoreToCategoryThrough, Photo, Favourite } from 'src/app/models';
+import { Address, Features, PolicyStatement, Store, StoreCategory, Shipping, StoreToCategoryThrough, Photo, Favourite, PaymentGateway } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
 
 
@@ -1627,6 +1627,20 @@ export class StoreService {
       catchError(e => this.handleError(e))
     );
   }
+
+  getPaymentGateWays(storeIds:string[]){
+    if(!storeIds){
+      storeIds = [];
+    }
+    const url = environment.store_api_root_url + `/stores/payment-gateways`;
+    return this.http.post<PaymentGateway[]>(url, storeIds).pipe(
+      map(res => {
+        console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  } 
 
 
   /////////////////////////////////////////////////////////////////////////

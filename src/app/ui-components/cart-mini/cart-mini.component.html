@@ -1,7 +1,7 @@
 <a href="javascript:;" class="cart-toggle label-block link" >
   <div class="cart-label d-lg-show">
     <span class="cart-name">Shopping Cart:</span>
-    <span class="cart-price">{{totalCash|currency:' USD ':'$ '}}</span>
+    <span class="cart-price">{{totalCash|currency:' CAD ':'$ '}}</span>
   </div>
   <i class="d-icon-bag"><span class="cart-count">{{Cart?.cartItems?.length||0}}</span></i>
 </a>
@@ -28,7 +28,7 @@
         <a href="javascript:;" class="product-name" (click)="goToProduct(item?.product)">{{item?.product?.name}}</a>
         <div class="price-box">
           <span class="product-quantity">{{item?.quantity}}</span>
-          <span class="product-price">{{(item?.product?.currentPrice + item?.quantity* (item?.shipping?.flatCharge||0))  | currency: 'USD ':'$ '}}</span>
+          <span class="product-price">{{(item?.product?.currentPrice + item?.quantity* (item?.shipping?.flatCharge||0))  | currency: 'CAD ':'$ '}}</span>
         </div>
       </div>
     </div>
@@ -37,11 +37,11 @@
   <!-- End of Products  -->
   <div class="cart-total">
     <label>Subtotal:</label>
-    <span class="price">{{totalCash|currency:' USD ':'$ '}}</span>
+    <span class="price">{{totalCash|currency:' CAD ':'$ '}}</span>
   </div>
   <!-- End of Cart Total -->
   <div class="cart-action">
     <a href="javascript:;" (click)="goToCart()" class="btn btn-dark btn-link">View Cart</a>
-    <a href="javascript:;" (click)="goToCheckOut()" class="btn btn-dark"><span>Go To Checkout</span></a>
+    <a href="javascript:;" *ngIf="Cart?.cartItems" (click)="goToCheckOut()" class="btn btn-dark"><span>Go To Checkout</span></a>
   </div>
   <!-- End of Cart Action -->

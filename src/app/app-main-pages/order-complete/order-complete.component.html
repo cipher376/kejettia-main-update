@@ -4,7 +4,8 @@
 
       <div class="step-by pr-4 pl-4">
         <h4 *ngIf="consolidatedOrder?.state === 'PENDING'" class="pending"><i class="d-icon-check"></i> Payment successful</h4>
-        <app-paystack *ngIf="consolidatedOrder?.state === 'NEW'"></app-paystack>
+        <!-- <app-paystack *ngIf="consolidatedOrder?.state === 'NEW'"></app-paystack> -->
+        <app-paynow *ngIf="consolidatedOrder?.state === 'NEW'"></app-paynow>
       </div>
       <div class="order-results" *ngIf="consolidatedOrder">
         <div class="overview-item">
@@ -28,7 +29,7 @@
         </div>
         <div class="overview-item">
           <span>Total:</span>
-          <strong>{{consolidatedOrder?.grandTotal | currency: 'USD ':'$ '}}</strong>
+          <strong>{{consolidatedOrder?.grandTotal | currency: 'CAD ':'$ '}}</strong>
         </div>
         <!-- <div class="overview-item">
                     <span>Payment method:</span>
@@ -53,19 +54,19 @@
                   style="margin-bottom: 15px;">
                 {{item?.product?.name}} <span> <i class="fas fa-times"></i>
                   {{item?.quantity}}</span></td>
-              <td class="product-price">{{item?.price | currency:'USD ':'$ '}}</td>
+              <td class="product-price">{{item?.price | currency:'CAD ':'$ '}}</td>
             </tr>
             <tr class="summary-subtotal">
               <td>
                 <h4 class="summary-subtitle">Subtotal:</h4>
               </td>
-              <td class="summary-subtotal-price">{{subtotal | currency:'USD ':'$ '}}</td>
+              <td class="summary-subtotal-price">{{subtotal | currency:'CAD ':'$ '}}</td>
             </tr>
             <tr class="summary-subtotal" *ngIf="deliveryCost!==0">
               <td>
                 <h4 class="summary-subtitle">Delivery</h4>
               </td>
-              <td class="summary-subtotal-price">{{deliveryCost | currency:'USD ':'$ '}}</td>
+              <td class="summary-subtotal-price">{{deliveryCost | currency:'CAD ':'$ '}}</td>
             </tr>
             <tr class="summary-subtotal">
               <td>
@@ -90,7 +91,7 @@
                 <h4 class="summary-subtitle">Total:</h4>
               </td>
               <td>
-                <p class="summary-total-price text-primary">{{consolidatedOrder?.grandTotal | currency:'USD ':'$ '}}
+                <p class="summary-total-price text-primary">{{consolidatedOrder?.grandTotal | currency:'CAD ':'$ '}}
                 </p>
               </td>
             </tr>
