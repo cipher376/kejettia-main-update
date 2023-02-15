@@ -114,7 +114,7 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
     if (!this.getData()) {
       // this.toaster.error('Delivery address information is invalid');
       alert('Delivery address information is invalid');
-      return undefined;
+      return false;
     }
     return new Promise((resolve, reject) => {
       console.log(this.newAddress);
@@ -142,6 +142,8 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
         })
       } else {
         // alert("Invalid address information provided")
+        this.savedEvent.emit(false);
+        resolve(false);
         return;
       }
     })

@@ -64,11 +64,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.totalCash = this.cartService.getTotalAmount();
   }
 
-  placeOrder() {
+  async placeOrder() {
     this.showLoader = true;
     if(!this.selectedMethod){
       alert("Please select payment method");
-    this.showLoader = false;
+      this.showLoader = false;
 
       return;
     }
@@ -77,30 +77,34 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     return;
     }
 
-    this.deliveryAddress.saveDeliveryAddress()?.then(value => {
-      if (value) {
-        // save order object
-        // //
-        this.consolidatedOrder = new ConsolidatedOrder();
-        this.consolidatedOrder.userId = this.loggedUser?.id;
-        this.consolidatedOrder.deliveryAddressId = this.deliveryAddress?.selectedDeliveryAddress?.id;
-        this.consolidatedOrder.userId = this.loggedUser?.id;
-        this.consolidatedOrder.currency = 'CAD';
-        this.consolidatedOrder.state  = ORDER_STATE.NEW;
-        this.consolidatedOrder.paymentGatewayId =  this.selectedMethod.id;
+    
 
-        console.log(this.consolidatedOrder);
+    const value = await this.deliveryAddress.saveDeliveryAddress();
+    if(!this.deliveryAddress?.selectedDeliveryAddress?.id){
+      console.log(value);
+      this.showLoader = false;
+    }
+    if (value) {
+      // save order object
+      // //
+      this.consolidatedOrder = new ConsolidatedOrder();
+      this.consolidatedOrder.userId = this.loggedUser?.id;
+      this.consolidatedOrder.deliveryAddressId = this.deliveryAddress?.selectedDeliveryAddress?.id;
+      this.consolidatedOrder.userId = this.loggedUser?.id;
+      this.consolidatedOrder.currency = 'CAD';
+      this.consolidatedOrder.state = ORDER_STATE.NEW;
+      this.consolidatedOrder.paymentGatewayId = this.selectedMethod.id;
 
-        this.orderService.createConsolidatedOrder(this.loggedUser?.id, this.consolidatedOrder).subscribe((consOrder) => {
-          this.consolidatedOrder = consOrder;
+      console.log(this.consolidatedOrder);
 
-          // reload the cart
-          this.router.navigateByUrl(Urls.order);
-           this.showLoader = false;
+      this.orderService.createConsolidatedOrder(this.loggedUser?.id, this.consolidatedOrder).subscribe((consOrder) => {
+        this.consolidatedOrder = consOrder;
 
-        })
-      }
-    })
+        // reload the cart
+        this.router.navigateByUrl(Urls.order);
+        this.showLoader = false;
+      })
+    } 
   }
 
   calculateShipping() {
