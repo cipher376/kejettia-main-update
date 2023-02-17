@@ -107,7 +107,7 @@
 
             <hr class="product-divider">
             <div class="product-form-group">
-              <a href="javascript:;" class="" *ngIf="inStock">Total in stock: {{StockCount>100?50:StockCount}}</a>
+              <a href="javascript:;" class="" *ngIf="inStock">Total in stock: {{StockCount>100?50:StockCount}}+</a>
               <a href="javascript:;" class="" *ngIf="!inStock">Out of stock</a>
             </div>
             <div class="product-form product-qty" *ngIf="inStock">
