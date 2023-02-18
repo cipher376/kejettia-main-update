@@ -8,7 +8,7 @@ import { StoreService } from 'src/app/shared/services/store.service';
 import { CartService } from './../../shared/services/cart.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, AfterViewInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { Cart, CartItem, Product, Features, Review, User } from 'src/app/models';
+import { Cart, CartItem, Product, Features, Review, User, ProductVariation } from 'src/app/models';
 import { Subscription } from 'rxjs';
 import { UserService, UtilityService } from 'src/app/shared/services';
 
@@ -44,6 +44,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   modelFeatures: Features[] = [];
   selectedFeatures: Features[] = [];
   otherFeatures: Features[] = [];
+
+  variations: ProductVariation[]=[];
+  selectedVariation: ProductVariation;
+
   shipFrom = '';
   guide = '';
 
@@ -81,8 +85,16 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.refreshProduct();
   }
 
+
   get Product() {
     return this.selectedProduct;
+  }
+
+
+  set SelectedVariation(variation: ProductVariation) {
+  console.log(variation);
+  this.selectedVariation = variation;
+  this.cart
   }
 
   set SelectedFeature(feature: Features) {
@@ -152,16 +164,26 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   addToCart() {
-    console.log(this.selectedShipping)
-    if ((this.selectedProduct?.shippings?.length) > 0 && (!this.selectedShipping)) {
-      alert("Please select shipping or delivery location");
-      return;
-    }
+    // console.log(this.selectedShipping)
+    // if ((this.selectedProduct?.shippings?.length) > 0 && (!this.selectedShipping)) {
+    //   alert("Please select shipping or delivery location");
+    //   return;
+    // }
 
-    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe(cartItem => {
+    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe((cart: Cart) => {
+      console.log(cart);
+      const cartItem = this.cart?.cartItems[this.cart?.cartItems?.length-1];
+      console.log(cartItem)
+      if(this.selectedVariation){
+        cartItem.productVariationId =  this.selectedVariation?.id;
+        this.cartService.linkCartItemToProductVariation(cartItem?.id, this.selectedVariation?.id).subscribe((status)=>{
+          console.log(status);
+        })
+      }
+      
       this.selectedFeatures?.forEach(feature => {
-        console.log(feature);
-        console.log(cartItem);
+        // console.log(feature);
+        // console.log(cartItem);
         if(cartItem?.id && feature?.id)
           this.cartService.updateCartItemToFeature(cartItem?.id, feature?.id)?.subscribe(() => {
         })
@@ -222,6 +244,8 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   refreshProduct() {
     this.storeService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
       this.selectedProduct = product;
+      this.variations = product?.productVariations;
+      // console.log(this.variations);
       this.init();
     });
   }

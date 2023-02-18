@@ -78,7 +78,6 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
       alert('Some items are out of stock, please review your items'); 
       return;
     }
-
     if (this.loggedUser) {
       this.router.navigateByUrl(Urls.checkout);
     } else {

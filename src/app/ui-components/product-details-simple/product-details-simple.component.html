@@ -85,10 +85,10 @@
             </div>
             <p class="product-short-desc" [innerHTML]=" selectedProduct?.about??'' | slice:0:210 | sanitizeHtml "></p>
 
-            <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
+            <!-- <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
               (selectedShippingCostEvent)="selectedShippingCost=$event"
               (selectedShippingEvent)="selectedShipping=$event">
-            </app-delivery-select>
+            </app-delivery-select> -->
 
             <hr class="product-divider">
             <div class="product-form-group">

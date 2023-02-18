@@ -26,6 +26,8 @@
       </figure>
       <div class="product-detail">
         <a href="javascript:;" class="product-name" (click)="goToProduct(item?.product)">{{item?.product?.name}}</a>
+        <a href="javascript:;" class="product-name" (click)="goToProduct(item?.product)" 
+        *ngFor="let att of item?.productVariation?.attributes">{{att?.name}} : {{att?.option}}</a>
         <div class="price-box">
           <span class="product-quantity">{{item?.quantity}}</span>
           <span class="product-price">{{(item?.product?.currentPrice + item?.quantity* (item?.shipping?.flatCharge||0))  | currency: 'CAD ':'$ '}}</span>

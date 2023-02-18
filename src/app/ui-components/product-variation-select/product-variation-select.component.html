@@ -1,0 +1,22 @@
+
+<label><p>{{'Select product options'| titlecase}}</p></label>
+<ng-container *ngFor="let name of variationNames; let i=index">
+  <div class="product-form product-variations product-size"
+ *ngIf="ProductVariations?.length>0">
+    
+  <label>{{name}}</label>
+  <div class="product-form-group ">
+    
+    <div class="select-box">
+      <select name="size" class="form-control" [(ngModel)]="SelectedValue">
+        <!-- <option value="" selected="selected">Choose sele</option> -->
+        <option [value]="name+'_'+v" *ngFor="let v of variationValues[i]; let i=index">{{v}}</option>
+      </select>
+    </div>
+    <!-- <a href="javascript:;" class="size-guide" style="margin-left: 11% !important;"
+     (click)="goToGuide(Features[0]?.name)"><i class="d-icon-th-list"></i>{{Features[0]?.name |titlecase}} Guide</a> -->
+  </div>
+  <br> 
+</div>
+</ng-container>
+

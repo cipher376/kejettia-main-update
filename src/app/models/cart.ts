@@ -1,5 +1,5 @@
 import { Shipping } from './shipping';
-import { Product, Features } from ".";
+import { Product, Features, ProductVariation } from ".";
 
 
 export class CartItem {
@@ -14,6 +14,8 @@ export class CartItem {
   cartId?: string;
   shippingId?: string;
   orderId?: string;
+  productVariationId?: any;
+  productVariation:ProductVariation;
 }
 
 

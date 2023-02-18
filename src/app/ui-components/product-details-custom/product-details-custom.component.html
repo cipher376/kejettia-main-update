@@ -87,17 +87,19 @@
             <p class="product-short-desc" [innerHTML]=" selectedProduct?.about??'' | slice:0:210 | sanitizeHtml "></p>
             <p class="product-short-desc" *ngIf="shipFrom"><b>Ships from: {{shipFrom}}</b></p>
 
-            <app-feature-select [Features]="colorFeatures" (guideEvent)="setGuidWidget($event)"
+            <!-- <app-feature-select [Features]="colorFeatures" (guideEvent)="setGuidWidget($event)"
               (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
             <app-feature-select [Features]="sizeFeatures" (guideEvent)="setGuidWidget($event)"
               (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
             <app-feature-select [Features]="lengthFeatures" (guideEvent)="setGuidWidget($event)"
-              (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
+              (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select> -->
 
-            <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
+              <app-product-variation-select [ProductVariations]="variations" (selectedProductVariationEvent)="SelectedVariation=$event"></app-product-variation-select>
+
+            <!-- <app-delivery-select [Shippings]="selectedProduct?.shippings" (guideEvent)="setGuidWidget($event)"
               (selectedShippingCostEvent)="selectedShippingCost=$event"
               (selectedShippingEvent)="selectedShipping=$event">
-            </app-delivery-select>
+            </app-delivery-select> -->
             <div class="product-form-group">
               <a href="javascript:;" class="product-variation-clean">Clean All</a>
             </div>

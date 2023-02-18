@@ -111,6 +111,7 @@ export class CartService {
           relation: 'cartItems',
           scope: {
             include: [
+              {relation: 'productVariation'},
               {
                 relation: 'product',
                 scope: {
@@ -204,7 +205,7 @@ export class CartService {
     // if user is not logged in create fake cart
     const user = this.userService.getLoggedUserLocalSync();
     if (!user?.id) {
-      console.log('here');
+      console.log('here');  
       return of(this.addToBrowserCart(cartId, productId, quantity, shipId));
     }
 
@@ -287,7 +288,19 @@ export class CartService {
     );
   }
 
-
+  linkCartItemToProductVariation(cartItemId: any, productVariationId: any){
+    if (!productVariationId || !cartItemId) {
+      console.log('Invalid cartItem to update ');
+      return undefined;
+    }
+    return this.http.get<boolean>(environment.store_api_root_url + `/cart-items/${cartItemId}/product-variation/${productVariationId}`).pipe(
+      map(res => {
+        return res as any;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
+  
 
 
 

@@ -42,8 +42,11 @@
                 <td class="product-name">
                   <div class="product-name-section" ngClass="allProductInStock()? '': 'red' ">
                     <a href="javascript:;" (click)="goToProduct(item?.product)">{{item?.product?.name}}</a><br>
+                    <a href="javascript:;" class="product-name" (click)="goToProduct(item?.product)" 
+        *ngFor="let att of item?.productVariation?.attributes">{{att?.name}} : {{att?.option}}</a><br>
                     <ng-container *ngFor="let f of item?.features">
-                      <a href="javascript:;" style="font-size: small;" (click)="goToProduct(item?.product)" >{{f?.name}}: {{f?.value}}</a><br>
+                      <a href="javascript:;" style="font-size: small;" (click)="goToProduct(item?.product)" >{{f?.name}}: {{f?.value}}</a>
+                      <br>
                     </ng-container>
                   </div>
                 </td>

@@ -12,6 +12,7 @@ import { MY_ACTION, SignalService } from './signal.service';
 import { environment } from 'src/environments/environment';
 import { Address, Features, PolicyStatement, Store, StoreCategory, Shipping, StoreToCategoryThrough, Photo, Favourite, PaymentGateway } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
+import { stringify } from 'querystring';
 
 
 export interface StoreView {
@@ -859,7 +860,8 @@ export class StoreService {
       return undefined;
     }
     const filter = {
-      include: [
+      include: [        
+        { relation: 'productVariations' },
         { relation: 'features' },
         { relation: 'productCategoryItems' },
         { relation: 'shippings' },
@@ -896,6 +898,9 @@ export class StoreService {
         showOnPage: true
       },
       include: [
+        {
+          relation: 'productVariations'
+        },
         { relation: 'features' },
         { relation: 'productCategoryItems' },
         { relation: 'shippings' },
@@ -914,6 +919,7 @@ export class StoreService {
         { relation: 'bargains' }
       ]
     }
+    // console.log(stringify(filter));
     const url = `${environment.store_api_root_url}/products?filter=${JSON.stringify(filter)}`
     return this.http.get<Product[]>(url).pipe(
       map((res: Product[]) => {
@@ -1270,6 +1276,7 @@ export class StoreService {
           showOnPage: true
         },
         include: [
+        { relation: 'productVariations' },
           { relation: 'features' },
           { relation: 'productCategoryItems' },
           { relation: 'shippings' },
@@ -1360,6 +1367,7 @@ export class StoreService {
         showOnPage: true
       },
       include: [
+        { relation: 'productVariations' },
         { relation: 'features' },
         { relation: 'productCategoryItems' },
         { relation: 'shippings' },
@@ -1486,6 +1494,7 @@ export class StoreService {
     }
     const filter = {
       include: [
+        { relation: 'productVariations' },
         { relation: 'features' },
         { relation: 'productCategoryItems' },
         { relation: 'shippings' },
