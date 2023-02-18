@@ -1,3 +1,9 @@
+
+
+
+
+
+
 import { TermsComponent } from './terms/terms.component';
 import { AuthGuard } from './../shared/services/guards/authGuard.service';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
