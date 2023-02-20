@@ -79,7 +79,9 @@ export enum MY_ACTION {
   //Comments and reviews
   loadReviews = 12,
 
-  wish_list_changed =13
+  wish_list_changed =13,
+
+  address_changed =14
 
 }
 

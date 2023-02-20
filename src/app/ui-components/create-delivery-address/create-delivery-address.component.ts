@@ -1,7 +1,7 @@
 import { CreateAddressComponent } from './../create-address/create-address.component';
 import { AddressComponent } from './../address/address.component';
 import { StoreService } from 'src/app/shared/services/store.service';
-import { Component, EventEmitter, OnInit, Output, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IOption } from 'ng-select';
 import { ToastrService } from 'ngx-toastr';
@@ -28,6 +28,8 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
 
   hideForm = false;
 
+  title = 'Delivery Address';
+
   @Output() savedEvent = new EventEmitter<boolean>();
 
   @ViewChild(CreateAddressComponent) createAddressComponent: CreateAddressComponent;
@@ -48,6 +50,10 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+  }
+
+  @Input() set Title(t: string){
+    this.title = t;
   }
 
 

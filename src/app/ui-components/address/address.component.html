@@ -1,13 +1,13 @@
 
 <div class="row">
-  <div class="col-sm-6 mb-2 ">
+  <div class="col-sm-6 mb-2 " *ngIf="title">
     <div class="">
       <a href="javascript:;" class="card-body" (click)="Tab='permanent'">
-        <h5 class="card-title text-uppercase card card-address p-r">Permanent Address</h5>
+        <h5 class="card-title text-uppercase card card-address p-r">Billing | Permanent Address</h5>
       </a>
     </div>
   </div>
-  <div class="col-sm-6 mb-2">
+  <div class="col-sm-6 mb-2" *ngIf="title">
     <div class="">
       <a href="javascript:;" (click)="Tab='shipping'" class="card-body">
         <h5 class="card-title text-uppercase card card-address p-r active">Shipping Address</h5>
@@ -20,9 +20,9 @@
     <div class="tab-pane">
       <!-- PERMANENT -->
 
-      <h5 class="mb-2"> Provide your home address.
+      <h5 class="mb-2" *ngIf="title"> Provide your home address.
       </h5>
-      <p class="mb-2">The following addresses will be used on the checkout page by default.
+      <p class="mb-2" *ngIf="title">This address will be use for billing on checkout.
       </p>
       <div class="card-body" [formGroup]="addForm">
         <div class="row">
@@ -101,7 +101,7 @@
         </div>
 
 
-        <div class="col-12 col-sm-12 mb-3 ">
+        <div class="col-12 col-sm-12 mb-3 " *ngIf="hideSaveBtn">
           <button type="button" class="btn  btn-primary" (click)="onSaveAddress()">Save address</button>
         </div>
       </div>
@@ -109,10 +109,10 @@
   </div>
 
   <div class="col-sm-12 mb-4 animate__animated animate__fadeInUp" *ngIf="Tab=='shipping'">
-    <div class="tab-pane">
+    <div class="tab-pane" >
       <!-- SHIPPING -->
 
-      <table class="order-table">
+      <table class="order-table" >
         <thead>
           <tr>
             <th class="pl-2">Name</th>

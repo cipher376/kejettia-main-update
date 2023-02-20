@@ -1,5 +1,16 @@
-<h3 class="title title-simple text-left text-uppercase">Delivery Address</h3>
+<h3 class="title title-simple text-left text-uppercase" *ngIf="title">{{title}}</h3>
 
+
+
+<!-- <div class="form-checkbox mb-6" (click)="newAddressBoxClicked()" > -->
+  <div class="form-checkbox mb-6 " style="cursor:pointer;"  *ngIf=" deliveryAddresses?.length>0">
+    <!-- <input type="checkbox" class="custom-checkbox" id="different-address" name="different-address" [(ngModel)]="hideForm"> -->
+    <label class="ls-s" style="cursor:pointer;" for="different-address" (click)="newAddressBoxClicked()">
+      <button class="btn btn-rounded btn-sm"><i class="fa fa-address-book"></i></button>
+    <u *ngIf="hideForm">Click to ship to a different address?</u>
+    <u *ngIf="!hideForm">Click to select old shipping address?</u></label>
+  </div>
+  
 <div *ngIf="hideForm && deliveryAddresses?.length>0">
   <div class="form-group">
     <ng-select [allowClear]="false" [multiple]="false" [options]="deliveryAddresses||[]" placeholder=""
@@ -14,14 +25,6 @@
   <br>
 </div> -->
 
-<!-- <div class="form-checkbox mb-6" (click)="newAddressBoxClicked()" > -->
-<div class="form-checkbox mb-6 " style="cursor:pointer;"  *ngIf=" deliveryAddresses?.length>0">
-  <!-- <input type="checkbox" class="custom-checkbox" id="different-address" name="different-address" [(ngModel)]="hideForm"> -->
-  <label class="ls-s" style="cursor:pointer;" for="different-address" (click)="newAddressBoxClicked()">
-    <button class="btn btn-rounded btn-sm"><i class="fa fa-address-book"></i></button>
-  <u *ngIf="hideForm">Click to ship to a different address?</u>
-  <u *ngIf="!hideForm">Click to select old shipping address?</u></label>
-</div>
 
 <div [hidden]="hideForm " [formGroup]="deliveryForm">
   <div class="row">

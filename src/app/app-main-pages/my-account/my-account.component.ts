@@ -36,7 +36,7 @@ export class MyAccountComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         let el: HTMLElement = this.addressDiv.nativeElement;
         el.click();
-      }, (2000));
+      }, (500));
     }
     
   })
