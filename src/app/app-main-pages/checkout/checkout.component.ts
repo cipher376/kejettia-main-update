@@ -120,6 +120,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     })
     this.storeService.getPaymentGateWays(storeIds).subscribe(gateWays=> {
       this.paymentGateWays = gateWays
+      if(gateWays?.length>0)
+      this.selectedMethod = gateWays[0]
     })
   }
 

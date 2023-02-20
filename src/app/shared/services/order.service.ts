@@ -271,6 +271,21 @@ export class OrderService {
     );
   }
 
+  // verifyPayment(consOrderId: any, paymentSessionId){
+  //   if(!consOrderId || !paymentSessionId){
+  //     console.error('Invalid verification ids');
+  //     return undefined;
+  //   }
+  //   const url = `${environment.store_api_root_url}/consolidated-orders/${consOrderId}/verify-payment/${paymentSessionId}`
+  //   return this.http.get<boolean>(url).pipe(
+  //     map(res => {
+  //       return res;
+  //     }),
+  //     catchError(e => this.handleError(e))
+  //   );
+    
+  // }
+
   getConsolidatedOrders(userId: any) {
     const filter = {
       where: {
@@ -341,8 +356,8 @@ export class OrderService {
 
 
 
-  verifyOrderPayment(orderId: any, ref: string) {
-    const url = `${environment.store_api_root_url}/consolidated-orders/${orderId}/verify-payment/${ref}`;
+  verifyOrderPayment(orderId: any, ref: string, gate: string) {
+    const url = `${environment.store_api_root_url}/consolidated-orders/${orderId}/verify-payment/${ref}/gateway/${gate}`;
     return this.http.get(url).pipe(
       map(res => {
         // console.log(res);

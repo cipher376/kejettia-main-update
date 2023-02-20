@@ -56,6 +56,8 @@ export class PopularProductsComponent implements OnInit, AfterViewInit {
   goToProduct(p: Product) {
     this.storeService.setSelectedProductLocal(p).then(() => {
       this.router.navigateByUrl(Urls.productDetails + '/' + p?.id);
+      // window.location.href = Urls.productDetails + '/' + p?.id;
+
     });
   }
 

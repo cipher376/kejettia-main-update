@@ -24,12 +24,13 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
   subtotal = 0;
 
   constructor(
-    // private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router,
     private location: Location,
     private cartService: CartService,
     private orderService: OrderService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService, 
+  
   ) { }
 
 
@@ -43,6 +44,11 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
     
     // console.log(this.consolidatedOrder);
     this.loadOrder();
+
+    this.route?.queryParams.subscribe(param => {
+      // console.log(param);
+      this.verifyPayment(param);
+    })
   }
 
   ngOnInit(): void {
@@ -92,6 +98,25 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
 
   getPhoto(product: Product) {
     return StoreService.getPhotoUrlByDisplayTypeLocal(product?.photos, 'cover', true, true);
+  }
+  
+  verifyPayment(param: object){
+    // console.log(payment_ssid);
+    // TODO: 
+    const keys = Object.keys(param)
+    if(keys?.length>0){
+      // const cons_id = keys[0].split("_")[0];
+      const cons_id = keys[0];
+      console.log(cons_id);
+
+      this.orderService.verifyOrderPayment(cons_id, param[cons_id], 'stripe').subscribe(status => {
+        console.log(status);
+        if(status){
+          // window.close();
+          console.log(status);
+        }
+      })
+    }
   }
 
 

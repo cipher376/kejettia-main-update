@@ -78,7 +78,7 @@ export class CartComponent implements OnInit {
 
   fillInStock(){
     this.inStock= [];
-    this.cart.cartItems.forEach(item => {
+    this.cart.cartItems?.forEach(item => {
       this.storeService.verifyProductStock(item?.productId).subscribe((status)=> {
         this.inStock.push(status);
       });
@@ -128,6 +128,7 @@ export class CartComponent implements OnInit {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate([Urls.productDetails + '/' + product?.id]);
       });
+      // window.location.href = Urls.productDetails + '/' + product?.id;
     });
   }
 

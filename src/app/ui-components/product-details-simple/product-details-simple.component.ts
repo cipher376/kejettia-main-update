@@ -136,9 +136,9 @@ export class ProductDetailsSimpleComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.storeService.verifyProductStock(this.Product.id).subscribe((status)=> {
-      this.inStock = status;
-    });
+    // this.storeService.verifyProductStock(this.Product.id).subscribe((status)=> {
+    //   this.inStock = status;
+    // });
   }
 
   init() {
