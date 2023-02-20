@@ -54,11 +54,26 @@
           *ngIf="!loggedUser?.id && !isMobile">Forgot
           password</a>
 
-        <div *ngIf="loggedUser?.id">
+        <div *ngIf="loggedUser?.id" class="dropdown">
+
           <a [routerLink]="['/main/pages/my-account']" routerLinkActive="router-link-active"><i class="d-icon-user"></i>
             &nbsp; <span *ngIf="loggedUser?.profile">{{loggedUser?.profile?.firstName}}
               {{loggedUser?.profile?.lastName}}</span>
             <span *ngIf="!loggedUser?.profile">{{loggedUser?.email}}</span></a>
+
+            <ul class="dropdown-box">
+              <li>
+                <a [routerLink]="['']" class="usersel help d-lg-show"><i class="d-icon-user"></i>Profile</a>
+              </li>
+
+              <li>
+                <a [routerLink]="['']" class="usersel help d-lg-show"><i class="d-icon-bag"></i>Orders</a>
+              </li>
+              
+              <li class="logoutsection">
+                <a [routerLink]="['']" class="usersel help d-lg-show"><i class="d-icon-arrow-left"></i>Logout</a>
+            </ul>
+
         </div>
         <!-- End of Login -->
       </div>

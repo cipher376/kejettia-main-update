@@ -1,3 +1,9 @@
-.m-1{
+/* .m-1{
   width: 55px;
+} */
+img.m-1 {
+  margin-bottom: 1em;
+  display: block;
+margin-left: 0.5em;
+width: 95px !important;  
 }

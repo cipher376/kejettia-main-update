@@ -12,18 +12,21 @@
             </div>
             <div class="product-thumbs-wrap">
               <div class="product-thumbs">
-                <div class="product-thumb active" *ngFor="let ph of selectedProductPhotos">
+                <app-gallery-wrapper [Images]="selectedProduct?.photos" class="m-0 p-0"
+              *ngIf="selectedProductPhotos?.length>0"></app-gallery-wrapper>
+                <!-- <div class="product-thumb active" *ngFor="let ph of selectedProductPhotos">
                   <img [src]="ph?.thumbnail" alt="product thumbnail" width="109" height="122">
-                </div>
+                </div> -->
               </div>
               <button class="thumb-up disabled"><i class="fas fa-chevron-left"></i></button>
               <button class="thumb-down disabled"><i class="fas fa-chevron-right"></i></button>
+              
             </div>
             <div class="product-label-group">
               <label class="product-label label-new">new</label>
             </div>
-            <app-gallery-wrapper [Images]="selectedProduct?.photos" class="m-0 p-0"
-              *ngIf="selectedProductPhotos?.length>0"></app-gallery-wrapper>
+            <!-- <app-gallery-wrapper [Images]="selectedProduct?.photos" class="m-0 p-0"
+              *ngIf="selectedProductPhotos?.length>0"></app-gallery-wrapper> -->
           </div>
         </div>
         <div class="col-md-6">
@@ -84,8 +87,8 @@
               <a href="javascript:;" (click)="goToTab(4)" class="link-to-tab rating-reviews">(
                 {{selectedProduct?.reviews?.length??0}} reviews )</a>
             </div>
-            <p class="product-short-desc" [innerHTML]=" selectedProduct?.about??'' | slice:0:210 | sanitizeHtml "></p>
-            <p class="product-short-desc" *ngIf="shipFrom"><b>Ships from: {{shipFrom}}</b></p>
+            <!-- <p class="product-short-desc" [innerHTML]=" selectedProduct?.about??'' | slice:0:210 | sanitizeHtml "></p>
+            <p class="product-short-desc" *ngIf="shipFrom"><b>Ships from: {{shipFrom}}</b></p> -->
 
             <!-- <app-feature-select [Features]="colorFeatures" (guideEvent)="setGuidWidget($event)"
               (selectedFeatureEvent)="SelectedFeature=$event"></app-feature-select>
