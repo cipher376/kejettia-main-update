@@ -78,7 +78,7 @@ export class PaystackComponent implements OnInit, AfterViewInit {
     this.signal.sendAction(MY_ACTION.paystackTransactionSuccess);
 
     // call the backend to verify the transaction
-    this.orderService.verifyOrderPayment(this.consolidatedOrder?.id, ref.reference).subscribe(data => {
+    this.orderService.verifyOrderPayment(this.consolidatedOrder?.id, ref.reference,"paystack").subscribe(data => {
       if (data.status === 'success') {
         this.orderService.getConsolidatedOrderById(this.consolidatedOrder?.id).subscribe(order => {
           this.utilityService.reload();

@@ -9,6 +9,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UserService } from 'src/app/shared/services';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { StoreService } from 'src/app/shared/services/store.service';
+import { AddressComponent } from 'src/app/ui-components/address/address.component';
 
 @Component({
   selector: 'app-checkout',
@@ -18,6 +19,7 @@ import { StoreService } from 'src/app/shared/services/store.service';
 export class CheckoutComponent implements OnInit, AfterViewInit {
 
   @ViewChild(CreateDeliveryAddressComponent) deliveryAddress: CreateDeliveryAddressComponent;
+  @ViewChild(AddressComponent) address: AddressComponent;
   loggedUser: User;
 
   cart: Cart;
@@ -30,13 +32,16 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   selectedMethod: PaymentGateway;
   showLoader = false;
 
+  next = 0
+  pageNumber =0;
   constructor(
     private router: Router,
     private cartService: CartService,
     private orderService: OrderService,
     private signal: SignalService,
     private userService: UserService,
-    private storeService: StoreService
+    private storeService: StoreService,
+
   ) {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
   }
@@ -54,6 +59,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       if ((action === MY_ACTION.cartChanged) || (action === MY_ACTION.cartLoaded)) {
         this.cart = this.cartService.getCartLocal();
         this.init();
+      } else if(action == MY_ACTION.address_changed){
+        this.next = this.pageNumber; // trigge page movement
       }
     })
   }
@@ -64,20 +71,38 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.totalCash = this.cartService.getTotalAmount();
   }
 
+  showForm(pageNumber: number){
+    // save the current form 
+    this.pageNumber = pageNumber;
+    // Navigation
+    if (pageNumber == 1) {
+      //save billing details
+      this.address?.onSaveAddress();
+      // if(!this.address?.address?.id){
+      //   return;
+      // }
+    } else if (pageNumber == 0) {
+      // handled by place order button
+      this.next = pageNumber;
+    }
+
+    
+
+  }
+
+
   async placeOrder() {
     this.showLoader = true;
-    if(!this.selectedMethod){
-      alert("Please select payment method");
-      this.showLoader = false;
-
-      return;
-    }
+    // if(!this.selectedMethod){
+    //   alert("Please select payment method");
+    //   this.showLoader = false;
+    //   return;
+    // }
     if(this.cart?.cartItems?.length<=0){
     this.showLoader = false;
     return;
     }
 
-    
 
     const value = await this.deliveryAddress.saveDeliveryAddress();
     if(!this.deliveryAddress?.selectedDeliveryAddress?.id){
@@ -120,6 +145,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     })
     this.storeService.getPaymentGateWays(storeIds).subscribe(gateWays=> {
       this.paymentGateWays = gateWays
+      if(gateWays?.length>0)
+      this.selectedMethod = gateWays[0]
     })
   }
 

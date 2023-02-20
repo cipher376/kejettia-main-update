@@ -117,18 +117,25 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.wishList = this.storeService.getWishListLocalSync();
     this.isInWishList();
 
-    console.log(this.wishList)
+    // console.log(this.wishList)
 
     if (this.selectedProduct) {
       setTimeout(() => {
         this.getCartItemFromCart();
+        
       }, 100);
     }
     this.cart = this.cartService.getCartLocal();
     this.products = this.storeService.getProductsLocalSync();
-    console.log(this.products)
+    // console.log(this.products)
+    
+    this.storeService.verifyProductStock(this.Product.id).subscribe((status)=> {
+      this.inStock = status;
+    });
 
     window.scrollTo(0, 10);
+
+    
 
   }
 
@@ -149,9 +156,6 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
         this.loadReviews();
       }
     });
-    this.storeService.verifyProductStock(this.Product.id).subscribe((status)=> {
-      this.inStock = status;
-    });
   }
 
   init() {
@@ -170,17 +174,26 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     //   return;
     // }
 
-    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe((cart: Cart) => {
-      console.log(cart);
-      const cartItem = this.cart?.cartItems[this.cart?.cartItems?.length-1];
-      console.log(cartItem)
+    this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, 
+      this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe((cart: Cart) => {
+      this.cart = cart;
+      this.cartService.getCart(this.loggedUser?.id).subscribe(cart => {
+        console.log(cart);
+        const len = cart.cartItems?.length;
+        this.handleCartAddOns(cart.cartItems[len-1])
+      })
+        // this.handleCartAddOns(cartItem)
+    })
+  }
+
+  handleCartAddOns(cartItem){
+    console.log(cartItem)
       if(this.selectedVariation){
         cartItem.productVariationId =  this.selectedVariation?.id;
         this.cartService.linkCartItemToProductVariation(cartItem?.id, this.selectedVariation?.id).subscribe((status)=>{
           console.log(status);
         })
       }
-      
       this.selectedFeatures?.forEach(feature => {
         // console.log(feature);
         // console.log(cartItem);
@@ -188,9 +201,8 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
           this.cartService.updateCartItemToFeature(cartItem?.id, feature?.id)?.subscribe(() => {
         })
       })
+
       this.showAddedToCartAlert();
-      // this.cartService.getCart().subscribe(()=>{})
-    })
   }
 
 

@@ -209,7 +209,7 @@ export class CartService {
       return of(this.addToBrowserCart(cartId, productId, quantity, shipId));
     }
 
-    if (!cartId || !productId) {
+    if (!cartId || cartId?.length<24 || !productId) {
       console.error('Invalid cart or product Id');
       if (!cartId) {
         this.initCart();
@@ -403,7 +403,7 @@ export class CartService {
     if (!cart) cart = this.getCartLocal();
     let total = 0;
     cart?.cartItems?.forEach(item => {
-      total += (item.price * item.quantity);
+      total += ((item?.price??0) * item?.quantity);
     });
     return total;
   }

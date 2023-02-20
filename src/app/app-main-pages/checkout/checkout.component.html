@@ -1,30 +1,83 @@
-  <app-loader-mini TopMargin="15" [Message]="'Processing order'" [hidden]="!showLoader"></app-loader-mini>
+<app-loader-mini TopMargin="15" [Message]="'Processing order'" [hidden]="!showLoader"></app-loader-mini>
 <main class="main checkout">
   <div class="page-content pt-0 pb-10 mb-10">
     <div class="container mt-7">
-      <!-- <div class="card accordion">
-                <div class="alert alert-light alert-primary alert-icon mb-4 card-header">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span class="text-body">Have a coupon?</span>
-                    <a href="#alert-body2" class="text-primary">Click here to enter your code</a>
-                </div>
-                <div class="alert-body mb-4 collapsed" id="alert-body2">
-                    <p>If you have a coupon code, please apply it below.</p>
-                    <div class="check-coupon-box d-flex">
-                        <input type="text" name="coupon_code" class="input-text form-control text-grey ls-m mr-4"
-                            id="coupon_code" value="" placeholder="Coupon code">
-                        <button type="submit" class="btn btn-dark btn-rounded btn-outline">Apply Coupon</button>
-                    </div>
-                </div>
-            </div> -->
       <form action="#" class="form">
         <div class="row">
-          <div class="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
-            <app-create-delivery-address #deliveryAddress></app-create-delivery-address>
+
+          <div class="col-xs-12 col-lg-8 text-center p-0">
+            <div class="card px-0  pb-0 ">
+              <!-- <h3 class="title title-simple text-center text-uppercase">Sign Up Your User Account</h3> -->
+              <p>Please verify or update existing information</p>
+
+              <form id="msform" >
+                <!-- progressbar -->
+                <ul id="progressbar" style="
+                              display: flex;
+                              flex-direction: row;
+                              justify-content: center;
+                              align-content: stretch;">
+                  <!-- <li [class.active]="next === 0" id="account"><strong>Personal</strong></li> -->
+                  <li [class.active]="next === 0" id="personal"><strong>Billing Address</strong></li>
+                  <li [class.active]="next === 1" id="confirm"><strong>Delivery Address</strong></li>
+                </ul>
+                <!-- <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+                </div> -->
+                <br>
+                <!--  Personal details -->
+                <!-- <fieldset *ngIf="next === 0">
+                  <div class="form-card">
+                    <div class="row">
+                      <div class="col-7">
+                        <h2 class="fs-title">Personal Information:</h2>
+                      </div>
+                      <div class="col-5">
+                        <h4 class="steps">Step 1 - 3</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <input (click)="showForm('account')" type="button" name="next" class="next action-button"
+                    value="Next" />
+                </fieldset> -->
+                <!-- billing Address -->
+                <div [ngSwitch]="next">
+                
+                <fieldset *ngSwitchCase="0">
+                  <div class="row text-left">
+                    <app-address #address [HideCoordinate]="true" [Title]="false"  [ShowSaveButton]="false"></app-address>
+                  </div>
+                  <input type="button" (click)="showForm(1)" name="next" class="next action-button"
+                    value="Next"  />
+                  <!-- <input type="button"  (click)="showForm(0)" name="previous" class="previous action-button-previous" value="Previous" *ngIf="next>0"/> -->
+                </fieldset>
+                <!-- Shipping Address -->
+                <fieldset *ngSwitchCase="1">
+                  <div class="row text-left">
+                  <app-create-delivery-address #deliveryAddress [Title]="''"></app-create-delivery-address>
+                  </div>
+                  <!-- <input type="button" (click)="showForm(2)" name="next" class="next action-button" 
+                    value="Next"  />-->
+                  <input type="button"  (click)="showForm(0)" name="previous" class="previous action-button-previous" value="Previous" *ngIf="next>0"/>
+                </fieldset>
+              </div>
+              </form>
+            </div>
           </div>
 
-          <aside class="col-lg-5 sticky-sidebar-wrapper">
-            <div class="sticky-sidebar mt-1" data-sticky-options="{'bottom': 50}">
+
+
+          
+
+
+
+
+
+
+
+          <aside class="col-xs-12 col-lg-4 sticky-sidebar-wrapper">
+            <div class="sticky-sidebar mt-1" data-sticky-options="{'bottom': 50}" [hidden]="true">
               <div class="summary pt-5">
                 <h3 class="title title-simple text-left text-uppercase">Payment Method</h3>
                 <table class="order-table">
@@ -37,13 +90,14 @@
                   <tbody>
                     <tr *ngFor="let mth of paymentGateWays">
                       <div class="custom-radio ">
-                        <input type="radio" id="payment" name="payment" class="custom-control-input" 
+                        <input type="radio" id="payment" name="payment" class="custom-control-input"
                           [checked]="mth?.id == selectedMethod?.id" (click)="PaymentGateWay=mth">
-                        <label style="font-size: 14px;" (click)="PaymentGateWay=mth" class="custom-control-label" for="{{mth?.title}}">{{mth?.title}} &nbsp;&nbsp;
-                          </label>
+                        <label style="font-size: 14px;" (click)="PaymentGateWay=mth" class="custom-control-label"
+                          for="{{mth?.title}}">{{mth?.title}} &nbsp;&nbsp;
+                        </label>
                       </div>
                     </tr>
-                   
+
                     <!-- <tr>
                       <div class="custom-radio">
                         <input type="radio" id="free-payment" name="payment" class="custom-control-input" 
@@ -95,41 +149,6 @@
                       <td class="product-total text-body">0.0%</td>
                     </tr>
 
-                    <!-- <tr class="sumnary-shipping shipping-row-last">
-                                             <td colspan="2">
-                                                <h4 class="summary-subtitle">Calculate Shipping</h4>
-                                                <ul>
-                                                    <li>
-                                                        <div class="custom-radio">
-                                                            <input type="radio" id="flat_rate"
-                                                                name="shipping" class="custom-control-input" checked>
-                                                            <label class="custom-control-label"
-                                                                for="flat_rate">Flat rate</label>
-                                                        </div>
-                                                    </li>
-
-                                                    <li>
-                                                        <div class="custom-radio">
-                                                            <input type="radio" id="free-shipping"
-                                                                name="shipping" class="custom-control-input">
-                                                            <label class="custom-control-label"
-                                                                for="free-shipping">Free
-                                                                shipping</label>
-                                                        </div>
-                                                    </li>
-
-                                                    <li>
-                                                        <div class="custom-radio">
-                                                            <input type="radio" id="local_pickup"
-                                                                name="shipping" class="custom-control-input">
-                                                            <label class="custom-control-label"
-                                                                for="local_pickup">Local pickup</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr> -->
-
                     <tr class="summary-total">
                       <td class="pb-0">
                         <h4 class="summary-subtitle">Total</h4>
@@ -141,43 +160,15 @@
                     </tr>
                   </tbody>
                 </table>
-                <!-- <div class="payment accordion radio-type">
-                                    <h4 class="summary-subtitle ls-m pb-3">Payment Methods</h4>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a href="#collapse1" class="collapse text-body text-normal ls-m">Check payments
-                                            </a>
-                                        </div>
-                                        <div id="collapse1" class="expanded" style="display: block;">
-                                            <div class="card-body ls-m">
-                                                Please send a check to Store Name, Store Street,
-                                                Store Town, Store State / County, Store Postcode.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <a href="#collapse2" class="expand text-body text-normal ls-m">Cash on delivery</a>
-                                        </div>
-                                        <div id="collapse2" class="collapsed">
-                                            <div class="card-body ls-m">
-                                                Pay with cash upon delivery.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-checkbox mt-4 mb-5">
-                                    <input type="checkbox" class="custom-checkbox" id="terms-condition"
-                                        name="terms-condition" />
-                                    <label class="form-control-label" for="terms-condition">
-                                        I have read and agree to the website <a href="javascript:;">terms and conditions </a>*
-                                    </label>
-                                </div>  -->
-                <button type="submit" class="btn btn-dark btn-rounded btn-order" *ngIf="paymentGateWays"  (click)="placeOrder()">Place
+                <button type="submit" class="btn btn-dark btn-rounded btn-order" *ngIf="paymentGateWays"
+                  (click)="placeOrder()">Place
                   Order</button>
               </div>
             </div>
           </aside>
+
+
+
         </div>
       </form>
     </div>

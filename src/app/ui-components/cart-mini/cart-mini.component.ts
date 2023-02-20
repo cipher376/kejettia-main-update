@@ -59,11 +59,6 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   init() {
     this.cart = this.cartService.getCartLocal();
     this.inStock= [];
-    this.cart?.cartItems?.forEach(item => {
-      this.storeService.verifyProductStock(item?.productId).subscribe((status)=> {
-        this.inStock.push(status);
-      });
-    })
     this.totalCash = this.cartService.getTotalAmount();
     // console.log(this.cart);
   }
@@ -91,6 +86,8 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate([Urls.productDetails + '/' + product?.id]);
       });
+      // window.location.href = Urls.productDetails + '/' + product?.id;
+      
     });
   }
 

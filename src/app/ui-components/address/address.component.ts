@@ -35,6 +35,8 @@ export class AddressComponent implements OnInit, AfterViewInit {
   tab = "permanent" // shipping
 
   hideCoordinate = false;
+  title = true;
+  hideSaveBtn = true;
 
   constructor(
     private fb: FormBuilder,
@@ -61,6 +63,14 @@ export class AddressComponent implements OnInit, AfterViewInit {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
     this.address = this.loggedUser?.address || new Address();
     this.createAddressForm();
+  }
+
+  @Input() set Title(t: boolean){
+    this.title = t;
+  }
+
+ @Input() set ShowSaveButton(b: boolean){
+    this.hideSaveBtn = b;
   }
 
   set Tab(t: string) {
@@ -165,6 +175,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
     }
     this.address.userId = this.loggedUser.id;
     this.userService.createUpdateAddress(this.loggedUser?.id, this.address).subscribe((address: Address) => {
+      this.signal.sendAction(MY_ACTION.address_changed)
       if (this.loggedUser) {
         this.loggedUser.address = address;
         this.address = address;

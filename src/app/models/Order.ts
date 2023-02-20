@@ -53,6 +53,7 @@ export class ConsolidatedOrder {
   currency?: string;
   visibleToUser?: boolean;
   paymentMethod?: PAYMENT_METHOD
+  consolidatedPaymentUrl?: string;
 
   dateCreated: Date;
   dateModified: Date;

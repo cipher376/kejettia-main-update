@@ -62,24 +62,25 @@ export class PaynowComponent implements OnInit, AfterViewInit {
   paymentInit() {
     try {
       this.isProcessing = true;
-      window.open(this.consolidatedOrder?.orders[0]?.paymentUrl, "_blank");
-      this.orderProcessingTimer = setInterval(this.validatePayment, 5000, this);
+      window.location.href = this.consolidatedOrder?.consolidatedPaymentUrl;
+      // window.open(this.consolidatedOrder?.consolidatedPaymentUrl, "_blank");
+      // this.orderProcessingTimer = setInterval(this.validatePayment, 5000, this); 
     } catch (error) {
       console.log(error);
     }
   }
 
-  validatePayment(_this: any){
-    _this.orderService.verifyOrderPayment(_this.consolidatedOrder?.id, 'remote')?.subscribe(status => {
-      if(status?.status.toString() === 'success') {
-        _this.isProcessing = false;
-        setTimeout(() => {
-        window.location.reload();
-        clearInterval(_this.orderProcessingTimer);
-        }, 4000);
-      }
-    })
-  }
+  // validatePayment(_this: any){
+  //   _this.orderService.verifyOrderPayment(_this.consolidatedOrder?.id, 'stripe')?.subscribe(status => {
+  //     if(status) {
+  //       _this.isProcessing = false;
+  //       setTimeout(() => {
+  //       window.location.reload();
+  //       clearInterval(_this.orderProcessingTimer);
+  //       }, 4000);
+  //     }
+  //   })
+  // }
 
   loadOrder() {
     this.orderService.getConsolidatedOrderById(this.consolidatedOrder?.id)?.subscribe(consOrder => {
