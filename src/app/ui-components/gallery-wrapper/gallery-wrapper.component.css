@@ -7,3 +7,12 @@ img.m-1 {
 margin-left: 0.5em;
 width: 95px !important;  
 }
+
+
+@media screen and (max-width: 991px) {
+  /* Styles for screens with a width of 956 pixels or less */
+  .container.stritem {
+    display: flex !important;
+    margin-left: -1.5em;
+}
+}
