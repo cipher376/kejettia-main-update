@@ -114,6 +114,7 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { SanitizeHtmlPipe } from '../shared/pipes/sanitize-html.pipe';
 import { PaynowComponent } from './paynow/paynow.component';
 import { ProductVariationSelectComponent } from './product-variation-select/product-variation-select.component';
+import { GoogleLoginComponent } from './google-login/google-login.component';
 
 
 @NgModule({
@@ -219,7 +220,8 @@ import { ProductVariationSelectComponent } from './product-variation-select/prod
     WhatsappComponent,
     SanitizeHtmlPipe,
     PaynowComponent,
-    ProductVariationSelectComponent
+    ProductVariationSelectComponent,
+    GoogleLoginComponent
   ],
   imports: [
     CommonModule,
@@ -326,7 +328,8 @@ import { ProductVariationSelectComponent } from './product-variation-select/prod
     WhatsappComponent,
     SanitizeHtmlPipe,
     PaynowComponent,
-    ProductVariationSelectComponent
+    ProductVariationSelectComponent,
+    GoogleLoginComponent
   ]
 })
 export class ComponentModule { }
