@@ -12,3 +12,5 @@ RUN ng build
 FROM nginx:1.17.1-alpine
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=compile-image /opt/ng/www /usr/share/nginx/html
+
+# CMD [ "ng serve" ][]
