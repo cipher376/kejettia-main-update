@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "docker:build-deploy-prod": "docker build -t kejettia-main-update .  && docker tag kejettia-main-update ntiamoah376/devtek:kejettia-main-update && docker push ntiamoah376/devtek:kejettia-main-update",
-    "docker:build-deploy-local": "docker build -t kejettia-main-update -f dockerfile.local .  && docker tag kejettia-main-update-local ntiamoah376/devtek:kejettia-main-update-local && docker push ntiamoah376/devtek:kejettia-main-update-local"
+    "docker:build-deploy-local": "docker build -t kejettia-main-update-local -f dockerfile.local .  && docker tag kejettia-main-update-local ntiamoah376/devtek:kejettia-main-update-local && docker push ntiamoah376/devtek:kejettia-main-update-local"
   },
   "private": true,
   "dependencies": {

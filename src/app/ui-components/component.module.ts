@@ -98,8 +98,8 @@ import { ShippingViewComponent } from './shipping-view/shipping-view.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 import { CreateDeliveryAddressComponent } from './create-delivery-address/create-delivery-address.component';
 import { SelectModule } from 'ng-select';
-import { Angular4PaystackModule } from 'angular4-paystack';
-import { PAYSTACK_PUBLIC_KEY } from '../config';
+// import { Angular4PaystackModule } from 'angular4-paystack';
+// import { PAYSTACK_PUBLIC_KEY } from '../config';
 import { StoreProductFilterComponent } from './store-product-filter/store-product-filter.component';
 import { CategoryFilterComponent } from './category-filter/category-filter.component';
 import { SizeFilterComponent } from './size-filter/size-filter.component';
@@ -206,7 +206,7 @@ import { ProductVariationSelectComponent } from './product-variation-select/prod
     ShippingViewComponent,
     CreateAddressComponent,
     CreateDeliveryAddressComponent,
-    PaystackComponent,
+    // PaystackComponent,
     StoreProductFilterComponent,
     CategoryFilterComponent,
     SizeFilterComponent,
@@ -233,7 +233,7 @@ import { ProductVariationSelectComponent } from './product-variation-select/prod
     SelectModule,
     // ModalModule,
     ProgressbarModule.forRoot(),
-    Angular4PaystackModule.forRoot(PAYSTACK_PUBLIC_KEY),
+    // Angular4PaystackModule.forRoot(PAYSTACK_PUBLIC_KEY),
 
   ],
   exports: [
@@ -310,7 +310,7 @@ import { ProductVariationSelectComponent } from './product-variation-select/prod
     GalleryWrapperComponent,
     CreateAddressComponent,
     CreateDeliveryAddressComponent,
-    PaystackComponent,
+    // PaystackComponent,
     StoreProductFilterComponent,
     CategoryFilterComponent,
     SizeFilterComponent,

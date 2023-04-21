@@ -94,6 +94,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   set SelectedVariation(variation: ProductVariation) {
   console.log(variation);
   this.selectedVariation = variation;
+  this.selectedProduct.currentPrice = variation.regular_price
   this.cart
   }
 
