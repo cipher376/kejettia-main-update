@@ -115,6 +115,7 @@ import { SanitizeHtmlPipe } from '../shared/pipes/sanitize-html.pipe';
 import { PaynowComponent } from './paynow/paynow.component';
 import { ProductVariationSelectComponent } from './product-variation-select/product-variation-select.component';
 import { GoogleLoginComponent } from './google-login/google-login.component';
+import { TrackingComponent } from './tracking/tracking.component';
 
 
 @NgModule({
@@ -221,7 +222,8 @@ import { GoogleLoginComponent } from './google-login/google-login.component';
     SanitizeHtmlPipe,
     PaynowComponent,
     ProductVariationSelectComponent,
-    GoogleLoginComponent
+    GoogleLoginComponent,
+    TrackingComponent,
   ],
   imports: [
     CommonModule,
@@ -329,7 +331,8 @@ import { GoogleLoginComponent } from './google-login/google-login.component';
     SanitizeHtmlPipe,
     PaynowComponent,
     ProductVariationSelectComponent,
-    GoogleLoginComponent
+    GoogleLoginComponent,
+    
   ]
 })
 export class ComponentModule { }

@@ -32,6 +32,7 @@ import { LoaderMiniComponent } from '../ui-components/loader-mini/loader-mini.co
 import { CartComponent } from './cart/cart.component';
 import { CompanyComponent } from './company/company.component';
 import { BusinessPageComponent } from './business-page/business-page.component';
+import { TrackingComponent } from '../ui-components/tracking/tracking.component';
 
 
 
@@ -98,7 +99,8 @@ const routes: Routes = [
             canActivate: [AuthGuard],
             path: 'verify-email', component: EmailVerificationComponent
           },
-          { path: 'business-page', component: BusinessPageComponent }
+          { path: 'business-page', component: BusinessPageComponent },
+          { path: 'tracking', component: TrackingComponent}
         ]
       },
 
