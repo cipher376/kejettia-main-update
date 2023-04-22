@@ -6,7 +6,6 @@ import { BlogWidgetComponent } from './blog-widget/blog-widget.component';
 import { BrandsHorizontalComponent } from './brands-horizontal/brands-horizontal.component';
 import { BlackFridayAdComponent } from './black-friday-ad/black-friday-ad.component';
 import { PopularProductsComponent } from './popular-products/popular-products.component';
-import { ProductDetailsSimpleComponent } from './product-details-simple/product-details-simple.component';
 import { ProductDetailsCustomComponent } from './product-details-custom/product-details-custom.component';
 import { ProductSalesWidgetComponent } from './product-sales-widget/product-sales-widget.component';
 import { ProductThumbHorizontalComponent } from './product-thumb-horizontal/product-thumb-horizontal.component';
@@ -186,7 +185,6 @@ import { GoogleLoginComponent } from './google-login/google-login.component';
     ProductThumbHorizontalComponent,
     ProductSalesWidgetComponent,
     ProductDetailsCustomComponent,
-    ProductDetailsSimpleComponent,
     PopularProductsComponent,
     BlackFridayAdComponent,
     BrandsHorizontalComponent,
@@ -300,7 +298,6 @@ import { GoogleLoginComponent } from './google-login/google-login.component';
     ProductThumbHorizontalComponent,
     ProductSalesWidgetComponent,
     ProductDetailsCustomComponent,
-    ProductDetailsSimpleComponent,
     PopularProductsComponent,
     BlackFridayAdComponent,
     BrandsHorizontalComponent,

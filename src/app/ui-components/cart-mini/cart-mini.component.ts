@@ -58,6 +58,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
 
   init() {
     this.cart = this.cartService.getCartLocal();
+    console.log(this.cart);
     this.inStock= [];
     this.totalCash = this.cartService.getTotalAmount();
     // console.log(this.cart);
@@ -89,6 +90,11 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
       // window.location.href = Urls.productDetails + '/' + product?.id;
       
     });
+
+    // this.storeService.setSelectedProductLocal(product).then(() => {
+    //   this.router.navigateByUrl(Urls.productDetails + '/' + product?.id);
+    //   // window.location.href = Urls.productDetails + '/' + product?.id;
+    // });
   }
 
   getProductPhoto(product: Product) {

@@ -403,7 +403,7 @@ export class CartService {
     if (!cart) cart = this.getCartLocal();
     let total = 0;
     cart?.cartItems?.forEach(item => {
-      total += ((item?.price??0) * item?.quantity);
+      total += ((item?.productVariation?.price??item?.price??0) * item?.quantity);
     });
     return total;
   }

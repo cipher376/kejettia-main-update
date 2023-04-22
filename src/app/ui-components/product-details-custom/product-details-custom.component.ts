@@ -94,7 +94,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   set SelectedVariation(variation: ProductVariation) {
   console.log(variation);
   this.selectedVariation = variation;
-  this.selectedProduct.currentPrice = variation.regular_price
+  this.selectedProduct.currentPrice = variation.price
   this.cart
   }
 
@@ -174,6 +174,16 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     //   alert("Please select shipping or delivery location");
     //   return;
     // }
+
+    if(this.variations?.length >0){
+      if(!this.selectedVariation){
+        const properties = []; 
+        
+        this.variations[0].attributes?.forEach(v=>properties.push(v.name))
+        alert('Please select '+properties.join(', '))
+        return;
+      }
+    }
 
     this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, 
       this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe((cart: Cart) => {
