@@ -67,12 +67,12 @@
               BRAND: <span class="product-brand">{{selectedProduct?.productModel?.productBrand?.manufacturer}} -
                 {{selectedProduct?.productModel?.productBrand?.location}}</span>
             </div>
-            <div class="product-price" *ngIf="variations?.length<1">
+            <div class="product-price" *ngIf="variations?.length<1 || selectedVariation">
               {{selectedProduct?.currentPrice |currency:'CAD '}} 
               <!-- +<small>{{selectedShippingCost | currency:' ':' '}}</small> <small style="color:black; font-size:50%">
                 shipping</small> -->
             </div>
-            <ng-container *ngIf="variations?.length>0">
+            <ng-container *ngIf="(!selectedVariation) && variations?.length>0">
               <div class="product-price">{{selectedProduct?.fromPrice |currency:'CAD ':'$ '}} -
                 {{selectedProduct?.toPrice |currency:'CAD ':'$ '}}</div>
               <!-- <div class="product-price">+ <small>{{selectedShippingCost | currency:' ':' '}}</small> <small
