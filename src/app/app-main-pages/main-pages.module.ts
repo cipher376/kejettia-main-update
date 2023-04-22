@@ -29,6 +29,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { BusinessPageComponent } from './business-page/business-page.component';
 import { TermsComponent } from './terms/terms.component';
+import { TrackingComponent } from './tracking/tracking.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { TermsComponent } from './terms/terms.component';
     ChangePasswordComponent,
     EmailVerificationComponent,
     BusinessPageComponent,
-    TermsComponent
+    TermsComponent,
+    TrackingComponent
   ],
 })
 export class MainPagesModule { }

@@ -34,7 +34,7 @@
               "src/styles.scss",
               "node_modules/ngx-simple-modal/styles/simple-modal.css"
             ],
-            "scripts": []
+            "scripts": [ "src/facebook-sdk.js" ]
           },
           "configurations": {
             "production": {

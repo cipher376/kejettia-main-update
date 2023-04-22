@@ -219,7 +219,7 @@ import { GoogleLoginComponent } from './google-login/google-login.component';
     SanitizeHtmlPipe,
     PaynowComponent,
     ProductVariationSelectComponent,
-    GoogleLoginComponent
+    GoogleLoginComponent,
   ],
   imports: [
     CommonModule,
@@ -326,7 +326,8 @@ import { GoogleLoginComponent } from './google-login/google-login.component';
     SanitizeHtmlPipe,
     PaynowComponent,
     ProductVariationSelectComponent,
-    GoogleLoginComponent
+    GoogleLoginComponent,
+    
   ]
 })
 export class ComponentModule { }
