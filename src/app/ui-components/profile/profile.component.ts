@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.signal._action$.subscribe(action => {
       if (action = MY_ACTION.reloadUser) {
         this.loggedUser = this.userService.getLoggedUserLocalSync();
-        console.log(this.loggedUser);
+        // console.log(this.loggedUser);
       }
     });
   }
@@ -56,9 +56,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       photo.size = this.profilePhoto?.size;
       photo.thumbnail = 'thumb_' + this.profilePhoto?.source;
       this.profilePhoto = photo;
-      console.log(this.profilePhoto);
+      // console.log(this.profilePhoto);
       this.userService.updateProfilePhoto(this.loggedUser?.id as any, photo)?.subscribe((photo: Photo) => {
-        console.log(photo);
+        // console.log(photo);
         if (photo) {
           this.loggedUser.profilePhoto = photo;
           setTimeout(() => {

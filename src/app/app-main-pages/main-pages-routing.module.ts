@@ -63,6 +63,10 @@ const routes: Routes = [
           { path: 'login', component: LoginComponent },
           {
             canActivate: [AuthGuard],
+            path: 'my-account/:page', component: MyAccountComponent
+          },
+          {
+            canActivate: [AuthGuard],
             path: 'my-account', component: MyAccountComponent
           },
           { path: 'about', component: AboutUsComponent },
