@@ -33,7 +33,7 @@
               <a href="javascript:;" (click)="goToProduct(prod)">{{prod?.name}}</a>
             </td>
             <td class="product-price">
-              <span class="amount">{{prod?.currentPrice  | currency:'CAD ':'$ '}}</span>
+              <span class="amount">{{prod?.currentPrice  | currency:'CAD ':'CAD$ '}}</span>
             </td>
             <td class="product-stock-status">
               <span class="wishlist-in-stock" *ngIf="prod?.stockCount>0">In Stock</span>

@@ -1,7 +1,7 @@
 import { StoreService } from './../../shared/services/store.service';
 import { UtilityService } from './../../shared/services/utility.service';
 import { Cart, CartItem } from './../../models/cart';
-import { ConsolidatedOrder, Product, User } from 'src/app/models';
+import { Address, ConsolidatedOrder, Product, User } from 'src/app/models';
 import { OrderService } from './../../shared/services/order.service';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { Order } from './../../models/Order';
@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from 'src/app/shared/services';
+import { Tax } from 'src/app/models/tax.model';
 
 @Component({
   selector: 'app-order-complete',
@@ -22,7 +23,7 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
   items: CartItem[] = [];
   deliveryCost = 0;
   subtotal = 0;
-
+  tax:Tax = new Tax();
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -30,6 +31,8 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
     private cartService: CartService,
     private orderService: OrderService,
     private utilityService: UtilityService, 
+    private storeService: StoreService,
+    private userService: UserService
   
   ) { }
 
@@ -52,6 +55,8 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngOnInit(): void {
+    this.loggedUser = this.userService.getLoggedUserLocalSync();
+
     this.consolidatedOrder = this.orderService.getSelectedConsolidatedOrderLocal();
     this.loadItems();
 
@@ -61,6 +66,8 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
         console.log(order);
       });
     }
+
+    this.getUserTax();
   }
 
   loadOrder() {
@@ -116,6 +123,19 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
           console.log(status);
         }
       })
+    }
+  }
+
+  getUserTax(address: Address=null){
+    if(!address){
+    if(this.loggedUser?.address){
+      this.storeService.getTax(this.loggedUser?.address?.country, this.loggedUser?.address?.state)?.subscribe(tx => {
+        this.tax=tx;
+      });
+    }} else {
+      this.storeService.getTax(address?.country, address?.state)?.subscribe(tx => {
+        this.tax=tx;
+      });
     }
   }
 

@@ -29,7 +29,7 @@
         </div>
         <div class="overview-item">
           <span>Total:</span>
-          <strong>{{consolidatedOrder?.grandTotal | currency: 'CAD ':'$ '}}</strong>
+          <strong>{{consolidatedOrder?.grandTotal | currency: 'CAD ':'CAD$ '}}</strong>
         </div>
         <!-- <div class="overview-item">
                     <span>Payment method:</span>
@@ -54,44 +54,53 @@
                   style="margin-bottom: 15px;">
                 {{item?.product?.name}} <span> <i class="fas fa-times"></i>
                   {{item?.quantity}}</span></td>
-              <td class="product-price">{{item?.price | currency:'CAD ':'$ '}}</td>
+                  <span *ngIf="item?.productVariationId" class="amount">{{item?.productVariation?.price | currency: 'CAD ':'CAD$ '}}</span>
+                  <span *ngIf="!item?.productVariationId" class="amount">{{item?.product?.currentPrice | currency: 'CAD ':'CAD$ '}}</span>
             </tr>
             <tr class="summary-subtotal">
               <td>
                 <h4 class="summary-subtitle">Subtotal:</h4>
               </td>
-              <td class="summary-subtotal-price">{{subtotal | currency:'CAD ':'$ '}}</td>
+              <td class="summary-subtotal-price">{{subtotal | currency:'CAD ':'CAD$ '}}</td>
             </tr>
             <tr class="summary-subtotal" *ngIf="deliveryCost!==0">
               <td>
                 <h4 class="summary-subtitle">Delivery</h4>
               </td>
-              <td class="summary-subtotal-price">{{deliveryCost | currency:'CAD ':'$ '}}</td>
+              <td class="summary-subtotal-price">{{deliveryCost | currency:'CAD ':'CAD$ '}}</td>
             </tr>
-            <tr class="summary-subtotal">
+            <!-- <tr class="summary-subtotal">
               <td>
                 <h4 class="summary-subtitle">Discount</h4>
               </td>
               <td class="summary-subtotal-price">0%</td>
+            </tr> -->
+            <tr>
+              <td class="product-name">Delivery</td>
+              <td class="product-total text-body">{{deliveryCost |currency:' ':'CAD$ '}}</td>
             </tr>
-            <tr class="summary-subtotal" *ngIf="deliveryCost == 0">
+            <tr *ngIf="tax?.id">
+              <td class="product-name">Tax ({{tax?.value*100}}%)</td>
+              <td class="product-total text-body">{{tax?.value*subtotal | currency:'CAD ':'CAD$ '}}</td>
+            </tr>
+            <!-- <tr class="summary-subtotal" *ngIf="deliveryCost == 0">
               <td>
                 <h4 class="summary-subtitle">Shipping:</h4>
               </td>
               <td class="summary-subtotal-price">Free shipping</td>
-            </tr>
-            <tr class="summary-subtotal">
+            </tr> -->
+            <!-- <tr class="summary-subtotal">
               <td>
                 <h4 class="summary-subtitle">Payment method:</h4>
               </td>
               <td class="summary-subtotal-price">{{consolidatedOrder?.paymentMethod}}</td>
-            </tr>
+            </tr> -->
             <tr class="summary-subtotal">
               <td>
                 <h4 class="summary-subtitle">Total:</h4>
               </td>
               <td>
-                <p class="summary-total-price text-primary">{{consolidatedOrder?.grandTotal | currency:'CAD ':'$ '}}
+                <p class="summary-total-price text-primary">{{consolidatedOrder?.grandTotal | currency:'CAD ':'CAD$ '}}
                 </p>
               </td>
             </tr>

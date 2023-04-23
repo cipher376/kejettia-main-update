@@ -17,7 +17,7 @@
       <td class="order-number"><a href="javascript:;" (click)="goToOrderComplete(order)">#{{order?.id?.slice(19)}}</a></td>
       <td class="order-date"><time>{{order?.dateCreated | date}}</time></td>
       <td class="order-status"><span>{{order?.state}}</span></td>
-      <td class="order-total"><span>{{order?.grandTotal | currency:'CAD ':'$ '}}</span></td>
+      <td class="order-total"><span>{{order?.grandTotal | currency:'CAD ':'CAD$ '}}</span></td>
       <td class="order-action"></td>
       <td class="order-action" *ngIf="order?.invoice"><a href="javascript:;" (click)="goToOrderDetails(order)"
           class="btn btn-primary btn-link btn-underline" >View</a></td>

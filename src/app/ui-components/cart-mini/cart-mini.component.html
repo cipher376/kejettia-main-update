@@ -1,7 +1,7 @@
 <a href="javascript:;" class="cart-toggle label-block link" >
   <div class="cart-label d-lg-show">
     <span class="cart-name">Shopping Cart:</span>
-    <span class="cart-price">{{totalCash|currency:' CAD ':'$ '}}</span>
+    <span class="cart-price">{{totalCash|currency:' CAD ':'CAD$ '}}</span>
   </div>
   <i class="d-icon-bag"><span class="cart-count">{{Cart?.cartItems?.length||0}}</span></i>
 </a>
@@ -30,8 +30,8 @@
         *ngFor="let att of item?.productVariation?.attributes">{{att?.name}} : {{att?.option}}</a>
         <div class="price-box">
           <span class="product-quantity">{{item?.quantity}}</span>
-          <span class="product-price" *ngIf="item?.productVariation">{{(item?.productVariation?.price + item?.quantity* (item?.shipping?.flatCharge||0))  | currency: 'CAD ':'$ '}}</span>
-          <span class="product-price" *ngIf="!item?.productVariation">{{(item?.price + item?.quantity* (item?.shipping?.flatCharge||0))  | currency: 'CAD ':'$ '}}</span>
+          <span class="product-price" *ngIf="item?.productVariation">{{(item?.productVariation?.price + item?.quantity* (item?.shipping?.flatCharge||0))  | currency: 'CAD ':'CAD$ '}}</span>
+          <span class="product-price" *ngIf="!item?.productVariation">{{(item?.price + item?.quantity* (item?.shipping?.flatCharge||0))  | currency: 'CAD ':'CAD$ '}}</span>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
   <!-- End of Products  -->
   <div class="cart-total">
     <label>Subtotal:</label>
-    <span class="price">{{totalCash|currency:' CAD ':'$ '}}</span>
+    <span class="price">{{totalCash|currency:' CAD ':'CAD$ '}}</span>
   </div>
   <!-- End of Cart Total -->
   <div class="cart-action">

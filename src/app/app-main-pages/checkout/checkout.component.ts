@@ -1,15 +1,16 @@
 import { ConsolidatedOrder } from './../../models/Order';
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { CartService } from 'src/app/shared/services/cart.service';
-import { Cart, Order, User, ORDER_STATE, PaymentGateway } from 'src/app/models';
+import { Cart, Order, User, ORDER_STATE, PaymentGateway, Address } from 'src/app/models';
 import { CreateDeliveryAddressComponent } from './../../ui-components/create-delivery-address/create-delivery-address.component';
 import { Urls } from 'src/app/config';
 import { Router } from '@angular/router';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from 'src/app/shared/services';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { AddressComponent } from 'src/app/ui-components/address/address.component';
+import { Tax } from 'src/app/models/tax.model';
 
 @Component({
   selector: 'app-checkout',
@@ -34,6 +35,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   next = 0
   pageNumber =0;
+
+  tax: Tax = new Tax();
+
+  
   constructor(
     private router: Router,
     private cartService: CartService,
@@ -44,6 +49,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   ) {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
+    this.getUserTax();
   }
 
 
@@ -69,6 +75,20 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.cart = this.cartService.getCartLocal();
     this.calculateShipping();
     this.totalCash = this.cartService.getTotalAmount();
+  }
+
+
+  getUserTax(address: Address=null){
+    if(!address){
+    if(this.loggedUser?.address){
+      this.storeService.getTax(this.loggedUser?.address?.country, this.loggedUser?.address?.state)?.subscribe(tx => {
+        this.tax=tx;
+      });
+    }} else {
+      this.storeService.getTax(address?.country, address?.state)?.subscribe(tx => {
+        this.tax=tx;
+      });
+    }
   }
 
   showForm(pageNumber: number){
@@ -157,6 +177,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   get PaymentGateWay(){
     return this.selectedMethod;
+  }
+
+  set addressChangeWatch(t: Address){
+    if(!this.tax)
+      this.getUserTax(t);
   }
 
 }

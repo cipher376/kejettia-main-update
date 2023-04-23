@@ -73,8 +73,8 @@
                 shipping</small> -->
             </div>
             <ng-container *ngIf="(!selectedVariation) && variations?.length>0">
-              <div class="product-price">{{selectedProduct?.fromPrice |currency:'CAD ':'$ '}} -
-                {{selectedProduct?.toPrice |currency:'CAD ':'$ '}}</div>
+              <div class="product-price">{{selectedProduct?.fromPrice |currency:'CAD ':'CAD$ '}} -
+                {{selectedProduct?.toPrice |currency:'CAD ':'CAD$ '}}</div>
               <!-- <div class="product-price">+ <small>{{selectedShippingCost | currency:' ':' '}}</small> <small
                   style="color:black; font-size:50%"> shipping</small></div> -->
             </ng-container>

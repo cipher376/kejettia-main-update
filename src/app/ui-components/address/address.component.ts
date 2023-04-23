@@ -38,6 +38,8 @@ export class AddressComponent implements OnInit, AfterViewInit {
   title = true;
   hideSaveBtn = true;
 
+  @Input() hideSaveAlert=false;
+
   constructor(
     private fb: FormBuilder,
     private util: UtilityService,
@@ -206,7 +208,10 @@ export class AddressComponent implements OnInit, AfterViewInit {
           this.userService.createUpdateUserDeliveryAddress(this.loggedUser?.id, deliveryAddress)?.subscribe(dAddress => {
           });
         }
-        alert("Address saved")
+        if(!this.hideSaveAlert){
+          alert("Address saved")
+
+        }
       }
     }, error => {
       console.log(error);

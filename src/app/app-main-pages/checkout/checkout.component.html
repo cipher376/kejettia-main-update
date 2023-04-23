@@ -10,7 +10,7 @@
               <!-- <h3 class="title title-simple text-center text-uppercase">Sign Up Your User Account</h3> -->
               <p>Please verify or update existing information</p>
 
-              <form id="msform" >
+              <form id="msform">
                 <!-- progressbar -->
                 <ul id="progressbar" style="
                               display: flex;
@@ -43,32 +43,35 @@
                 </fieldset> -->
                 <!-- billing Address -->
                 <div [ngSwitch]="next">
-                
-                <fieldset *ngSwitchCase="0">
-                  <div class="row text-left">
-                    <app-address #address [HideCoordinate]="true" [Title]="false"  [ShowSaveButton]="false"></app-address>
-                  </div>
-                  <input type="button" (click)="showForm(1)" name="next" class="next action-button"
-                    value="Next"  />
-                  <!-- <input type="button"  (click)="showForm(0)" name="previous" class="previous action-button-previous" value="Previous" *ngIf="next>0"/> -->
-                </fieldset>
-                <!-- Shipping Address -->
-                <fieldset *ngSwitchCase="1">
-                  <div class="row text-left">
-                  <app-create-delivery-address #deliveryAddress [Title]="''"></app-create-delivery-address>
-                  </div>
-                  <!-- <input type="button" (click)="showForm(2)" name="next" class="next action-button" 
+
+                  <fieldset *ngSwitchCase="0">
+                    <div class="row text-left">
+                      <app-address #address [HideCoordinate]="true" [Title]="false"
+                        [ShowSaveButton]="false" [hideSaveAlert]="true"></app-address>
+                    </div>
+                    <input type="button" (click)="showForm(1)" name="next" class="next action-button" value="Next" />
+                    <!-- <input type="button"  (click)="showForm(0)" name="previous" class="previous action-button-previous" value="Previous" *ngIf="next>0"/> -->
+                  </fieldset>
+                  <!-- Shipping Address -->
+                  <fieldset *ngSwitchCase="1">
+                    <div class="row text-left">
+                      <app-create-delivery-address (valueChange)="addressChangeWatch=$event" #deliveryAddress [Title]="''"></app-create-delivery-address>
+                    </div>
+                    <!-- <input type="button" (click)="showForm(2)" name="next" class="next action-button" 
                     value="Next"  />-->
-                  <input type="button"  (click)="showForm(0)" name="previous" class="previous action-button-previous" value="Previous" *ngIf="next>0"/>
-                </fieldset>
-              </div>
+                    <input style="float:left" type="button" (click)="showForm(0)" name="previous" class="previous action-button-previous"
+                      value="Previous" *ngIf="next>0" />
+                    <input style="float:right" type="button" *ngIf="!deliveryAddress.hideForm && next>0" (click)="deliveryAddress.saveDeliveryAddress()" name="previous" class="previous action-button-previous"
+                      value="Save" />
+                  </fieldset>
+                </div>
               </form>
             </div>
           </div>
 
 
 
-          
+
 
 
 
@@ -126,36 +129,37 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of cart?.cartItems||[]">
-                      <td class="product-name">{{item?.product?.name}}
+                      <td class="product-name">{{item?.product?.name.slice(0, 30)}}
                         <span class="product-quantity">×&nbsp;{{item?.quantity}}</span>
                       </td>
-                      <td class="product-total text-body">{{item?.price |currency:' ':'$ '}}</td>
+                      <td class="product-total text-body">{{item?.price |currency:' ':'CAD$ '}}</td>
                     </tr>
 
                     <tr class="summary-subtotal">
                       <td>
                         <h4 class="summary-subtitle">Subtotal</h4>
                       </td>
-                      <td class="summary-subtotal-price pb-0 pt-0">{{totalCash |currency:' ':'$ '}}
+                      <td class="summary-subtotal-price pb-0 pt-0">{{totalCash |currency:' ':'CAD$ '}}
                       </td>
                     </tr>
 
                     <tr>
                       <td class="product-name">Delivery</td>
-                      <td class="product-total text-body">{{totalShipCost |currency:' ':'$ '}}</td>
+                      <td class="product-total text-body">{{totalShipCost |currency:' ':'CAD$ '}}</td>
                     </tr>
-                    <tr>
-                      <td class="product-name">Discount</td>
-                      <td class="product-total text-body">0.0%</td>
+                    <tr *ngIf="tax?.id">
+                      <td class="product-name">{{tax?.name}} Tax ({{tax?.value*100}}%)</td>
+                      <td class="product-total text-body">{{tax?.value*totalCash | currency:'CAD ':'CAD$ '}}</td>
                     </tr>
 
                     <tr class="summary-total">
-                      <td class="pb-0">
+                      <td class="pb-0" style="width: 50%!important">
                         <h4 class="summary-subtitle">Total</h4>
                       </td>
-                      <td class=" pt-0 pb-0">
-                        <p class="summary-total-price ls-s text-primary">
-                          {{(totalShipCost+totalCash) | currency:' ':'$ '}}</p>
+                      <td class=" pt-0 pb-0" style="width: 50%!important">
+                        <p class="summary-total-price ls-s" *ngIf="!tax?.id">{{(totalCash+totalShipCost) | currency:'CAD':'CAD$ '}} </p>
+                        <p class="summary-total-price ls-s" *ngIf="tax?.id">{{(totalCash+totalShipCost +
+                          (tax?.value*totalCash)) | currency:'CAD ':'CAD$ '}}</p>
                       </td>
                     </tr>
                   </tbody>
@@ -166,9 +170,6 @@
               </div>
             </div>
           </aside>
-
-
-
         </div>
       </form>
     </div>

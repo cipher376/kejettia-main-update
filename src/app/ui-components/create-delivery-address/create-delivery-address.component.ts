@@ -31,6 +31,7 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
   title = 'Delivery Address';
 
   @Output() savedEvent = new EventEmitter<boolean>();
+  @Output() valueChange = new EventEmitter<Address>();
 
   @ViewChild(CreateAddressComponent) createAddressComponent: CreateAddressComponent;
 
@@ -63,8 +64,8 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
     })
     // console.log(this.selectedDeliveryAddress);
     this.address = this.selectedDeliveryAddress?.address;
+    this.valueChange.emit(this.address);
   }
-
 
 
   get HideForm(){

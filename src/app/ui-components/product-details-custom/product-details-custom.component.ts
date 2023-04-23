@@ -268,8 +268,13 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.storeService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
       this.selectedProduct = product;
       this.variations = product?.productVariations;
-      this.selectedProduct.fromPrice=Math.min(...this.variations.map(t=> t.price))
-      this.selectedProduct.toPrice=Math.max(...this.variations.map(t=> t.price))
+      const max=Math.min(...this.variations.map(t=> t.price)), min=Math.max(...this.variations.map(t=> t.price))
+      if(max===min){
+        this.selectedProduct.currentPrice = max;
+      } else {
+        this.selectedProduct.fromPrice=min
+        this.selectedProduct.toPrice=max
+      }
       this.init();
     });
   }

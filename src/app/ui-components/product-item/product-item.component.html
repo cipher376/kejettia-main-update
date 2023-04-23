@@ -28,13 +28,13 @@
       </h3>
       <div class="product-price" *ngIf="Product?.currentPrice">
         <span class="price"></span>
-        <ins class="new-price">{{Product?.currentPrice  |currency:'CAD ':'$ '}}</ins><del class="old-price" *ngIf="Product?.previousPrice">
-          {{Product?.previousPrice  |currency:'CAD ':'$ '}}</del>
+        <ins class="new-price">{{Product?.currentPrice  |currency:'CAD ':'CAD$ '}}</ins><del class="old-price" *ngIf="Product?.previousPrice">
+          {{Product?.previousPrice  |currency:'CAD ':'CAD$ '}}</del>
       </div>
       <div class="product-price"  *ngIf="!Product?.currentPrice" >
         <p>
-          <span class="price">{{Product?.fromPrice |currency:'CAD ':'$ '}}</span> -
-          <span class="price">{{Product?.toPrice |currency:'CAD ':'$ '}}</span>
+          <span class="price">{{Product?.fromPrice |currency:'CAD ':'CAD$ '}}</span> -
+          <span class="price">{{Product?.toPrice |currency:'CAD ':'CAD$ '}}</span>
         </p>
       </div>
       <app-rating [Rating]="Rating" [Reviews]="Product?.reviews"></app-rating>
@@ -59,12 +59,12 @@
       <a href="javascript:;"  (click)="goToProduct()">{{Product?.name}}</a>
     </h3>
     <div class="product-price" *ngIf="Product?.currentPrice">
-      <span class="price">{{Product?.currentPrice |currency:'CAD ':'$ '}}</span>
+      <span class="price">{{Product?.currentPrice |currency:'CAD ':'CAD$ '}}</span>
     </div>
     <div class="product-price" *ngIf="!Product?.currentPrice">
       <p>
-        <span class="price">{{Product?.fromPrice |currency:'CAD ':'$ '}}</span> -
-        <span class="price">{{Product?.toPrice |currency:'CAD ':'$ '}}</span>
+        <span class="price">{{Product?.fromPrice |currency:'CAD ':'CAD$ '}}</span> -
+        <span class="price">{{Product?.toPrice |currency:'CAD ':'CAD$ '}}</span>
       </p>
 
     </div>

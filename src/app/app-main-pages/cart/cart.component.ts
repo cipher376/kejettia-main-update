@@ -8,6 +8,7 @@ import { StoreService } from 'src/app/shared/services/store.service';
 import { Location } from '@angular/common';
 import { UtilityService, UserService } from 'src/app/shared/services';
 import { IOption } from 'ng-select';
+import { Tax } from 'src/app/models/tax.model';
 
 
 declare var $: any;
@@ -31,6 +32,8 @@ export class CartComponent implements OnInit {
   public cities: Array<IOption> = [];
   
   inStock:boolean[] = [];
+
+  tax: Tax = new Tax();
 
   constructor(
     private router: Router,
@@ -62,6 +65,7 @@ export class CartComponent implements OnInit {
       this.fillInStock();
       console.log(this.cart);
     });
+    this.getUserTax();
   }
 
   ngOnInit(): void {
@@ -76,6 +80,12 @@ export class CartComponent implements OnInit {
     })
   }
 
+  getUserTax(){
+    if(this.selectedUser?.address){
+      this.storeService.getTax(this.selectedUser?.address?.country, this.selectedUser?.address?.state)?.subscribe(tx => {this.tax=tx;});
+    }
+  }
+  
   fillInStock(){
     this.inStock= [];
     this.cart.cartItems?.forEach(item => {

@@ -72,8 +72,7 @@ export class CreateAddressComponent implements OnInit {
       suburb: [
         this.address.suburb || '',
         [
-          Validators.minLength(2),
-          Validators.maxLength(100)
+          
         ]
       ],
       city: [
@@ -98,8 +97,7 @@ export class CreateAddressComponent implements OnInit {
         Validators.maxLength(100)]],
       postcode: [this.address.postCode || '',
       [
-        Validators.minLength(2),
-        Validators.maxLength(100)
+        
       ]],
       apartment: [this.address.apartment || '',[]],
       lat: [this.util.getLatLngArray(this.address?.latLng).lat],

@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { Address, Features, PolicyStatement, Store, StoreCategory, Shipping, StoreToCategoryThrough, Photo, Favourite, PaymentGateway } from 'src/app/models';
 import { PageInfo } from 'src/app/models/page';
 import { stringify } from 'querystring';
+import { Tax } from 'src/app/models/tax.model';
 
 
 export interface StoreView {
@@ -1643,6 +1644,26 @@ export class StoreService {
     }
     const url = environment.store_api_root_url + `/stores/payment-gateways`;
     return this.http.post<PaymentGateway[]>(url, storeIds).pipe(
+      map(res => {
+        console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  } 
+
+  /////////////////////////////////////////////////////////////////////////
+  /*************Manage Tax queries*****/
+  ///////////////////////////////////////////////////////////////////////////
+
+
+  getTax(countryCode: string, stateCode: string){
+    if(!countryCode || !stateCode){
+      //alert('Specify country and state code');
+      return undefined;
+    }
+    const url = environment.store_api_root_url + `/tax-managers/${countryCode.toUpperCase()}/${stateCode.toUpperCase()}`;
+    return this.http.get<Tax>(url).pipe(
       map(res => {
         console.log(res);
         return res;
