@@ -10,13 +10,9 @@
               <!-- <h3 class="title title-simple text-center text-uppercase">Sign Up Your User Account</h3> -->
               <p>Please verify or update existing information</p>
 
-              <form id="msform" >
+              <form id="msform">
                 <!-- progressbar -->
-                <ul id="progressbar" style="
-                              display: flex;
-                              flex-direction: row;
-                              justify-content: center;
-                              align-content: stretch;">
+                <ul id="progressbar" style=" display: flex; flex-direction: row;  justify-content: center;align-content: stretch;">
                   <!-- <li [class.active]="next === 0" id="account"><strong>Personal</strong></li> -->
                   <li [class.active]="next === 0" id="personal"><strong>Billing Address</strong></li>
                   <li [class.active]="next === 1" id="confirm"><strong>Delivery Address</strong></li>
@@ -43,32 +39,33 @@
                 </fieldset> -->
                 <!-- billing Address -->
                 <div [ngSwitch]="next">
-                
-                <fieldset *ngSwitchCase="0">
-                  <div class="row text-left">
-                    <app-address #address [HideCoordinate]="true" [Title]="false"  [ShowSaveButton]="false"></app-address>
-                  </div>
-                  <input type="button" (click)="showForm(1)" name="next" class="next action-button"
-                    value="Next"  />
-                  <!-- <input type="button"  (click)="showForm(0)" name="previous" class="previous action-button-previous" value="Previous" *ngIf="next>0"/> -->
-                </fieldset>
-                <!-- Shipping Address -->
-                <fieldset *ngSwitchCase="1">
-                  <div class="row text-left">
-                  <app-create-delivery-address #deliveryAddress [Title]="''"></app-create-delivery-address>
-                  </div>
-                  <!-- <input type="button" (click)="showForm(2)" name="next" class="next action-button" 
+
+                  <fieldset *ngSwitchCase="0">
+                    <div class="row text-left">
+                      <app-address #address [HideCoordinate]="true" [Title]="false"
+                        [ShowSaveButton]="false"></app-address>
+                    </div>
+                    <input type="button" (click)="showForm(1)" name="next" class="next action-button" value="Next" />
+                    <!-- <input type="button"  (click)="showForm(0)" name="previous" class="previous action-button-previous" value="Previous" *ngIf="next>0"/> -->
+                  </fieldset>
+                  <!-- Shipping Address -->
+                  <fieldset *ngSwitchCase="1">
+                    <div class="row text-left">
+                      <app-create-delivery-address #deliveryAddress [Title]="''"></app-create-delivery-address>
+                    </div>
+                    <!-- <input type="button" (click)="showForm(2)" name="next" class="next action-button" 
                     value="Next"  />-->
-                  <input type="button"  (click)="showForm(0)" name="previous" class="previous action-button-previous" value="Previous" *ngIf="next>0"/>
-                </fieldset>
-              </div>
+                    <input type="button" (click)="showForm(0)" name="previous" class="previous action-button-previous"
+                      value="Previous" *ngIf="next>0" />
+                  </fieldset>
+                </div>
               </form>
             </div>
           </div>
 
 
 
-          
+
 
 
 
@@ -125,7 +122,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of cart?.cartItems||[]">
+                    <tr *ngFor="let item of cart?.cartItems||[]" class="echitem">
                       <td class="product-image">
                         <img src="your-image-url.jpg" alt="Product Image">
                       </td>
