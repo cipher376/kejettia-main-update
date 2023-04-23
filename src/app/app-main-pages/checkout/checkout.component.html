@@ -12,11 +12,7 @@
 
               <form id="msform">
                 <!-- progressbar -->
-                <ul id="progressbar" style="
-                              display: flex;
-                              flex-direction: row;
-                              justify-content: center;
-                              align-content: stretch;">
+                <ul id="progressbar" style=" display: flex; flex-direction: row;  justify-content: center;align-content: stretch;">
                   <!-- <li [class.active]="next === 0" id="account"><strong>Personal</strong></li> -->
                   <li [class.active]="next === 0" id="personal"><strong>Billing Address</strong></li>
                   <li [class.active]="next === 1" id="confirm"><strong>Delivery Address</strong></li>
@@ -128,7 +124,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of cart?.cartItems||[]">
+                    <tr *ngFor="let item of cart?.cartItems||[]" class="echitem">
+                      <td class="product-image">
+                        <img src="your-image-url.jpg" alt="Product Image">
+                      </td>
                       <td class="product-name">{{item?.product?.name.slice(0, 30)}}
                         <span class="product-quantity">×&nbsp;{{item?.quantity}}</span>
                       </td>
@@ -172,6 +171,7 @@
           </aside>
         </div>
       </form>
+      <app-product-sales-widget></app-product-sales-widget>
     </div>
   </div>
 </main>

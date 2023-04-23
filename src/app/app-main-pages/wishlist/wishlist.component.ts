@@ -6,6 +6,7 @@ import { Product, User } from 'src/app/models';
 import { UserService } from 'src/app/shared/services';
 import { PHOTO_DISPLAY_TYPES, Urls } from 'src/app/config';
 
+
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',

@@ -1,3 +1,7 @@
+
+@import url("../../../assets/fontawesome-free/css/all.min.css");
+
+
 .checkout.main {
   border-top: none;
 }
@@ -162,7 +166,7 @@ text-align: left;
 }
 
 #progressbar .active {
-  color: #673AB7;
+  color: #ed1d25;
 }
 
 #progressbar li {
@@ -223,7 +227,7 @@ text-align: left;
 
 /*Color number of the step and the connector before it*/
 #progressbar li.active:before, #progressbar li.active:after {
-  background: #673AB7;
+  background: #ed1d25;
 }
 
 /*Animated Progress Bar*/
@@ -232,11 +236,18 @@ height: 20px;
 }
 
 .progress-bar {
-background-color: #673AB7;
+background-color: #ed1d25;
 }
 
 /*Fit image in bootstrap div*/
 .fit-image{
   width: 100%;
   object-fit: cover;
+}
+
+.echitem{
+  border-bottom: 1px solid #e1e1e1;
+}
+tr.echitem {
+  height: 18em;
 }

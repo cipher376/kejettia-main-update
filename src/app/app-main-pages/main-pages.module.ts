@@ -41,7 +41,7 @@ import { TrackingComponent } from './tracking/tracking.component';
     NgxPaginationModule,
     ComponentModule,
     HttpClientModule,
-    SelectModule
+    SelectModule,
   ],
   declarations: [
     MainComponent,

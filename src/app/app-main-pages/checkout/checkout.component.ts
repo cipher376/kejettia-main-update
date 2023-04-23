@@ -183,5 +183,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     if(!this.tax)
       this.getUserTax(t);
   }
+  
 
 }
