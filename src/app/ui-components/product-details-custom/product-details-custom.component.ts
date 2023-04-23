@@ -22,7 +22,6 @@ declare var Window: any;
 export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   loggedUser: User;
 
-
   selectedProduct: Product;
   selectedProductId = '';
   selectedProductPhotos: Photo[] = [];

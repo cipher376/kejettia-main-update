@@ -126,6 +126,9 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of cart?.cartItems||[]">
+                      <td class="product-image">
+                        <img src="your-image-url.jpg" alt="Product Image">
+                      </td>
                       <td class="product-name">{{item?.product?.name}}
                         <span class="product-quantity">×&nbsp;{{item?.quantity}}</span>
                       </td>
@@ -171,6 +174,7 @@
 
         </div>
       </form>
+      <app-product-sales-widget></app-product-sales-widget>
     </div>
   </div>
 </main>

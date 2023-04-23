@@ -2,29 +2,29 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const IDENTITY_API_PORT_LOCAL = '2002'
-export const IDENTITY_API_HOST_LOCAL = 'http://localhost'
-export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}:${IDENTITY_API_PORT_LOCAL}`
+// export const IDENTITY_API_PORT_LOCAL = '2002'
+// export const IDENTITY_API_HOST_LOCAL = 'http://localhost'
+// export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}:${IDENTITY_API_PORT_LOCAL}`
 
-export const STORE_API_PORT_LOCAL = '2001'
-export const STORE_API_HOST_LOCAL = 'http://localhost'
-export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
+// export const STORE_API_PORT_LOCAL = '2001'
+// export const STORE_API_HOST_LOCAL = 'http://localhost'
+// export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}:${STORE_API_PORT_LOCAL}`
 
-export const FILE_API_PORT_LOCAL = '2003'
-export const FILE_API_HOST_LOCAL = 'http://localhost'
-export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}:${FILE_API_PORT_LOCAL}/file`
+// export const FILE_API_PORT_LOCAL = '2003'
+// export const FILE_API_HOST_LOCAL = 'http://localhost'
+// export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}:${FILE_API_PORT_LOCAL}/file`
 
-export const MESSAGE_API_PORT_LOCAL = '2004'
-export const MESSAGE_API_HOST_LOCAL = 'http://localhost'
-export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}:${MESSAGE_API_PORT_LOCAL}`
+// export const MESSAGE_API_PORT_LOCAL = '2004'
+// export const MESSAGE_API_HOST_LOCAL = 'http://localhost'
+// export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}:${MESSAGE_API_PORT_LOCAL}`
 
-export const EMPLOYEE_ACCOUNT_API_PORT_LOCAL = '2005'
-export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'http://localhost'
-export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}:${EMPLOYEE_ACCOUNT_API_PORT_LOCAL}`
+// export const EMPLOYEE_ACCOUNT_API_PORT_LOCAL = '2005'
+// export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'http://localhost'
+// export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}:${EMPLOYEE_ACCOUNT_API_PORT_LOCAL}`
 
-export const MAIN_IDENTITY_API_PORT_LOCAL = '2000'
-export const MAIN_IDENTITY_API_HOST_LOCAL = 'http://localhost'
-export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}:${MAIN_IDENTITY_API_PORT_LOCAL}`
+// export const MAIN_IDENTITY_API_PORT_LOCAL = '2000'
+// export const MAIN_IDENTITY_API_HOST_LOCAL = 'http://localhost'
+// export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}:${MAIN_IDENTITY_API_PORT_LOCAL}`
 
 
 
@@ -32,23 +32,23 @@ export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}:${MA
 
 /********************************* REMOTE SERVER CONNECTIONS ************************************/
 
-// export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'https://employee-account.api.kejettia.com'
-// export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}`
+export const EMPLOYEE_ACCOUNT_API_HOST_LOCAL = 'https://employee-account.api.kejettia.com'
+export const EMPLOYEE_ACCOUNT_API_URL_LOCAL = `${EMPLOYEE_ACCOUNT_API_HOST_LOCAL}`
 
-// export const MESSAGE_API_HOST_LOCAL = 'https://message.api.kejettia.com'
-// export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}`
+export const MESSAGE_API_HOST_LOCAL = 'https://message.api.kejettia.com'
+export const MESSAGE_API_URL_LOCAL = `${MESSAGE_API_HOST_LOCAL}`
 
-// export const FILE_API_HOST_LOCAL = 'https://file.api.kejettia.com'
-// export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}/file`
+export const FILE_API_HOST_LOCAL = 'https://file.api.kejettia.com'
+export const FILE_API_URL_LOCAL = `${FILE_API_HOST_LOCAL}/file`
 
-// export const IDENTITY_API_HOST_LOCAL = 'https://kejettia-identity.api.kejettia.com'
-// export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}`
+export const IDENTITY_API_HOST_LOCAL = 'https://kejettia-identity.api.kejettia.com'
+export const IDENTITY_API_URL_LOCAL = `${IDENTITY_API_HOST_LOCAL}`
 
-// export const MAIN_IDENTITY_API_HOST_LOCAL = 'https://main-identity.api.kejettia.com'
-// export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}`
+export const MAIN_IDENTITY_API_HOST_LOCAL = 'https://main-identity.api.kejettia.com'
+export const MAIN_IDENTITY_API_URL_LOCAL = `${MAIN_IDENTITY_API_HOST_LOCAL}`
 
-// export const STORE_API_HOST_LOCAL = 'https://store.api.kejettia.com'
-// export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}`
+export const STORE_API_HOST_LOCAL = 'https://store.api.kejettia.com'
+export const STORE_API_URL_LOCAL = `${STORE_API_HOST_LOCAL}`
 
 
 

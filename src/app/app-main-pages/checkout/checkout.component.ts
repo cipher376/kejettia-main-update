@@ -159,4 +159,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     return this.selectedMethod;
   }
 
+  
+
 }
