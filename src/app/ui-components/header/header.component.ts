@@ -61,5 +61,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   goToWishlist() {
     this.router.navigateByUrl(Urls.wishlist);
   }
+  
 
 }
