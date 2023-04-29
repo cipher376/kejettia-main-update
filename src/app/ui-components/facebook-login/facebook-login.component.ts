@@ -51,7 +51,7 @@ export class FacebookLoginComponent implements OnInit {
           (loginResponse) => {
             console.log(loginResponse);
           },
-          { scope: 'email' }
+          { scope: 'public_profile,email' }
         );
       }
     });

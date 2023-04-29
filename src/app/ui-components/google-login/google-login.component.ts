@@ -29,7 +29,7 @@ export class GoogleLoginComponent implements OnInit {
     this.getUrlLink();
 
     this.route.queryParams.subscribe(p => {
-      console.log(p);
+      // console.log(p);
       if(p?.auth){
         this.auth.loginThirdParty(JSON.parse(p?.auth));
       }
@@ -43,7 +43,7 @@ export class GoogleLoginComponent implements OnInit {
   getUrlLink(){
     this.auth.getGoogleAuthLink().subscribe(link=> {
       this.link = link.link;
-      console.log(this.link);
+      // console.log(this.link);
     }, (error)=>console.log(error))
   }
 
