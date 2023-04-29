@@ -27,9 +27,7 @@ export class UtilityService {
     private router: Router
   ) { }
 
-  getRecatchaKey(){
-    return '6LdqzcglAAAAAHtt26F2BlHWM3exGscEGp2Uw-1t'
-  }
+
 
   setSearchTermLocal(term: string) {
     this.localStore.setSync('searchKey', term);

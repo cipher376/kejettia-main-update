@@ -65,6 +65,10 @@
         privacy policy</label>
     </div>
   </div>
+
+  <div style="margin-left: 14%; margin-bottom: 5%;" [ngClass]="{'recaptchafailed': recaptchafailed}" >
+    <re-captcha (resolved)="resolveRecaptcha($event)" ></re-captcha>
+  </div>
   <button class="btn btn-dark btn-block btn-rounded" (click)="onRegister()">Register</button>
 </form>
 <div class="form-choice text-center">

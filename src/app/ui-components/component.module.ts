@@ -116,12 +116,18 @@ import { ProductVariationSelectComponent } from './product-variation-select/prod
 import { GoogleLoginComponent } from './google-login/google-login.component';
 import { SocialMediaComponent } from './social-media/social-media.component';
 import { RecaptchaModule } from 'ng-recaptcha';
-
+import { RECAPTCHA_SETTINGS, RecaptchaSettings } from "ng-recaptcha";
+import { FacebookLoginComponent } from './facebook-login/facebook-login.component';
+import { AppleLoginComponent } from './apple-login/apple-login.component';
+// import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [
     AccountDetailsComponent,
     AddressComponent,
+    FacebookLoginComponent,
+    AppleLoginComponent,
     BannerPromotionComponent,
     BannersComponent,
     BestSellerItemComponent,
@@ -238,6 +244,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
     ProgressbarModule.forRoot(),
     // Angular4PaystackModule.forRoot(PAYSTACK_PUBLIC_KEY),
     RecaptchaModule,
+    OAuthModule.forRoot()
   ],
   exports: [
     AccountDetailsComponent,
@@ -252,6 +259,8 @@ import { RecaptchaModule } from 'ng-recaptcha';
     CategoriesMenuComponent,
     CategoriesMenuItemComponent,
     CategoriesSectionComponent,
+    FacebookLoginComponent,
+    AppleLoginComponent,
     CategoryComponent,
     FooterComponent,
     HeaderComponent,
@@ -333,6 +342,13 @@ import { RecaptchaModule } from 'ng-recaptcha';
     SocialMediaComponent,
     RelatedProductComponent
     
+  ], 
+  providers: [
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: { siteKey: "6LdqzcglAAAAAHtt26F2BlHWM3exGscEGp2Uw-1t" } as RecaptchaSettings,
+    },
+    // provideOAuthClient()
   ]
 })
 export class ComponentModule { }

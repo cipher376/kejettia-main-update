@@ -29,6 +29,8 @@ export class RegisterComponent implements OnInit {
   public credentials: Credentials = new Credentials;
 
   errorMsg = '';
+  recaptcha_value='';
+  recaptchafailed = false;
 
   @Input() isBusinessRequest = false;
 
@@ -50,6 +52,11 @@ export class RegisterComponent implements OnInit {
   }
 
   async onRegister() {
+    if(!this.recaptcha_value){
+      alert(`Please click "I'm not a robot for verification" `);
+      this.recaptchafailed = true;
+      return;
+    }
     this.errorMsg = '';
     if (!this.getData()) {
       this.errorMsg = 'Complete all required fields';
@@ -236,5 +243,12 @@ export class RegisterComponent implements OnInit {
         this.toaster.success('A customer service representative will contact you shortly. Thank');
       }
     })
+  }
+
+  resolveRecaptcha($e){
+    this.recaptcha_value = $e;
+    if(this.recaptcha_value){
+      this.recaptchafailed = false;
+    }
   }
 }

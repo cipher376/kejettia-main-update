@@ -20,7 +20,9 @@
       <a href="javascript:;" [routerLink]="['/main/pages/auth/forgot']" routerLinkActive="router-link-active"  class="lost-link  border-no lh-1 ls-normal font-weight-bold">Lost your password?</a> &nbsp;
       <a href="javascript:;" [routerLink]="['/main/pages/auth/register']" class="lost-link  border-no lh-1 ls-normal font-weight-bold">Register</a>
   </div>
-  <re-captcha (resolved)="resolveRecaptcha($event)" siteKey="recaptcha_key"></re-captcha>
+  <div style="margin-left: 14%; margin-bottom: 5%;" [ngClass]="{'recaptchafailed': recaptchafailed}" >
+  <re-captcha (resolved)="resolveRecaptcha($event)" ></re-captcha>
+</div>
   <button class="btn btn-dark btn-block btn-rounded"  (click)="onLogin()">Login</button>
 </form>
 <div class="form-choice text-center">

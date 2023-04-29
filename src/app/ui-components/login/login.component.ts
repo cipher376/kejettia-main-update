@@ -30,7 +30,9 @@ export class LoginComponent implements OnInit {
   facebookAuthUrl = Urls.facebookAuthUrl;
   twitterAuthUrl = Urls.twitterAuthUrl;
 
-  recaptcha_key ='';
+ 
+  recaptcha_value='';
+  recaptchafailed = false;
 
   constructor(
     private _auth: MyAuthService,
@@ -67,16 +69,22 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recaptcha_key = this.util.getRecatchaKey();
+    
   }
 
 
   async onLogin() {
+    if(!this.recaptcha_value){
+      alert(`Please click "I'm not a robot for verification" `);
+      this.recaptchafailed = true;
+      return;
+    }
     // console.log(this._loginForm);
     if (!this._loginForm.valid) {
       // this._toaster.error('Provide valid credentials');
       return;
     }
+    
 
     this._auth.login(this._loginForm.value).subscribe(
       res => {
@@ -122,7 +130,10 @@ export class LoginComponent implements OnInit {
   }
 
   resolveRecaptcha($e){
-    console.log($e)
+    this.recaptcha_value = $e;
+    if(this.recaptcha_value){
+      this.recaptchafailed = false;
+    }
   }
 
 }
