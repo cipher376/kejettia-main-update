@@ -13,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let order of consolidatedOrders">
+    <tr *ngFor="let order of consolidatedOrders?.reverse()">
       <td class="order-number"><a href="javascript:;" (click)="goToOrderComplete(order)">#{{order?.id?.slice(19)}}</a></td>
       <td class="order-date"><time>{{order?.dateCreated | date}}</time></td>
       <td class="order-status"><span>{{order?.state}}</span></td>

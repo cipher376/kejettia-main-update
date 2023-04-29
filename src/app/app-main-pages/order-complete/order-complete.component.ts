@@ -56,6 +56,7 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getLoggedUserLocalSync();
+    this.getUserTax();
 
     this.consolidatedOrder = this.orderService.getSelectedConsolidatedOrderLocal();
     this.loadItems();
@@ -67,7 +68,9 @@ export class OrderCompleteComponent implements OnInit, AfterViewInit, OnDestroy 
       });
     }
 
-    this.getUserTax();
+    this.getUserTax(this.consolidatedOrder?.deliveryAddress?.address);
+
+    
   }
 
   loadOrder() {

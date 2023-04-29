@@ -141,6 +141,7 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
           // inform neighboring components
           if (deliveryAddress?.id) {
             this.savedEvent.emit(true);
+            this.valueChange.emit(this.address);
             resolve(true);
           } else {
             this.savedEvent.emit(false);

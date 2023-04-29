@@ -38,7 +38,9 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     
-
+    this.cartService.getCart(this.loggedUser?.id).subscribe(cart => {
+      this.cart = cart;
+    })
   }
 
   ngOnInit(): void {

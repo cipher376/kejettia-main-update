@@ -1665,6 +1665,22 @@ export class StoreService {
     const url = environment.store_api_root_url + `/tax-managers/${countryCode.toUpperCase()}/${stateCode.toUpperCase()}`;
     return this.http.get<Tax>(url).pipe(
       map(res => {
+        // console.log(res);
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  } 
+
+
+  getTaxForCart(cartId: string, address: Address): Observable<Tax>{
+    if(!cartId || !address){
+      //alert('Specify country and state code');
+      return undefined;
+    }
+    const url = environment.store_api_root_url + `/tax-managers/calculate-tax/${cartId}`;
+    return this.http.post<any>(url, address).pipe(
+      map(res => {
         console.log(res);
         return res;
       }),

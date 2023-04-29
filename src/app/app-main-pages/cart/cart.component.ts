@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Urls } from 'src/app/config';
 import { Cart, Product, CartItem, Address, User } from 'src/app/models';
 import { CartService } from 'src/app/shared/services/cart.service';
@@ -29,7 +29,6 @@ export class CartComponent implements OnInit {
   totalCash: number = 0; // total cash
   totalShipCost: number = 0;
 
-  public cities: Array<IOption> = [];
   
   inStock:boolean[] = [];
 
@@ -42,19 +41,11 @@ export class CartComponent implements OnInit {
     private storeService: StoreService,
     private location: Location,
     private util: UtilityService,
-    private userService: UserService
+    private userService: UserService,
+    private cd: ChangeDetectorRef
   ) {
     Window = window;
 
-    this.util.getSelectedCities().forEach(city => {
-      this.cities.push(
-        {
-          value: city,
-          label: city,
-          disabled: false
-        }
-      )
-    })
   }
 
 
@@ -62,6 +53,7 @@ export class CartComponent implements OnInit {
     this.selectedUser = this.userService.getLoggedUserLocalSync();
     this.cartService.getCart(this.selectedUser?.id)?.subscribe(cart => {
       this.cart = cart;
+      this.getUserTax();
       this.fillInStock();
       console.log(this.cart);
     });
@@ -82,7 +74,15 @@ export class CartComponent implements OnInit {
 
   getUserTax(){
     if(this.selectedUser?.address){
-      this.storeService.getTax(this.selectedUser?.address?.country, this.selectedUser?.address?.state)?.subscribe(tx => {this.tax=tx;});
+      const address = this.selectedUser?.address;
+      delete address.userId;
+      this.storeService.getTaxForCart(this.cart?.id, address)
+      ?.subscribe(tx => {
+        this.cd.detectChanges();
+        this.tax=tx;
+        this.tax.id = 1;
+        console.log(tx)
+      });
     }
   }
   

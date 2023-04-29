@@ -25,7 +25,7 @@
         </button>
       </figure>
       <div class="product-detail">
-        <a href="javascript:;" class="product-name" (click)="goToProduct(item?.product)">{{item?.product?.name}}</a>
+        <a href="javascript:;" class="product-name" (click)="goToProduct(item?.product)">{{item?.product?.name.slice(0,20)}}</a>
         <a href="javascript:;" class="product-name" (click)="goToProduct(item?.product)" 
         *ngFor="let att of item?.productVariation?.attributes">{{att?.name}} : {{att?.option}}</a>
         <div class="price-box">

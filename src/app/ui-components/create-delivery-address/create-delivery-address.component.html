@@ -14,7 +14,7 @@
 <div *ngIf="hideForm && deliveryAddresses?.length>0">
   <div class="form-group">
     <ng-select [allowClear]="false" [multiple]="false" [options]="deliveryAddresses||[]" placeholder=""
-      (selected)="SelectedDeliveryAddress=$event" placeholder="Select a previous delivery address">
+      (selected)="SelectedDeliveryAddress=$event" placeholder="Select from existing addresses">
     </ng-select>
   </div>
 </div>

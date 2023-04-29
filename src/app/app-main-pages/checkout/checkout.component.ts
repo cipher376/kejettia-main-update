@@ -1,7 +1,7 @@
 import { ConsolidatedOrder } from './../../models/Order';
 import { MY_ACTION, SignalService } from 'src/app/shared/services/signal.service';
 import { CartService } from 'src/app/shared/services/cart.service';
-import { Cart, Order, User, ORDER_STATE, PaymentGateway, Address } from 'src/app/models';
+import { Cart, Order, User, ORDER_STATE, PaymentGateway, Address, Photo, Product } from 'src/app/models';
 import { CreateDeliveryAddressComponent } from './../../ui-components/create-delivery-address/create-delivery-address.component';
 import { Urls } from 'src/app/config';
 import { Router } from '@angular/router';
@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   pageNumber =0;
 
   tax: Tax = new Tax();
-
+  showPlaceOrderbutton = false;
   
   constructor(
     private router: Router,
@@ -138,7 +138,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       this.consolidatedOrder.userId = this.loggedUser?.id;
       this.consolidatedOrder.currency = 'CAD';
       this.consolidatedOrder.state = ORDER_STATE.NEW;
-      this.consolidatedOrder.paymentGatewayId = this.selectedMethod.id;
+      this.consolidatedOrder.paymentGatewayId = this.selectedMethod?.id;
 
       console.log(this.consolidatedOrder);
 
@@ -171,7 +171,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   set PaymentGateWay(gateway: PaymentGateway){
-    console.log(gateway);
+    // console.log(gateway);
     this.selectedMethod = gateway;
   }
 
@@ -180,9 +180,22 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   set addressChangeWatch(t: Address){
+    this.showPlaceOrderbutton = true
     if(!this.tax)
       this.getUserTax(t);
   }
   
-
+  getPhotoUrl(photos: Photo[]) {
+    // console.log(photos);
+    return StoreService.getPhotoUrlByDisplayTypeLocal(photos, 'cover', true, true);
+  }
+  goToProduct(product: Product) {
+    console.log('here')
+    this.storeService.setSelectedProductLocal(product).then(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([Urls.productDetails + '/' + product?.id]);
+      });
+      // window.location.href = Urls.productDetails + '/' + product?.id;
+    });
+  }
 }

@@ -16,7 +16,7 @@
           <span>Status:</span>
           <strong>
             <span *ngIf="consolidatedOrder?.state" class="unknown"
-              [ngClass]="{'new': consolidatedOrder.state === 'NEW', 'pending': consolidatedOrder.state === 'PENDING'}">
+              [ngClass]="{'new': consolidatedOrder?.state === 'NEW', 'pending': consolidatedOrder?.state === 'PENDING'}">
               {{consolidatedOrder?.state}}</span></strong>
         </div>
         <div class="overview-item">
@@ -29,7 +29,7 @@
         </div>
         <div class="overview-item">
           <span>Total:</span>
-          <strong>{{consolidatedOrder?.grandTotal | currency: 'CAD ':'CAD$ '}}</strong>
+          <strong>{{consolidatedOrder?.grandTotal+consolidatedOrder?.taxValue | currency: 'CAD ':'CAD$ '}}</strong>
         </div>
         <!-- <div class="overview-item">
                     <span>Payment method:</span>
@@ -52,7 +52,7 @@
             <tr *ngFor="let item of items">
               <td class="product-name"><img [src]="getPhoto(item?.product)" height="80" width="80"
                   style="margin-bottom: 15px;">
-                {{item?.product?.name}} <span> <i class="fas fa-times"></i>
+                {{item?.product?.name?.slice(0, 50)}} <span> <i class="fas fa-times"></i>
                   {{item?.quantity}}</span></td>
                   <span *ngIf="item?.productVariationId" class="amount">{{item?.productVariation?.price | currency: 'CAD ':'CAD$ '}}</span>
                   <span *ngIf="!item?.productVariationId" class="amount">{{item?.product?.currentPrice | currency: 'CAD ':'CAD$ '}}</span>
@@ -61,7 +61,7 @@
               <td>
                 <h4 class="summary-subtitle">Subtotal:</h4>
               </td>
-              <td class="summary-subtotal-price">{{subtotal | currency:'CAD ':'CAD$ '}}</td>
+              <td class="summary-subtotal-price">{{consolidatedOrder?.grandTotal| currency:'CAD ':'CAD$ '}}</td>
             </tr>
             <tr class="summary-subtotal" *ngIf="deliveryCost!==0">
               <td>
@@ -81,7 +81,7 @@
             </tr>
             <tr *ngIf="tax?.id">
               <td class="product-name">Tax ({{tax?.value*100}}%)</td>
-              <td class="product-total text-body">{{tax?.value*subtotal | currency:'CAD ':'CAD$ '}}</td>
+              <td class="product-total text-body">{{consolidatedOrder.taxValue| currency:'CAD ':'CAD$ '}}</td>
             </tr>
             <!-- <tr class="summary-subtotal" *ngIf="deliveryCost == 0">
               <td>
@@ -100,14 +100,14 @@
                 <h4 class="summary-subtitle">Total:</h4>
               </td>
               <td>
-                <p class="summary-total-price text-primary">{{consolidatedOrder?.grandTotal | currency:'CAD ':'CAD$ '}}
+                <p class="summary-total-price text-primary">{{consolidatedOrder?.grandTotal+(consolidatedOrder.taxValue) | currency:'CAD ':'CAD$ '}}
                 </p>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <h2 class="title title-simple text-left pt-10 mb-2">Billing Address</h2>
+      <h2 class="title title-simple text-left pt-10 mb-2">Delivery Address</h2>
 
       <div class="address-info pb-8 mb-6">
         <p class="address-detail pb-2">
@@ -120,8 +120,8 @@
           {{consolidatedOrder?.deliveryAddress?.address?.country}}
           ({{consolidatedOrder?.deliveryAddress?.address?.postCode}})<br>
         </p>
-        <p class="email">Phone: {{consolidatedOrder?.deliveryAddress?.phone}}</p>
-        <p class="email"> {{consolidatedOrder?.deliveryAddress?.email}} </p>
+        <p class="email"><b>Phone</b>: {{consolidatedOrder?.deliveryAddress?.phone}}</p>
+        <p class="email"><b>Email</b>: {{consolidatedOrder?.deliveryAddress?.email}} </p>
       </div>
       <a href="javascript:;" (click)="back()" class="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4">
         <i class="d-icon-arrow-left"></i> Back to List</a>

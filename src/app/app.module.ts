@@ -18,7 +18,7 @@ import { AlertComponent } from './ui-components/alert/alert.component';
 import { AuthGuard } from './shared/services/guards/authGuard.service';
 import { SanitizeHtmlPipe } from './shared/pipes/sanitize-html.pipe';
 import { GoogleLoginComponent } from './ui-components/google-login/google-login.component';
-
+import { RecaptchaModule } from "ng-recaptcha";
 
 
 @NgModule({
@@ -50,6 +50,7 @@ import { GoogleLoginComponent } from './ui-components/google-login/google-login.
         draggable: true
       }
     }),
+    
   ],
   providers: [
     httpInterceptorProviders,

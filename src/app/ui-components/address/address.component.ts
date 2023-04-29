@@ -1,6 +1,6 @@
 import { DeliveryAddress } from './../../models/delivery-address';
 import { SignalService } from './../../shared/services/signal.service';
-import { Component, EventEmitter, OnInit, Output, AfterViewInit, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, AfterViewInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IOption } from 'ng-select';
 import { ToastrService } from 'ngx-toastr';
@@ -45,16 +45,19 @@ export class AddressComponent implements OnInit, AfterViewInit {
     private util: UtilityService,
     private toaster: ToastrService,
     private userService: UserService,
+    private cd:ChangeDetectorRef,
     private signal: SignalService
   ) {
-    const tempCountries = this.util.getAllCountries();
-    tempCountries.forEach(cty => {
+    this.util.getAllCountryNames()?.subscribe(countries => {
+      this.countries=[];
+      countries.forEach(cty => {
       this.countries.push({
-        value: cty.name,
-        label: cty.name,
+        value: cty,
+        label: cty,
         disabled: false
       });
     })
+    });
     this.createAddressForm();
   }
 
@@ -146,7 +149,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
 
   getAddressData() {
     if (!this.addForm?.valid) {
-      console.log(this.addForm);
+      // console.log(this.addForm);
       // alert("Invalid data")
       this.toaster.error('Provide valid data!');
       return false;
@@ -163,7 +166,7 @@ export class AddressComponent implements OnInit, AfterViewInit {
     this.address.apartment = this.addForm?.value.apartment ?? '';
     this.address.suburb = this.addForm?.value.suburb ?? '';
     this.address.latLng = this.addForm?.value.lat + ',' + this.addForm?.value.lng;
-    console.log(this.address);
+    // console.log(this.address);
     return true;
   }
 
@@ -219,16 +222,24 @@ export class AddressComponent implements OnInit, AfterViewInit {
     });
   }
 
-  setCountry($event: any) {
+  async setCountry($event: any) {
     this.selectedCountry = $event;
     this.selectedStates = [];
-    this.util.getStatesByCountry(this.selectedCountry.value).forEach(state => {
-      this.selectedStates.push({
-        value: state,
-        label: state,
-        disabled: false
+    this.util
+      .getStatesByCountry(this.selectedCountry.value)
+      ?.subscribe((states) => {
+        this.cd.detectChanges();
+        this.selectedStates = [];
+        states.forEach((state) => {
+          this.selectedStates.push({
+            value: state,
+            label: state,
+            disabled: false,
+          });
+        });
+
+        // console.log(states);
       });
-    });
   }
 
   view(add: DeliveryAddress) {

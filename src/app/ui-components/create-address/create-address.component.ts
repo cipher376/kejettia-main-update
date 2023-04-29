@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IOption } from 'ng-select';
 import { ToastrService } from 'ngx-toastr';
@@ -26,15 +26,18 @@ export class CreateAddressComponent implements OnInit {
     private fb: FormBuilder,
     private util: UtilityService,
     private toaster: ToastrService,
+    private cd:ChangeDetectorRef
   ) {
-    const tempCountries = this.util.getAllCountries();
-    tempCountries.forEach(cty => {
+    this.util.getAllCountryNames()?.subscribe(countries => {
+      this.countries=[];
+      countries.forEach(cty => {
       this.countries.push({
-        value: cty.name,
-        label: cty.name,
+        value: cty,
+        label: cty,
         disabled: false
       });
     })
+    });
     this.selectedCountry = {
       label: '',
       value: '',
@@ -108,7 +111,7 @@ export class CreateAddressComponent implements OnInit {
 
   getAddressData() {
     if (!this.addForm?.valid) {
-      console.log(this.addForm);
+      // console.log(this.addForm);
       // alert("Invalid data")
       alert('Fill all required fields');
       return false;
@@ -126,7 +129,7 @@ export class CreateAddressComponent implements OnInit {
     this.address.suburb = this.addForm?.value.suburb ?? '';
     this.address.latLng = this.addForm?.value.lat + ',' + this.addForm?.value.lng;
 
-    console.log(this.address);
+    // console.log(this.address);
     if(!this.address.street){
       alert("Street name is required");
       return false;
@@ -142,16 +145,22 @@ export class CreateAddressComponent implements OnInit {
     this.addressEvent.emit(this.address); // send address object to the calling component;
   }
 
-  setCountry($event: any) {
+  async setCountry($event: any) {
     this.selectedCountry = $event;
     this.selectedStates = [];
-    this.util.getStatesByCountry(this.selectedCountry.value).forEach(state => {
-      this.selectedStates.push({
-        value: state,
-        label: state,
-        disabled: false
+    this.util
+      .getStatesByCountry(this.selectedCountry.value)?.subscribe((states) => {
+        this.cd.detectChanges();
+        this.selectedStates = [];
+        states.forEach((state) => {
+          this.selectedStates.push({
+            value: state,
+            label: state,
+            disabled: false,
+          });
+        });
       });
-    });
+
   }
 
 }

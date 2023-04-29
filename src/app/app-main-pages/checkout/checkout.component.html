@@ -56,7 +56,7 @@
                     <!-- <input type="button" (click)="showForm(2)" name="next" class="next action-button" 
                     value="Next"  />-->
                     <input style="float:left" type="button" (click)="showForm(0)" name="previous" class="previous action-button-previous"
-                      value="Previous" *ngIf="next>0" />
+                      value="Back" *ngIf="next>0" />
                     <input style="float:right" type="button" *ngIf="!deliveryAddress.hideForm && next>0" (click)="deliveryAddress.saveDeliveryAddress()" name="previous" class="previous action-button-previous"
                       value="Save" />
                   </fieldset>
@@ -124,14 +124,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of cart?.cartItems||[]" class="echitem">
+                    <tr *ngFor="let item of cart?.cartItems||[]" class="echitem" (click)="goToProduct(item?.product)" >
                       <td class="product-image">
-                        <img src="your-image-url.jpg" alt="Product Image">
+                        <img style="width: 40%; cursor: pointer;" [src]="getPhotoUrl(item?.product?.photos)" alt="Product Image">
                       </td>
-                      <td class="product-name">{{item?.product?.name.slice(0, 30)}}
+                      <td class="product-name" style="cursor: pointer;">{{item?.product?.name.slice(0, 30)}}
                         <span class="product-quantity">×&nbsp;{{item?.quantity}}</span>
                       </td>
-                      <td class="product-total text-body">{{item?.price |currency:' ':'CAD$ '}}</td>
+                      <td *ngIf="item?.productVariationId" class="product-total text-body">{{item?.productVariation?.price|currency:' ':'CAD$ '}}</td>
+                      <td *ngIf="!item?.productVariationId" class="product-total text-body">{{item?.product?.currentPrice|currency:' ':'CAD$ '}}</td>    
                     </tr>
 
                     <tr class="summary-subtotal">
@@ -163,7 +164,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <button type="submit" class="btn btn-dark btn-rounded btn-order" *ngIf="paymentGateWays"
+                <button type="submit" class="btn btn-dark btn-rounded btn-order" *ngIf="paymentGateWays && showPlaceOrderbutton"
                   (click)="placeOrder()">Place
                   Order</button>
               </div>
@@ -171,7 +172,7 @@
           </aside>
         </div>
       </form>
-      <app-product-sales-widget></app-product-sales-widget>
+      <!-- <app-product-sales-widget></app-product-sales-widget> -->
     </div>
   </div>
 </main>

@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { Urls } from 'src/app/config';
 import { User, Credentials } from 'src/app/models';
-import { MyAuthService, UserService, MyLocalStorageService } from 'src/app/shared/services';
+import { MyAuthService, UserService, MyLocalStorageService, UtilityService } from 'src/app/shared/services';
 import { AlertComponent } from '../alert/alert.component';
 
 
@@ -30,13 +30,15 @@ export class LoginComponent implements OnInit {
   facebookAuthUrl = Urls.facebookAuthUrl;
   twitterAuthUrl = Urls.twitterAuthUrl;
 
+  recaptcha_key ='';
 
   constructor(
     private _auth: MyAuthService,
     private _localStore: MyLocalStorageService,
     private _router: Router,
     private _fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private util: UtilityService
   ) {
 
     this.route.url.subscribe(url => {
@@ -65,6 +67,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.recaptcha_key = this.util.getRecatchaKey();
   }
 
 
@@ -77,24 +80,7 @@ export class LoginComponent implements OnInit {
 
     this._auth.login(this._loginForm.value).subscribe(
       res => {
-        if ((res as any)?.user?.id) {
-
-          console.log(Urls?.returnUrl);
-
-          if (!Urls.returnUrl.includes('login')) {
-            window.location.href = window.location.protocol + '//' + window.location.host + Urls.returnUrl;
-          } else {
-            // if customer has no address, direct to profile
-            if(this._user?.address?.id){
-              window.location.href = window.location.protocol + '//' + window.location.host + Urls.home;
-            }else {
-              window.location.href = window.location.protocol + '//' + window.location.host + Urls.account+`?page=address`;
-            }
-          }
-
-        } else {
-          this._localStore.set('is_login', false).then(_ => { });
-        }
+        this._auth.loginComplete();
       },
       error => {
         console.log(error);
@@ -133,6 +119,10 @@ export class LoginComponent implements OnInit {
 
   gotoRegister() {
     this._router.navigateByUrl('/main/pages/auth/register');
+  }
+
+  resolveRecaptcha($e){
+    console.log($e)
   }
 
 }

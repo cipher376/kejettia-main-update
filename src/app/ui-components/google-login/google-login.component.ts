@@ -1,100 +1,53 @@
-import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Credentials } from 'src/app/models';
+import { MyAuthService } from 'src/app/shared/services';
 declare const gapi: any;
 
 @Component({
-
   selector: 'app-google-login',
-  // template: '<button class="google-signin-button" (click)="onSignIn()">Sign in with Google</button>'
-  template: `
-    <button class="google-signin-button" (click)="onSignIn()">
-      <div class="google-signin-button__icon">
-        <img src="assets/images/search.png" >
-      </div>
-      <div class="google-signin-button__text">
-        <span>Google</span>
-      </div>
-    </button>
-  `,
-
-styles: [`
-.google-signin-button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 10em;
-  height: 48px;
-  border-radius: 4px;
-  background-color: #fff;
-  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  border: 1px solid #ddd;
-  padding: 1em;
-}
-
-.google-signin-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
-}
-
-.google-signin-button__icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 4px 0px 0px 4px;
-  padding: 0.8em;
-}
-
-.google-signin-button__icon svg {
-  width: 28px;
-  height: 28px;
-}
-
-.google-signin-button__text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  color: #666;
-  font-size: 14px;
-  font-weight: 500;
-}
-`] 
-  
+  templateUrl:'./google-login.component.html',
+  styleUrls:['./google-login.component.scss']
 })
 export class GoogleLoginComponent implements OnInit {
-
-  private clientId = '506338606923-ln0ldqdqvo9m5h8n1m84f34gnu6loaij.apps.googleusercontent.com';
-  private scope = [
-    'profile',
-    'email'
-  ].join(' ');
 
   @Output() onSuccess = new EventEmitter<any>();
   @Output() onFailure = new EventEmitter<any>();
 
-  constructor() { }
+  googleCred:Credentials = new Credentials();
+  link: string;
+
+  constructor(
+    private route: ActivatedRoute, 
+    private auth: MyAuthService
+  ) {
+
+  }
 
   ngOnInit() {
-    gapi.load('auth2', () => {
-      gapi.auth2.init({
-        client_id: this.clientId,
-        scope: this.scope
-      });
-    });
+    this.getUrlLink();
+
+    this.route.queryParams.subscribe(p => {
+      console.log(p);
+      if(p?.auth){
+        this.auth.loginThirdParty(JSON.parse(p?.auth));
+      }
+    })
   }
 
-  onSignIn() {
-    const auth2 = gapi.auth2.getAuthInstance();
-    auth2.signIn().then((googleUser) => {
-      const profile = googleUser.getBasicProfile();
-      const id_token = googleUser.getAuthResponse().id_token;
-      console.log('ID Token: ' + id_token);
-      console.log('Full Name: ' + profile.getName());
-      console.log('Email: ' + profile.getEmail());
-    });
+  async onSignIn() {
+    window.location.href= this.link
   }
+
+  getUrlLink(){
+    this.auth.getGoogleAuthLink().subscribe(link=> {
+      this.link = link.link;
+      console.log(this.link);
+    }, (error)=>console.log(error))
+  }
+
+  
+
 
 }

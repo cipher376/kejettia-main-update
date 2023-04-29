@@ -92,7 +92,7 @@ export class MyAuthService {
     );
   }
 
-  login(data: Credential) {
+  login(data: Credentials) {
     // console.log(environment.identity_api_root_url)
     return this.http.post<{ token: string, user: User }>(environment.identity_api_root_url + '/users/login', data).pipe(
       map((res) => {
@@ -109,6 +109,50 @@ export class MyAuthService {
       }),
       catchError(e => this.handleError(e))
     );
+  }
+
+  loginThirdParty(auth: {token: string, user: User}){
+    this.token = { token: auth.token } as any;
+        if (this.token?.token) {
+          this.saveToken(this.token);
+          this.userService.getUserDeliveryAddress(auth?.user?.id)?.subscribe(addresses => {
+            auth.user.otherDeliveryAddresses = addresses;
+            this.userService.setLoggedUserLocalSync(auth.user);
+          })
+          this.userService.setLoggedUserLocal(auth.user);
+
+          // console.log(auth);
+        }
+        this.loginComplete();
+  }
+
+  loginComplete(){
+    const user = this.userService.getLoggedUserLocalSync();
+    if (user?.id) {
+      // console.log(Urls?.returnUrl);
+      if (!Urls.returnUrl.includes('login')) {
+        window.location.href = window.location.protocol + '//' + window.location.host + Urls.returnUrl;
+      } else {
+        // if customer has no address, direct to profile
+        if(user?.address?.id){
+          window.location.href = window.location.protocol + '//' + window.location.host + Urls.home;
+        }else {
+          window.location.href = window.location.protocol + '//' + window.location.host + Urls.account+`?page=address`;
+        }
+      }
+
+    } else {
+      this.store.set('is_login', false).then(_ => { });
+    }
+  }
+
+  getGoogleAuthLink():Observable<any>{
+    return this.http.get<string>(environment.identity_api_root_url + `/authentication/google/link`).pipe(
+      map((res) => {
+        console.log(res);
+        return res
+      }),
+      catchError(e => this.handleError(e)))
   }
 
   logout() {

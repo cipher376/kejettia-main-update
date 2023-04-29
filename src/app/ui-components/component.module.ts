@@ -115,6 +115,7 @@ import { PaynowComponent } from './paynow/paynow.component';
 import { ProductVariationSelectComponent } from './product-variation-select/product-variation-select.component';
 import { GoogleLoginComponent } from './google-login/google-login.component';
 import { SocialMediaComponent } from './social-media/social-media.component';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 
 @NgModule({
@@ -236,7 +237,7 @@ import { SocialMediaComponent } from './social-media/social-media.component';
     // ModalModule,
     ProgressbarModule.forRoot(),
     // Angular4PaystackModule.forRoot(PAYSTACK_PUBLIC_KEY),
-
+    RecaptchaModule,
   ],
   exports: [
     AccountDetailsComponent,

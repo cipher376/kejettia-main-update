@@ -13,11 +13,11 @@
   </div>
   <div class="col-xs-12 form-group" style="margin-bottom: 10px; position: relative;">
     <label>State *</label>
-    <ng-select formControlName="state" [allowClear]="false" [multiple]="false" [options]="selectedStates||[]"
+    <ng-select  formControlName="state" [allowClear]="false" [multiple]="false" [options]="selectedStates||[]"
       placeholder="">
     </ng-select>
     <div class="alert alert-state" role="alert" *ngIf="(addForm.get('state')?.errors) && addForm.get('state')?.dirty">
-      Select your state or region.
+      Select your province | state | region.
     </div>
   </div>
   <div class="row">

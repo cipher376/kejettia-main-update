@@ -50,6 +50,7 @@ export class ConsolidatedOrder {
   state: ORDER_STATE;
   invoice?: string;
   grandTotal?: number;
+  taxValue?: number;
   currency?: string;
   visibleToUser?: boolean;
   paymentMethod?: PAYMENT_METHOD
