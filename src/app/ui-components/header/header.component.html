@@ -38,8 +38,8 @@
             class="d-icon-map"></i>Contact</a> -->
         <!-- <a [routerLink]="['/main/pages/faq']" routerLinkActive="router-link-active" class="help d-lg-show"><i
             class="d-icon-info"></i> Need Help</a> -->
-            <a [routerLink]="['/main/pages/business-page']" routerLinkActive="router-link-active" class="help d-lg-show"><i
-              class="d-icon-shoppingbag"></i>Own a Shop</a>
+            <!-- <a [routerLink]="['/main/pages/business-page']" routerLinkActive="router-link-active" class="help d-lg-show"><i
+              class="d-icon-shoppingbag"></i>Own a Shop</a> -->
 
 
         <a [routerLink]="['/main/pages/auth/login']" routerLinkActive="router-link-active" *ngIf="!loggedUser?.id"><i
@@ -63,15 +63,15 @@
 
             <ul class="dropdown-box">
               <li>
-                <a [routerLink]="['/main/pages/my-account/dashboard']" class="usersel help d-lg-show"><i class="d-icon-user"></i>Profile</a>
+                <a [routerLink]="['/main/pages/my-account/dashboard']" class="usersel help"><i class="d-icon-user"></i>Profile</a>
               </li>
 
               <li>
-                <a [routerLink]="['/main/pages/my-account/orders']" class="usersel help d-lg-show"><i class="d-icon-bag"></i>Orders</a>
+                <a [routerLink]="['/main/pages/my-account/orders']" class="usersel help"><i class="d-icon-bag"></i>Orders</a>
               </li>
               
               <li class="logoutsection">
-                <a style="cursor: pointer;" (click)="logout()" class="usersel help d-lg-show"><i class="d-icon-arrow-left"></i>Logout</a>
+                <a style="cursor: pointer;" (click)="logout()" class="usersel help"><i class="d-icon-arrow-left"></i>Logout</a>
             </ul>
 
         </div>
