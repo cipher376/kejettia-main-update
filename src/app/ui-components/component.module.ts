@@ -122,6 +122,7 @@ import { AppleLoginComponent } from './apple-login/apple-login.component';
 // import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AgeRestrictionComponent } from './age-restriction/age-restriction.component';
+import { SubscribePopupComponent } from './subscribe-popup/subscribe-popup.component';
 
 @NgModule({
   declarations: [
@@ -231,6 +232,7 @@ import { AgeRestrictionComponent } from './age-restriction/age-restriction.compo
     GoogleLoginComponent,
     SocialMediaComponent,
     AgeRestrictionComponent,
+    SubscribePopupComponent,
   ],
   imports: [
     CommonModule,
@@ -344,6 +346,7 @@ import { AgeRestrictionComponent } from './age-restriction/age-restriction.compo
     SocialMediaComponent,
     RelatedProductComponent,
     AgeRestrictionComponent,
+    SubscribePopupComponent,
     
   ], 
   providers: [
