@@ -121,6 +121,7 @@ import { FacebookLoginComponent } from './facebook-login/facebook-login.componen
 import { AppleLoginComponent } from './apple-login/apple-login.component';
 // import { provideOAuthClient } from 'angular-oauth2-oidc';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { AgeRestrictionComponent } from './age-restriction/age-restriction.component';
 
 @NgModule({
   declarations: [
@@ -229,6 +230,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     ProductVariationSelectComponent,
     GoogleLoginComponent,
     SocialMediaComponent,
+    AgeRestrictionComponent,
   ],
   imports: [
     CommonModule,
@@ -340,7 +342,8 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     ProductVariationSelectComponent,
     GoogleLoginComponent,
     SocialMediaComponent,
-    RelatedProductComponent
+    RelatedProductComponent,
+    AgeRestrictionComponent,
     
   ], 
   providers: [
