@@ -33,6 +33,7 @@ import { CartComponent } from './cart/cart.component';
 import { CompanyComponent } from './company/company.component';
 import { BusinessPageComponent } from './business-page/business-page.component';
 import { TrackingComponent } from './tracking/tracking.component';
+import { ComingSoonComponent } from '../ui-components/coming-soon/coming-soon.component';
 
 
 
@@ -105,6 +106,7 @@ const routes: Routes = [
           },
           { path: 'business-page', component: BusinessPageComponent },
           { path: 'tracking', component: TrackingComponent },
+          { path: 'coming-soon', component: ComingSoonComponent },
         ]
       },
 

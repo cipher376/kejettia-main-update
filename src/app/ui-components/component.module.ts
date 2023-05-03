@@ -123,6 +123,7 @@ import { AppleLoginComponent } from './apple-login/apple-login.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AgeRestrictionComponent } from './age-restriction/age-restriction.component';
 import { SubscribePopupComponent } from './subscribe-popup/subscribe-popup.component';
+import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 
 @NgModule({
   declarations: [
@@ -233,6 +234,7 @@ import { SubscribePopupComponent } from './subscribe-popup/subscribe-popup.compo
     SocialMediaComponent,
     AgeRestrictionComponent,
     SubscribePopupComponent,
+    ComingSoonComponent,
   ],
   imports: [
     CommonModule,
