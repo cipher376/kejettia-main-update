@@ -38,7 +38,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     
-    this.cartService.getCart(this.loggedUser?.id).subscribe(cart => {
+    this.cartService.getCart(this.loggedUser?.id)?.subscribe(cart => {
       this.cart = cart;
     })
   }
@@ -106,7 +106,7 @@ export class CartMiniComponent implements OnInit, AfterViewInit {
   deleteFromCart(cartItem: CartItem) {
     const sub = this.cartService.deleteCartItem(this.cart?.id, cartItem?.id);
     if (sub) {
-      sub.subscribe(() => {
+      sub?.subscribe(() => {
         this.cart = this.cartService.getCartLocal();
       })
     } else {

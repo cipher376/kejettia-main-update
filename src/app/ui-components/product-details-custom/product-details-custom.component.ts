@@ -91,10 +91,15 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
 
 
   set SelectedVariation(variation: ProductVariation) {
-  console.log(variation);
+  // console.log(variation);
   this.selectedVariation = variation;
   this.selectedProduct.currentPrice = variation.price
-  this.cart
+
+  // check if variation image is valid and rebind image url
+  // this is use to change the current selected image in view
+  
+ 
+  // this.cart
   }
 
   set SelectedFeature(feature: Features) {
@@ -187,7 +192,7 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.addToCart$ = this.cartService.addUpdateCartItemToCart(this.cart?.id, 
       this.selectedProduct?.id, this.quantity, this.selectedShipping?.id)?.subscribe((cart: Cart) => {
       this.cart = cart;
-      this.cartService.getCart(this.loggedUser?.id).subscribe(cart => {
+      this.cartService.getCart(this.loggedUser?.id)?.subscribe(cart => {
         console.log(cart);
         const len = cart.cartItems?.length;
         this.handleCartAddOns(cart.cartItems[len-1])
@@ -197,10 +202,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   handleCartAddOns(cartItem){
-    console.log(cartItem)
+    // console.log(cartItem)
       if(this.selectedVariation){
         cartItem.productVariationId =  this.selectedVariation?.id;
-        this.cartService.linkCartItemToProductVariation(cartItem?.id, this.selectedVariation?.id).subscribe((status)=>{
+        this.cartService.linkCartItemToProductVariation(cartItem?.id, this.selectedVariation?.id)?.subscribe((status)=>{
           console.log(status);
         })
       }
@@ -223,8 +228,8 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
       return;
     }
     if (!this.isInWishList()) {
-      this.storeService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id).subscribe(() => {
-        this.storeService.getUserWishList(this.loggedUser?.id).subscribe(products => {
+      this.storeService.addProductToWhishlist(this.selectedProduct?.id, this.loggedUser?.id)?.subscribe(() => {
+        this.storeService.getUserWishList(this.loggedUser?.id)?.subscribe(products => {
           this.wishList = products;
         });
       })
@@ -264,10 +269,11 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
   }
 
   refreshProduct() {
-    this.storeService.getProductById(this.selectedProductId ?? this.selectedProduct.id).subscribe(product => {
-      this.selectedProduct = product;
+    this.storeService.getProductById(this.selectedProductId ?? this.selectedProduct.id)?.subscribe(product => {
+      try {
+         this.selectedProduct = product;
       this.variations = product?.productVariations;
-      const max=Math.min(...this.variations.map(t=> t.price)), min=Math.max(...this.variations.map(t=> t.price))
+      const max=Math.min(...this.variations?.map(t=> t.price)), min=Math.max(...this.variations?.map(t=> t.price))
       if(max===min){
         this.selectedProduct.currentPrice = max;
       } else {
@@ -275,6 +281,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
         this.selectedProduct.toPrice=max
       }
       this.init();
+      } catch (error) {
+        
+      }
+     
     });
   }
 
@@ -312,8 +322,8 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     this.selectedProduct?.photos?.forEach(p => {
       const ph = new Photo();
       if(!p.remoteId){
-        ph.source = environment.file_api_download_url_root + p.source;
-        ph.thumbnail = environment.file_api_download_url_root + p.thumbnail;
+        ph.source = environment.file_api_download_url_root + p?.source;
+        ph.thumbnail = environment.file_api_download_url_root + p?.thumbnail;
       }else {
         ph.source =  p.source;
         ph.thumbnail =  p.thumbnail;
@@ -463,6 +473,10 @@ export class ProductDetailsCustomComponent implements OnInit, AfterViewInit {
     }))
       .insertBefore($product).fadeIn();
     $('.sticky-sidebar').trigger('recalc.pin');
+  }
+
+  setProductPhoto(color){
+
   }
 }
 

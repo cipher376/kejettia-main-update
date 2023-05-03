@@ -6,7 +6,7 @@
           <div class="product-gallery pg-vertical sticky-sidebar" data-sticky-options="{'minWidth': 767}">
             <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
               <figure class="product-image" *ngFor="let ph of selectedProductPhotos">
-                <img src="{{ph?.source}}" #zoomImage [attr.data-zoom-image]="ph?.source"
+                <img src="{{(selectedVariation?.photoUrl)??ph?.source}}" #zoomImage [attr.data-zoom-image]="ph?.source"
                   alt="Women's Brown Leather Backpacks" width="800" height="900">
               </figure>
             </div>

@@ -159,25 +159,25 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
 
 
   getData() {
-    console.log(this.deliveryForm)
+    if (this.selectedDeliveryAddress) {
+      this.selectedDeliveryAddress.fname = this.deliveryForm?.value.firstName??this.selectedDeliveryAddress.fname;
+      this.selectedDeliveryAddress.lname = this.deliveryForm?.value.lastName?? this.selectedDeliveryAddress.lname;
+      this.selectedDeliveryAddress.mname = this.deliveryForm?.value.otherName ?? this.selectedDeliveryAddress.mname;
+      this.selectedDeliveryAddress.email = this.deliveryForm?.value.email??this.selectedDeliveryAddress.email;
+      this.selectedDeliveryAddress.phone = this.deliveryForm?.value.phone??this.selectedDeliveryAddress.phone;
+      this.selectedDeliveryAddress.visibleToUser = true;
+      if (this.address)
+        this.selectedDeliveryAddress.address = this.address;
+    }
     this.onValidate('email')
     if (!this._isEmail) {
+      console.log('Invalid email');
       return false;
     }
     this.onValidate('phone')
     if (!this._isPhone) {
+      console.log('Invalid phone number')
       return false;
-    }
-
-    if (this.selectedDeliveryAddress) {
-      this.selectedDeliveryAddress.fname = this.deliveryForm?.value.firstName;
-      this.selectedDeliveryAddress.lname = this.deliveryForm?.value.lastName;
-      this.selectedDeliveryAddress.mname = this.deliveryForm?.value.otherName ?? '';
-      this.selectedDeliveryAddress.email = this.deliveryForm?.value.email;
-      this.selectedDeliveryAddress.phone = this.deliveryForm?.value.phone;
-      this.selectedDeliveryAddress.visibleToUser = true;
-      if (this.address)
-        this.selectedDeliveryAddress.address = this.address;
     }
 
     return true;
@@ -188,7 +188,7 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
     switch (value) {
       case 'email':
         const emailRe = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm;
-        if (this.deliveryForm?.value.email?.match(emailRe)) {
+        if (this.selectedDeliveryAddress.email?.match(emailRe)) {
           this._isEmail = true;
         } else {
           this._isEmail = false;
@@ -199,10 +199,10 @@ export class CreateDeliveryAddressComponent implements OnInit, AfterViewInit {
         const re2 = /^\d{10}$/;
         const re3 = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
         const re4 = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-        if (this.deliveryForm?.value?.phone?.match(re1) ||
-          this.deliveryForm?.value?.phone?.match(re2) ||
-          this.deliveryForm?.value?.phone?.match(re3) ||
-          this.deliveryForm?.value?.phone?.match(re4)) {
+        if (this.selectedDeliveryAddress.phone?.match(re1) ||
+        this.selectedDeliveryAddress.phone?.match(re2) ||
+        this.selectedDeliveryAddress.phone?.match(re3) ||
+        this.selectedDeliveryAddress.phone?.match(re4)) {
           this._isPhone = true;
           console.log(true);
         } else {

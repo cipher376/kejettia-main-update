@@ -153,6 +153,8 @@ export class ProductVariation {
   // meta_data: WcMetaData[]; //	Meta data. See Product variation - Meta data properties
 
   cartItems: CartItem[];
+  // photo: Photo;
+  photoUrl: string;
 }
 
 export class VariationAttribute {

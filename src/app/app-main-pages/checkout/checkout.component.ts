@@ -149,7 +149,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.router.navigateByUrl(Urls.order);
         this.showLoader = false;
       })
-    } 
+    } else {
+      this.showLoader = false;
+    }
   }
 
   calculateShipping() {

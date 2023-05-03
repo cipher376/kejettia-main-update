@@ -68,8 +68,6 @@ export class ProductVariationSelectComponent implements OnInit {
         this.variationValues[index]?.push(att.option);
     })
 
-    // console.log(this.variationAttributes);
-    // console.log(this.variationValues);
 
   }
 
