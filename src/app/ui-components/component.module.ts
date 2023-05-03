@@ -124,6 +124,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AgeRestrictionComponent } from './age-restriction/age-restriction.component';
 import { SubscribePopupComponent } from './subscribe-popup/subscribe-popup.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+import { IntroBannerFourComponent } from './intro-banner-four/intro-banner-four.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
     IntroBannerOneComponent,
     IntroBannerTwoComponent,
     IntroBannerThreeComponent,
+    IntroBannerFourComponent,
     MainCarouselComponent,
     MapComponent,
     MobileMenuComponent,
@@ -274,6 +276,7 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
     IntroBannerOneComponent,
     IntroBannerTwoComponent,
     IntroBannerThreeComponent,
+    IntroBannerFourComponent,
     MainCarouselComponent,
     MapComponent,
     MobileMenuComponent,

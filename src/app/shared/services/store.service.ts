@@ -670,6 +670,16 @@ export class StoreService {
   }
 
 
+  getAllProudctCategories(){
+    const filter =  { "include":[{"relation": "photo" }]};
+    const url = `${environment.store_api_root_url}/product-categories?filter=${JSON.stringify(filter)}`
+    return this.http.get<ProductCategory[]>(url).pipe(
+      map((res: ProductCategory[]) => {
+        return res;
+      }),
+      catchError(e => this.handleError(e))
+    );
+  }
 
   // linking store to Category item
   addStoreToCategory(storeId: any, storeCategoryId: any) {

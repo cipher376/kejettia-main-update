@@ -1,7 +1,7 @@
 import { UserService } from './../../shared/services/user.service';
 import { StoreService } from './../../shared/services/store.service';
 import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
-import { Product, ProductCategoryItem, Store, StoreCategory, User } from 'src/app/models';
+import { Product, ProductCategory, ProductCategoryItem, Store, StoreCategory, User } from 'src/app/models';
 import { UtilityService } from 'src/app/shared/services';
 
 declare var $: any;
@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   private stores: Store[] = [];
   private storeCategories: StoreCategory[] = [];
   private productCategoryItems: ProductCategoryItem[] = [];
+  private productCategories: ProductCategory[]=[];
   private wishList: Product[] = [];
   private loggedUser: User;
 
@@ -26,7 +27,8 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   private loaderCount = 0;
   constructor(
     private storeService: StoreService,
-    private userService: UserService
+    private userService: UserService,
+    
   ) {
     Window = window;
   }
@@ -35,7 +37,8 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.showLoader = true;
     this.loaderCount = 0;
-
+    
+    this.loadProductCategories()
     this.loadPremiumStores();
     this.getStoreCategories();
     this.getProductCategoryItems();
@@ -67,6 +70,10 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
 
   get StoreCategories() {
     return this.storeCategories;
+  }
+
+  get ProductCategories(){
+    return this.productCategories;
   }
 
   set LoaderCount(c: number) {
@@ -127,6 +134,12 @@ export class HomeComponent implements OnInit, AfterContentInit, AfterViewInit {
       this.LoaderCount += 1;
       // console.log(this.premiumStores);
     });
+  }
+
+  loadProductCategories(){
+    this.storeService.getAllProudctCategories()?.subscribe(cats => {
+      this.productCategories = UtilityService.shuffle(cats);
+    })
   }
 
 

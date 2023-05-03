@@ -15,13 +15,13 @@
             <app-main-carousel [StoreCategories]="MainCarouselCategories"></app-main-carousel>
           </div>
 
-          <!-- <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
-            <app-intro-banner-three *ngIf="premiumStores?.length>0" [Store]="premiumStores[0]"></app-intro-banner-three>
-          </div> -->
+          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
+            <app-intro-banner-four *ngIf="ProductCategories?.length>0" [ProductCategory]="ProductCategories[0]"></app-intro-banner-four>
+          </div>
 
-          <!-- <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
-            <app-intro-banner-three *ngIf="premiumStores?.length>1" [Store]="premiumStores[1]"></app-intro-banner-three>
-          </div> -->
+          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1">
+            <app-intro-banner-four *ngIf="ProductCategories?.length>1" [ProductCategory]="ProductCategories[1]"></app-intro-banner-four>
+          </div>
 
           <div class="grid-item col-lg-6 col-md-4 height-x1 into_banner_one">
             <app-intro-banner-one [Title]="'THIS MONTH SALE'" [Content]="'70% DISCOUNT'"
@@ -32,9 +32,9 @@
             <app-brands></app-brands>
           </div>
 
-          <!-- <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1 ph_remove_banner">
-            <app-intro-banner-three *ngIf="premiumStores?.length>2" [Store]="premiumStores[2]"></app-intro-banner-three>
-          </div> -->
+          <div class="grid-item col-lg-3 col-md-4 col-sm-6 height-x1 ph_remove_banner">
+            <app-intro-banner-four *ngIf="ProductCategories?.length>2" [ProductCategory]="ProductCategories[2]"></app-intro-banner-four>
+          </div>
 
           <div class="grid-space col-1"></div>
         </div>
